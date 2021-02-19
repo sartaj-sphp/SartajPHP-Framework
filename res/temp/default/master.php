@@ -1,28 +1,25 @@
 <?php 
 switch($page->getAuthenticateType()){
 case 'GUEST':{
-$menu = new TempFile("{$phppath}temp/default/menu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/menu.php";
 break;
 }
 case 'ADMIN':{
-$menu = new TempFile("{$phppath}temp/default/admmenu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/admmenu.php";
 break;
 }
 case 'MEMBER':{
-$menu = new TempFile("{$phppath}temp/default/mebmenu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/mebmenu.php"; 
 break;
 }
-case 'DEALER':{
-$menu = new TempFile("{$phppath}temp/default/delmenu.php"); $menu->run();
-break;
+
 }
-default:{
-$menu = new TempFile("{$phppath}temp/default/menu.php"); $menu->run();
-break;    
-}
-}
+include_once($menupath);
+$menu = new MenuUi();
+$menu->run();
+
 //addFrontPlace('videomenu');
-//runFrontPlace('videomenu');
+runFrontPlace('frontEditor',"footer");
 ?><!DOCTYPE html>
 <html>
 <head lang="en">
@@ -30,7 +27,10 @@ break;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php SphpJsM::addBootStrapKit();  print getHeaderHTML(); ?>
 <link href="<?php print $respath; ?>temp/default/css/framework.css" rel="stylesheet"  type="text/css" />
-<link rel="icon" type="image/gif" href="<?php print $basepath; ?>favicon.gif" />
+<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo $respath; ?>temp/default/imgs/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $respath; ?>temp/default/imgs/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $respath; ?>temp/default/imgs/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $respath; ?>temp/default/imgs/favicon-16x16.png" />
 </head>
 <body>
     <div class="container">
@@ -47,6 +47,6 @@ break;
 </div>
 </div>
             </div></div></div>
-<?php print getFooterHTML(); print traceError(); print traceErrorInner(); ?>
+<?php renderFrontPlace('frontEditor',"footer"); print getFooterHTML(); print traceError(); print traceErrorInner(); ?>
 </body>
 </html>

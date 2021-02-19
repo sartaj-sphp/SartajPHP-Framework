@@ -26,8 +26,8 @@ if($page->isevent)
 switch($page->sact){
 case "captcha" :{ 
 SphpBase::$engine->cleanOutput();
-SphpBase::$sphp_response->addHttpHeader("Content-Type: image/jpeg");
-SphpBase::$sphp_response->addHttpHeader("Cache-Control: no-cache, must-revalidate");
+SphpBase::$sphp_response->addHttpHeader("Content-Type","image/jpeg");
+SphpBase::$sphp_response->addHttpHeader("Cache-Control","no-cache, must-revalidate");
 includeOnce("{$comppath}captcha/cap.php");
 $df = new CaptchaSub();
 $df->genImage();

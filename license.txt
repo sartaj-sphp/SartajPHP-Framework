@@ -1,5 +1,5 @@
 SartajPHP Framework is based on SPHP libraries and provide rapid web development. 
-    Copyright (C) 2007  Sartaj Singh website:- http://sartajphp.com/
+    Copyright (C) 2007 - 2021 Sartaj Singh website:- http://sartajphp.com/
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

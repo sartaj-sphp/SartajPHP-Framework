@@ -2,6 +2,9 @@
 
 final class SphpJsM{
 public function __construct() {
+    $this->init();
+}
+public function init() {
     global $respath;
 // load js lib and jquery ready function
 //addFileLink("{$respath}jquery/jquery-min.js",true);
@@ -19,7 +22,7 @@ addFileLink("{$respath}jslib/jquery/jslib.js", true);
 addHeaderJSFunction('ready', "$(document).ready(function() {", "});", true);
 addHeaderJSFunction('ready', "$(document).ready(function() {", "});");
 addHeaderJSFunction('pageload', "$(window).on('load',function() {", "});", true);
-addFileLink('window.jQuery = window.$ = jql;',true,"jquery-js-code","js");
+addFileLink('sphpjq = window.jQuery = window.$ = jql;',true,"jquery-js-code","js");
 
 }
 
@@ -31,7 +34,7 @@ addHeaderJSFunction('ready', "jql(document).ready(function() {", "});");
 addHeaderJSFunction('pageload', "jql(window).on('load',function() {", "});", true);
 // use code var jql = $.noConflict(true);
 if($default){
-    updateFileLink('window.jQuery = window.$ '. $replaceVar .' = jql;',true,"jquery-js-code","js");
+    updateFileLink('sphpjq = window.jQuery = window.$ '. $replaceVar .' = jql;',true,"jquery-js-code","js");
 }
 }
 public static function addjQuery2($default=false) {
@@ -41,7 +44,7 @@ addHeaderJSFunction('readyjq2', "jq2(document).ready(function() {", "});", true)
 addHeaderJSFunction('readyjq2', "jq2(document).ready(function() {", "});");
 addHeaderJSFunction('pageloadjq2', "jq2(window).on('load',function() {", "});", true);
 if($default){
-    updateFileLink('window.jQuery = window.$ = jq2;',true,"jquery-js-code","js");
+    updateFileLink('sphpjq = window.jQuery = window.$ = jq2;',true,"jquery-js-code","js");
 }
 
 }
@@ -57,9 +60,9 @@ addHeaderJSFunction('readyjq1', "jq1(document).ready(function() {", "});");
 addHeaderJSFunction('pageloadjq1', "jq1(window).on('load',function() {", "});", true);
 if($default){
     if($latest){
-    updateFileLink('window.jQuery = window.$ = jq1 = jql;',true,"jquery-js-code","js");        
+    updateFileLink('sphpjq = window.jQuery = window.$ = jq1 = jql;',true,"jquery-js-code","js");        
     }else{
-    updateFileLink('window.jQuery = window.$ = jq1;',true,"jquery-js-code","js");
+    updateFileLink('sphpjq = window.jQuery = window.$ = jq1;',true,"jquery-js-code","js");
     }
 }
 //addFileLink("{$respath}jslib/jquery-ui-1.12.1/jquery-ui.min_jq1.js", true,"jquery-ui");
@@ -67,8 +70,8 @@ if($default){
 public static function addjQueryUI($version="1.12.1") {
     global $respath;
     addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.min.css", true);
-    addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.theme.min.css", true);
-    addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.structure.min.css", true);
+    //addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.theme.min.css", true);
+    //addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.structure.min.css", true);
 //    addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui-bootstrap.css", true);
     addFileLink("{$respath}jslib/jquery-ui-" . $version . "/jquery-ui.min.js", true,"jquery-ui","","jqueryui:" . $version);
 }

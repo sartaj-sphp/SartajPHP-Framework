@@ -1,3 +1,7 @@
+/*
+ * All rights are reserved by SartajPHP. for more info contact on sartajphp.com
+ * 
+ */
 function makeFirstUpper(str){
 str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();
@@ -378,3 +382,163 @@ function format_date(date) {
   return month+"-"+day+"-"+year+" "+hour+":"+minutes+":"+seconds;
 
 }
+async function checkOnlineStatus(){
+  try {
+    const online = await fetch("/favicon.ico");
+    return online.status >= 200 && online.status < 300; // either true or false
+  } catch (err) {
+    return false; // definitely offline
+  }
+};
+class SuperClass{
+	constructor(){
+	this.self2 = this; 
+	}
+    get myself(){
+        return this.self2;
+    }
+};
+class Debug extends SuperClass{
+		constructor(){
+			super();
+		}
+		printerr(msg){
+			let str1 = this.filterMsg(msg);
+			if(str1.length > 2){
+				console.log("SNode Err:- " + str1);
+			}
+		}
+		printwarn(msg){
+			let str1 = this.filterMsg(msg);
+			if(str1.length > 2){
+				console.log("SNode Warn:- " + str1);
+			}
+		}
+		println(msg){
+			let str1 = this.filterMsg(msg);
+			if(str1.length > 2){
+				console.log("SNode:- " + str1);
+			}
+		}
+		print_r(msga){
+			let myself = this.myself;
+			msga.forEach(msg => { 
+				console.log("SNodeA:- " + myself.filterMsg(msg));
+			});
+		}
+		filterMsg(msg){
+			if (msg != undefined) {
+				if(typeof msg === 'object'){
+					if(typeof msg.toString === 'function'){
+						return msg.toString();						
+					}else{
+						return this.objToString(msg);
+					}
+				}else{
+					return msg;
+				}
+			}
+			return "";
+		}
+		objToString(obj){
+			//console.dir(obj, { depth: null });
+			return JSON.stringify(obj);
+		}
+		objToString2(obj){
+			var str = '';
+			for (var p in obj) {
+				if (obj.hasOwnProperty(p)) {
+					str += p + '::' + obj[p] + '\n';
+				}
+			}
+			return str;
+		}
+}
+const debug = new Debug();
+class SphpClass extends SuperClass{
+	constructor(){
+		super()
+		this.debug = debug;
+		this.serverPathi = window.location;
+		this.onstart();
+	}
+	get ServerPath(){
+		return this.serverPathi;
+	}
+	
+	onstart(){}
+};
+
+class Router extends SphpClass{
+		constructor(){
+			super();
+			this.lstregapps = {};
+		}
+		registerApp(ctrl,path){
+			this.lstregapps[ctrl] = path;
+		}
+		get ListRegApps(){
+			return this.lstregapps;
+		}
+}
+
+const router = new Router();
+function registerApp(ctrl,path){
+	router.registerApp(ctrl,path);
+}
+class StQueue extends SphpClass{
+    onstart(){
+        this.lst = [];
+    }
+    addInQueue(promise){
+        this.lst.push(promise);
+    }
+    wait(callback,fail){
+         Promise.all(this.lst).then(callback).catch(fail);
+    }
+}
+class BasicApp extends SphpClass{
+		page_new(){}
+                getQueue(){
+                    return new StQueue();
+                }
+}
+class StartEngine {
+		constructor(){
+			this.projectDir = window.location;
+			this.lstappsobj = {};
+			this.debug = debug
+		}
+		get serverPath(){
+			return this.projectDir;
+		}
+		getEventTrigger(evt,evtp,ctrl){
+			let obj2 = this.getApp(ctrl);
+			let fcall = 'page_event_' + evt ;
+			try{
+			return obj2[fcall](evtp);
+			}catch(e){
+				this.debug.println(ctrl + " Application doesn't have event handler " + evt + " or error " + e);
+			}
+
+		}
+		getAppTrigger(ctrl){
+			let obj2 = this.getApp(ctrl);
+			return obj2.page_new();
+		}
+		getApp(ctrl){
+			if(this.lstappsobj[ctrl]){
+				return this.lstappsobj[ctrl];
+			}else{
+				let obj1 = router.ListRegApps[ctrl];
+				this.lstappsobj[ctrl] = new obj1();
+				return this.lstappsobj[ctrl];
+			}
+		}
+                getEventPara(event,ui,aname){
+                    return {obj: $(event.target),evt: aname,event: event,ui: ui};
+                }
+}
+const sphp_api = new StartEngine();
+
+

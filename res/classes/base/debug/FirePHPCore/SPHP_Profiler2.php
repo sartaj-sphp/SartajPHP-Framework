@@ -11,15 +11,17 @@ class SphpProfiler extends Sphp\core\DebugProfiler{
         $fb = new FB(); 
         $C = 0;
         foreach ($this->msg as $key=>$value) { 
-            $C += 1;
             if($C > 90){
-                exit ;
+                break ;
             }
             if($value[4]=="info"){
-//                $firephp->info($value[0]);
+            //    $C += 1;
+             //   $firephp->info($value[0]);
             }else if($value[4]=="infoi"){
+                $C += 1;
                 $firephp->info($value[0]);
             }else{
+                $C += 1;
                 $firephp->error("$value[2] - $value[0]","$value[1] - $value[3]");
             }
         }

@@ -2,7 +2,7 @@
 $auth = "ADMIN";
 $tblName = "pagcategory";
 $page->Authenticate();
-$page->sesSecure();
+//$page->sesSecure();
 $JSServer->getAJAX();
 $masterFile = $admmasterf;
 $formHead = "Page Category Form";
@@ -14,7 +14,7 @@ $genForm->setField("rank","Category Rank","num","","","4");
 $genForm->setField("spcmpid"," ","hidden");
 ';
 
-$genFormTemp = new TempFile("$libpath/tpl/db/GenForm.php");
+$genFormTemp = new TempFile("{$libpath}tpl/db/GenForm.php");
 $aparent->setOptionsFromTable('aname','','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
 $aparent->unsetOptionsKeyArray();
 $aparent->setOptions("NONE," . $aparent->getOptions());
@@ -27,10 +27,10 @@ $page->sact = 'show';
     $_REQUEST['page'] = $Client->session('pg1');
 }
 
-$showallTemp = new TempFile("$libpath/tpl/db/Showall.php");
+$showallTemp = new TempFile("{$libpath}tpl/db/Showall.php");
 $showall->setFieldNames("aname,atype,aparent");
 $showall->setHeaderNames("Category Name,Type,Parent");
-$showall->setColWidths("");
+//$showall->setColWidths("");
 $showall->setWhere("WHERE spcmpid='".$_SESSION['uid']."' ORDER BY aparent");
 $showall->setEdit();
 $showall->setDelete();

@@ -1,6 +1,7 @@
-<menu id="pager1" runat="server" caption="Pages" href="<?php print getAppPath('pagecat','','',true); ?>"  >
-<menuitem id="menui1" runat="server" href="<?php print getAppPath('pagecat','','',true); ?>" >Add Category</menuitem>
-<menuitem id="menui1" runat="server" href="<?php print getEventPath('show','','pagecat','','',true); ?>" >List Category</menuitem>
-<menuitem id="menui1" runat="server" href="<?php print getAppPath('pagea','','',true); ?>" >Add Page</menuitem>
-<menuitem id="menui1" runat="server" href="<?php print getEventPath('show','','pagea','','',true); ?>" >List Pages</menuitem>
-</menu>
+<?php
+SphpBase::$sphp_api->addMenu("Pages");
+SphpBase::$sphp_api->addMenuLink("Add Category",getAppPath('pagecat','','',true),"","Pages");
+SphpBase::$sphp_api->addMenuLink("List Category",getEventPath('show','','pagecat','','',true),"","Pages");
+SphpBase::$sphp_api->addMenuLink("Add Page",getAppPath('pagea','','',true),"","Pages");
+SphpBase::$sphp_api->addMenuLink("List Pages",getEventPath('show','','pagea','','',true),"","Pages");
+?>

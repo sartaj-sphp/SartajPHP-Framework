@@ -1,0 +1,8 @@
+{
+    "phppath": "binlib/php/php.exe",
+    "browser": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "browserparam": ["--app=$url"],
+    "key": "localhost.key",
+    "cert": "localhost.crt",
+    "ca": "RootCA.pem"
+}

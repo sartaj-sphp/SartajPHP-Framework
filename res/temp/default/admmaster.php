@@ -1,22 +1,23 @@
 <?php 
 switch($page->getAuthenticateType()){
 case 'GUEST':{
-$menu = new TempFile("{$phppath}temp/default/menu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/menu.php";
 break;
 }
 case 'ADMIN':{
-$menu = new TempFile("{$phppath}temp/default/admmenu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/admmenu.php";
 break;
 }
 case 'MEMBER':{
-$menu = new TempFile("{$phppath}temp/default/mebmenu.php"); $menu->run();
+$menupath = "{$phppath}temp/default/mebmenu.php"; 
 break;
 }
-case 'DEALER':{
-$menu = new TempFile("{$phppath}temp/default/delmenu.php"); $menu->run();
-break;
+
 }
-}
+include_once($menupath);
+$menu = new MenuUi();
+$menu->run();
+
 ?><!DOCTYPE html>
 <html>
 <head lang="en">

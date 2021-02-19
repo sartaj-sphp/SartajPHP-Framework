@@ -19,7 +19,7 @@ $genForm->setField("menuname","Menu Name","text","","","40");
 $genForm->setField("rank","Menu Rank","num","","","4");
 $genForm->setField("filepath1","FileName","file","","2","200000");
 $genForm->setField("filepath2","FileName","file","","2","200000");
-$genForm->setField("details","Page Code","sartajc/TinyEditor/TinyEditor.php");
+$genForm->setField("details","Page Code","controls/TinyEditor/TinyEditor.php");
 $genForm->setField("spcmpid"," ","hidden");
 $genForm->setField("pagename"," ","hidden");
 ';
@@ -31,6 +31,7 @@ $pagename->value = str_replace("//", "",  $pagename->value);
 $pagename->value = str_replace("-", "",  $pagename->value);
 $pagename->setDataBound();
 }
+
 $catname->setOptionsFromTable('aname','','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
 $details->unsetDataBound();
 $filepath1->setFileSavePath("pagres/". $pagename->value .'-1.'.$filepath1->getFileExtention());

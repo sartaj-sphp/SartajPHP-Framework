@@ -10,6 +10,6 @@ $mysql->createTable($sql);
 $mysql->disconnect();
 
 global $libpath;
-include_once "{$libpath}global/classes/DIR.php";
+include_once "{$libpath}lib/DIR.php";
 DIR::directoryCreate("pagres");
 ?>

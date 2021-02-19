@@ -5,6 +5,81 @@ var returndataobj;
 var onajaxreceive = function($response){
     
 };
+/*
+ * jQuery Ajax Progress - Lightweight jQuery plugin that adds support of `progress` and `uploadProgress` events to $.ajax()
+ * Copyright (c) 2018 Alexey Lizurchik <al.lizurchik@gmail.com> (@likerR_r)
+ * Licensed under the MIT license https://github.com/likerRr/jq-ajax-progress
+ * http://likerrr.mit-license.org/
+ */
+
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
+  var $originalAjax = $.ajax.bind($);
+
+  $.ajax = function (url, options) {
+    if (typeof url === 'object') {
+      options = url;
+      url = undefined;
+    }
+
+    options = options || {
+      chunking: false
+    };
+
+    // Get current xhr object
+    var xmlHttpReq = options.xhr ? options.xhr() : $.ajaxSettings.xhr();
+    var chunking = options.chunking || $.ajaxSettings.chunking;
+
+    // Make it use our own.
+    options.xhr = function () {
+      if (typeof options.uploadProgress === 'function') {
+        if (!xmlHttpReq.upload) {
+          return;
+        }
+
+        // this line looks strange, but without it chrome doesn't catch `progress` event on uploading. Seems like chromium bug
+        xmlHttpReq.upload.onprogress = null;
+
+        // Upload progress listener
+        xmlHttpReq.upload.addEventListener('progress', function (e) {
+          options.uploadProgress.call(this, e);
+        }, false);
+      }
+
+      if (typeof options.progress === 'function') {
+        var lastChunkLen = 0;
+
+        // Download progress listener
+        xmlHttpReq.addEventListener('progress', function (e) {
+          var params = [e],
+            chunk = '';
+
+          if (this.readyState === XMLHttpRequest.LOADING && chunking) {
+            chunk = this.responseText.substr(lastChunkLen);
+            lastChunkLen = this.responseText.length;
+            params.push(chunk);
+          }
+
+          options.progress.apply(this, params);
+        }, false);
+      }
+
+      return xmlHttpReq;
+    };
+
+    return $originalAjax(url, options);
+  };
+}));
 
 jql.fn.getJSON = function(){
     var o = {};
@@ -512,7 +587,95 @@ function hideOverlay(id) {
         "visibility": "hidden"
     });
 }
-function ajaxcall(idimg,fun,url,data2,cache,dataType,async,runbackground1,callback){
+function sartajgt(idimg,url,data,cache,dataType){
+    let sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcall(idimg,url,data,cache,dataType);
+}
+function getURL(url,data,runbackground){
+    let sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground);
+}
+function getAJAX(url,data,runbackground,callback){
+    let sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground,callback);
+}
+function getAJAXStream(url,data,runbackground,callback){
+    let sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcallchunk('',url,data,true,'json',true,runbackground,callback);
+}
+function parseSphpResponse(data,callback){
+    let sphp_ajax2 = new sphp_ajax();
+    sphp_ajax2.sartajpro(data,callback);
+}
+function sartajpro(data,callback){
+    let sphp_ajax2 = new sphp_ajax();
+    sphp_ajax2.sartajpro(data,callback);
+}
+
+function sphp_wsocket(url="ws://127.0.0.1:8000/sphp.ws",callBackNativem){
+var myself = this;
+this.status = false;
+this.esocket = new WebSocket(url);
+this.esocket.onopen = function (event) {
+myself.status = true;
+callBackNativem("sopen");
+//myself.callProcess("indexc2","evt","evtp",{"test":"val"});
+  //console.log(event);
+};
+this.esocket.onmessage = function (event) {
+	//console.log("onmsg " + event.data);
+	parseSphpResponse(event.data,function(ret){
+		callBackNativem(ret);
+	});
+};
+this.esocket.onclose = function (event) {
+myself.status = false;
+	callBackNativem("sclose");
+  console.log("close by server ");
+};
+this.esocket.onerror = function (event) {
+  console.log("socket error " + event);
+};
+this.sendMsg = function(ctrl,msg){
+	data = {};
+	data["wsmsg"] = msg;
+	myself.callProcessApp(ctrl,"","",data);
+}
+this.callGlobalApp = function(ctrl,evt,evtp,data){
+	var data2 = {}; 
+	data2['ctrl'] = ctrl;
+	data2['evt'] = evt;
+	data2['evtp'] = evtp;
+	data2['type'] = "";
+	data2['typeappobj'] = "s";
+	data2['token'] = "";
+	data2['bdata'] = data;
+	if(myself.status){
+            myself.esocket.send(JSON.stringify(data2));
+	}
+};
+this.callProcessApp = function(ctrl,evt,evtp,data){
+	var data2 = {}; 
+	data2['ctrl'] = ctrl;
+	data2['evt'] = evt;
+	data2['evtp'] = evtp;
+	data2['type'] = "";
+	data2['typeappobj'] = "m";
+	data2['token'] = "";
+	data2['bdata'] = data;
+	if(myself.status){
+            myself.esocket.send(JSON.stringify(data2));
+	}
+};
+this.processApp = function(ctrl,data){
+    this.callProcessApp(ctrl,"","",data);
+};
+
+}
+
+function sphp_ajax() {
+    let MySelf = this;
+this.ajaxcall = function(idimg,url,data2,cache,dataType,async,runbackground1,callback){
 var async2 = true;
 var runbackground = false;
 if(async==false){
@@ -529,12 +692,12 @@ displayOverlay(jql("#" + idimg).html());
 idimg = "ajax_loader";
 //document.getElementById(idimg).style.visibility = 'visible';	
 displayOverlay(idimg);
-	}
+}
 }
 jql.ajax({
 type: "POST",
 url: url,
-dataType: dataType,
+dataType: "text",
 data: data2,
 cache: cache,
 async: async2,
@@ -545,99 +708,145 @@ hideOverlay(idimg);
 //document.getElementById(idimg).style.visibility = 'hidden';
 }
 if(callback != undefined){
-fun(html,callback); 
+MySelf.sartajpro(html,callback); 
 }else{
-fun(html,onajaxreceive); 
+MySelf.sartajpro(html,onajaxreceive); 
 }
 }
 });
+};
+this.ajaxcallchunk = function(idimg,url,data2,cache,dataType,async,runbackground1,callback){
+var async2 = true;
+var runbackground = false;
+if(async==false){
+async2 = false;
 }
-function sartajgt(idimg,url,data,cache,dataType){
-ajaxcall(idimg,sartajpro,url,data,cache,dataType);
+if(runbackground1==true){
+runbackground = true;
 }
-function getURL(url,data,runbackground){
-ajaxcall('',sartajpro,url,data,true,'json',true,runbackground);
+if(runbackground==false){
+if(idimg!=''){
+//document.getElementById(idimg).style.visibility = 'visible';
+displayOverlay(jql("#" + idimg).html());
+}else if(document.getElementById("ajax_loader")!=null){
+idimg = "ajax_loader";
+//document.getElementById(idimg).style.visibility = 'visible';	
+displayOverlay(idimg);
 }
-function getAJAX(url,data,runbackground,callback){
-ajaxcall('',sartajpro,url,data,true,'json',true,runbackground,callback);
 }
-function sartajpro(val,callback){
-    sartajpro2(val);
+jql.ajax({
+type: "POST",
+url: url,
+dataType: "text",
+data: data2,
+cache: cache,
+async: async2,
+chunking: true,
+ progress: function(e, part) {
+if(callback != undefined){
+MySelf.sartajpro(part,callback); 
+}else{
+MySelf.sartajpro(part,onajaxreceive); 
+}
+     
+ },
+success: function(html)
+{
+if(runbackground==false && idimg!=''){
+hideOverlay(idimg);
+//document.getElementById(idimg).style.visibility = 'hidden';
+}
+if(callback != undefined){
+//MySelf.sartajpro(html,callback); 
+}else{
+//MySelf.sartajpro(html,onajaxreceive); 
+}
+}
+});
+};
+this.sartajpro = function(valm,callback){
+    let jsonobjar = JSON.parse("[" + valm + "{}]");
+    for(let c=0;c<jsonobjar.length - 1;c++){
+        this.sartajprom(jsonobjar[c],callback);
+    }
+}
+this.sartajprom = function(val,callback){
+    MySelf.sartajpro2(val);
 if(val.response.retobj!= undefined){ 
     callback(val.response.retobj);
 }else{
     callback();
 }    
-}
-function sartajpro2(val){
+};
+this.sartajpro2 = function(val){
 if(val.response.css!= undefined){ 
 jql.each(val.response.css, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('css',key,value,val);
+MySelf.sartajproc('css',key,value,val);
 });
 });
 }else{
-ldjs(val);    
+MySelf.ldjs(val);    
 }
 
-}
-function ldjs(val){
+};
+this.ldjs = function(val){
 if(val.response.jsfl!= undefined){ 
 jql.each(val.response.jsfl, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('jsfl',key,value,val);
+MySelf.sartajproc('jsfl',key,value,val);
 });
 });
 }else{
-ldmid(val);    
+MySelf.ldmid(val);    
 }
-}
-function ldmid(val){
+};
+this.ldmid = function(val){
 if(val.response.html!= undefined){ 
 jql.each(val.response.html, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('html',key,value,val);
+MySelf.sartajproc('html',key,value,val);
 });
 });
 }
 if(val.response.js!= undefined){ 
 jql.each(val.response.js, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('js',key,value,val);
+MySelf.sartajproc('js',key,value,val);
 });
 });
 }
 if(val.response.jsp!= undefined){ 
 jql.each(val.response.jsp, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('jsp',key,value,val);
+MySelf.sartajproc('jsp',key,value,val);
 });
 });
 }
 if(val.response.jsf!= undefined ){ 
 jql.each(val.response.jsf, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
-sartajproc('jsf',key,value,val);
+MySelf.sartajproc('jsf',key,value,val);
 });
 });
 }
 
-}
-function sartajproc(keym,key,value,val){
+};
+this.sartajproc = function(keym,key,value,val){
 if(key!= undefined){ 
 switch(key){
-    case 'proces' :{
+    case 'proces' :{ 
 jql.globalEval(value);
 break;
     }
     case 'csslink' :{
 servfindex = 0;
-loadFiles(fileList2,keym,ldjs,val);    
+loadFiles(fileList2,keym,MySelf.ldjs,val);    
 break;
     }
     case 'jslink' :{
 servfindex = 0; 
-loadFiles(fileList,keym,ldmid,val);    
+loadFiles(fileList,keym,MySelf.ldmid,val);    
 break;
     }
 }
@@ -649,7 +858,9 @@ jql.globalEval(funCall);
 }
 
 }
-}
+};
+};
+
 
 function loadFiles(fileListn,ftype,complete,val){
 if(fileListn.length > servfindex){

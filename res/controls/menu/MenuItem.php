@@ -64,13 +64,13 @@ $controlkeysp = "";
     }
     if($strkey != "") $strkey .= " && ";
     // code depend on key listner javascript code of framework
-    addHeaderJSFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", "}",true);
-    addHeaderJSFunctionCode("jq_keyevent", "menukeyevent1", 'ret = jq_menukeyevent(eventer2);',true);
+    addHeaderJSFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", " return true;}",true);
+    addHeaderJSFunctionCode("jq_keyevent", "menukeyevent1", 'ret = (jq_menukeyevent(eventer2) ? ret : false);',true);
     addHeaderJSFunctionCode("jq_menukeyevent", $this->name, ' if('. $strkey .'eventer.keycode=='. $this->mkey .'){
         if(eventer.evt==\'keyup\'){
             $(".dropdown-item[data-mkey='.$this->mkey.']")[0].click();
-            return false;
         }
+        return false;
     } 
 ',true);
     //console.log(eventer.keycode);

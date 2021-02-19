@@ -1,11 +1,12 @@
-<menubar id="menubar1" runat="server" funsetNavbarCSS="navbar navbar-expand-md bg-dark navbar-dark">
-
-<menu id="menum1" runat="server" caption="Home" href="<?php print $basepath; ?>">
-<menuitem id="menuim1" runat="server" href="<?php print getAppPath('index') ; ?>">Home</menuitem>
-<menuitem id="menuim1" runat="server" href="<?php print getEventPath('page','contacts','index'); ?>">contact us</menuitem>
-</menu>
-
-</menu>
-<?php $mnu = new TempFile("plugin/cmenu.php"); $mnu->run(); $mnu->render(); ?>
-</menubar>
-
+<?php 
+include_once($phppath . "controls/menu/BootstrapMenu.php"); 
+class MenuUi extends BootstrapMenu{
+    public function onstart() {
+        //$this->setNavBarCss("navbar sticky-top navbar-expand-md bg-dark navbar-dark");
+        $this->sphp_api->addMenu("Home", "","fa fa-home","root");
+        $this->sphp_api->addMenuLink("Home", getAppPath("index"),"fa fa-home","Home");
+        $this->sphp_api->addMenuLink("Contact Us", getEventPath('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
+        include_once("plugin/cmenu.php"); 
+        
+    }
+}

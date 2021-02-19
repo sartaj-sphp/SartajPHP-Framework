@@ -82,6 +82,7 @@ imagettftext($image, $size, $angle5, 110, $size+15, $textColor5, $font5, $letter
 
 //header('Content-type: image/jpeg');
 //Output image to browser
+//echo "hello";
 imagejpeg($image);
 //Destroys the image
 imagedestroy($image);

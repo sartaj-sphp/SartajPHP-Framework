@@ -22,7 +22,14 @@ addFileLink($jquerypath.'ui/jquery.ui.widget.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.tabs.min.js');
  * 
  */
+//bind js event on other component  $("#'.$this->name.'").on("rsize",function(){});
+
 addHeaderJSFunctionCode('ready',$this->name,'
+    var ro'. $this->name . ' = new ResizeObserver(entries => {
+        $("#'.$this->name.'").trigger("rsize");
+    });
+    ro'. $this->name . '.observe($("#' . $this->name . '")[0]);
+
  $("#'.$this->name.'").tabs();');
 if($this->innerHTML == ''){
 $this->innerHTML = '<ul>
