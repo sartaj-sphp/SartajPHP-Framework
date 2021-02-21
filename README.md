@@ -46,8 +46,8 @@ Then
 
 With Download Zip file from github :--------
 
-After download copy res and demo folder in your root folder. res folder is called frameowrk folder and demo folder is called 
-project folder. You can create your component, classes etc. all reusable code in res folder and customise code in 
+After download copy res and demo folder in your root folder. res folder is called framework folder and demo folder is called 
+project folder. You can create your component, classes etc. all reusable code in res folder and customize code in 
 project folder. Learn more:- [SartajPHP Website][1]
 
 

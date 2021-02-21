@@ -6,21 +6,12 @@ $cmpname = "Demo Company";
 $duser = "root";
 $db = "sphp";
 $dpass = "";
-function getSPDB(){
-global $duser,$db,$dpass;
-$duser = "root";
-$db = "sphp";
-$dpass = "";
-}
-function getPluginDB(){
-global $duser,$db,$dpass;
-$duser = "root";
-$db = "sphp";
-$dpass = "";
-}
+function getSPDB(){}
+function getPluginDB(){}
 
-$basepath = "http://".$_SERVER['HTTP_HOST']."/gitdemo/demo/";
-
+if($basepath != ""){
+	$basepath .= "gitdemo/demo/";
+}
 //app mail settings
 $mailServer = "mail.domain.com";
 $mailUser = "appmail@domain.com";
