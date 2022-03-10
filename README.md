@@ -28,7 +28,7 @@ Add to your composer.json:
 
         "require": {
 
-            "sartajphp/sartajphp": "~4.4"
+            "sartajphp/sartajphp": "dev-master"
 
         }
 

@@ -1,0 +1,10 @@
+{
+    "project": "Demo",
+    "type": "srvapp",
+    "fronturl": "https://sartajphp.com",
+    "extra": "port 0 mean auto, browser=default mean use system browser and empty mean use inbuilt browser or set path",
+    "host": "localhost",
+    "port": 0,
+    "phppath": "php",
+	"browser": "default"
+}
