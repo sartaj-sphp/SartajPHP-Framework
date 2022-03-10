@@ -17,7 +17,7 @@ $mailServer = "mail.domain.com";
 $mailUser = "appmail@domain.com";
 $mailPass = "1234";
 $mailPort = "26";
-$injectProtection = false;
+
 
 //$masterf = "temp/new_design/master.php";
 

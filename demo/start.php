@@ -1,13 +1,17 @@
 <?php
-$respath = "../res/";
-$phppath = "../res/";
-$sharedpath = "./";
-$libversion = "Sphp";
-if(isset($argv) && count($argv)>3){
-    chdir(__DIR__);
-    $sharedpath = $argv[3] . "/";
-    $respath = "~rs/res/";
-//$respath = "~up/res/";
-$phppath = $sharedpath . "res/";
+$sharedpath = "..";
+$respath = "../res";
+if(!defined("start_path")){
+    define("start_path", __DIR__);
 }
-include_once("{$phppath}{$libversion}/global/start.php");
+if(isset($argv) && count($argv)>3){
+    chdir(start_path);
+    $sharedpath = $argv[3] ;
+	$respath = "~rs/res";
+}
+//$respath = "~up/res/";
+$phppath = $sharedpath . "/res";
+$slibversion = "Slib";
+$libversion = "Sphp";
+
+include_once("{$phppath}/{$slibversion}/{$libversion}/global/start.php");

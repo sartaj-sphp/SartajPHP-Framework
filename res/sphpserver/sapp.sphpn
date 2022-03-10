@@ -1,6 +1,0 @@
-{
-	"project": "IDE",
-	"type": "shared",
-	"extra": "this project use system web server, other types are nodejsserver, backend",
-	"url": "http://localhost/ideweb/"
-}

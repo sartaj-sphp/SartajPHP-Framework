@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/x-sphp">
+    <comment>SartajPHP App file</comment>
+    <acronym>SPHP</acronym>
+    <glob pattern="*.sphp"/>
+    <icon name="application-x-sphp"/>
+  </mime-type>
+</mime-info>
+

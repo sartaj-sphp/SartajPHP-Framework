@@ -8,6 +8,20 @@ str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
 });
 return(str);
 }
+function callOnceTimeFirstCall(fun,time){
+    var now = Date.now();
+    var nt = fun.lascalltime || now; 
+    if( nt > now ) return false;
+    fun.lascalltime = now + time; 
+    return true;
+}
+function callOnceTimeLastCall(fun,time,callback,args){
+    var nt = fun.lascalltimer || 0; 
+    clearTimeout(nt);
+    fun.lascalltimer = setTimeout(function() {
+        callback.apply(fun, args);
+    }, time);
+}
 function restrictNumeric(){
     $(".numeric").keypress(function(event) {
   // Backspace, tab, enter, end, home, left, right
@@ -146,7 +160,12 @@ jQuery.fn.centerHorizontal = function () {
     this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2)) + "px");
     return this;
 }
-
+function getPosition(mouseEvent,obj){
+    var offs = $(obj).offset();
+    let left = mouseEvent.clientX - offs.left;
+    let top = mouseEvent.clientY - offs.top; 
+    return [left,top];
+}
 // start global function
 function ucwords(str){
 str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
@@ -161,19 +180,49 @@ function isset2(variable){
         return false;
     }
 }
+function is_array(variable){ 
+    if(jQuery.type(variable) === "object" && variable.length){ 
+        return true;
+    }else{
+        return false;
+    }    
+    
+}
+function is_object(variable){ 
+    if(jQuery.isPlainObject(variable)){ 
+        return true;
+    }else if(jQuery.type(variable) === "object"){ 
+        return true;
+    }else{
+        return false;
+    }    
+}
 function isset(variable){ 
     if (jQuery.type(variable) !== "undefined" && jQuery.type(variable) !== "null") {
-		if(jQuery.type(variable) !== "object"){ 
-			return true;
-		}else if(jQuery.isPlainObject(variable)){ 
-			return true;
-		}else if(jQuery.type(variable) === "object" && variable.length){ 
-			return true;
-		}else{
-			return false;
-		}
+        if(variable.length !== 'undefined'){ 
+            if(variable.length > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else if(jQuery.isPlainObject(variable)){
+            if(Object.keys(variable).length > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else if(jQuery.type(variable) === "number"){ 
+            return true;
+        }else if(jQuery.type(variable) === "boolean"){ 
+            return true;
+        }else if(jQuery.type(variable) === "object" && Object.keys(variable).length > 0){ 
+            return true;
+        }else{
+            return false;
+        }
+    
     }else{ 
-              return false;
+        return false;
     }
 }
 function get_browser(){
@@ -337,12 +386,12 @@ function getValue(obj){
     }
 }
 function selectByValue(obj,val){
-$('option:selected', obj).removeAttr('selected');
-$(obj).find('option[value="' + val + '"]').attr("selected",true);
+$(obj).children('option').removeAttr('selected');
+$(obj).find('option[value="' + val + '"]').prop("selected",true);
 }
 function selectByText(obj,val){
-$('option:selected', obj).removeAttr('selected');
-$(obj).find('option:contains("' + val + '")').attr("selected",true);
+$(obj).children('option').removeAttr('selected');
+$(obj).find('option:contains("' + val + '")').prop("selected",true);
 }
 function toggleFullScreen() {
   if (!document.fullscreenElement &&    // alternative standard method
@@ -390,6 +439,15 @@ async function checkOnlineStatus(){
     return false; // definitely offline
   }
 };
+const getMethods = (obj) => {
+  let properties = new Set()
+  let currentObj = obj
+  do {
+    Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
+  } while ((currentObj = Object.getPrototypeOf(currentObj)))
+  return [...properties.keys()].filter(item => typeof obj[item] === 'function')
+}
+//sjslib code
 class SuperClass{
 	constructor(){
 	this.self2 = this; 
@@ -455,6 +513,9 @@ class Debug extends SuperClass{
 		}
 }
 const debug = new Debug();
+function println(msg){
+    debug.println(msg);
+}
 class SphpClass extends SuperClass{
 	constructor(){
 		super()
@@ -498,6 +559,64 @@ class StQueue extends SphpClass{
     }
 }
 class BasicApp extends SphpClass{
+		page_new(){}
+                getQueue(){
+                    return new StQueue();
+                }
+}
+class CompApp extends SphpClass{
+		constructor(){
+			super();
+                    let myself = this;
+			this.state = {};
+                        let textNode = $("body")[0];
+                        if (textNode.addEventListener) {
+                            textNode.addEventListener ('DOMNodeInserted', function(e){myself._onupdate(e)}, false);
+                            textNode.addEventListener ('DOMNodeInsertedIntoDocument', function(e){myself._onupdate(e)}, false);
+                            //textNode.addEventListener ('DOMNodeRemoved', function(e){myself._onupdate(e)}, false);
+                            //textNode.addEventListener ('DOMNodeRemovedFromDocument', function(e){myself._onupdate(e)}, false);
+                        }
+                        myself._setupEventHnadlers();
+		}
+                _onupdate(e){
+                    //debug.println("node insert");
+                    //console.log(e);
+                    //myself._setupEventHnadlers();
+                }
+                _setupEventHnadlers(){
+                    let myself = this;
+                    let fun1 = getMethods(this);
+                    $.each(fun1,function(index,funname){
+                        let fun2 = funname.split("_");
+                        if(fun2[0] === "comp"){
+                            let compselector = fun2[2];
+                            let compevent = fun2[3];
+                            if(fun2[1] == "class"){
+                                compselector = "." + compselector;
+                            }else if(fun2[1] == "id"){
+                                compselector = "#" + compselector;
+                            }
+                            $(compselector).on(compevent,function(e){
+                                myself[funname](e);
+                            });
+                        }
+                    });
+                    //debug.println("node removed document");
+                }
+                setState(val){
+                    let myself = this;
+                    this.state = $.extend(myself.state,val); 
+                }
+                lcomp_class_headerbar_click(e){
+                    let str = 'hello, <b id="bd1" data-text="red">my name is</b> jQuery.';
+                    let html = $.parseHTML( str );
+                    $.each( html, function( i, el ) {
+                        if(el.nodeName !== "#text"){
+                       //console.log("<li>" + el.nodeName + "</li>");
+                       sconsole.dir(el.attributes);
+                        }
+                    });
+                }
 		page_new(){}
                 getQueue(){
                     return new StQueue();
