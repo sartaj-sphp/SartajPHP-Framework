@@ -7,11 +7,11 @@ Info
 -----------
 [SartajPHP][1] is a **PHP framework** for web applications, Command Line Application, 
 Desktop Application with Hybrid Technology and Mobile Application with Hybrid and Ajax Platform.
-This PHP Framework used event oriented programming model. It is full flexible framework
+This PHP Framework used event oriented programming techniques. It is full flexible framework
 where you can build any type of application like MVC, Component Oriented, API, Multi Tier,
-Cross Platform, Web Service, plugin or extension for another PHP Framework, wrapper 
-for another PHP framework or applications or your new invention. This PHP Framework 
-has lots of reusable **PHP components**. SartajPHP is used by hundreds of web applications.
+Cross Platform, Web Service, plugin or extension for another PHP Frameworks, wrapper 
+for another PHP frameworks or applications or your new things. This PHP Framework 
+has lots of reusable **PHP components**. SartajPHP is giving life to lots of web,desktop and mobile applications.
 
 Installation
 ------------
