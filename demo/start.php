@@ -14,4 +14,4 @@ $phppath = $sharedpath . "/res";
 $slibversion = "Slib";
 $libversion = "Sphp";
 
-include_once("{$phppath}/{$slibversion}/{$libversion}/global/start.php");
+include_once("{$phppath}/Score/{$libversion}/global/start.php");
