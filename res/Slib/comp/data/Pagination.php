@@ -286,10 +286,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventPath($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$respath}/Sphp/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventPath($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"". SphpBase::$sphp_settings->slib_res_path ."/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventPath($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$respath}/Sphp/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventPath($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"". SphpBase::$sphp_settings->slib_res_path ."/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";

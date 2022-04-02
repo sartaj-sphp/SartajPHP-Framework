@@ -67,7 +67,7 @@ print $str;
                         </tr>
                         <tr> 
                           <td>
-<input type="text" runat="server" id="catcaha" path="libpath/comp/bundle/captcha/Captcha.php"  funsetMaxLen="5" funsetRequired="" funsetForm="form2" funsetMsgName="Secure Code">
+<input type="text" runat="server" id="catcaha" path="controls/bundle/captcha/Captcha.php"  funsetMaxLen="5" funsetRequired="" funsetForm="form2" funsetMsgName="Secure Code">
 </td>
                         </tr>
                         <tr> 

@@ -1,7 +1,6 @@
 <?php
-$auth = "ADMIN";
 $tblName = "admin";
-$page->Authenticate();
+$page->Authenticate("ADMIN");
 //$page->sesSecure();
 $masterFile = $admmasterf;
 

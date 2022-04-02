@@ -1,8 +1,7 @@
 <?php
-$auth = "GUEST,ADMIN,MEMBER";
 $tblName = "admin";
 $masterFile = $admmasterf;
-$page->Authenticate();
+$page->Authenticate("GUEST,ADMIN,MEMBER");
 
 $dynData = new TempFile("{$apppath}/forms/admlogin.php");
 
@@ -30,7 +29,7 @@ if($page->issubmit){
             setcookie( "algdec", "dome1", $date_of_expiry );
         }
 setSession('ADMIN', $cmpid);
-\SphpBase::$sphp_request->session("edtmode",autocompkey);
+\SphpBase::$sphp_request->session("edtmode",autocompkey); 
 getWelcome();
 }else{
   $msg = "Error:- Wrong user name or password";  

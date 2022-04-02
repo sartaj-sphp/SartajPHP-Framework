@@ -184,7 +184,12 @@ if(callback != undefined){
 });
 };
 this.sartajpro = function(valm,callback){
-    let jsonobjar = JSON.parse("[" + valm + "{}]");
+    let jsonobjar = [];
+    try{
+        jsonobjar = JSON.parse("[" + valm + "{}]");
+    }catch(e){
+       console.log("Invalid AJAX Response:- " + valm); 
+    }
     for(let c=0;c<jsonobjar.length - 1;c++){
         this.sartajprom(jsonobjar[c],callback);
     }
@@ -242,7 +247,7 @@ jql.each(val.response.jsfl, function(keym2, valuem2) {
 jql.each(valuem2, function(key, value) {
 //MySelf.sartajproc('jsfl',key,value,val);
 servfindex = 0; 
-loadFiles(fileList,keym,MySelf.ldmid,val);    
+loadFiles(fileList,'jsfl',MySelf.ldmid,val);    
 });
 });
 }else{
@@ -306,7 +311,7 @@ window[key](value);
 }finally{ }    
 };
 this.sartajproc = function(keym,key,value,val){
-    console.log(keym + '- ' + key + ' - ' );
+    //console.log(keym + '- ' + key + ' - ' );
     try{
 if(key!= undefined){ 
 switch(key){

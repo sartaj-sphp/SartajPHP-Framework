@@ -57,7 +57,7 @@ class HTMLForm extends \Sphp\tools\Control {
         if ($this->blnajax) {
             \SphpBase::$JSServer->getAJAX();
             if ($this->target == '') {
-                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::$sphp_settings->res_path . \SphpBase::$sphp_settings->slib_version  . '/comp/html/res/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
+                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::$sphp_settings->res_path . '/'. \SphpBase::$sphp_settings->slib_version  . '/comp/html/res/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
                 $this->target = $this->name . "res";
             } else {
                 $divt = "";
@@ -88,7 +88,7 @@ document.getElementById('ajax_loader').style.visibility = 'hidden';
              * 
              */
 
-            addHeaderJSFunctionCode('ready', $this->name, "jql('#" . $this->name . "').ajaxForm(); ");
+            //addHeaderJSFunctionCode('ready', $this->name, "jql('#" . $this->name . "').ajaxForm(); ");
         } else {
             $subcode = "
 if(val==''){
@@ -144,7 +144,7 @@ return false;
         $this->setAttributeDefault("action",getThisPath());
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit('');return false;");
         if(!isset($this->onsubmit)){
-            addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){var vt = " . $this->name . "_submit('');return false;}); ");
+            addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){var vt = " . $this->name . "_submit(''); event.preventDefault(); return false;}); ");
         }
         $hdn = "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . \SphpBase::$sphp_request->request($this->recID) . "\" />";
         $this->appendHTML($hdn);

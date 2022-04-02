@@ -603,6 +603,8 @@ function setVald(obj,val){
                         $(obj).append('<option>'+ d +'</option>');                        
                     }
                 });
+            }else if(val.indexOf("<") >= -1){ 
+                $(obj).html(val);
             }else{ 
                 $(obj)[0].options[$(obj)[0].selectedIndex].value = val;
             }    

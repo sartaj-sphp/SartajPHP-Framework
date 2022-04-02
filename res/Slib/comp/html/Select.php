@@ -187,10 +187,15 @@ class Select extends \Sphp\tools\Control {
         $tblName = \SphpBase::$page->tblName;
         $mysql = \SphpBase::$dbEngine;
         $blnMultiTextField = false;
+        $blnMultiValField = false;
         $arr1 = Array();
         $ar1 = explode(",", $textField);
         if (count($ar1) > 1) {
             $blnMultiTextField = true;
+        }
+        $ar2 = explode(",", $valueField);
+        if (count($ar2) > 1) {
+            $blnMultiValField = true;
         }
 
         if ($tableName == '') {
@@ -198,7 +203,11 @@ class Select extends \Sphp\tools\Control {
         }
         if($sql==''){
         if ($textField == '') {
-            $textField = $valueField;
+            if($blnMultiValField){
+                $textField = $ar2[0];
+            }else{
+                $textField = $valueField;                
+            }
             $sql = "SELECT $valueField FROM $tableName $logic";
         } else {
             $sql = "SELECT $valueField,$textField FROM $tableName $logic";
@@ -208,15 +217,23 @@ class Select extends \Sphp\tools\Control {
         $result = $mysql->fetchQuery($sql, $cacheTime, '', $valueField);
         foreach ($result as $index2 => $row2) {
             foreach ($row2 as $index => $row) {
+                $strv1 = "";
+                $strt1 = "";
                 if ($blnMultiTextField) {
-                    $strp = "";
                     foreach ($ar1 as $key => $value) {
-                        $strp .= $row[$value] . ' ';
+                        $strt1 .= $row[$value] . ' ';
                     }
-                    $arr1[] = Array($row[$valueField], $strp);
                 } else {
-                    $arr1[] = Array($row[$valueField], $row[$textField]);
+                    $strt1 = $row[$textField];
                 }
+                if ($blnMultiValField) {
+                    foreach ($ar2 as $key => $value) {
+                        $strv1 .= $row[$value] . ',';
+                    }
+                } else {
+                    $strv1 = $row[$valueField];
+                }
+                $arr1[] = Array($strv1, $strt1);
             }
         }
         $this->setOptionsKeyArray();
@@ -301,6 +318,7 @@ document.getElementById('$this->name').focus();
                     $key = $val[1];
                 }
                 if ($CF == $this->selectedIndex) {
+                    $this->value = $key;
                     $strOut .= "<option value=\"$key\" selected>" . $val[1] . "</option>";
                 } else {
                     $strOut .= "<option value=\"$key\">" . $val[1] . "</option>";

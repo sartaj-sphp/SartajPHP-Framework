@@ -13,6 +13,7 @@ private $minlen = "1";
 private $req = false;
 private $formName = '';
 private $msgName = '';
+private $synccomp = '';
 
 public function oncreate($element){
 $this->setHTMLName("");
@@ -35,13 +36,12 @@ public function setURL($val){
 public function setMinLen($val){
     $this->minlen = $val;
 }
-
 public function sendData($val){
-global $JSServer;
-$JSServer->addJSONBlock('js','proces','
-           var data = '.$val.';
+    
+SphpBase::$JSServer->addJSONBlock('js','proces','
+   '. SphpBase::$sphp_api->getJSArray("data",$val) .'
   var term = "'.$_REQUEST['term'].'" ;
-'.$this->name.'_cache[ term ] = data;    
+'.$this->name.'_cache[term] = data;    
 '.$this->name.'_response(data);
     ');
     
@@ -67,17 +67,19 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
 }
 
 addHeaderJSFunction($this->name.'_autocomplete', "function ".$this->name.'_autocomplete(request){ ' , "
+    clearTimeout(this.tmr1); this.tmr1 = setTimeout(function(){
 getURL('$this->url',request);    
+    },1000);
 }");
 
-addHeaderJSCode($this->name, ' var '.$this->name.'_cache = {}; var '.$this->name.'_response = null;');
+addHeaderJSCode($this->name, ' window["'.$this->name.'_cache"] = {}; window["'.$this->name.'_response"] = null;');
 addHeaderJSFunctionCode('ready',$this->name,'
     $("#'.$this->name.'").autocomplete({
     minLength: '.$this->minlen.',
     source: function( request, response ) {
             var term = request.term;
             if ( term in '.$this->name.'_cache ) {
-                    response( '.$this->name.'_cache[ term ] );
+                    response('.$this->name.'_cache[term]);
                     return;
             }
 '.$this->name.'_response = response;
