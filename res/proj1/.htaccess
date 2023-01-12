@@ -1,0 +1,14 @@
+Options +FollowSymLinks -indexes
+DirectoryIndex start.php
+
+<FilesMatch "\.(?i:gif|jpe?g|png|ico|css|js)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "max-age=172800, public, must-revalidate"
+  </IfModule>
+</FilesMatch>
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} \.(html|htm)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ start.php [NC,L]

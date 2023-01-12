@@ -1,0 +1,8 @@
+{
+    "project": "Demo",
+    "type": "srvapp",
+    "extra": "port 0 mean auto",
+    "host": "localhost",
+    "port": 0,
+	"browser": "default"
+}
