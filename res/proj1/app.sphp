@@ -4,5 +4,6 @@
     "extra": "port 0 mean auto",
     "host": "localhost",
     "port": 0,
+    "php": "php",
 	"browser": "default"
 }
