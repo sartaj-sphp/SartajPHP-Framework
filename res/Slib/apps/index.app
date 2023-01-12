@@ -9,8 +9,8 @@ class index extends \Sphp\tools\BasicApp{
     }
     
     public function page_new() {
-        if(file_exists("forms/index.php")){ 
-            $dynData = new TempFile("forms/index.php", false,false, $this);
+        if(file_exists(PROJ_PATH . "/forms/index.php")){ 
+            $dynData = new TempFile(PROJ_PATH . "/forms/index.php", false,false, $this);
         }else{
             $dynData = new TempFile("{$this->apppath}/forms/index.php", false,false, $this);
         }

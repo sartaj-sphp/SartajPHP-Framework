@@ -64,12 +64,15 @@ class HTMLForm extends \Sphp\tools\Control {
             }
 
             $this->setPreTag($divt);
-            $subcode = "jql('#" . $this->name . "').ajaxSubmit({
+            $subcode = "$('#{$this->name}').find(\"input[type='submit']\").attr('disabled',true);
+jql('#" . $this->name . "').ajaxSubmit({
 dataType: 'text',
 success:  function(html) { 
 if(document.getElementById('ajax_loader')!=null){
 document.getElementById('ajax_loader').style.visibility = 'hidden';
 }
+$('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
+
         sartajpro(html,function(res){}); 
     }
         });

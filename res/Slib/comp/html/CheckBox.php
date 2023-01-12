@@ -11,21 +11,25 @@ private $formName = '';
 private $msgName = '';
     private $errmsg = '';
 private $req = false;
+private $label = "";
 
 public function oninit() {
-$Client = getSphpRequest();
+$Client = \SphpBase::$sphp_request;
 $this->tagName = "input";
 $this->setAttribute('type','checkbox');
 if($this->issubmit){
 $this->setAttribute('checked', 'checked');
-}else if($Client->request('chktxt'.$this->name)=='Yes'){
-$this->value = 'No';
+}else if($Client->request('chktxt'.$this->name)=='1'){
+$this->value = '0';
 $this->setDataBound();
 }
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
         }        
 
+}
+public function setLabel($param) {
+    $this->label = $param;
 }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
@@ -64,13 +68,20 @@ public function onrender(){
             $this->setPostTag($this->errmsg);
         }
  if($this->getAttribute('class')==''){
-    $this->class = "form-control";
+    $this->class = "form-check-input";
 }
-   $this->setPostTag('<input type="hidden" name="chktxt'.$this->name.'" value="Yes" />');
-if($this->value != 'Yes'){
-$this->setAttribute('value', 'Yes');
+   $this->setPostTag('<input type="hidden" name="chktxt'.$this->name.'" value="1" />');
+        if($this->label != ""){
+            $this->setPreTag($this->getPreTag() . '<div class="form-check">');
+            $this->setPostTag('<label class="form-check-label" for="'. $this->name .'">
+    '. $this->label .'
+  </label></div>' . $this->getPostTag());
+        }
+   
+if($this->value != '1'){
+$this->setAttribute('value', '1');
 }else{
-$this->setAttribute('value', 'Yes');
+$this->setAttribute('value', '1');
 $this->setAttribute('checked', 'checked');
 }
 

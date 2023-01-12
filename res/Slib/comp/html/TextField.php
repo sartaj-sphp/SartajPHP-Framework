@@ -48,6 +48,15 @@ class TextField extends \Sphp\tools\Control {
         $this->formName = $val;
     }
 
+    // upper or lower
+    public function setCase($val) {
+        if($val == "upper"){
+            $this->value = strtoupper($this->value);
+        }else{
+            $this->value = strtolower($this->value);            
+        }
+    }
+    
     public function setMsgName($val) {
         $this->msgName = $val;
         $this->setAttribute('placeholder', $val);

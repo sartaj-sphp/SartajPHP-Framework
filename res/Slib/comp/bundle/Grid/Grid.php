@@ -107,6 +107,9 @@ $this->extraData = $val;
 }
 public function setPageNo($val){
 $this->pageNo = $val - 1;
+\SphpBase::$sphp_request->session($this->name.'p',$val);
+\SphpBase::$sphp_request->session($this->name.'pc', \SphpBase::$sphp_router->ctrl);
+\SphpBase::$sphp_request->request('page',false, $val);
 }
 public function getPageNo(){
 return $this->pageNo + 1;
@@ -322,16 +325,19 @@ $startPage = 1;
 if($endPage>$this->totalPages){
 $endPage = $this->totalPages;
 }
- $strstart = "<div class=\"pfloat-left\">";
+ //$strstart = "<div class=\"pfloat-left\">";
+$strstart = "";
+ $pg = $this->pageNo + 1;
 for ($k=$startPage; $k<=$endPage; $k++) {
-        if ($k != $_REQUEST['page']) {
+        if ($k != $pg) {
 if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)
+  ."'); return false;\"><div class=\"pfloat-left\">".($k)."</div></a>";
 }else{
-         $lynx .= $strstart."<a href=\"". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= $strstart."<a href=\"". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\"><div class=\"pfloat-left\">".($k)."</div></a>";    
 }
         } else {
-         $lynx .= $strstart.($k)."</div>";
+         $lynx .= $strstart . "<div class=\"pfloat-left-down\">".($k)."</div>";
         }
 }
 $startPage2 = $this->getPageNo();
@@ -589,7 +595,7 @@ window.location = link ;
 
 if($this->blnadd){
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
-<div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
+<div id="'.$this->name.'_editor" style="width:100%;height:100%;" ></div>    
 </div><div id="'.$this->name.'_toolbar">';
 }else{
 $ptag = '<div id="'.$this->name.'_toolbar">';    

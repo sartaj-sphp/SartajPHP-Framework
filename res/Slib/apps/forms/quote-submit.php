@@ -38,4 +38,3 @@ $mail->sendMail('Query',$cmpemail, 'itkruze.com', $msgn);
 $sd->run();    
 $sd->render();    
 }
-?>

@@ -92,8 +92,10 @@ public static function addjQueryUI($version="1.12.1") {
 
 public static function addReact() {
     global $jslibpath;
-    addFileLink("$jslibpath/react/react.production.min.js", true,"","","react:17");
-    addFileLink("$jslibpath/react/react-dom.production.min.js", true,"","","react:17");
+    addFileLink("$jslibpath/react/react.production18.min.js", true,"","","react:18");
+    addFileLink("$jslibpath/react/react-dom.production18.min.js", true,"","","reactdom:18");
+    addFileLink("$jslibpath/react/babel6.26.0.min.js", true,"","","babel:6.26.0");
+    //use <script type="text/babel"> tag to code        
 }
 
 public static function addBootStrap5() {

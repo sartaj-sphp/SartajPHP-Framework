@@ -4,31 +4,28 @@
  *
  * @author SARTAJ
  */
-//include_once("{$libpath}comp/html/TextField.php");
+//include_once("{$libpath}/comp/html/TextField.php");
 
 
 class Captcha extends Sphp\comp\html\TextField{
 
 public function oncreate($element) {
-global $page,$Client;
-global $libpath;
-global $comppath;
 $this->unsetEndTag();
 if($this->issubmit){
-if($Client->session('image_value') != md5(strtoupper($this->getValue()))){
+if(SphpBase::$sphp_request->session('image_value') != md5(strtoupper($this->getValue()))){
 setErr('Captcha', "Secure Image Code is not Correct!");
 
 }
 }
 
-if($page->isevent)
+if(SphpBase::$page->isevent)
 {
-switch($page->sact){
+switch(SphpBase::$page->sact){
 case "captcha" :{ 
 SphpBase::$engine->cleanOutput();
 SphpBase::$sphp_response->addHttpHeader("Content-Type","image/jpeg");
 SphpBase::$sphp_response->addHttpHeader("Cache-Control","no-cache, must-revalidate");
-includeOnce("{$comppath}captcha/cap.php");
+includeOnce("{$this->mypath}/cap.php");
 $df = new CaptchaSub();
 $df->genImage();
 break;
@@ -43,7 +40,6 @@ break;
 
 
 public function onrender(){
-global $libpath;
 if($this->value!=''){
 $this->parameterA['value'] = $this->value;
 }

@@ -1,8 +1,8 @@
 {
-	".sphpe": {
-		"openwith": "ideweb/"
+	"sphpe": {
+		"openwith": "ideweb"
 	},
-	".txt": {
-		"openwith": "notepad/"
+	"txt": {
+		"openwith": "notepad"
 	}
 }

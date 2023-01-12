@@ -17,7 +17,7 @@ const sconsoleLog = {
             sconsole.log(msg);
         }
     },
-    dir: function(msg){sconsoleLog.dir(msg);},
+    dir: function(msg){sconsole.dir(msg);},
     info: function(msg){sconsoleLog.log(msg,"i");},
     warn: function(msg){sconsoleLog.log(msg,"w")},
     error: function(msg){sconsoleLog.log(msg,"e")},
@@ -28,7 +28,7 @@ const sconsoleLog = {
     };
 console = sconsoleLog;
 window.onerror = function (msg, url, line) {
-   console.error("","Error: " + msg + " url: " + url + " Line: " + line );
+   console.error("Error: " + msg + " url: " + url + " Line: " + line );
 };
 function logMe(e, msg) {
     if (msg != undefined) {
@@ -586,6 +586,7 @@ return xmlHttp;
 
 function setVald(obj,val){
     var type = $(obj).prop("tagName");
+    var dtype = $.type(val);
     switch(type){
         case 'INPUT':{
             $(obj).val(val);
@@ -594,7 +595,7 @@ function setVald(obj,val){
             $(obj).html(val);
             break;
         }case 'SELECT':{ 
-            if($.type(val) === "array"){ 
+            if(dtype === "array"){ 
                 $(obj).html('');
                 $.each(val,function(index,d){
                     if($.type(d) === "array"){ 
@@ -603,10 +604,26 @@ function setVald(obj,val){
                         $(obj).append('<option>'+ d +'</option>');                        
                     }
                 });
-            }else if(val.indexOf("<") >= -1){ 
+            }else if(dtype === "number"){ 
+                $(obj).find("option").filter(function(){
+                    if($(this).text().indexOf(val) !== -1){
+                        $(this).prop('selected', true);
+                        $(this).change();
+                    }else{
+                        $(this).prop('selected', false);                        
+                    }
+                });
+            }else if(val.indexOf("<") > -1){ 
                 $(obj).html(val);
             }else{ 
-                $(obj)[0].options[$(obj)[0].selectedIndex].value = val;
+                $(obj).find("option").filter(function(){
+                    if($(this).text().toLowerCase().indexOf(val.toLowerCase()) !== -1){
+                        $(this).prop('selected', true);
+                        $(this).change();
+                    }else{
+                        $(this).prop('selected', false);                        
+                    }
+                });
             }    
             break;
         }case 'DIV':{
@@ -740,13 +757,13 @@ function bin2hex(str){
     return Array.from(bytes,byte => byte.toString(16).padStart(2, "0")).join("");
 }
 function hex2bin(strhex){
-    const bytes = new Uint8Array(strhex.length / 2);
+    let bytes = new Uint8Array(strhex.length / 2);
     for (let i = 0; i !== bytes.length; i++) {
         bytes[i] = parseInt(strhex.substr(i * 2, 2), 16);
     }
-    return new TextDecoder("UTF-8").decode(bytes);
+    return bytes;
+    //return new TextDecoder("UTF-8").decode(bytes);
 }
-
 function sphp_wsocket(url="ws://127.0.0.1:8000/sphp.ws",callBackNativem){
 var myself = this;
 this.status = false;

@@ -18,13 +18,13 @@ private function random_string2($len=5, $str='')
 }
 public function genImage() {
 //$bpath = "";
-//$bpath = "{$comppath}captcha/";
-$bpath = dirname(__FILE__) .'/' ;
+//$bpath = "{$comppath}/captcha/";
+$bpath = __DIR__;
 //print $bpath;
 //create the random string using the upper function (if you want more than 5 characters just modify the parameter)
 $rand_str= $this->random_string2(5);
 //We memorize the md5 sum of the string into a session variable
-$_SESSION['image_value'] = md5($rand_str);
+SphpBase::$sphp_request->session('image_value', md5($rand_str));
 
 //Get each letter in one valiable, we will format all letters different
 $letter1=substr($rand_str,0,1);
@@ -34,7 +34,7 @@ $letter4=substr($rand_str,3,1);
 $letter5=substr($rand_str,4,1);
 
 //Creates an image from a png file. If you want to use gif or jpg images, just use the coresponding functions: imagecreatefromjpeg and imagecreatefromgif.
-$image=imagecreatefrompng("{$bpath}res/noise.png");
+$image=imagecreatefrompng("{$bpath}/res/noise.png");
 
 //Get a random angle for each letter to be rotated with.
 $angle1 = rand(-20, 20);
@@ -44,11 +44,11 @@ $angle4 = rand(-20, 20);
 $angle5 = rand(-20, 20);
 
 //Get a random font. (In this examples, the fonts are located in "fonts" directory and named from 1.ttf to 10.ttf)
-$font1 = "{$bpath}fonts/".rand(1, 2).".ttf";
-$font2 = "{$bpath}fonts/".rand(1, 2).".ttf";
-$font3 = "{$bpath}fonts/".rand(1, 2).".ttf";
-$font4 = "{$bpath}fonts/".rand(1, 2).".ttf";
-$font5 = "{$bpath}fonts/".rand(1, 2).".ttf";
+$font1 = "{$bpath}/fonts/".rand(1, 2).".ttf";
+$font2 = "{$bpath}/fonts/".rand(1, 2).".ttf";
+$font3 = "{$bpath}/fonts/".rand(1, 2).".ttf";
+$font4 = "{$bpath}/fonts/".rand(1, 2).".ttf";
+$font5 = "{$bpath}/fonts/".rand(1, 2).".ttf";
 
 //Define a table with colors (the values are the RGB components for each color).
 $colors[0]=array(122,229,112);

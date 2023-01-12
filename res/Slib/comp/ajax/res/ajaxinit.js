@@ -69,13 +69,16 @@ function getURL(url,data,runbackground){
     let sphp_ajax2 = new sphp_ajax();
 sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground);
 }
-function getAJAX(url,data,runbackground,callback){
+async function getAJAX(url,data,runbackground,callback){
     let sphp_ajax2 = new sphp_ajax();
-sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground,callback);
-}
-function getAJAXStream(url,data,runbackground,callback){
-    let sphp_ajax2 = new sphp_ajax();
-sphp_ajax2.ajaxcallchunk('',url,data,true,'json',true,runbackground,callback);
+    let promise1 = new Promise((resolvea1,rejecta1)=>{
+    sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground,function(r1){
+        callback(r1); 
+        resolvea1(1);
+    });        
+    });
+    let result = await promise1;
+    return result;
 }
 function getAJAXChunkUpload(url,data={},callback,chunkstart=0,chunkend=0){
     let sphp_ajax2 = new sphp_ajax();

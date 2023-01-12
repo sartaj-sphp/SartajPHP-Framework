@@ -72,9 +72,11 @@ print $str;
                         </tr>
                         <tr> 
                           <td>
-<input name="Submit" value="Submit" type="button" onclick="form2_submit('');" />
+                              <input name="Submit" value="Submit" type="submit" class="btn btn-primary" />
+                              
                             </td>
                         </tr>
                       </tbody></table>
                     </form>
+<br /><br />
 </div>

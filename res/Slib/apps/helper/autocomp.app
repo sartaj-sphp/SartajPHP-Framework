@@ -74,6 +74,7 @@ class autocomp extends Sphp\tools\BasicApp{
     public function page_event_autocomp($param) {
         $this->loadRequest();
         //$v1 = array();
+        $this->statement = str_replace("-!]", "->", $this->statement);
         $len1 = strlen($this->statement);
         if($len1 > 2){
             $ope = substr($this->statement,$len1-2);
@@ -126,13 +127,15 @@ class autocomp extends Sphp\tools\BasicApp{
         }else{
             $v1 = \SphpBase::$sphp_api->getRegisterAppClass($filenpath,false);            
         }
-        $clsname = $v1[0];
+        $clsname = $v1[0]; 
         $projrootpath = $this->Client->session("wproject");
         if($projrootpath == ""){
             $projrootpath = \SphpBase::$sphp_settings->start_path;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid
+        $this->afile = str_replace("[!", "<", $this->afile);
+        $this->afile = str_replace("!]", ">", $this->afile);
         $this->afile = str_replace("echo getHeaderHTML();", "", $this->afile);
         $this->afile = str_replace("print getHeaderHTML();", "", $this->afile);
         $this->afile = str_replace("echo getFooterHTML();", "", $this->afile);
@@ -167,9 +170,8 @@ class autocomp extends Sphp\tools\BasicApp{
         if($block_count > 0){
             $funline = true;
         }
-       
         if($funline && $funName !== ""){ 
-            $flines[$this->arow] = ' return '. $statement .'; ';
+            $flines[$this->arow] = ' global $xyzo2; $xyzo2 = '. $statement .'; ' . ' return '. $statement .'; ';
         }else{
             $flines[$this->arow] = ' global $xyzo2; $xyzo2 = '. $statement .'; ';            
         }
@@ -181,14 +183,17 @@ class autocomp extends Sphp\tools\BasicApp{
                 $objCreater .= ' if(function_exists("'. $funName .'")){  global $xyzo2; $xyzo2 = \SphpBase::$sphp_api->rtFunctionInvoke("'. $funName .'",null);} ';
             }
             $objCreater .= ' } ';
-            //$this->debug->println("class " . $statement);
+            //$this->debug->println("class " . $flines[$this->arow]);
             //file_put_contents("td2.txt",implode("\n",$flines) . $objCreater);
             $v = "Output: " . executePHPCode(implode("\n",$flines). $objCreater,true);
         } catch (\Throwable $e) {
             $v = "Error: " . $e->getMessage();
+            $this->debug->println($v);
         }catch(\Exception $e){
             $v = "Error: " . $e->getMessage();
+            $this->debug->println($v);
         }
+       // $this->debug->println($v);
         return $v;
         
     }
@@ -197,16 +202,23 @@ class autocomp extends Sphp\tools\BasicApp{
         $objvar = null;
         if($this->statement == "SphpBase"){
             $objvar = new SphpBase();
+        }else if(strpos($this->statement,"SphpBase") !== false){
+            $objCreater = '<?php global $xyzo2; $xyzo2 = ' . $statement . ';';
+            $v1 = executePHPCode($objCreater,true);
+            $objvar =  $xyzo2;
         }else if($this->atype == "app" || $this->atype == "php"){
             $v = $this->convertThis2($statement);
             $resvar = null;
-            if(is_object($xyzo)){
+            if(is_object($xyzo)){ 
                 $rcls1 = new \ReflectionClass($xyzo);
-                $method = \SphpBase::$sphp_api->rtClassMethodFromFileLine($rcls1,$this->arow);
+                $method = \SphpBase::$sphp_api->rtClassMethodFromFileLine($rcls1,$this->arow + 1);
                 if($method !== null){
-                    $resvar =  \SphpBase::$sphp_api->rtClassMethodInvoke($method,$xyzo,null);
+                    $resvar =  \SphpBase::$sphp_api->rtClassMethodInvoke($method,$xyzo,null); 
+                    //$this->debug->println($method);
                     if($resvar !== null){
                         $objvar = $resvar;
+                    }else{
+                        $objvar = $xyzo2; 
                     }
                 }
             }else if(is_object($xyzo2)){
