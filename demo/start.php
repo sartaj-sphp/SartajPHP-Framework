@@ -1,7 +1,7 @@
 <?php
 
-$sharedpath = "../..";
-$respath = "../../res";
+$sharedpath = "..";
+$respath = "../res";
 $slibversion = "Slib";
 $libversion = "Sphp";
 
