@@ -26,6 +26,13 @@ class jq {
 public $jsstate = "of";
 public static function __callStatic($name, $arguments) {
 }
+public function __get($varName) {
+}
+public function __set($varName, $value) {
+}
+public function __toString() {
+return "jq";
+}
 }
 /**
 * Description of Eventer

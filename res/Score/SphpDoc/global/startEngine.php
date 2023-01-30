@@ -47,33 +47,19 @@ public function getAuthenticate($perm = "") {}
 }
 class SphpBase {
 /** @static \Sphp\Engine $engine */
-private static $engine = null;
 /** @static \Sphp\core\Router $sphp_router */
-private static $sphp_router = null;
-/** @static \Sphp\core\SphpApi $sphp_api */
-private static $sphp_api = null;
+/** @static \Sphp\core\SphpAPI $sphp_api */
 /** @static \Sphp\core\Request $sphp_request */
-private static $sphp_request = null;
 /** @static \Sphp\core\Response $sphp_response */
-private static $sphp_response = null;
 /** @static \Sphp\kit\Session $sphp_session */
-private static $sphp_session = null;
 /** @static \Sphp\Settings $sphp_settings */
-private static $sphp_settings = null;
 /** @static \SphpPermission $sphp_permissions */
-private static $sphp_permissions = null;
 /** @static \Sphp\kit\JSServer $JSServer */
-private static $JSServer = null;
 /** @static \Sphp\kit\JQuery $JQuery */
-private static $JQuery = null;
 /** @static \Sphp\kit\Page $page */
-private static $page = null;
 /** @static \Sphp\core\DebugProfiler $debug */
-private static $debug = null;
 /** @static \MySQL $dbEngine */
-private static $dbEngine = null;
 /** @static \SphpJsM $sphpJsM */
-private static $sphpJsM = null;
 /** @static \Sphp\tools\TempFile $dynData */
 public static $dynData = null;
 /** @static \stmycache $stmycache */
@@ -97,9 +83,9 @@ public static function sphp_router() {
 return self::$sphp_router;
 }
 /**
-* Get SphpApi
+* Get SphpAPI
 * @static
-* @return \Sphp\core\SphpApi
+* @return \Sphp\core\SphpAPI
 */
 public static function sphp_api() {
 return self::$sphp_api;
@@ -174,6 +160,7 @@ return self::$page;
 * @param \Sphp\kit\Page $p
 */
 public static function set_page($p) {
+//in future controll here for assignment more then one
 self::$page = $p;
 }
 /**
@@ -214,6 +201,7 @@ return self::$sphpJsM;
 * @ignore
 */
 public static function _startme() {
+// set up settings
 self::$sphp_settings = new \Sphp\Settings();
 }
 /**

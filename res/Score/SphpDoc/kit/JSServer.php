@@ -5,7 +5,6 @@ public $json = null;
 public $ajaxrender = false;
 public $jsonready = false;
 public $jsonplain = false;
-private static $firstRun = true;
 /**
 * Advance function 
 */

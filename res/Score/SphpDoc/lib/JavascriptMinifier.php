@@ -3,8 +3,6 @@ require_once ( dirname ( __FILE__ ) . "/Minifier.php" ) ;
 class	JavascriptMinifier	extends  Minifier
 {
 const	TOKEN_REGEX		=  100 ;
-private static	$SymbolsBeforeRegex	=  [ '(', '=', ';', '!', '>', '<', ':', '' ] ;
-private static  $ForceNewlineBefore	=  [] ;
 protected function  MinifyData ( )
 {
 $data			=  '' ;
