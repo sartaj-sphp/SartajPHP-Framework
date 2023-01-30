@@ -60,20 +60,20 @@ class Ajaxsenddata extends \Sphp\tools\Control {
     }
 
     public function addJSONBlock($sact, $evtp, $dataar) {
-        \SphpBase::$JSServer->addJSONBlock($sact, $evtp, $dataar);
+        \SphpBase::JSServer()->addJSONBlock($sact, $evtp, $dataar);
     }
 
     public function addJSONJSBlock($jsdata = '') {
-        \SphpBase::$JSServer->addJSONJSBlock($jsdata);
+        \SphpBase::JSServer()->addJSONJSBlock($jsdata);
     }
 
     public function echoJSON() {
-        \SphpBase::$JSServer->echoJSON();
+        \SphpBase::JSServer()->echoJSON();
     }
 
     public function onjsrender() {
         $ajax = new \Sphp\kit\Ajax();
-        \SphpBase::$JSServer->getAjax();
+        \SphpBase::JSServer()->getAjax();
         $valobj = null;
         foreach ($this->compa as $key => $val2) {
             $valobj = readGlobal($val2);

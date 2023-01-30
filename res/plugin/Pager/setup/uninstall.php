@@ -11,7 +11,7 @@ $mysql->executeQuery($sql);
 $mysql->disconnect();
 
 global $libpath;
-include_once "{$libpath}lib/DIR.php";
+include_once "{$libpath}/lib/DIR.php";
 $dr = new DIR();
 $dr->directoryDelete("pagres");
 

@@ -1,8 +1,8 @@
 <?php
 $auth = "ADMIN";
 $tblName = "pagdet";
-$page->Authenticate();
-//$page->sesSecure();
+SphpBase::page()->Authenticate();
+//SphpBase::page()->sesSecure();
 $JSServer->getAJAX();
 
 $masterFile = $admmasterf;
@@ -24,7 +24,7 @@ $genForm->setField("spcmpid"," ","hidden");
 $genForm->setField("pagename"," ","hidden");
 ';
 
-$genFormTemp = new TempFile("{$libpath}tpl/db/GenForm.php");
+$genFormTemp = new TempFile("{$libpath}/tpl/db/GenForm.php");
 if($details->issubmit){
 $pagename->value = str_replace(" ", "_",  strtolower($pagetitle->value));
 $pagename->value = str_replace("//", "",  $pagename->value);
@@ -46,7 +46,7 @@ if($details->issubmit){
 file_put_contents("pagres/". $pagename->getValue().".html",$details->getValue());
 }
 
-$showallTemp = new TempFile("{$libpath}tpl/db/Showall.php");
+$showallTemp = new TempFile("{$libpath}/tpl/db/Showall.php");
 $showall->setFieldNames("pagename,pagestatus,catname");
 $showall->setHeaderNames("Name,Ban,Category");
 $showall->setWhere("WHERE spcmpid='".$_SESSION['uid']."'  ORDER BY catname");
@@ -69,10 +69,10 @@ $nump = count($showall->result);
      $blnert = true;
  }
     if(getCheckErr() && $blnert){
-$page->isnew = false;
-$page->isinsert = false;
-$page->isevent = true;
-$page->sact = 'show';
+SphpBase::page()->isnew = false;
+SphpBase::page()->isinsert = false;
+SphpBase::page()->isevent = true;
+SphpBase::page()->sact = 'show';
  }
 else if(getCheckErr() && !$blnert){
  }
@@ -80,7 +80,7 @@ else if(getCheckErr() && !$blnert){
 }
 
 
-if($page->isinsert){
+if(SphpBase::page()->isinsert){
 if($mysql->isRecordExist("SELECT pagename FROM pagdet WHERE spcmpid='$cmpid' AND pagename='$pagename->value'")){
      setErr('Pagename', 'You can not add more pages with same name!');
 	}
@@ -88,27 +88,27 @@ $spcmpid->value = $_SESSION['uid'];
 $spcmpid->setDataBound();
 //getProdLimit();
 }
-if($page->isview){
-$page->viewData($form2);
+if(SphpBase::page()->isview){
+SphpBase::page()->viewData($form2);
 $details->value = file_get_contents("pagres/". $pagename->getValue().".html");
-$page->isview = false;
+SphpBase::page()->isview = false;
 $formNo = 1;
 $blngetFront = true;
 }
-if($page->isnew){
+if(SphpBase::page()->isnew){
 //getProdLimit();
 }
-if($page->isdelete){
-$page->viewData($form2,$page->evtp);
+if(SphpBase::page()->isdelete){
+SphpBase::page()->viewData($form2,SphpBase::page()->evtp);
 $pathf = "pagres/".$pagename->getValue().".html";
 if(file_exists($pathf)){unlink($pathf);}
 }
 //addHeaderJSFunctionCode('pageload', 'jh', 'alert("load done")',true);
-include_once("{$libpath}tpl/db/autoapp.php");
+include_once("{$libpath}/tpl/db/autoapp.php");
 
 // update cache data
-if($page->isinsert || $page->isupdate){
-$tmp = new TempFile("{$phppath}plugin/Pager/front/menuupdate.php");
+if(SphpBase::page()->isinsert || SphpBase::page()->isupdate){
+$tmp = new TempFile("{$phppath}/plugin/Pager/front/menuupdate.php");
 $tmp->run();
 }
 ?>

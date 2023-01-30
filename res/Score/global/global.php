@@ -30,7 +30,7 @@ $blnEditMode = false;
 // false mean no use of preload
 $blnPreLibCache = false;
 // if true load library as single file
-$blnPreLibLoad = false;
+$blnPreLibLoad = true;
 $blnStopResponse = false;
 
 if(strpos($slibversion,".phar") !== false){

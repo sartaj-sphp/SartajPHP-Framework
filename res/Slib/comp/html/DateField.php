@@ -119,7 +119,7 @@ public function setButtonImage($val){$this->image=$val;}
 public function setNumMonths($val){$this->nomonth=$val;}
 
 public function onjsrender(){
-    $sphp_settings = \SphpBase::$sphp_settings;
+    $sphp_settings = \SphpBase::sphp_settings();
 //addFileLink("$jquerypath/themes/base/jquery.ui.all.css");
 //addFileLink("$jquerypath/ui/jquery.ui.core.min.js");
 //addFileLink("$jquerypath/ui/jquery.ui.widget.min.js");

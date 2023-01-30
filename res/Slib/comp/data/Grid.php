@@ -41,14 +41,14 @@ private $header = '';
 private $footer = '';
 
 public function __construct($name='',$fieldName='',$tableName='') {
-$page = \SphpBase::$page;
-$sphp_router = \SphpBase::$sphp_router;
+$page = \SphpBase::page();
+$sphp_router = \SphpBase::sphp_router();
 $ctrl = $sphp_router->ctrl;
-$tblName = \SphpBase::$page->tblName;
-$JSServer = \SphpBase::$JSServer;
-$Client = \SphpBase::$sphp_request;
+$tblName = \SphpBase::page()->tblName;
+$JSServer = \SphpBase::JSServer();
+$Client = \SphpBase::sphp_request();
 
-if($page->isSesSecure){
+if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
 $this->init($name,'','');
@@ -56,11 +56,11 @@ $this->blnajax = true;
 $this->eventName = $name ."_show";
 $JSServer->getAJAX();
 if($Client->isRequest($name.'page')){
-\SphpBase::$sphp_request->session($name.'p', \SphpBase::$sphp_request->request($name.'page'));
-\SphpBase::$sphp_request->session($name.'pc', $ctrl);
+\SphpBase::sphp_request()->session($name.'p', \SphpBase::sphp_request()->request($name.'page'));
+\SphpBase::sphp_request()->session($name.'pc', $ctrl);
 }else{
 if($Client->session($name.'pc') == $ctrl){
-\SphpBase::$sphp_request->request($name.'page', \SphpBase::$sphp_request->session($name.'p'));
+\SphpBase::sphp_request()->request($name.'page', \SphpBase::sphp_request()->session($name.'p'));
 }
 }
 $this->pageNo = $Client->request($name.'page') - 1;
@@ -74,12 +74,12 @@ $this->setHTMLName('');
 
 public function handleEvents(){
     extract(getGlobals(), EXTR_REFS);
-    $page = \SphpBase::$page;
-    $JSServer = \SphpBase::$JSServer;
+    $page = \SphpBase::page();
+    $JSServer = \SphpBase::JSServer();
     $genFormTemp = readGlobal("genFormTemp");
-if($page->isevent)
+if(SphpBase::page()->isevent)
 {
-switch($page->sact){
+switch(SphpBase::page()->sact){
 case $this->name.'_show':{
 $JSServer->addJSONComp($this,'showalledtif');
 break;
@@ -197,9 +197,9 @@ $this->blndlg = false;
 }
 
 public function executeSQL(){
-$mysql = \SphpBase::$dbEngine;
+$mysql = \SphpBase::dbEngine();
 $HTMLParser = readGlobal("HTMLParser");
- $sphp_settings = \SphpBase::$sphp_settings;
+ $sphp_settings = \SphpBase::sphp_settings();
   $stro = "";
 // count total page
 $mysql->connect();
@@ -319,7 +319,7 @@ if($endPage>$this->totalPages){
 $endPage = $this->totalPages;
 }
 for ($k=$startPage; $k<=$endPage; $k++) {
-        if ($k != \SphpBase::$sphp_request->request($this->name.'page')) {
+        if ($k != \SphpBase::sphp_request()->request($this->name.'page')) {
 if($this->blnajax){
          $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
@@ -475,7 +475,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 }
 
 public function onjsrender(){
-    $JSServer = \SphpBase::$JSServer;
+    $JSServer = \SphpBase::JSServer();
 if(! $JSServer->ajaxrender){
 if($this->blnajax){
 $this->startAJAX();

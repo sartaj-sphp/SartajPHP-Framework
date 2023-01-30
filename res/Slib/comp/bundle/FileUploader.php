@@ -39,12 +39,12 @@ $this->fileExtention = $ft['extension'];
 $this->tagName = "input";
 $this->parameterA['type'] = 'file';
 $this->init($this->name,$this->fildName,$this->tablName);
-if($page->sact== $name.'del'){
+if(SphpBase::page()->sact== $name.'del'){
 $file = decrypt($_REQUEST['pfn']);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
-$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='$page->evtp'");
+$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='SphpBase::page()->evtp'");
 $JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
 }
 }
@@ -155,7 +155,7 @@ global $JSClient,$page;
     $this->parameterA['value'] = $this->value;
 if($this->value!=''){
     $this->setPostTag('<input type="hidden" name="hid'.$this->name.'" value="'.$this->value.'" /><div id="out'.$this->name.'">
-        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSClient->postServer("'".getEventPath($this->name.'del',$page->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
+        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSClient->postServer("'".getEventPath($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
 }
 }
 }

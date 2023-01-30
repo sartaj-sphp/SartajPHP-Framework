@@ -14,7 +14,7 @@ private $req = false;
 private $label = "";
 
 public function oninit() {
-$Client = \SphpBase::$sphp_request;
+$Client = \SphpBase::sphp_request();
 $this->tagName = "input";
 $this->setAttribute('type','checkbox');
 if($this->issubmit){

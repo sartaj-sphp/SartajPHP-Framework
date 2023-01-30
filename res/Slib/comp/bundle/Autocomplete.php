@@ -38,8 +38,8 @@ public function setMinLen($val){
 }
 public function sendData($val){
     
-SphpBase::$JSServer->addJSONBlock('js','proces','
-   '. SphpBase::$sphp_api->getJSArray("data",$val) .'
+SphpBase::JSServer()->addJSONBlock('js','proces','
+   '. SphpBase::sphp_api()->getJSArray("data",$val) .'
   var term = "'.$_REQUEST['term'].'" ;
 '.$this->name.'_cache[term] = data;    
 '.$this->name.'_response(data);

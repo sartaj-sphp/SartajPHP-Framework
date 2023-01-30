@@ -1,9 +1,9 @@
 <?php
 $JSServer->getAJAX();
 
-if($page->isevent)
+if(SphpBase::page()->isevent)
 {
-switch($page->sact){
+switch(SphpBase::page()->sact){
 case 'show':{
 $formNo = 2;
 $blngetFront = true;
@@ -15,13 +15,13 @@ $blngetFront = true;
 break;
 }
 case 'showall_view':{
-$page->isevent = false;
-$page->isview = true;
+SphpBase::page()->isevent = false;
+SphpBase::page()->isview = true;
 break;
 }
 case 'showall_delete':{
-$page->isevent = false;
-$page->isdelete = true;
+SphpBase::page()->isevent = false;
+SphpBase::page()->isdelete = true;
 break;
 }
 case 'showall_newa':{
@@ -37,24 +37,24 @@ break;
 }
  }
 
-if($page->isview)
+if(SphpBase::page()->isview)
 {
-$page->viewData($form2);
+SphpBase::page()->viewData($form2);
 $JSServer->addJSONTemp($genFormTemp,'showall_editor');
 }
-if($page->isdelete)
+if(SphpBase::page()->isdelete)
 {
-$page->deleteRec();
+SphpBase::page()->deleteRec();
 setMsg('app1','Record is Deleted' );
 $JSServer->addJSONBlock('html','showerrdet',traceError(true));
 $JSServer->addJSONBlock('html','showmsgdet',traceMsg(true));
 $JSServer->addJSONComp($showall,'showall_list');
 }
 
-if($page->isupdate)
+if(SphpBase::page()->isupdate)
 {
 if(!getCheckErr()){
-$page->updateData();
+SphpBase::page()->updateData();
 if(!getCheckErr()){
 $JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
 $JSServer->addJSONComp($showall,'showall_list');
@@ -73,10 +73,10 @@ $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));
 }
 }
 
-if($page->isinsert)
+if(SphpBase::page()->isinsert)
 {
 if(!getCheckErr()){
-$page->insertData();
+SphpBase::page()->insertData();
 if(!getCheckErr()){
 //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
 $JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
@@ -97,9 +97,9 @@ $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));
  }
 
 
-if($page->isnew)
+if(SphpBase::page()->isnew)
 {
-$page->forward(getEventPath('show', '', '', '', '', true));
+SphpBase::page()->forward(getEventPath('show', '', '', '', '', true));
     }
 
 if ($blngetFront){

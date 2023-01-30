@@ -1,7 +1,7 @@
 <h1 title="<?php print getKeyword(); ?>" class="headerbar"><?php print $list->row['pagesubttitle']; ?></h1>
 <div class="panel">
 <div id="list" runat="server" path="libpath/comp/data/Pagination.php" funsetCacheTime="<?php print $maxtime; ?>" dtabel="pagdet"  
-funsetFieldNames="pagesubttitle,pagetitle,pagedes,pagekey,filepath1,filepath2" funsetWhere="<?php global $pagname; if($page->sact!=''){$pagname = $page->sact;}else{$pagname = 'home';} print "WHERE spcmpid='$cmpid' AND  pagename='$pagname'"; ?>">
+funsetFieldNames="pagesubttitle,pagetitle,pagedes,pagekey,filepath1,filepath2" funsetWhere="<?php global $pagname; if(SphpBase::page()->sact!=''){$pagname = SphpBase::page()->sact;}else{$pagname = 'home';} print "WHERE spcmpid='$cmpid' AND  pagename='$pagname'"; ?>">
 <code>
 <?php
 $title = $list->row['pagetitle'];

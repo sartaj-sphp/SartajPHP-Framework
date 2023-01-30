@@ -5,8 +5,8 @@ class Seditor extends \Sphp\tools\BasicApp{
     
     
     public function onstart() {
-        $this->setMasterFile(SphpBase::$sphp_settings->slib_path . "/temp/default/softmaster.php");
-        SphpBase::$sphp_settings->disableEditing();
+        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/temp/default/softmaster.php");
+        SphpBase::sphp_settings()->disableEditing();
         $this->tmp1 = new TempFile($this->apppath . "/forms/seditor_form1.front",false,null,$this);
         
     }
@@ -18,8 +18,8 @@ class Seditor extends \Sphp\tools\BasicApp{
     }
 
     public function page_event_findtempf($param) {
-        $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::$sphp_settings->defenckey);
-        $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::$sphp_settings->defenckey);
+        $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::sphp_settings()->defenckey);
+        $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::sphp_settings()->defenckey);
         
         addHeaderJSFunctionCode("afterSaveFile", "fileopen3", ' window.opener.ProcessSphpCM("reload");',true);
         $afile = basename($tempfname);
@@ -38,8 +38,8 @@ class Seditor extends \Sphp\tools\BasicApp{
     
     public function page_event_findmasterf($param) {
         if($this->Client->request("tempfname") !== ""){
-            $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::$sphp_settings->defenckey);
-            $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::$sphp_settings->defenckey);
+            $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::sphp_settings()->defenckey);
+            $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::sphp_settings()->defenckey);
             $afile = basename($tempfname);
             $dir1 = dirname($tempfname);
             $atype = pathinfo($tempfname,PATHINFO_EXTENSION);

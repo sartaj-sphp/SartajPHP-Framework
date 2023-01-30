@@ -76,7 +76,7 @@ $this->element->innertext = '';
 
 
 public function onprerender(){
-$mysql = \SphpBase::$dbEngine;
+$mysql = \SphpBase::dbEngine();
 $this->result = $mysql->fetchQuery($this->sql,$this->cacheTime,$this->cachefile,$this->cachekey,$this->cachesave);
 }
 

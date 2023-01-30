@@ -5,7 +5,7 @@
  * @author SARTAJ
  */
 
-include_once(SphpBase::$sphp_settings->slib_path . "/comp/ajax/Ajaxsenddata.php");
+include_once(SphpBase::sphp_settings()->slib_path . "/comp/ajax/Ajaxsenddata.php");
 class Grid extends Control{
 public $pageNo = -1;
 public $totalPages = 1;
@@ -54,19 +54,19 @@ public $content_section = null;
 
 
 public function oncreate($element) {
-if(\SphpBase::$page->isSesSecure){
+if(\SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
-if(\SphpBase::$sphp_request->isRequest('page')){
-\SphpBase::$sphp_request->session($this->name.'p',\SphpBase::$sphp_request->request('page'));
-\SphpBase::$sphp_request->session($this->name.'pc', \SphpBase::$sphp_router->ctrl);
+if(\SphpBase::sphp_request()->isRequest('page')){
+\SphpBase::sphp_request()->session($this->name.'p',\SphpBase::sphp_request()->request('page'));
+\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->ctrl);
 }else{
-\SphpBase::$sphp_request->request('page',false, 1);
-if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::$sphp_router->ctrl){
-\SphpBase::$sphp_request->request('page',false,$_SESSION[$this->name.'p']);
+\SphpBase::sphp_request()->request('page',false, 1);
+if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::sphp_router()->ctrl){
+\SphpBase::sphp_request()->request('page',false,$_SESSION[$this->name.'p']);
 }
 }
-$this->pageNo = \SphpBase::$sphp_request->request('page') - 1;
+$this->pageNo = \SphpBase::sphp_request()->request('page') - 1;
 
 if($this->dtable == ''){
     $parentapp = $this->tempobj->getBindApp();
@@ -107,9 +107,9 @@ $this->extraData = $val;
 }
 public function setPageNo($val){
 $this->pageNo = $val - 1;
-\SphpBase::$sphp_request->session($this->name.'p',$val);
-\SphpBase::$sphp_request->session($this->name.'pc', \SphpBase::$sphp_router->ctrl);
-\SphpBase::$sphp_request->request('page',false, $val);
+\SphpBase::sphp_request()->session($this->name.'p',$val);
+\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->ctrl);
+\SphpBase::sphp_request()->request('page',false, $val);
 }
 public function getPageNo(){
 return $this->pageNo + 1;
@@ -194,8 +194,8 @@ public function setHandleEvent(){
 }
 
 public function executeSQL(){
-  $mysql = \SphpBase::$dbEngine;
-  $libpath = \SphpBase::$sphp_settings->lib_path;
+  $mysql = \SphpBase::dbEngine();
+  $libpath = \SphpBase::sphp_settings()->lib_path;
   $stro = "";
 // count total page
 $mysql->connect();
@@ -432,14 +432,14 @@ public function onaftercreate(){
     }
 
 public function handleEvent(){
-    if(\SphpBase::$page->getEvent()== $this->name . "_sortby"){
+    if(\SphpBase::page()->getEvent()== $this->name . "_sortby"){
         $this->unsetRenderTag();
-        if(\SphpBase::$sphp_request->request('dir')=='1'){
-            $this->ordersortby = "ORDER BY ". \SphpBase::$sphp_request->request('sortby'). " DESC";
+        if(\SphpBase::sphp_request()->request('dir')=='1'){
+            $this->ordersortby = "ORDER BY ". \SphpBase::sphp_request()->request('sortby'). " DESC";
         }else{
-            $this->ordersortby = "ORDER BY ". \SphpBase::$sphp_request->request('sortby') . " ASC";            
+            $this->ordersortby = "ORDER BY ". \SphpBase::sphp_request()->request('sortby') . " ASC";            
         }
-        \SphpBase::$JSServer->addJSONComp($this, $this->name);     
+        \SphpBase::JSServer()->addJSONComp($this, $this->name);     
     }
 }
 
@@ -630,7 +630,7 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
 
 public function onjsrender(){
 $opendlg = "";
-if(!\SphpBase::$JSServer->ajaxrender){
+if(!\SphpBase::JSServer()->ajaxrender){
     addHeaderCSS("gridhighlight", " .highlight{
  font-size: 16px;
  color: #000000;
@@ -734,8 +734,8 @@ window.location = link ;
 }
 
 public function onprerender(){
-$Client = \SphpBase::$sphp_request;
-$ctrl = \SphpBase::$sphp_router;
+$Client = \SphpBase::sphp_request();
+$ctrl = \SphpBase::sphp_router();
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){

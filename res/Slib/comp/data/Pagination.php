@@ -50,24 +50,24 @@ public $buttonprev = '';
 public $links = '';
 
 public function __construct($name='',$fieldName='',$tableName='') {
-$page = \SphpBase::$page;
-$ctrl = \SphpBase::$sphp_router->ctrl;
-$tblName = \SphpBase::$page->tblName;
-//\SphpBase::$debug->setMsg('tblName ' . $tableName);
-if($page->isSesSecure){
+$page = \SphpBase::page();
+$ctrl = \SphpBase::sphp_router()->ctrl;
+$tblName = \SphpBase::page()->tblName;
+//\SphpBase::debug()->setMsg('tblName ' . $tableName);
+if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
 $this->init($name,'','');
-if(\SphpBase::$sphp_request->request('page') != ""){
-\SphpBase::$sphp_request->session($name.'p', \SphpBase::$sphp_request->request('page'));
-\SphpBase::$sphp_request->session($name.'pc', $ctrl);
+if(\SphpBase::sphp_request()->request('page') != ""){
+\SphpBase::sphp_request()->session($name.'p', \SphpBase::sphp_request()->request('page'));
+\SphpBase::sphp_request()->session($name.'pc', $ctrl);
 }else{
-\SphpBase::$sphp_request->request('page', 1);
-if(\SphpBase::$sphp_request->isSession($name.'pc') && \SphpBase::$sphp_request->session($name.'pc', $ctrl)){
-\SphpBase::$sphp_request->request('page', \SphpBase::$sphp_request->session($name.'p'));
+\SphpBase::sphp_request()->request('page', 1);
+if(\SphpBase::sphp_request()->isSession($name.'pc') && \SphpBase::sphp_request()->session($name.'pc', $ctrl)){
+\SphpBase::sphp_request()->request('page', \SphpBase::sphp_request()->session($name.'p'));
 }
 }
-$this->pageNo = intval(\SphpBase::$sphp_request->request('page')) - 1;
+$this->pageNo = intval(\SphpBase::sphp_request()->request('page')) - 1;
 if($tableName==''){
 $this->dtable = $tblName;
 }else{
@@ -204,8 +204,8 @@ $this->blnadd = false;
 }
 
 public function executeSQL(){
-$mysql = \SphpBase::$dbEngine;
-$respath = \SphpBase::$sphp_settings->res_path;
+$mysql = \SphpBase::dbEngine();
+$respath = \SphpBase::sphp_settings()->res_path;
   $stro = "";
 // count total page
 //$mysql->connect();
@@ -286,10 +286,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventPath($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"". SphpBase::$sphp_settings->slib_res_path ."/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventPath($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"". SphpBase::sphp_settings()->slib_res_path ."/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventPath($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"". SphpBase::$sphp_settings->slib_res_path ."/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventPath($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"". SphpBase::sphp_settings()->slib_res_path ."/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -332,7 +332,7 @@ $endPage = $this->totalPages;
 }
  $strstart = "<div class=\"pfloat-left\">";
 for ($k=$startPage; $k<=$endPage; $k++) {
-        if ($k != \SphpBase::$sphp_request->request('page')) {
+        if ($k != \SphpBase::sphp_request()->request('page')) {
 if($this->blnajax){
          $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
@@ -514,7 +514,7 @@ $ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.
 
 
 public function onjsrender(){
-$JSServer = SphpBase::$JSServer;
+$JSServer = SphpBase::JSServer();
 $opendlg = "";
 if(!$JSServer->ajaxrender){
 if($this->blnajax){

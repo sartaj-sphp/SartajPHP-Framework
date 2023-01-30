@@ -28,23 +28,23 @@ private $imgTag = false;
 private $errmsg = "";
 
 public function __construct($name='',$fieldName='',$tableName='') {
-$page = \SphpBase::$page;
-$tblName = \SphpBase::$page->tblName;
-$JSServer = \SphpBase::$JSServer;
-$Client = \SphpBase::$sphp_request;
-$mysql = \SphpBase::$dbEngine;
+$page = \SphpBase::page();
+$tblName = \SphpBase::page()->tblName;
+$JSServer = \SphpBase::JSServer();
+$Client = \SphpBase::sphp_request();
+$mysql = \SphpBase::dbEngine();
 
 $this->name = $name;
 $this->fildName = $fieldName;
 $this->tablName = $tableName;
 $this->unsetEndTag();
-if(\SphpBase::$sphp_request->isFile("$name")){
-    $f1 = \SphpBase::$sphp_request->files("$name");
+if(\SphpBase::sphp_request()->isFile("$name")){
+    $f1 = \SphpBase::sphp_request()->files("$name");
 $this->fileType = $f1["type"];
 $this->fileSize = $f1["size"];
 $this->fileTempName = $f1["tmp_name"];
 if($this->fileTempName!=''){
-\SphpBase::$sphp_request->request($this->name,false,$f1["name"]);
+\SphpBase::sphp_request()->request($this->name,false,$f1["name"]);
 $ft = pathinfo($f1["name"]);
 $this->fileExtention = $ft['extension'];
 $this->filename = $ft['filename'];
@@ -53,13 +53,13 @@ $this->filename = $ft['filename'];
 }
 $this->tagName = "input";
 $this->init($this->name,$this->fildName,$this->tablName);
-if($page->sact== $name.'del'){
-$file = substr(decrypt(\SphpBase::$sphp_request->request('pfn')),3);
+if(SphpBase::page()->sact== $name.'del'){
+$file = substr(decrypt(\SphpBase::sphp_request()->request('pfn')),3);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
 if($this->fildName!=''){
-$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='$page->evtp'");
+$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='SphpBase::page()->evtp'");
 }
 $JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
 }
@@ -81,7 +81,7 @@ $JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
     }
 
 public function deleteFile() {
-    $file = decrypt(\SphpBase::$sphp_request->request("hid" . $this->name));
+    $file = decrypt(\SphpBase::sphp_request()->request("hid" . $this->name));
     if($file != ""){
     $file = substr($file,3);
     $pt = pathinfo($file);
@@ -90,7 +90,7 @@ public function deleteFile() {
     }
 }
 public function isUpdateFile() {
-    $file = decrypt(\SphpBase::$sphp_request->request("hid" . $this->name));
+    $file = decrypt(\SphpBase::sphp_request()->request("hid" . $this->name));
     if($file != "" && $this->value != ""){
         $file = substr($file,3);
         if($file != $this->value){
@@ -154,7 +154,7 @@ public function getFileMinLen() { return $this->minLen; }
      public function getFileTypesAllowed(){return $this->fileTypeA;}
      public function getFileTempName(){return $this->fileTempName;}
      public function getFileName(){return $this->filename;}
-     public function getFilePrevName(){return \SphpBase::$sphp_request->request('hid'.$this->name);}
+     public function getFilePrevName(){return \SphpBase::sphp_request()->request('hid'.$this->name);}
      public function getFileExtention(){return $this->fileExtention;}
      public function setFileSavePath($val){$this->fileSavePath = $val;}
 
@@ -176,13 +176,13 @@ break;
 }
 public function saveFile($FilePath){
 if ($this->issubmit && !getCheckErr()){
-if (\SphpBase::$sphp_request->isFile($this->name) && \SphpBase::$sphp_request->files($this->name)["error"] > 0)
+if (\SphpBase::sphp_request()->isFile($this->name) && \SphpBase::sphp_request()->files($this->name)["error"] > 0)
     {
-        $this->setErrMsg(\SphpBase::$sphp_request->files($this->name)["error"]);
+        $this->setErrMsg(\SphpBase::sphp_request()->files($this->name)["error"]);
        }
   else
     {
-	if(!move_uploaded_file(\SphpBase::$sphp_request->files($this->name)["tmp_name"], $FilePath )){
+	if(!move_uploaded_file(\SphpBase::sphp_request()->files($this->name)["tmp_name"], $FilePath )){
         $this->setErrMsg("Can not save file on server");
             }else{
                 $this->value = $FilePath;
@@ -201,7 +201,7 @@ public function oncreate($element){
 }
 
 public function onjsrender(){
-//getJSServer()->getAJAX();
+//SphpBase::JSServer()->getAJAX();
 if($this->formName!=''){
 if($this->req){
 addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
@@ -216,7 +216,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
     }
 
 public function onrender(){
-$page = \SphpBase::$page;
+$page = \SphpBase::page();
 $imgtag = '';
 $btnd = '';
     if($this->errmsg!=""){
@@ -233,7 +233,7 @@ if($this->value !=""){
         $imgtag = '<img src="'.$this->defaultImg.'" width="150" height="100" />';
     }
     if($this->btnDelete){
-        $btnd = '<a href="javascript: '.getJSServer()->postServer("'".getEventPath($this->name.'del',$page->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
+        $btnd = '<a href="javascript: '.SphpBase::JSServer()->postServer("'".getEventPath($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
     }
 }
 

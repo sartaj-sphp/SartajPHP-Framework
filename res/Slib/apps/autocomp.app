@@ -31,14 +31,14 @@ class autocomp extends Sphp\tools\BasicApp{
         $this->getList($this->JSServer);
         $this->getList($this->Client);
         $this->getList($this->page);
-        $this->getList(SphpBase::$sphp_api);
-        $this->getList(SphpBase::$sphp_response);
-        $this->getList(SphpBase::$sphp_permissions);
-        $this->getList(SphpBase::$dbEngine);
-        $this->getList(SphpBase::$debug);
-        $this->getList(SphpBase::$sphp_router);
-        $this->getList(SphpBase::$sphp_session);
-        $this->getList(SphpBase::$sphp_settings);
+        $this->getList(SphpBase::sphp_api());
+        $this->getList(SphpBase::sphp_response());
+        $this->getList(SphpBase::sphp_permissions());
+        $this->getList(SphpBase::dbEngine());
+        $this->getList(SphpBase::debug());
+        $this->getList(SphpBase::sphp_router());
+        $this->getList(SphpBase::sphp_session());
+        $this->getList(SphpBase::sphp_settings());
         //$this->getList(SphpBase::);
         
     }
@@ -109,20 +109,20 @@ class autocomp extends Sphp\tools\BasicApp{
             $resvar = null;
             if(is_object($xyzo) && !is_array($xyzo)){
                 $rcls1 = new \ReflectionClass($xyzo);
-                $method = \SphpBase::$sphp_api->rtClassMethodFromFileLine($rcls1,$this->arow);
+                $method = \SphpBase::sphp_api()->rtClassMethodFromFileLine($rcls1,$this->arow);
                 if($method !== null){
-                    $resvar =  \SphpBase::$sphp_api->rtClassMethodInvoke($method,$xyzo,null);
+                    $resvar =  \SphpBase::sphp_api()->rtClassMethodInvoke($method,$xyzo,null);
                     if($resvar !== null){
                         $v2 = array_keys($resvar);
                         foreach ($v2 as $key => $value) { 
-                            \SphpBase::$sphp_api->setGlobal($value,$resvar[$value]);
+                            \SphpBase::sphp_api()->setGlobal($value,$resvar[$value]);
                         }
                     }
                 }
             }else if(is_array($xyzo)){
                 $v2 = array_keys($xyzo); 
                 foreach ($v2 as $key => $value) { 
-                    \SphpBase::$sphp_api->setGlobal($value,$xyzo[$value]);
+                    \SphpBase::sphp_api()->setGlobal($value,$xyzo[$value]);
                 }
             }
         }
@@ -146,7 +146,7 @@ class autocomp extends Sphp\tools\BasicApp{
             $ope = $value[1];
             $prop = $value[2];
             if(strpos($obj, '$')!== false){
-                $obj = \SphpBase::$sphp_api->getGlobal(substr($obj,1));
+                $obj = \SphpBase::sphp_api()->getGlobal(substr($obj,1));
             }
             if($objvar !== null){
                 $obj = $objvar;
@@ -206,8 +206,8 @@ class autocomp extends Sphp\tools\BasicApp{
     private function convertThisTest() {
         global $xyzo;
         //$filenpath = $this->apath . '/' . $this->atext;
-        //$filenpath = str_replace(\SphpBase::$sphp_settings->server_path, "", $filenpath);
-        $v1 = \SphpBase::$sphp_api->getRegisterAppClass("apps/index2.app",true);
+        //$filenpath = str_replace(\SphpBase::sphp_settings()->server_path, "", $filenpath);
+        $v1 = \SphpBase::sphp_api()->getRegisterAppClass("apps/index2.app",true);
         includeOnce($v1[1]);
         return new $v1[0];
         return null;
@@ -219,15 +219,15 @@ class autocomp extends Sphp\tools\BasicApp{
         //$projpath = $this->Client->session("wproject");
         if($this->atype == "app"){
             writeAppPath($this->apath . '/');
-            $v1 = \SphpBase::$sphp_api->getRegisterAppClass($filenpath,true);
+            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,true);
         }else{
-            $v1 = \SphpBase::$sphp_api->getRegisterAppClass($filenpath,false);            
+            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,false);            
         }
         $clsname = $v1[0];
         $objCreater = ' global $xyzo; if(class_exists("'. $clsname .'")){ $xyzo = new '. $clsname .'();} ';
         $projrootpath = $this->Client->session("wproject");
         if($projrootpath == ""){
-            $projrootpath = \SphpBase::$sphp_settings->start_path;
+            $projrootpath = \SphpBase::sphp_settings()->start_path;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid
@@ -318,7 +318,7 @@ class autocomp extends Sphp\tools\BasicApp{
         $xyz2 = get_defined_constants(false);
         $xyz3 = get_defined_functions();
         $xyz4 = get_defined_vars();
-        return \SphpBase::$sphp_api->rtScopeDefinedHelp($xyz1,$xyz2,$xyz3,$xyz4);
+        return \SphpBase::sphp_api()->rtScopeDefinedHelp($xyz1,$xyz2,$xyz3,$xyz4);
     }
     public function getListLive($clsobj) {
         //Instantiate the reflection object
@@ -328,9 +328,9 @@ class autocomp extends Sphp\tools\BasicApp{
         $ar1 = array();
         $ar1["static"] = array();
         $ar1["member"] = array();
-        $ar1["static"] = \SphpBase::$sphp_api->rtClassConstantHelp($mainClass,$reflector);
-        \SphpBase::$sphp_api->rtClassPropertyHelp($mainClass,$clsobj,$reflector,$ar1);
-        \SphpBase::$sphp_api->rtClassMethodHelp($mainClass,$reflector,$ar1);
+        $ar1["static"] = \SphpBase::sphp_api()->rtClassConstantHelp($mainClass,$reflector);
+        \SphpBase::sphp_api()->rtClassPropertyHelp($mainClass,$clsobj,$reflector,$ar1);
+        \SphpBase::sphp_api()->rtClassMethodHelp($mainClass,$reflector,$ar1);
 
         if (!isset($ar1["static"]))
             $ar1["static"] = array();

@@ -1,17 +1,17 @@
 <?php
-$tblName = "admin";
-$page->Authenticate("ADMIN");
-//$page->sesSecure();
+SphpBase::page()->tblName = "admin";
+SphpBase::page()->Authenticate("ADMIN");
+//SphpBase::page()->sesSecure();
 $masterFile = $admmasterf;
 
-if($page->isnew)
+if(SphpBase::page()->isnew)
 {
 $formName ="admhome";
  }
 
 
-if($page->isevent){
-switch($page->sact){
+if(SphpBase::page()->isevent){
+switch(SphpBase::page()->sact){
 
 }
 }
@@ -23,8 +23,8 @@ $title = "";
 $metakeywords = "";
 $metadescription = "";
 $metaclassification = "";
-$dynData = new TempFile("{$apppath}/forms/admhome.php");
-$dynData->run();
+SphpBase::$dynData = new TempFile("{$apppath}/forms/admhome.php");
+SphpBase::$dynData->run();
 include_once("$masterFile");
     break;
 	}

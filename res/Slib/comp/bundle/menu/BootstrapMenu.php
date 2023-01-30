@@ -74,7 +74,7 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::$JSServer->getAJAX();
+SphpBase::JSServer()->getAJAX();
 addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }

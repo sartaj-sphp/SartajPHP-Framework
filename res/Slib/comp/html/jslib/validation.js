@@ -81,7 +81,7 @@ limit = ctlText[c][2];
 val1 = getVal(c,type);
 if(val1!='' && val1.length < limit){
 returnval = false;
-displayValidationError(obj1,"Please Type more then " + limit + "  chracters in " + msg);
+displayValidationError(obj1,"Please Type more then or = " + limit + "  chracters in " + msg);
 break;
 }
 }

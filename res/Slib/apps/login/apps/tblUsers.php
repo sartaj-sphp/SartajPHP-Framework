@@ -1,8 +1,8 @@
 <?php
 $auth = "ADMIN";
-$tblName = "usert";
-$page->Authenticate();
-$page->sesSecure();
+SphpBase::page()->tblName = "usert";
+SphpBase::page()->Authenticate();
+SphpBase::page()->sesSecure();
 $formHead = "Users Form";
 $formFields = '
 $genForm->setField("userID","User ID","text","r","4","20");
@@ -29,9 +29,9 @@ $showall->setFieldNames("userID,pass,sacheme,logDate,createDate,logIP");
 $showall->setColWidths("");
 $showall->setEdit();
 $showall->setDelete();
-if($page->isevent)
+if(SphpBase::page()->isevent)
 {
-switch($page->sact){
+switch(SphpBase::page()->sact){
 case 'show':{
 $formNo = 2;
 $blngetFront = true;
@@ -41,27 +41,27 @@ break;
 }
  }
 
-if($page->isview)
+if(SphpBase::page()->isview)
 {
-$page->viewData($form2);
+SphpBase::page()->viewData($form2);
 $blngetFront = true;
 $formNo = 1;
 }
-if($page->isdelete)
+if(SphpBase::page()->isdelete)
 {
-$page->deleteRec();
+SphpBase::page()->deleteRec();
 $blngetFront = true;
 $formNo = 2;
 }
-if($page->issubmit)
+if(SphpBase::page()->issubmit)
 {
  
 }
 
-if($page->isupdate)
+if(SphpBase::page()->isupdate)
 {
 if(!getCheckErr()){
-$page->updateData();
+SphpBase::page()->updateData();
 $blngetFront = true;
 $formNo = 2;
 }
@@ -71,11 +71,11 @@ $formNo = 1;
 }
 }
 
-if($page->isinsert)
+if(SphpBase::page()->isinsert)
 {
 if(!getCheckErr()){
 if(!$mysql->isRecordExist("SELECT userID FROM usert WHERE userID='".$userID->getValue()."'")){
-$page->insertData();
+SphpBase::page()->insertData();
 $blngetFront = true;
 $formNo = 2;
 }else{
@@ -93,7 +93,7 @@ setErr('app','Error Detail:-'.traceError(true) );
  }
 
 
-if($page->isnew)
+if(SphpBase::page()->isnew)
 {
 $formNo = 1;
 $blngetFront = true;

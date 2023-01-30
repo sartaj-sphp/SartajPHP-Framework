@@ -55,9 +55,9 @@ class HTMLForm extends \Sphp\tools\Control {
     public function onprejsrender() {
         $valdx = "";
         if ($this->blnajax) {
-            \SphpBase::$JSServer->getAJAX();
+            \SphpBase::JSServer()->getAJAX();
             if ($this->target == '') {
-                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::$sphp_settings->res_path . '/'. \SphpBase::$sphp_settings->slib_version  . '/comp/html/res/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
+                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::sphp_settings()->res_path . '/'. \SphpBase::sphp_settings()->slib_version  . '/comp/html/res/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
                 $this->target = $this->name . "res";
             } else {
                 $divt = "";
@@ -149,7 +149,7 @@ return false;
         if(!isset($this->onsubmit)){
             addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){var vt = " . $this->name . "_submit(''); event.preventDefault(); return false;}); ");
         }
-        $hdn = "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . \SphpBase::$sphp_request->request($this->recID) . "\" />";
+        $hdn = "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . \SphpBase::sphp_request()->request($this->recID) . "\" />";
         $this->appendHTML($hdn);
         $parenttag = $this->wrapTag("div");
         $parenttag->setAttribute("id","wrp" . $this->name);

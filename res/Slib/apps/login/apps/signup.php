@@ -7,31 +7,31 @@
 // app settings
 $auth = "GUEST,MEMBER";
 // default table values for all components
-$tblName = "usert";
+SphpBase::page()->tblName = "usert";
 // check athentication type of user if not match with $auth then forward application
 // according to getWelcome function in global.php file
-$page->Authenticate();
-//$page->sesSecure();
+SphpBase::page()->Authenticate();
+//SphpBase::page()->sesSecure();
 // include section if we want use inbuilt in other panels then we include that panel here
 $dynData = new TempFile("apps/auth/forms/signup.php");
 
-if($page->isevent)
+if(SphpBase::page()->isevent)
 {
-switch($page->sact){
+switch(SphpBase::page()->sact){
 case "showall" :{
 $blngetFront = true;
 $formNo = 1;
 break;
 }
 case "veri" :{
-if($mysql->isRecordExist("SELECT userID FROM usert WHERE id='". $_REQUEST['uid']."' AND validationNum='". $page->evtp."' AND NOT validation")){
+if($mysql->isRecordExist("SELECT userID FROM usert WHERE id='". $_REQUEST['uid']."' AND validationNum='". SphpBase::page()->evtp."' AND NOT validation")){
 $extra[]['validation'] = '1';
 $extra[]['status'] = 'DONE';
 $extra[]['logDate'] = date('Y-m-d');
 $extra[]['logIP'] = $_SERVER['REMOTE_ADDR'];
 $extra[]['logBrowser'] = $_SERVER['HTTP_USER_AGENT'];
-$page->updateData($extra,$_REQUEST['uid']);
-$page->forward(getAppPath('login'));
+SphpBase::page()->updateData($extra,$_REQUEST['uid']);
+SphpBase::page()->forward(getAppPath('login'));
 }
 else{
 setErr('app', "User ID ". $txtuserID->getValue()." Already Exist Please Select Other User ID!");
@@ -62,38 +62,38 @@ break;
  }
 
 
-if($page->isdelete)
+if(SphpBase::page()->isdelete)
 {
-//$page->deleteRec();
+//SphpBase::page()->deleteRec();
 $blngetFront = true;
 $formNo = 2;
  }
 
-if($page->isview)
+if(SphpBase::page()->isview)
 {
-$page->viewData($page->form);
+SphpBase::page()->viewData(SphpBase::page()->form);
 $blngetFront = true;
 $formNo = 1;
 
  }
 
-if($page->isaction)
+if(SphpBase::page()->isaction)
 {
 //print "Action event <br>";
  }
 
-if($page->issubmit)
+if(SphpBase::page()->issubmit)
 {
 
 }
 
-if($page->isupdate)
+if(SphpBase::page()->isupdate)
 {
 $blngetFront = true;
 $formNo = 1;
 }
 
-if($page->isinsert)
+if(SphpBase::page()->isinsert)
 {
 if(preg_replace('/[a-zA-Z0-9]/', '', $txtuserID->getValue())){
 setErr('app', "Chracters in UserID Is not Valid!");
@@ -113,7 +113,7 @@ $extra[]['logIP'] = $_SERVER['REMOTE_ADDR'];
 $extra[]['logBrowser'] = $_SERVER['HTTP_USER_AGENT'];
 //$extra[]['logOS'] = '';
 //$extra[]['logMotherBoard'] = '';
-$newid = $page->insertData($extra);
+$newid = SphpBase::page()->insertData($extra);
 $blngetFront = true;
 $formNo = 2;
 }
@@ -130,7 +130,7 @@ $formNo = 1;
 }
  }
 
-if($page->isnew)
+if(SphpBase::page()->isnew)
 {
 $blngetFront = true;
 $formNo = 1;

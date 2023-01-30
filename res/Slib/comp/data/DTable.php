@@ -16,7 +16,7 @@ private $blnDontuseFormat = false;
 
 
 public function __construct($name='',$fieldName='',$tableName='') {
-$tblName = \SphpBase::$page->tblName;
+$tblName = \SphpBase::page()->tblName;
 $this->init($name,'','');
 if($tableName==''){
 $this->dtable = $tblName;
@@ -49,13 +49,13 @@ $comp = $this->RenderComp->createComp2($id,$path,$class,$id);
 $comp->setForm($this->form);
 $comp->setTempobj($this->tempobj);
 $this->tempobj->setComponent($comp->name,$comp); 
-\SphpBase::$sphp_api->addComponent($comp->name,$comp);
+\SphpBase::sphp_api()->addComponent($comp->name,$comp);
 return $comp;
 }
 
 public function genComp(){
-  $comppath = \SphpBase::$sphp_settings->comp_path;
-  $libpath = \SphpBase::$sphp_settings->slib_path;
+  $comppath = \SphpBase::sphp_settings()->comp_path;
+  $libpath = \SphpBase::sphp_settings()->slib_path;
 // count total page
 foreach($this->fields as $key=>$arrn){ 
 $label = $arrn[0];

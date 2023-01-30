@@ -1,5 +1,5 @@
 <?php 
-switch($page->getAuthenticateType()){
+switch(SphpBase::page()->getAuthenticateType()){
 case 'GUEST':{
 $menupath = "{$slibpath}/temp/default/menu.php";
 break;

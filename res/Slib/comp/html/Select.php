@@ -184,8 +184,8 @@ class Select extends \Sphp\tools\Control {
     }
 
     public function setOptionsFromTable($valueField, $textField = '', $tableName = '', $logic = '', $sql = '', $cacheTime = '0') {
-        $tblName = \SphpBase::$page->tblName;
-        $mysql = \SphpBase::$dbEngine;
+        $tblName = \SphpBase::page()->tblName;
+        $mysql = \SphpBase::dbEngine();
         $blnMultiTextField = false;
         $blnMultiValField = false;
         $arr1 = Array();

@@ -7,18 +7,18 @@
 // app settings
 $auth = "GUEST,ADMIN";
 // default table values for all components
-$tblName = "admin";
+SphpBase::page()->tblName = "admin";
 // check athentication type of user if not match with $auth then forward application 
 // according to getWelcome function in global.php file
-$page->Authenticate();
-//$page->sesSecure();
+SphpBase::page()->Authenticate();
+//SphpBase::page()->sesSecure();
 // include section if we want use inbuilt in other panels then we include that panel here
 $dynData = new TempFile("apps/auth/forms/admlogin.php");
 
 
-if($page->isevent)
+if(SphpBase::page()->isevent)
 {
-switch($page->sact){
+switch(SphpBase::page()->sact){
 case "showall" :{
 $blngetFront = true;
 $formNo = 1;
@@ -35,26 +35,26 @@ case "logout" :{
  }
 
 
-if($page->isdelete)
+if(SphpBase::page()->isdelete)
 {
-//$page->deleteRec();
+//SphpBase::page()->deleteRec();
 $blngetFront = true;
 $formNo = 1;
  }
 
-if($page->isview)
+if(SphpBase::page()->isview)
 {
 $blngetFront = true;
 $formNo = 1;
 
  }
 
-if($page->isaction)
+if(SphpBase::page()->isaction)
 {
 //print "Action event <br>";
  }
 
-if($page->issubmit)
+if(SphpBase::page()->issubmit)
 {
 //print "Submit event <br>";
 if(preg_replace('/[a-zA-Z0-9]/', '', $txtuserID->getValue())){
@@ -78,13 +78,13 @@ $blngetFront = true;
 $formNo = 1;
 }
 
-if($page->isupdate)
+if(SphpBase::page()->isupdate)
 {
 $blngetFront = true;
 $formNo = 1;
 }
 
-if($page->isinsert)
+if(SphpBase::page()->isinsert)
 {
 if(!getCheckErr()){
 
@@ -94,7 +94,7 @@ else{
 }
  }
 
-if($page->isnew)
+if(SphpBase::page()->isnew)
 {
 $blngetFront = true;
 $formNo = 1;

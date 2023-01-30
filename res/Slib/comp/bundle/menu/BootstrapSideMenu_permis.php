@@ -47,7 +47,7 @@ public function genMenus() {
     foreach ($mnuroot as $mnuName => $lstMenu) {
         if($lstMenu[4] == ""){
             $str1 .= $this->genMenu($lstMenu);            
-        }else if(SphpBase::$sphp_permissions->isPermission($lstMenu[4])){
+        }else if(SphpBase::sphp_permissions()->isPermission($lstMenu[4])){
             $str1 .= $this->genMenu($lstMenu);
         }
     }
@@ -62,7 +62,7 @@ private function genMenu($lstMenu,$submenu=0){
         foreach ($mnuroot as $mnuName => $lstMenu2) {
             if($lstMenu2[4] == ""){
                 $str .= $this->genMenu($lstMenu2,1);
-            }else if(SphpBase::$sphp_permissions->isPermission($lstMenu2[4])){
+            }else if(SphpBase::sphp_permissions()->isPermission($lstMenu2[4])){
                 $str .= $this->genMenu($lstMenu2,1);
             }
         }
@@ -91,7 +91,7 @@ private function genMenuLinks($mnuroot){
     foreach ($mnuroot as $mnuLinkName => $lstMenuLink) {
         if($lstMenuLink[4] == ""){
             $str .= $this->getB4MenuLink($lstMenuLink[0],$lstMenuLink[1],$lstMenuLink[2],$lstMenuLink[3]); 
-        }else if(SphpBase::$sphp_permissions->isPermission($lstMenuLink[4])){
+        }else if(SphpBase::sphp_permissions()->isPermission($lstMenuLink[4])){
             $str .= $this->getB4MenuLink($lstMenuLink[0],$lstMenuLink[1],$lstMenuLink[2],$lstMenuLink[3]); 
         }
     }
@@ -100,7 +100,7 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::$JSServer->getAJAX();
+SphpBase::JSServer()->getAJAX();
 addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
