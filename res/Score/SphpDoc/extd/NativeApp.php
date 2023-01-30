@@ -22,7 +22,6 @@ public $dbEngine = null;
 public $debug = null;
 public $Form = null;
 public $protocolJ = null;
-public function __construct(){}
 public function setForm($param) {}
 public function processEvent(){}
 public function setTableName($dbtable){}
@@ -47,7 +46,6 @@ public function getSesSecurity(){}
 }
 class ProtocolJ {
 public $JSServer;
-public function __construct() {}
 public function createValueType($type,$subtype,$value) {}
 public function createEvent($url,$evtargtype,$args) {}
 public function createEventArgs($arg,$type,$subtype,$value) {}

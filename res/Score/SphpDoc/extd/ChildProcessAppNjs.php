@@ -6,7 +6,6 @@ public $mainConnection = 0;
 /**
 * Advance function 
 */
-public function __construct() {}
 /**
 * Create Child Process
 * @param string $exepath file path to execute as child process
@@ -123,7 +122,6 @@ public function callProcess($fun, $data, $type = "childp") {}
 * Override wait event handler of ConsoleAPP
 */
 public function onwait() {}
-public function __destruct() {}
 /**
 * Advance function, Internal use
 */

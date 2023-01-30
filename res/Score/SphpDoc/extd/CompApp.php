@@ -29,7 +29,6 @@ public $Client = null;
 public $dbEngine = null;
 /** @var \Sphp\core\DebugProfiler debug */
 public $debug = null;
-public function __construct($ptempobj, $compobj) {}
 public function createTempFile($filepath,$noprefix=false) {}
 public function setup($tempobj) {}
 public function process($tempobj) {}

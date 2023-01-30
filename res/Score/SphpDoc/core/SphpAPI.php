@@ -6,7 +6,6 @@ public $errStatus = false;
 * Advance function, Internal use
 * @ignore
 */
-public function __construct() {}
 /**
 * Advance function, Internal use
 * @ignore

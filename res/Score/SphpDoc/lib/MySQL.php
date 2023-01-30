@@ -18,7 +18,6 @@ public $all_query_ok = true;
 * This returns the MySQL class object
 * @return MySQL
 */
-public function __construct($engine) {}
 public function connect($db1 = "", $dhost1 = "", $duser1 = "", $dpass1 = "") {}
 public function cleanQuery($string) {}
 public function clearQuery($string) {}
@@ -35,7 +34,6 @@ public function prepare($sql) {}
 public function executeQueryJFX($sql) {}
 public function executeQueryQuickJFX($sql) {}
 public function disconnect() {}
-public function __destruct() {}
 public function updateSQL($frm, $txttbl, $where) {}
 public function insertSQL($frm, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}

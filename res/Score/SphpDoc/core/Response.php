@@ -1,7 +1,6 @@
 <?php
 namespace Sphp\core{
 class Response {
-public function __construct() {}
 /**
 * Advance Function, Internal use
 */

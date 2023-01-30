@@ -8,7 +8,6 @@ public $msg = array();
 * @ignore
 */
 public $debugmode = 0;
-public function __construct() {}
 /**
 * Clear all messages
 */
@@ -46,7 +45,54 @@ public function print_r($arr) {}
 * @return array
 */
 public function getMsg() {}
-protected function traceBack($errnom, $errstr, $errfile, $errline) {}
+protected function traceBack($errnom, $errstr, $errfile, $errline) {
+if (!(error_reporting() & $errnom) || $this->maxErrorCounter > 0) {
+return;
+}
+$this->maxErrorCounter += 1;
+$errnoa = $this->getErrorType($errnom);        
+$arglist = "";
+$objname = "";
+$callerline = 0;
+$filepath = "";
+$filept = "";
+$debug_arry = debug_backtrace();
+$this->setMsg($errstr , $errnom, $errfile, $errline, "error");
+$errstr = "";
+$arc = array("traceBack","SphpErrorHandler");
+foreach ($debug_arry as $key => $caller) { 
+$ar = array();
+if(!isset($caller["file"])){
+$caller["file"] = "";
+}
+if(!isset($caller["line"])){
+$caller["line"] = 0;
+}
+if(!isset($caller["class"])){
+$caller["class"] = "";
+}
+if(!isset($caller["object"])){
+$caller["object"] = "";
+}
+if(!isset($caller["type"])){
+$caller["type"] = "";
+}
+if(! in_array($caller["function"], $arc)){ 
+$ar['file'] = $caller["file"];
+$ar['line'] = $caller["line"];
+$ar['function'] = $caller["function"];
+$ar['class'] = $caller["class"];
+$ar['type'] = $caller["type"];
+$ar["arglist"] = $this->getFunctionArgs($caller);
+if($ar["line"]==0){
+$errstr = ":Error Msg: (" . $ar["arglist"] . ')ENDMsg ' ;                
+}else{
+$errstr = " Call". $this->maxErrorCounter ."[" . $ar["class"] . $ar["type"] . $ar["function"] . "(". $ar["arglist"] .")]";
+}
+$this->setMsg($errstr , $errnoa, $ar['file'], $ar["line"], "error");
+}
+}
+}
 /**
 * Advance Function, Internal Use
 */
@@ -70,11 +116,42 @@ public function printAll() {}
 * @param string $type default=log, info,error
 * @return type
 */
-protected function consoleMsg($msg,$type="log"){}
+protected function consoleMsg($msg,$type="log"){
+$msg = str_replace("\r", ' ',$msg);
+$msg = str_replace("\n", ' ',$msg);
+return 'console.'. $type .'("' . str_replace('"', '\"',$msg) . '");';
+}
 /**
 * Advance Function, Internal Use
 */
-protected function renderHexMode() {}
+protected function renderHexMode() { 
+$C = 0;
+$str1 = '';
+try{
+foreach ($this->msg as $key=>$value) { 
+if($C > 90){
+break ;
+}
+if($value[4]=="info"){
+$str1 .= $this->consoleMsg($value[0],"log");
+}else if($value[4]=="infoi"){
+$C += 1;
+$str1 .= $this->consoleMsg($value[0],"info");
+}else{
+$C += 1;
+$str1 .= $this->consoleMsg("$value[2] - $value[0]" . " $value[1] - $value[3]","error");
+}
+}
+if(function_exists("getCheckErr") && getCheckErr()){
+$str1 .= traceError(false).' '.traceErrorInner(false);
+$this->write_log($str1);
+}
+}  catch (Exception $e){
+echo 'Debugger Failed: ',  $e->getMessage(), "\n";
+$this->write_log('Debugger Failed: ',  $e->getMessage(), "\n");
+}
+addFooterJSCode("debugger1",'/* start debug */' . $str1 . '/* end debug */');
+}
 /**
 * Advance Function, Internal Use
 */

@@ -22,7 +22,6 @@ public $respath = "";
 public $comppath = "" ;
 public $libpath = "" ;
 public $debug = null;
-public function __construct($dhtml=false) {}
 public function getTempobj() {}
 public function setTempobj($tempobj) {}
 public function setCodebehind($codebehind) {}

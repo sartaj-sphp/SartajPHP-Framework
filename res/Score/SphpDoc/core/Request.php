@@ -17,7 +17,6 @@ public $argv = array();
 /** @var string $type Request Type Default NORMAL or AJAX or SOAP */
 public $type = "NORMAL";     /** @var boolean $isNativeClient true if application embed with browser  */
 public $isNativeClient = false;
-public function __construct() {}
 /**
 * Get All Request Headers
 * @return array()

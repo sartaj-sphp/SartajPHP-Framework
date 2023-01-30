@@ -62,7 +62,6 @@ public function processEvent() {}
 * @ignore
 */
 public function render() {}
-public function __construct() {}
 /**
 * get controller event name trigger by browser
 * @return string

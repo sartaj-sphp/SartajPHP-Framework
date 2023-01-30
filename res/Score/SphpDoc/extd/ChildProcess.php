@@ -10,13 +10,11 @@ class ChildProcess {
 * @param array  $options Options for proc_open()
 * @throws RuntimeException When proc_open() is not installed
 */
-public function __construct($cmd, $cwd = null, array $env = null, array $options = array()) {}
 public function write($msg) {}
 public function read() {}
 public function readErr() {}
 public function run() {}
 public function closeProcess() {}
 public function getStatus() {}
-public function __destruct() {}
 }
 }

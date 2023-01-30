@@ -20,7 +20,6 @@ public $debug = null;
 public $phppath = "";
 public $respath = "";
 public $apppath = "";
-public function __construct($tempfile) {}
 public function setup($tempobj) {}
 public function process($tempobj) {}
 /**

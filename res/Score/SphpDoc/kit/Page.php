@@ -35,7 +35,6 @@ public $isSesSecure = false;
 * Advance No Use
 * @depends start
 */
-public function __construct() {}
 /** Advance 
 * Overload, Event Handler For App Type development
 */
@@ -117,7 +116,6 @@ public function init() {}
 /** Advance 
 * Overload, Event Handler For App Type development
 */
-public function __destruct() {}
 /**
 * Set which user can access this application. Default user is GUEST.
 * You can set session variable in login app 

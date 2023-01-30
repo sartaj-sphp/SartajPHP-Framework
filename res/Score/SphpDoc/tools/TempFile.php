@@ -192,7 +192,6 @@ public function getBlncodebehind() {}
 * @param boolean $dhtml Optional Default=false, if true then use different template engine
 * @param string $prefixNameadd Optional Default='', prefix for component id
 */
-public function __construct($TempFilePath, $blnStringData = false, $backfileobj = null, $parentappobj = null, $dhtml = false, $prefixNameadd = "") {}
 /**
 * Add Meta Data attached to TempFile
 * @param string $key
@@ -210,7 +209,6 @@ public function getMetaData($key) {}
 * @param string $name
 * @return \Sphp\tools\Control
 */
-public function __get($name) {}
 /**
 * Check if Component Exist in TempFile
 * @param string $key component name or id in HTML code
@@ -258,9 +256,7 @@ public function getChildrenWrapper($compobj) {}
 public function parseComponentChildren($obj) {}
 }
 class TempFileChild extends TempFile {
-public function __construct($TempFilePath, $blnStringData = false, $backfileobj = null, $parenttemp = null, $dhtml = false, $prefixNameadd = "") {}
 }
 class TempFileComp extends TempFile {
-public function __construct($TempFilePath, $blnStringData = false, $parentapp = null, $noprefix = false) {}
 }
 }

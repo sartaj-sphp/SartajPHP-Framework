@@ -24,13 +24,8 @@ public function destSession(){}
 */
 class jq {
 public $jsstate = "of";
-public function __construct() {}
-public function __invoke($param1) {}
-public function __call($name, $arguments) {}
-public static function __callStatic($name, $arguments) {}
-public function __get($varName) {}
-public function __set($varName, $value) {}
-public function __toString() {}
+public static function __callStatic($name, $arguments) {
+}
 }
 /**
 * Description of Eventer
@@ -42,10 +37,8 @@ public $obj="";
 public $evt="";
 public $event="";
 public $ui="";
-public function __construct() {}
 }
 class Event{
-public function __construct($targetobj) {}
 public function setHandler($eventhandlerobj, $handler) {}
 public function raiseEvent($arglst = array()) {}
 }

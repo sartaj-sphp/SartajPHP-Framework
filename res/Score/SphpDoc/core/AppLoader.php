@@ -53,7 +53,6 @@ class FrontPlace{
 * $type = TempFile(*.front) or PHP
 * </p>
 */
-public function __construct($frontname, $filepath, $secname = "left", $type = "TempFile") {}
 /**
 * Run Front Place before processing master file getHeaderHTML() code
 */

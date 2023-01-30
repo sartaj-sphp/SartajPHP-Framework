@@ -68,9 +68,5 @@ public function setTagName($tagname) {}
 public function wrapTag($taghtml) {}
 public function wrapInnerTags($taghtml) {}
 public function appendHTML($html){}
-public function &__get($name) {}
-public function __set($name, $value) {}
-public function __isset($name) {}
-public function __unset($name) {}
 }
 }

@@ -36,15 +36,12 @@ public $run_mode_not_extension = false;
 public $run_hd_parser = false;
 public $blnPreLibLoad = false;
 public $blnStopResponse = false;
-public function __construct() {}
 /**
 * Advance Function, Internal Use
 */
-public  function __get($key){}
 /**
 * Advance Function, Internal Use
 */
-public  function __set($key,$val){}    
 public function getTitle() {}
 public function getMetakeywords() {}
 public function getKeywordIndex() {}

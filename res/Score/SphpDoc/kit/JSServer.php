@@ -152,7 +152,6 @@ public function postServer($url, $data = "{}", $imgid = "''", $cache = false, $d
 */
 class JQuery {
 public $jq = null;
-public function __construct() {}
 public function setJSFunctionName($jsfun, $funtype = false) {}
 public function stripQuot($val) {}
 public function safeJSString($val) {}

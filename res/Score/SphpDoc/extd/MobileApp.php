@@ -15,7 +15,6 @@ public $cfilename = "";
 public $path = "";
 public $pathres = "";
 public $dir = null;
-public function __construct(){}
 public function setSpecialMetaTag($val) {}
 public function setup($tempobj){}
 public function addPage($pageobj) {}

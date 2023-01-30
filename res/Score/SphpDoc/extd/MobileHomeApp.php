@@ -8,7 +8,6 @@ namespace Sphp\tools{
 include_once($libpath . "/lib/DIR.php");
 include_once($libpath . "/lib/HtmlMinifier.php");
 class MobileHomeApp extends ComboApp{
-public function __construct(){}
 public function render(){}
 }
 class MobilePageApp extends MobileHomeApp{

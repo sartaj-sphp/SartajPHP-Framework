@@ -30,7 +30,6 @@ public $Client = null;
 public $dbEngine = null;
 /** @var \Sphp\core\DebugProfiler $debug */
 public $debug = null;
-public function __construct() {}
 /**
 * Advance function for change the behavior of app
 * @param \Sphp\tools\TempFile $tempobj

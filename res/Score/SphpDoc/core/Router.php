@@ -98,7 +98,6 @@ public function getthisURL($extra = "", $blnSesID = false) {}
 * @return string
 */
 public function getEventURL($eventName, $evtp = "", $ControllerName = "", $extra = "", $newbasePath = "", $blnSesID = false) {}
-public function __toString() {}
 /**
 * Advance Function, Internal use
 * @param string $evt

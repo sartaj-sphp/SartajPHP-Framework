@@ -9,7 +9,6 @@ class Psjs {
 public $strdata = "";
 public $strlen = -1;
 public $file_arr = array();
-public function __construct($filepath) {}
 public function parseJavascript() {}
 public function parseJavascriptBlock($start, $find_start, $find_end) {}
 public function fixCompEventHandlers($tempobj) {}

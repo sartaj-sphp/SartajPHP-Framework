@@ -26,19 +26,41 @@ $cacheFileList = array();
 * @link https://sartajphp.com/api4-fun.html?addCacheList
 * @return void
 */
-function addCacheList($url, $sec = 0, $type = "controller") {}
+function addCacheList($url, $sec = 0, $type = "controller") {
+global $cacheFileList;
+$md5url = md5($url);
+$cacheFileList[$md5url] = array($sec, $type);
+}
 /** isPharApp()
 * Check if application run as Phar app.
 * @return boolean
 */
-function isPharApp(){}
+function isPharApp(){
+if(defined("PHARAPP")){
+return true;
+}else{
+return false;        
+}
+}
 /**
 * 
 * @param string $url
 * @return boolean
 */
-function isRegisterCacheItem($url) {}
-function getCacheItem($url) {}
+function isRegisterCacheItem($url) {
+global $cacheFileList;
+$md5url = md5($url);
+if (isset($cacheFileList[$md5url])) {
+return true;
+} else {
+return false;
+}
+}
+function getCacheItem($url) {
+global $cacheFileList;
+$md5url = md5($url);
+return $cacheFileList[$md5url];
+}
 include_once("{$phppath}/Score/global/global.php");
 $response_method = "NORMAL";
 if(defined("PHARAPPW")){
@@ -53,35 +75,63 @@ define("TABCHAR", "\t");
 * @param string $param
 * @return mixed
 */
-function readGlobal($param) {}
+function readGlobal($param) {
+global $$param;
+if (isset($$param)) {
+return $$param;
+} else {
+return "null";
+}
+}
 /**
 * Write Global variable
 * @param string $param
 * @param object $val
 */
-function writeGlobal($param, $val) {}
+function writeGlobal($param, $val) {
+global $$param;
+$$param = $val;
+}
 /**
 * include with all global variables in close environment like include in function.
 * @param string $filepath
 */
-function includeOnce($filepath) {}
+function includeOnce($filepath) {
+extract($GLOBALS, EXTR_REFS);
+include_once($filepath);
+}
 /**
 * Experimental don't use. 
 * include with all global variables in close environment like include in function.
 * when sphp_mannually_start_engine defined then it use include otherwise it use include_once
 * @param string $filepath
 */
-function includeOnce2($filepath) {}
+function includeOnce2($filepath) {
+extract($GLOBALS, EXTR_REFS);
+if (!defined("sphp_mannually_start_engine")) {
+include_once($filepath);
+} else {
+include($filepath);
+}
+}
 /**
 * Get $GLOBALS PHP Variable
 * @return array
 */
-function getGlobals() {}
+function getGlobals() {
+return $GLOBALS;
+}
 /**
 * Extra autoload registered function
 * @param string $name
 */
-function loadSphpLibClass($name) {}
+function loadSphpLibClass($name) {
+$class_name = explode("\\", $name);
+$file_find = \SphpBase::sphp_settings()->lib_path . '/extd/' . $class_name[count($class_name) - 1] . '.php';
+if (file_exists($file_find)) {
+include_once($file_find);
+}
+}
 spl_autoload_register("loadSphpLibClass");
 class stmycache {
 public $url_extension = ".html";
@@ -104,7 +154,6 @@ public $type = "NORMAL";     public $isNativeClient = false;
 public $edtmode = false;
 public $ytetimestart1 = 0;
 public $ytetimestart2 = 0;
-public function __construct() {}
 public function findbdataToStr($str1){}
 public function getPostFormData($data){}
 public function escapetag($str) {}

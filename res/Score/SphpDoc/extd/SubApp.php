@@ -27,7 +27,6 @@ public $cfilename = "";
 public $cfilepath = "";
 public $mypath = "";
 public $myrespath = "";
-public function __construct(){}
 public function setup($tempobj){}
 public function process($tempobj){}
 public function processEvent(){}
