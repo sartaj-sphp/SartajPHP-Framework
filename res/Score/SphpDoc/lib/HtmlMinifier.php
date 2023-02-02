@@ -11,17 +11,7 @@ const			TAG_LOCAL_STYLE		=  '__LOCAL_STYLE__' ;
 const			TAG_START		=  "\x00" ;
 const			TAG_END			=  "\x01" ;
 protected function  MinifyData ( )
-{
-return ( $this -> __minify_data ( $this -> Content ) ) ;
-}
+{}
 protected function  __get_text_data ( $node )
-{
-$parent		=  strtolower ( $node -> parentNode -> nodeName ) ;
-if  ( isset  ( self::$PreserveSpacesInTags [ $parent ] ) )
-$result		=  $node -> nodeValue ;
-else
-$result		=  preg_replace ( '/\s+/ms', ' ', $node -> nodeValue ) ;
-$result		=  htmlentities ( $result ) ;
-return ( $result ) ;
-}
+{}
 }

@@ -26,10 +26,12 @@ $errorLog = true;
 $sphpRunasLib = false;
 $run_hd_parser = false; // not working under process
 $translatermode = false;
-$blnEditMode = false;
-// false mean no use of preload
+$blnEditMode = true;
+// true mean use of php preload in ini
+//opcache.preload=D:/www/res/Sphp/preload_lib.php
+//opcache.preload_user=www-data
 $blnPreLibCache = false;
-// if true load library as single file
+// if true load libsphp1.php file
 $blnPreLibLoad = true;
 $blnStopResponse = false;
 

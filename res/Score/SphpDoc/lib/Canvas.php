@@ -20,24 +20,6 @@ public function drawImageOver($image,$dst_x,$dst_y,$x,$y,$dst_width,$dst_height,
 public function drawString($x,$y,$string){}
 public function saveImage($path){}
 public function getImageDataStreem(){}
-function getOutputFunction(){
-switch ($this->mime)
-{
-case 'image/gif':
-$outputFunction		= 'imagepng';
-$this->mime				= 'image/png'; 		$this->doSharpen			= FALSE;
-$this->quality			= round(10 - ($this->quality / 10)); 	break;
-case 'image/x-png':
-case 'image/png':
-$outputFunction		= 'imagepng';
-$this->doSharpen			= FALSE;
-$this->quality			= round(10 - ($this->quality / 10)); 	break;
-default:
-$outputFunction	 	= 'imagejpeg';
-$this->doSharpen			= TRUE;
-break;
-}
-return $outputFunction;
-}
+function getOutputFunction(){}
 }
 }

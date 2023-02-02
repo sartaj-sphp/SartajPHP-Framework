@@ -325,16 +325,8 @@ public function getParameterA($name) {}
 * Regsiter Event for Object which uses for Event Driven Programming.
 * @param string $event_name
 */
-protected function registerEvent($event_name) {
-$this->eventRegister[$event_name] = array("null", "null");
-}
-protected function isRegisterHandler($event_name) {
-if ($this->eventRegister[$event_name][1] != "null") {
-return true;
-} else {
-return false;
-}
-}
+protected function registerEvent($event_name) {}
+protected function isRegisterHandler($event_name) {}
 /**
 * Set Event Handler of Component. 
 * This is Registered Event in component which can handle by application.
@@ -343,25 +335,9 @@ return false;
 * @param object $eventhandlerobj Optional Object handle the event 
 */
 public function setEventHandler($event_name, $handler, $eventhandlerobj = "null") {}
-protected function raiseEvent($event_name, $arglst = array()) {
-$arglst["obj"] = $this;
-$arglst["evt"] = $event_name;
-if (is_object($this->eventRegister[$event_name][0])) {
-call_user_func_array(array($this->eventRegister[$event_name][0], $this->eventRegister[$event_name][1]), array($arglst));
-} else if ($this->eventRegister[$event_name][1] != "null") {
-call_user_func_array($this->eventRegister[$event_name][1], array($arglst));
-}
-}
-protected function registerEventJS($event_name) {
-$this->eventRegisterJS[$event_name] = array("null", "null");
-}
-protected function isRegisterHandlerJS($event_name) {
-if ($this->eventRegisterJS[$event_name][1] != "null") {
-return true;
-} else {
-return false;
-}
-}
+protected function raiseEvent($event_name, $arglst = array()) {}
+protected function registerEventJS($event_name) {}
+protected function isRegisterHandlerJS($event_name) {}
 /**
 * Set Event Handler for JS Code
 * @param string $event_name Event Name to handle
@@ -376,33 +352,7 @@ public function setEventHandlerJS($event_name, $handler, $eventhandlerobj = "nul
 * @param array $arglst
 * @return string
 */
-protected function raiseEventJS($event_name, $arglst = array()) {
-if (!is_object($this->eventRegisterJS[$event_name][0])) {
-$str = "";
-if (!isset($arglst["obj"])) {
-$arglst["obj"] = "$('#" . $this->name . "')";
-}
-$arglst["evt"] = "'" . $event_name . "'";
-$arglst["event"] = "event";
-foreach ($arglst as $key => $value) {
-if (!is_string($value)) {
-$value = '"' . $value . '"';
-}
-if ($str == "") {
-$str .= "\"" . $key . "\": " . $value;
-} else {
-$str .= ",\"" . $key . "\": " . $value;
-}
-}
-if ($this->eventRegisterJS[$event_name][1] == "null") {
-$str = "comp_" . $this->name . "_" . $event_name . "(" . "{" . $str . "}" . ")";
-} else {
-$str = $this->eventRegisterJS[$event_name][1] . "(" . "{" . $str . "}" . ")";
-}
-return $str;
-}
-return "";
-}
+protected function raiseEventJS($event_name, $arglst = array()) {}
 /**
 * Submit Component value via Ajax Request and it 
 * generate all required JS code automatically.
@@ -435,16 +385,7 @@ public function addHeaderJSFunctionCode($funname, $name, $code, $renderonce = fa
 * @param string $handlerFunName JS function name for handling event.
 * @param boolean $renderonce Optional default=false, true=ignore on ajax request
 */
-protected function bindJSEvent($selector, $eventName, $handlerFunName = "", $renderonce = false) {
-$jsfun = $selector . $eventName;
-if ($handlerFunName == "") {
-$jsfun = str_replace("#", "", $selector);
-$jsfun = str_replace(".", "", $jsfun);
-$jsfun = "comp_" . $jsfun . "_" . $eventName;
-$handlerFunName = $jsfun;
-}
-addHeaderJSFunctionCode("ready", $jsfun, ' $("' . $selector . '").on("' . $eventName . '",function(event, ui){ var rt = ' . $handlerFunName . '({obj: $(event.target),evt: "' . $eventName . '",event: event,ui: ui}); return rt;});', $renderonce);
-}
+protected function bindJSEvent($selector, $eventName, $handlerFunName = "", $renderonce = false) {}
 /**
 * Bind with any JS Object Event(NON DOM Events) with $handlerFunName. 
 * For Example:- Bind with activate event of bootstrap Tab 
@@ -456,64 +397,13 @@ addHeaderJSFunctionCode("ready", $jsfun, ' $("' . $selector . '").on("' . $event
 * @param string $handlerFunName JS function name for handling event.
 * @param boolean $renderonce Optional default=false, true=ignore on ajax request
 */
-protected function bindJSObjEvent($selector, $obj, $eventName, $handlerFunName = "", $renderonce = false) {
-$jsfun = $selector . $eventName;
-if ($handlerFunName == "") {
-$jsfun = str_replace("#", "", $selector);
-$jsfun = str_replace(".", "", $jsfun);
-$jsfun = "comp_" . $jsfun . "_" . $eventName;
-$handlerFunName = $jsfun;
-}
-addHeaderJSFunctionCode("ready", $jsfun, ' $("' . $selector . '").' . $obj . '({' .
-$eventName . ': function(event, ui){ var rt = ' . $handlerFunName .
-'({obj: $("' . $selector . '"),evt: "' . $eventName . '",event: event,ui: ui}); return rt;}});', $renderonce);
-}
+protected function bindJSObjEvent($selector, $obj, $eventName, $handlerFunName = "", $renderonce = false) {}
 public function parseMe() {}
-public final function getHelp() {
-$this->setPostTag('<a href="http://www.sartajphp.com/" target="__blank" >For More Help Visit Sphp Website</a>');
-}
-public final function render() {
-$strRet = "";
-if ($this->renderMe == true) {
-$this->onjsrender();
-$this->onrender();
-$this->renderLast();
-$this->raiseEvent("on-endrender");
-if ($this->parentobj != null) {
-$this->parentobj->onchildevent("onrender", $this);
-}
-$this->getHTMLTag();
-}
-$this->element->blnrender = $this->renderMe;
-$this->element->blnrenderTag = $this->renderTag;
-$this->element->blnselfclose = !$this->blnendtag;
-}
-public final function prerender() {
-if ($this->renderMe == true) {
-$this->raiseEvent("on-startrender");
-$this->renderOnJsEvent();
-$this->onprejsrender();
-$this->onprerender();
-if ($this->parentobj != null) {
-$this->parentobj->onchildevent("onprerender", $this);
-}
-}
-}
-public final function oncompinit($element) {
-$this->setEventHandlerIn("on-init", $element);
-$this->setEventHandlerIn("on-create", $element);
-$this->setEventHandlerIn("on-startrender", $element);
-$this->setEventHandlerIn("on-endrender", $element);
-$this->oninit();
-$this->raiseEvent("on-init", array("element" => $element));
-}
-public final function oncompcreate($element) {
-$this->raiseEvent("on-create", array("element" => $element));
-$this->oncreate($element);
-if ($this->parentobj != null) {
-$this->parentobj->onchildevent("oncreate", $this);
-}
-}
+public final function getHelp() {}
+public final function render() {}
+public final function prerender() {}
+public final function oncompinit($element) {}
+public final function oncompcreate($element) {}
 /**
 * Advance Function
 * Execute PHP and return result with eval. 
@@ -634,9 +524,7 @@ public function init($name = "", $fieldName = "", $tableName = "") {}
 * @param string $type Data Type
 * @param string $options
 */
-protected function addHelpPropList($name, $help = '', $val = '', $param = '', $type = '', $options = '') {
-$this->proplist[$name] = array($val, $param, $type, $options, $help, '');
-}
+protected function addHelpPropList($name, $help = '', $val = '', $param = '', $type = '', $options = '') {}
 /**
 * Add Help for Component
 * @param string $name function name
@@ -646,9 +534,7 @@ $this->proplist[$name] = array($val, $param, $type, $options, $help, '');
 * @param string $type Data Type
 * @param string $options
 */
-protected function addHelpPropFunList($name, $help = '', $val = '', $param = '', $type = '', $options = '') {
-$this->proplist[$name] = array($val, $param, $type, $options, $help, 'f');
-}
+protected function addHelpPropFunList($name, $help = '', $val = '', $param = '', $type = '', $options = '') {}
 /**
 * Advance Function, Internal use
 */
@@ -656,43 +542,7 @@ public function helpPropList() {}
 /**
 * Advance Function, Internal use
 */
-protected function genhelpPropList() {
-$this->proplist["runat"] = array('', '', 'select', 'server', 'runtime', '');
-$this->proplist["dtable"] = array($this->dtable, '', '', '', 'Database table name', '');
-$this->proplist["dfield"] = array($this->dfield, '', '', '', 'Database table Column name', '');
-$this->proplist["setHTMLName"] = array($this->HTMLName, '$val', '', '', 'HTML Tag Name', 'f');
-$this->proplist["setHTMLID"] = array($this->HTMLID, '$val', '', '', 'HTML Tag ID', 'f');
-$this->proplist["path"] = array($this->mypath, '$val', '', '', 'component file path', '');
-$this->proplist["pathres"] = array($this->myrespath, '$val', '', '', 'component file pathres', '');
-$this->proplist["setValue"] = array($this->value, '$val', '', '', 'value of component, few case of value attribute of tag', 'f');
-$this->proplist["setDefaultValue"] = array('', '$val', '', '', 'Default value if value is empty', 'f');
-$this->proplist["setTagName"] = array($this->tagName, '$val', '', '', 'HTML Tag name', 'f');
-$this->proplist["setPreTag"] = array('', '$val', '', '', 'Pre HTML', 'f');
-$this->proplist["setPostTag"] = array('', '$val', '', '', 'Post HTML', 'f');
-$this->proplist["setInnerPreTag"] = array('', '$val', '', '', 'first innerhtml', 'f');
-$this->proplist["setInnerPostTag"] = array('', '$val', '', '', 'last innerhtml', 'f');
-$this->proplist["wrapTag"] = array('', '$val', '', '', 'wrap with html tag', 'f');
-$this->proplist["wrapInnerTags"] = array('', '$val', '', '', 'wrap innerhtml with html tag', 'f');
-$this->proplist["setUnAuth"] = array('', '$auth_list', '', '', 'Unauthorised comma separated list which can not see this component', 'f');
-$this->proplist["setAuth"] = array('', '$auth_list', '', '', 'Authorised comma separated list which can see this component', 'f');
-$this->proplist["setrender"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can see this component', 'f');
-$this->proplist["unsetrender"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not see this component', 'f');
-$this->proplist["setrenderTag"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can see this Tag', 'f');
-$this->proplist["unsetrenderTag"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not see this Tag', 'f');
-$this->proplist["setDontFill"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not fetch data from database', 'f');
-$this->proplist["unsetDontFill"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can fetch data from database', 'f');
-$this->proplist["setDontSubmit"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not insert or update to database', 'f');
-$this->proplist["unsetDontSubmit"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can insert or update data to  database', 'f');
-$this->proplist["setDontInsert"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not insert to  database', 'f');
-$this->proplist["unsetDontInsert"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can insert data to  database', 'f');
-$this->proplist["setDontUpdate"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can not update data to  database', 'f');
-$this->proplist["unsetDontUpdate"] = array('', '$permissions', '', '', 'Comma separated Permissions list which can update data to database', 'f');
-$this->proplist["onJsEvent"] = array('', '$eventName,$handlerFunName="",$renderonce=false', '', '', 'Bind JS Event', '');
-$this->proplist["on-init"] = array('', '', '', '', 'Bind INIT Event with App', '');
-$this->proplist["on-create"] = array('', '', '', '', 'Bind Create Event with App', '');
-$this->proplist["on-startrender"] = array('', '', '', '', 'Bind Start Render Event with App', '');
-$this->proplist["on-endrender"] = array('', '', '', '', 'Bind End Render Event with App', '');
-}
+protected function genhelpPropList() {}
 }
 class ControlGroup extends Control {
 final public function onaftercreate() {}

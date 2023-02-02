@@ -46,25 +46,8 @@ public function isPermission($permissions) {}
 public function getAuthenticate($perm = "") {}
 }
 class SphpBase {
-/** @static \Sphp\Engine $engine */
-/** @static \Sphp\core\Router $sphp_router */
-/** @static \Sphp\core\SphpAPI $sphp_api */
-/** @static \Sphp\core\Request $sphp_request */
-/** @static \Sphp\core\Response $sphp_response */
-/** @static \Sphp\kit\Session $sphp_session */
-/** @static \Sphp\Settings $sphp_settings */
-/** @static \SphpPermission $sphp_permissions */
-/** @static \Sphp\kit\JSServer $JSServer */
-/** @static \Sphp\kit\JQuery $JQuery */
-/** @static \Sphp\kit\Page $page */
-/** @static \Sphp\core\DebugProfiler $debug */
-/** @static \MySQL $dbEngine */
-/** @static \SphpJsM $sphpJsM */
-/** @static \Sphp\tools\TempFile $dynData */
 public static $dynData = null;
-/** @static \stmycache $stmycache */
 public static $stmycache = null;
-/** @static array $cacheFileList */
 public static $cacheFileList = null;
 /**
 * Get Engine
@@ -264,24 +247,4 @@ if ($debugmode > 0) {
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 }
-SphpBase::_startme();
-SphpBase::init();
-$jq = new \Sphp\kit\jq();
-$engine = new Sphp\Engine();
-SphpBase::setReady($engine);
-$engine->start();
-try {
-if (!defined("sphp_mannually_start_engine")) {
-$sphp_notglobalapp = $engine->executeinit();
-if (!$sphp_notglobalapp[0]) {
-include_once($sphp_notglobalapp[1]);
-$engine->execute(true);
-} else {
-$engine->execute();
-}
-}
-} catch (\Throwable $e) {
-throw new Exception($e->getMessage() . ' File:- ' . $e->getFile() . ' Line:- ' . $e->getLine());
-} catch (\Exception $e) {
-throw new Exception($e->getMessage() . ' File:- ' . $e->getFile() . ' Line:- ' . $e->getLine());
-}
+function runSartajPHPEngine(){}
