@@ -7,7 +7,7 @@ $duser = "root";
 $db = "dbproj";
 $dpass = "";
 
-$debugmode = true;
+$debugmode = 0;
 
 if($basepath != ""){
 	$basepath .= "demo/";
@@ -23,12 +23,9 @@ $mailPort = "26";
 //$admmasterf = "temp/html/master.php";
 
 function getWelcome(){
-global $logType;
-global $fileName;
-global $page;
-global $basepath;
+$page = SphpBase::page();
 
-switch($logType){
+switch(SphpBase::page()->getAuthenticateType()){
 case "ADMIN":{
 $page->forward(getAppPath("admhome",'','',true));
 break;
@@ -39,7 +36,7 @@ break;
 }
 
 default:{
-$page->forward(getAppPath("home"));
+$page->forward(getAppPath("index"));
 break;
 }
 

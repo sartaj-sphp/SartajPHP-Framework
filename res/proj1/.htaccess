@@ -8,7 +8,14 @@ DirectoryIndex start.php
 </FilesMatch>
 
 RewriteEngine On
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE] 
 RewriteCond %{REQUEST_URI} \.(html|htm)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ start.php [NC,L]
+RewriteCond %{REQUEST_URI} \.(front|app|temp|mast)$ [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/index.html [L,R=301,NE]
+<FilesMatch "\.(htm?l|txt|css|js|php|pl)$">
+    SetOutputFilter DEFLATE
+ </FilesMatch>

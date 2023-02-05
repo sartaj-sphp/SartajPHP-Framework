@@ -1,6 +1,0 @@
-[2021-07-13: 14:54:46] Server Status:- :call: include_once(0 : {/usr/bin/res/Slib/Sphp/global/start.php} , ) 
-                ENDLOG_DATA[2021-07-13: 14:54:46] Server Status:- :call: include_once(0 : {/usr/bin/res/Slib/Sphp/global/start.php} , ) 
-                ENDLOG_DATA[2021-10-12: 14:57:53] Server Status:- :Error Msg: (0 : {} , )ENDMsg  
-                ENDLOG_DATA[2021-10-12: 17:14:03] Server Status:- :Error Msg: (0 : {} , )ENDMsg  
-                ENDLOG_DATA[2021-10-12: 17:14:20] Server Status:- :Error Msg: (0 : {} , )ENDMsg  
-                ENDLOG_DATA
