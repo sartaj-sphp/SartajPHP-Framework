@@ -25,9 +25,11 @@ Installation
 How to install it?
 
 With NPM:----
+
 npm install -g sphpdesk
 
 After Installation run command
+
 npx sphpdesk
 
 It run default project inside in res folder. If you want to run directly sphpserver then you can create a symlink inside your bin folder.
