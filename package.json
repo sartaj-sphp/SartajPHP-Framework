@@ -8,7 +8,7 @@
   "repository": "github:sartaj-singh/SartajPHP-Framework",
   "bugs": "https://github.com/sartaj-singh/SartajPHP-Framework/issues",
   "bin": {
-    "sphpdesk": "./index.js"
+    "sphpdesk": "index.js"
   },
   "scripts": {
     "sphpdesk": "node ."
