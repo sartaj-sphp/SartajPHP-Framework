@@ -1,6 +1,6 @@
 {
   "name": "sphpdesk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sartaj PHP Desktop Interface",
   "preferGlobal": true,
   "main": "index.js",

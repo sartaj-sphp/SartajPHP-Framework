@@ -32,7 +32,7 @@ After Installation run command
 
 npx sphpdesk
 
-It run default project inside res folder. If you want to run directly sphpserver then you can create a symlink inside your bin folder.
+It runs default project inside res folder. If you want to run directly sphpserver then you can create a symlink inside your bin folder.
 For run with double click on file app.sphp, you need to register .sphp file type with sphpserver application. Right click on app.sphp
 file and select open with and choose sphpserver application path.OR you can install on your desktop with installation file inside 
 res/sphpserver folder
