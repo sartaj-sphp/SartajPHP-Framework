@@ -22,7 +22,7 @@ Installation
 
 * [Install SartajPHP + Sphp Server][1] with NPM JS Package).
 
-How to install it?
+How to install Sphp Server binary package?
 
 With NPM:----
 
