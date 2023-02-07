@@ -1,0 +1,8 @@
+<div class="row">
+<div class="col">
+<form id="form2" runat="server" class="form-horizontal"  action="##{ getThisPath() }#">
+ name   <input id="name" runat="server" type="text" dfield=""  funsetForm="form2" funsetMsgName="i am good" fuisetRequired="" fuisetMinLen="4" fuisetMaxLen="8" />
+<input type="submit" value="Submit" />
+</form>
+</div>
+</div>

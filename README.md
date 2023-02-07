@@ -75,7 +75,7 @@ project folder. You can create your component, classes etc. all reusable code in
 project folder. Learn more:- [SartajPHP Website][1]
 
 
-Sphp Server(instal with NPM) Commands:-
+Sphp Server(install with NPM) Commands:-
 -------------
 
 * Run Desk App mode:- sphpdesk proj_dir/app.sphp
@@ -92,7 +92,10 @@ You can over-write these settings with console arguments:-
 "port": 0 : port number to serve server
 "secure": 0 : no https
 "php": "php": use system installed PHP or ""
-"browser": "default":- System Default or "$exepath/browser/nw" your custom browser,
+"browser": "default":- System Default 
+or "$exepath/browser/nw" your custom browser
+or "" empty for inbuilt browser, these browser need libraries installed on system
+ like WebView2 on windows and GTK3, WebKitGTK on linux
 
    browser command line arguments example:-
 "browserparam": ["--url=$url"],
