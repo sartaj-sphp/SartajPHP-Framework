@@ -24,11 +24,11 @@ Installation
 
 How to install Sphp Server binary package?
 
-With NPM:----
+* With NPM:----
 
 npm install -g sphpdesk
 
-After Installation run command
+* After Installation run command
 
 npx sphpdesk
 
@@ -75,7 +75,7 @@ project folder. You can create your component, classes etc. all reusable code in
 project folder. Learn more:- [SartajPHP Website][1]
 
 
-Sphp Server(instal with NPM not with composer) Commands:-
+Sphp Server(instal with NPM) Commands:-
 -------------
 
 * Run Desk App mode:- sphpdesk proj_dir/app.sphp
