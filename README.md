@@ -20,8 +20,8 @@ For more info see:- <a href="https://github.com/sartaj-singh/vscode-sartajphp-in
 Installation
 ------------
 
-* [Install SartajPHP][1] with Composer or download zip file from github(see
-  [GitHub][2]).
+* [Install SartajPHP + Sphp Server][1] with NPM JS Package).
+
 How to install it?
 
 With NPM:----
@@ -36,6 +36,12 @@ It runs default project inside res folder. If you want to run directly sphpserve
 For run with double click on file app.sphp, you need to register .sphp file type with sphpserver application. Right click on app.sphp
 file and select open with and choose sphpserver application path.OR you can install on your desktop with installation file inside 
 res/sphpserver folder
+
+
+* [Install SartajPHP][1] with Composer or download zip file from github(see
+  [GitHub][2]).
+
+How to install it?
 
 
 With Composer:----
