@@ -2,7 +2,7 @@
 <p align="center"><a href="http://sartajphp.com" target="_blank">
     <img src="http://sartajphp.com/temp/default/images/logo.png">
 </a></p>
- 
+
 Info
 -----------
 [SartajPHP][1] is a **PHP framework** for web applications, Command Line Application, 
@@ -75,7 +75,7 @@ project folder. You can create your component, classes etc. all reusable code in
 project folder. Learn more:- [SartajPHP Website][1]
 
 
-Sphp Server Commands:-
+Sphp Server(instal with NPM not with composer) Commands:-
 -------------
 
 * Run Desk App mode:- sphpdesk proj_dir/app.sphp
