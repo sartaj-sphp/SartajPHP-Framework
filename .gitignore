@@ -2,4 +2,6 @@
 /nbproject/
 /node_modules/
 package-lock.json
+/res/sphpserver/
+/res/bin/
 
