@@ -10,8 +10,5 @@
     "bin": ["demo/start.php"],
     "require": {
         "php": ">=5.4"
-    },
-    "archive": {
-        "exclude": ["res/bin", "index.js", "package.json"]
     }
 }
