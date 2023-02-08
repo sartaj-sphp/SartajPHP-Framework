@@ -2,7 +2,7 @@
 /**
  * Description of DIR
  *
- * @author SARTAJ
+ * @author Sartaj Singh <sartajphp.com>
  */
 class DIR {
 public $arr = Array();

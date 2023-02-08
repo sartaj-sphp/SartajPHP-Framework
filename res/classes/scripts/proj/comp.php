@@ -1,6 +1,6 @@
 <?php
 $cmpid = "demo";
-$cmpname = "SartjPHP Demo";
+$cmpname = "SartajPHP Demo";
 
 
 $duser = "root";

@@ -1,0 +1,16 @@
+{
+    "project": "Demo",
+    "type1": "srvapp,deskapp,consoleapp",
+    "type": "deskapp",
+    "comment": "port 0 mean auto",
+    "host": "localhost",
+    "port": 0,
+    "secure": 0,
+    "php": "php",
+    "browser3": "$exepath/res/binextra/nwjs-v0.67.1-linux-x64/nw",
+    "browserparam3": ["--url=$url"],
+    "browser": "default",
+    "browserparam": ["--allow-file-access-from-files", "--disable-web-security", "--user-data-dir=$projpath/cache","--app=$url", "--disable-features=CrossSiteDocumentBlockingIfIsolating"],
+    "browserparam2": ["--app=$url"],
+    "browserparam4": ["--new-window", "$url"]
+}

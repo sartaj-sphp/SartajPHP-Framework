@@ -44,6 +44,7 @@ $menu->run();
 </div>
 </div>
             </div></div></div>
-<?php  echo SphpBase::sphp_api()->getFooterHTML(); echo SphpBase::sphp_api()->traceError() . SphpBase::sphp_api()->traceErrorInner(); ?>
+<?php  echo SphpBase::sphp_api()->getFooterHTML(); 
+echo SphpBase::sphp_api()->traceError(true) . SphpBase::sphp_api()->traceErrorInner(true); ?>
 </body>
 </html>

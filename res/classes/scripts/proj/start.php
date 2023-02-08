@@ -1,7 +1,7 @@
 <?php
 
-$sharedpath = "vendor/sartajphp/sartajphp";
-$respath = "vendor/sartajphp/sartajphp/res";
+$sharedpath = "..";
+$respath = "../res";
 $slibversion = "Slib";
 $libversion = "Sphp";
 

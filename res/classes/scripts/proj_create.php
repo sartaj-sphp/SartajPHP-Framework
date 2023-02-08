@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Sartaj Singh <sartajphp.com>
+ */
 include_once(__DIR__ . "/DIR.php");
 $dir = new DIR();
 $src = realpath(__DIR__ . "/proj");
