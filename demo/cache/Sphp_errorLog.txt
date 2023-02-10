@@ -1,8 +1,0 @@
-
-
-[2023-02-06: 17:20:11] URL:- / Fatel Error:- Type:-8 Msg:-fwrite(): write of 10 bytes failed with errno=32 Broken pipe File:-/usr/local/lib/node_modules/node/lib/node_modules/sphpdesk/res/Score/Sphp/libsphp1.php on line no. 0 
-                ENDLOG_DATA
-[2023-02-06: 17:20:11] URL:- / Fatel Error:- Type:-8 Msg:-Undefined variable: _SESSION File:-/usr/local/lib/node_modules/node/lib/node_modules/sphpdesk/res/Score/Sphp/libsphp1.php on line no. 0 
-                ENDLOG_DATA
-[2023-02-06: 17:20:11] URL:- / Fatel Error:- Type:-8 Msg:-Undefined variable: _SESSION File:-/usr/local/lib/node_modules/node/lib/node_modules/sphpdesk/res/Score/Sphp/libsphp1.php on line no. 0 
-                ENDLOG_DATA

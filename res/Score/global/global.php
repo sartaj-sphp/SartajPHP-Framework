@@ -26,7 +26,7 @@ $errorLog = true;
 $sphpRunasLib = false;
 $run_hd_parser = false; // not working under process
 $translatermode = false;
-$blnEditMode = true;
+$blnEditMode = false;
 // true mean use of php preload in ini
 //opcache.preload=D:/www/res/Sphp/preload_lib.php
 //opcache.preload_user=www-data

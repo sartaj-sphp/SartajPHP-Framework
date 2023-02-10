@@ -3,7 +3,7 @@ namespace Sphp\core{
 class Request {
 /** @var string $method Request Method */
 public $method = "";
-/** @var string $mode Default SERVER OR CMD or CGI */
+/** @var string $mode Default SERVER OR CLI or CGI */
 public $mode = "SERVER";     /** @var string $protocol Request Protocol */
 public $protocol = "";
 /** @var boolean $blnsecure Request SSL */

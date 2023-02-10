@@ -1,6 +1,6 @@
 <?php
-namespace Sphp\core{
-class SphpPreRunP{
+namespace Sphp\core {
+class SphpPreRunP {
 /**
 * Start Event Handler for prerun.php file. include any library here will be available
 * in whole project 
@@ -18,7 +18,7 @@ class AppLoader {
 * @return array
 * @ignore
 */
-public function load(){}
+public function load() {}
 /**
 * Advance Function, Internal use
 * @return array
@@ -29,7 +29,7 @@ public function startApp() {}
 /**
 * \Sphp\core\Exception
 */
-class Exception extends \Exception{
+class Exception extends \Exception {
 protected $line = 0;
 protected $file = "";
 /**
@@ -43,7 +43,7 @@ public function setLine($line) {}
 */
 public function setFile($filepath) {}
 }
-class FrontPlace{
+class FrontPlace {
 /**
 * Create Front Place Object
 * @param string $frontname Unique Name of Front Place
@@ -56,11 +56,11 @@ class FrontPlace{
 /**
 * Run Front Place before processing master file getHeaderHTML() code
 */
-public function run(){}
+public function run() {}
 /**
 * Call Render in master file where to display html code
 */
-public function render(){}
+public function render() {}
 }
 /**
 * SphpVersion class
@@ -71,16 +71,16 @@ public function render(){}
 * @author     Sartaj Singh
 * @copyright  2007
 */
-class SphpVersion{
-public function setVersion($val){}
-public function setMinVersionSphp($val){}
-public function setMaxVersionSphp($val){}
-public function setMinVersionPHP($val){}
-public function setMaxVersionPHP($val){}
-public function getVersion(){}
-public function getMinVersionSphp(){}
-public function getMaxVersionSphp(){}
-public function getMinVersionPHP(){}
-public function getMaxVersionPHP(){}
+class SphpVersion {
+public function setVersion($val) {}
+public function setMinVersionSphp($val) {}
+public function setMaxVersionSphp($val) {}
+public function setMinVersionPHP($val) {}
+public function setMaxVersionPHP($val) {}
+public function getVersion() {}
+public function getMinVersionSphp() {}
+public function getMaxVersionSphp() {}
+public function getMinVersionPHP() {}
+public function getMaxVersionPHP() {}
 }
 }

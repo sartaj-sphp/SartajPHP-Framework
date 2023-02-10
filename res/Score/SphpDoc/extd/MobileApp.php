@@ -12,8 +12,6 @@ public $sjsobj = array();
 public $blnsjsobj = true;
 public $sphp_api = null;
 public $cfilename = "";
-public $path = "";
-public $pathres = "";
 public $dir = null;
 public function setSpecialMetaTag($val) {}
 public function setup($tempobj){}
