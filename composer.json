@@ -7,7 +7,9 @@
         { "name": "Sartaj Singh", "homepage": "http://www.sartajsingh.com" },
         { "name": "Sartaj PHP Website", "homepage": "http://www.sartajphp.com" }
     ],
-    "bin": ["demo/start.php"],
+    "bin": {
+        "demo":"demo/start.php"
+    },
     "require": {
         "php": ">=5.4"
     }
