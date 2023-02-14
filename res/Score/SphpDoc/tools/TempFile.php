@@ -74,6 +74,11 @@ public function setAppname($appname) {}
 */
 public function setComponent($key, $obj) {}
 /**
+* Add TempFile as JS Variable to store the JS Objects of components.
+* name of tempfile is used as variable name in JS
+*/
+public function addAsJSVar() {}
+/**
 * Advance Function
 * Register TempFile with SphpApi
 */

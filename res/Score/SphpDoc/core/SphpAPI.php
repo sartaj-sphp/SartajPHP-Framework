@@ -1,5 +1,5 @@
 <?php
-namespace Sphp\core{
+namespace Sphp\core {
 final class SphpAPI {
 public $errStatus = false;
 /**
@@ -16,13 +16,13 @@ public function init() {}
 * @param string $key name of tempfile
 * @param \Sphp\tools\TempFile $obj TempFile Object
 */
-public function registerTempFile($key,$obj) {}
+public function registerTempFile($key, $obj) {}
 /**
 * Add Property into property bag. It is good to use, rather then global variables
 * @param string $name Name for identification
 * @param mixed $obj Any valid PHP Object or Data Type
 */
-public function addProp($name,$obj) {}
+public function addProp($name, $obj) {}
 /**
 * Read proprty from property bag
 * @param string $name Name for identification
@@ -35,7 +35,7 @@ public function getProp($name) {}
 * @param string $comp Name for identification
 * @param \Sphp\tools\Control $obj Control Object
 */
-public function addComponent($comp,$obj) {}
+public function addComponent($comp, $obj) {}
 /**
 * Advance Function, Internal use
 * Add Component for Database bound
@@ -43,7 +43,7 @@ public function addComponent($comp,$obj) {}
 * @param string $comp Name for identification as key
 * @param \Sphp\tools\Control $obj Control Object
 */
-public function addComponentDB($tempname,$comp,$obj) {}
+public function addComponentDB($tempname, $comp, $obj) {}
 /**
 * Advance Function, Internal use
 * Get Components List for Database bound
@@ -79,7 +79,7 @@ public function isComponent($comp) {}
 * Extra data pass to renderer as associative array
 * </p>
 */
-public function addMenu($text,$link="",$icon="",$parent="root",$ajax=false,$roles="",$akey="",$settings=null) {}
+public function addMenu($text, $link = "", $icon = "", $parent = "root", $ajax = false, $roles = "", $akey = "", $settings = null) {}
 /**
 * Add menu link in menu <p>
 * SphpBase::sphp_api()->addMenu("Live Chat",getEventPath("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
@@ -103,31 +103,31 @@ public function addMenu($text,$link="",$icon="",$parent="root",$ajax=false,$role
 * Extra data pass to renderer as associative array
 * </p>
 */
-public function addMenuLink($text,$link="",$icon="",$parent="root",$ajax=false,$roles="",$akey="",$settings=null) {}
+public function addMenuLink($text, $link = "", $icon = "", $parent = "root", $ajax = false, $roles = "", $akey = "", $settings = null) {}
 /**
 * Ban Menu from list, it will not display
 * @param string $text menu name
 * @param string $parent Optional menu parent
 */
-public function banMenu($text,$parent="root") {}
+public function banMenu($text, $parent = "root") {}
 /**
 * Ban Menulink from list, it will not display
 * @param string $text menu name
 * @param string $parent Optional menu parent
 */
-public function banMenuLink($text,$parent="root") {}
+public function banMenuLink($text, $parent = "root") {}
 /**
 * Get All Menu List from parent menu
 * @param string $parent Optional menu parent
 * @return array|null
 */
-public function getMenuList($parent="root") {}
+public function getMenuList($parent = "root") {}
 /**
 * Get All Menulink List from parent menu
 * @param string $parent Optional menu parent
 * @return array|null
 */
-public function getMenuLinkList($parent="root") {}
+public function getMenuLinkList($parent = "root") {}
 /**
 * Cache a request URL if it doesn't need processing.
 * SphpBase::sphp_api()->addCacheList("index",100)
@@ -217,7 +217,7 @@ public function getAppObject($path) {}
 * @param boolean $setEnv Default true = set apppath variable
 * @return type
 */
-public function getRegisterAppClass($filepath,$setEnv=true) {}
+public function getRegisterAppClass($filepath, $setEnv = true) {}
 /**
 * Read Global Variable
 * @param string $varname
@@ -284,7 +284,7 @@ public function array_search_str($needle, $haystack) {}
 * @param string $case1 Default strtolower other value = strtoupper
 * @return array
 */
-public function array_change_val_case($arr, $case1="") {}
+public function array_change_val_case($arr, $case1 = "") {}
 /**
 * Search first match of Needle in array as case insensitive 
 * @param type $needle
@@ -330,7 +330,7 @@ public function getIPDetail() {}
 * @param string $datatype default FLOAT other value is INT
 * @return boolean
 */
-public function is_valid_num($val, $datatype="FLOAT") {}
+public function is_valid_num($val, $datatype = "FLOAT") {}
 public function getEngine() {}
 /**
 * Check valid email format
@@ -403,7 +403,7 @@ public function minifyJS($filedata) {}
 * @param string|mixed $data content to write in file
 * @return int| Exception
 */
-public function safeWriteFile($filepath,$data){}
+public function safeWriteFile($filepath, $data) {}
 /**
 * Trigger Error
 * SphpBase::sphp_api()->triggerError("Couldn't get any result from database", E_USER_NOTICE,debug_backtrace())
@@ -417,7 +417,7 @@ public function triggerError($msg, $errType, $debug_array) {}
 * @param boolean $renderonce Default false
 * @return string
 */
-public function getrenderType($renderonce=false) {}
+public function getrenderType($renderonce = false) {}
 /**
 * Add CSS, JS File Link for browser 
 * SphpBase::sphp_api()->addFileLink("temp/default/theme-black.css",true,"","","2.7")
@@ -428,7 +428,7 @@ public function getrenderType($renderonce=false) {}
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
 */
-public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "",$ver="0") {}
+public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0") {}
 /**
 * Update CSS, JS File Link for browser 
 * SphpBase::sphp_api()->updateFileLink("temp/default/theme-black2.js",false,"black1","js","2.8")
@@ -438,7 +438,7 @@ public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext 
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
 */
-public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "",$ver="0") {}
+public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0") {}
 /**
 * Remove CSS, JS File Link for browser 
 * SphpBase::sphp_api()->removeFileLink("temp/default/theme-black2.js",false,"black1","js")
@@ -475,7 +475,7 @@ public function issetFileLink($filename, $ext, $renderonce = false) {}
 * @return string
 * 
 */
-public function getCombineGlobalJSFiles($min = false,$removeonly = false) {}
+public function getCombineGlobalJSFiles($min = false, $removeonly = false) {}
 /**
 * Advance Function
 * Combine All render once=false files
@@ -484,7 +484,7 @@ public function getCombineGlobalJSFiles($min = false,$removeonly = false) {}
 * @return string
 * 
 */
-public function getCombineJSFiles($min = false,$removeonly = false) {}
+public function getCombineJSFiles($min = false, $removeonly = false) {}
 /**
 * Check JS Function Exist in Header Section
 * @param string $funname Function name as id
@@ -569,7 +569,7 @@ public function addFooterJSCode($name, $code, $renderonce = false) {}
 * @param int $blockJSCode Optional default 0 block JS code section Other values 1 and 2
 * @return string
 */
-public function getHeaderJS($htmltag = true, $global = true,$blockJSCode = 0) {}
+public function getHeaderJS($htmltag = true, $global = true, $blockJSCode = 0) {}
 /**
 * Filter String as JS String
 * @param string $str
@@ -584,7 +584,7 @@ public function getFilterJSString($str) {}
 * @param int $blockJSCode Optional default 0 block JS code section Other values 1 and 2
 * @return string
 */
-public function getFooterJS($htmltag = true, $global = true,$blockJSCode = 0) {}
+public function getFooterJS($htmltag = true, $global = true, $blockJSCode = 0) {}
 /**
 * Advance Function, Internal use
 * Generate all HTML,CSS and JS code for Header Section
@@ -593,7 +593,7 @@ public function getFooterJS($htmltag = true, $global = true,$blockJSCode = 0) {}
 * @param int $blockJSCode Optional default 0 block JS code section Other values 1 and 2
 * @return string
 */
-public function getHeaderHTML($htmltag = true, $global = true,$blockJSCode = 0) {}
+public function getHeaderHTML($htmltag = true, $global = true, $blockJSCode = 0) {}
 /**
 * Advance Function, Internal use
 * Generate all HTML,CSS and JS code for Footer Section
@@ -609,7 +609,7 @@ public function getFooterHTML($htmltag = true, $global = true, $blockJSCode = 0)
 * @param string $type Optional Default=log, it is same as JS console like info, error
 * @return string
 */
-public function consoleMsg($msg,$type="log"){}
+public function consoleMsg($msg, $type = "log") {}
 /**
 * Print Error message in browser in HTML or JS code. This
 * uses SphpBase::sphp_api()->setErr function for set error message.
@@ -778,16 +778,16 @@ public function endec($str, $ky = "") {}
 public function rtClassMethod(\ReflectionClass &$refClass) {}
 public function rtClassFile(\ReflectionClass &$refClass) {}
 public function rtMethodSource(\ReflectionMethod &$method, &$arlines) {}
-public function rtMethodParamFromString($strline,$parameters){}
+public function rtMethodParamFromString($strline, $parameters) {}
 public function rtMethodParm(&$method) {}
 public function rtClassConstantHelp($mainClass, \ReflectionClass &$reflector) {}
-public function rtScopeDefinedHelp(&$arCls,&$arConst,&$arFun,&$arVars) {}
-public function rtClassMethodInvoke(&$method, &$obj, $args=null) {}
-public function rtFunctionInvoke($fun, $args=null) {}
+public function rtScopeDefinedHelp(&$arCls, &$arConst, &$arFun, &$arVars) {}
+public function rtClassMethodInvoke(&$method, &$obj, $args = null) {}
+public function rtFunctionInvoke($fun, $args = null) {}
 public function rtClassMethodFromFileLine(\ReflectionClass &$reflector, $line) {}
-public function rtClassMethodHelp($mainClass, \ReflectionClass &$reflector,&$arResult) {}
-public function rtClassPropertyHelp($mainClass,$clsobj,\ReflectionClass &$reflector,&$arResult) {}
-public function rtAutoCompleteFormat($objname,$helpdoc,$objtype,$code,$helptype) {}
+public function rtClassMethodHelp($mainClass, \ReflectionClass &$reflector, &$arResult) {}
+public function rtClassPropertyHelp($mainClass, $clsobj, \ReflectionClass &$reflector, &$arResult) {}
+public function rtAutoCompleteFormat($objname, $helpdoc, $objtype, $code, $helptype) {}
 public function executePHP($strPHPCode) {}
 public function executePHPGlobal($strPHPCode) {}
 public function executePHPFunc($strPHPCode) {}

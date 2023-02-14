@@ -13,6 +13,7 @@ public $blnsjsobj = true;
 public $sphp_api = null;
 public $cfilename = "";
 public $dir = null;
+public function setGenRootFolder($param) {}
 public function setSpecialMetaTag($val) {}
 public function setup($tempobj){}
 public function addPage($pageobj) {}

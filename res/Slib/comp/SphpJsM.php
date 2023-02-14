@@ -74,9 +74,9 @@ addHeaderJSFunction('readyjq1', "jq1(document).ready(function() {", "});");
 addHeaderJSFunction('pageloadjq1', "jq1(window).on('load',function() {", "});", true);
 if($default){
     if($latest){
-    updateFileLink('sphpjq = window.jQuery = window.$ = jq1 = jql;',true,"jquery-js-code","js");        
+        updateFileLink('sphpjq = window.jQuery = window.$ = jq1 = jql;',true,"jquery-js-code","js");        
     }else{
-    updateFileLink('sphpjq = window.jQuery = window.$ = jq1;',true,"jquery-js-code","js");
+        updateFileLink('sphpjq = window.jQuery = window.$ = jq1;',true,"jquery-js-code","js");
     }
 }
 //addFileLink("$jslibpath/jquery-ui-1.12.1/jquery-ui.min_jq1.js", true,"jquery-ui");

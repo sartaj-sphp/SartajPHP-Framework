@@ -61,6 +61,23 @@ function bindJsVarRefresh(){
         tempobj["propbag"][k] = v;
     });
 }
+function TempFile(){
+    let compList = {};
+    this.addComponent = function(key){
+        if(! Object.prototype.hasOwnProperty.call(compList, key)){
+            compList[key] = null;
+        }
+    };
+    this.setComponent = function(key,obj){
+        if(compList[key] === null){
+            compList[key] = obj;
+        }
+    };
+    this.getComponent = function(key){
+        return compList[key];
+    };
+    
+}
 function sartajgt(idimg,url,data,cache,dataType){
     let sphp_ajax2 = new sphp_ajax();
 sphp_ajax2.ajaxcall(idimg,url,data,cache,dataType);

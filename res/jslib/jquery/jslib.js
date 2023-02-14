@@ -8,6 +8,41 @@ str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
 });
 return(str);
 }
+function parseNumber(variable){
+    if (jQuery.type(variable) !== "undefined" && jQuery.type(variable) !== "null") {
+        if(variable.length !== 'undefined'){ 
+            if(variable.length > 0){
+                var f1 = parseFloat(variable,10);
+                if(f1 !== "NaN"){
+                    parseFloat(variable,10);
+                }else{
+                    return 0.0;
+                }
+            }else{
+                return parseFloat(variable,10);
+            }
+        }else if(jQuery.isPlainObject(variable)){
+            if(Object.keys(variable).length > 0){
+                return Object.keys(variable).length;
+            }else{
+                return 0.0;
+            }
+        }else if(jQuery.type(variable) === "number"){ 
+            return variable;
+        }else if(jQuery.type(variable) === "boolean"){ 
+            if(variable) return 1;
+            return 0.0;
+        }else if(jQuery.type(variable) === "object" && Object.keys(variable).length > 0){ 
+            return Object.keys(variable).length;
+        }else{
+            return 0.0;
+        }
+    
+    }else{ 
+        return 0.0;
+    }
+    
+}
 function callOnceTimeFirstCall(fun,time){
     var now = Date.now();
     var nt = fun.lascalltime || now; 
@@ -431,6 +466,9 @@ function format_date(date) {
   return month+"-"+day+"-"+year+" "+hour+":"+minutes+":"+seconds;
 
 }
+
+var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(r){var e,t,o,a,h,d,C,c="",f=0;for(r=Base64._utf8_encode(r);f<r.length;)e=r.charCodeAt(f++),t=r.charCodeAt(f++),o=r.charCodeAt(f++),a=e>>2,h=(3&e)<<4|t>>4,d=(15&t)<<2|o>>6,C=63&o,isNaN(t)?d=C=64:isNaN(o)&&(C=64),c=c+this._keyStr.charAt(a)+this._keyStr.charAt(h)+this._keyStr.charAt(d)+this._keyStr.charAt(C);return c},decode:function(r){var e,t,o,a,h,d,C,c="",f=0;for(r=r.replace(/[^A-Za-z0-9\+\/\=]/g,"");f<r.length;)a=this._keyStr.indexOf(r.charAt(f++)),h=this._keyStr.indexOf(r.charAt(f++)),d=this._keyStr.indexOf(r.charAt(f++)),C=this._keyStr.indexOf(r.charAt(f++)),e=a<<2|h>>4,t=(15&h)<<4|d>>2,o=(3&d)<<6|C,c+=String.fromCharCode(e),64!=d&&(c+=String.fromCharCode(t)),64!=C&&(c+=String.fromCharCode(o));return Base64._utf8_decode(c)},_utf8_encode:function(r){r=r.replace(/\r\n/g,"\n");for(var e="",t=0;t<r.length;t++){var o=r.charCodeAt(t);o<128?e+=String.fromCharCode(o):o>127&&o<2048?(e+=String.fromCharCode(o>>6|192),e+=String.fromCharCode(63&o|128)):(e+=String.fromCharCode(o>>12|224),e+=String.fromCharCode(o>>6&63|128),e+=String.fromCharCode(63&o|128))}return e},_utf8_decode:function(r){for(var e="",t=0,o=c1=c2=0;t<r.length;)(o=r.charCodeAt(t))<128?(e+=String.fromCharCode(o),t++):o>191&&o<224?(e+=String.fromCharCode((31&o)<<6|63&(c2=r.charCodeAt(t+1))),t+=2):(e+=String.fromCharCode((15&o)<<12|(63&(c2=r.charCodeAt(t+1)))<<6|63&(c3=r.charCodeAt(t+2))),t+=3);return e}};
+
 async function checkOnlineStatus(){
   try {
     const online = await fetch("/favicon.ico");

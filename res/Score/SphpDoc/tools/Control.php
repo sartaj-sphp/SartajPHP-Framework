@@ -378,6 +378,28 @@ public function onJsEvent($eventName, $handlerFunName = "", $renderonce = false)
 */
 public function addHeaderJSFunctionCode($funname, $name, $code, $renderonce = false) {}
 /**
+* Add Component as JS variable part of TempFile JS Object. 
+* HTML Name of component used as variable name in JS code. By default it
+* is same as tag id.
+* in JS you can get Component object as temp1.getComponent('txtname');
+*/
+public function addAsJSVar() {}
+/**
+* Set Component as JS variable part of TempFile JS Object. Remember not all component 
+* will automatically create js object. It is created by component code. If component 
+* developer doesn't offer JS integration then there are no any JS object. 
+* in JS you can set Component object as temp1.setComponent('txtname','$jscode');
+* @param string $jscode JS Code as String
+* @return string JS code
+*/
+public function setAsJSVar($jscode) {}
+/**
+* Get Component as JS Variable.
+* return code like temp1.getComponent('txtname');
+* @return string JS code
+*/
+public function getAsJSVar() {}
+/**
 * Bind with any JS Event with $handlerFunName. 
 * It generate all required JS code and add into jQuery ready handler.
 * @param string $selector jQuery selector
