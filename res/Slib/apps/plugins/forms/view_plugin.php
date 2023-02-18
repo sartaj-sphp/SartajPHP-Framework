@@ -4,7 +4,7 @@
 $arr = $this->tempobj->parentapp->directoryCount("{$phppath}/plugin");
 foreach($arr as $key=>$val){
 print "<div class=\"border\">
-<a href=".getEventPath('vw',$val,'installer').">$val</a><br />";
+<a href=".getEventURL('vw',$val,'installer').">$val</a><br />";
 include_once("{$phppath}/plugin/$val/doc/des.php");
 print "</div>";
 }

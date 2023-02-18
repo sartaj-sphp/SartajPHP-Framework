@@ -15,7 +15,7 @@ function getPagerMenuLinks($catname){
     $sql2 = "SELECT id,pagename,catname,menuname FROM pagdet WHERE spcmpid='$cmpid' AND catname='$catname' AND pagestatus='NO' AND menustatus='YES' ORDER BY rank";
     $result = $dbEngine->fetchQuery($sql2,600);
     foreach ($result["news"] as $key => $row) {
-        SphpBase::sphp_api()->addMenuLink($row['menuname'],getEventPath($row['pagename'],'','page'),"",$catname);
+        SphpBase::sphp_api()->addMenuLink($row['menuname'],getEventURL($row['pagename'],'','page'),"",$catname);
     }
 
 }

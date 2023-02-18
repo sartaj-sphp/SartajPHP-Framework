@@ -25,11 +25,11 @@ class Seditor extends \Sphp\tools\BasicApp{
         $afile = basename($tempfname);
         $dir1 = dirname($tempfname);
         $atype = pathinfo($tempfname,PATHINFO_EXTENSION);
-        addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventPath("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+        addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventURL("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
         $afile = basename($tempappname);
         $dir1 = dirname($tempappname);
         $atype = pathinfo($tempappname,PATHINFO_EXTENSION);
-        addHeaderJSFunctionCode("ready", "fileopen2", '    addTabWithoutTree("'. getEventPath("openfile") .'","a2","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+        addHeaderJSFunctionCode("ready", "fileopen2", '    addTabWithoutTree("'. getEventURL("openfile") .'","a2","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
         $this->setTempFile($this->tmp1);
         
         //$this->JSServer->addJSONJSBlock('');
@@ -43,7 +43,7 @@ class Seditor extends \Sphp\tools\BasicApp{
             $afile = basename($tempfname);
             $dir1 = dirname($tempfname);
             $atype = pathinfo($tempfname,PATHINFO_EXTENSION);
-            addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventPath("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+            addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventURL("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
             $this->setTempFile($this->tmp1);
             //$this->JSServer->addJSONJSBlock('');
             //$this->JSServer->addJSONReturnBlock($this->Client->session("wproject") . "/" . $tempfname);

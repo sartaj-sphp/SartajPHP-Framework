@@ -31,7 +31,7 @@ $extra[]['logDate'] = date('Y-m-d');
 $extra[]['logIP'] = $_SERVER['REMOTE_ADDR'];
 $extra[]['logBrowser'] = $_SERVER['HTTP_USER_AGENT'];
 SphpBase::page()->updateData($extra,$_REQUEST['uid']);
-SphpBase::page()->forward(getAppPath('login'));
+SphpBase::page()->forward(getAppURL('login'));
 }
 else{
 setErr('app', "User ID ". $txtuserID->getValue()." Already Exist Please Select Other User ID!");

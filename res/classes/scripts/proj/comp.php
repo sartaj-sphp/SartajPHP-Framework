@@ -27,16 +27,16 @@ $page = SphpBase::page();
 
 switch(SphpBase::page()->getAuthenticateType()){
 case "ADMIN":{
-$page->forward(getAppPath("admhome",'','',true));
+$page->forward(getAppURL("admhome",'','',true));
 break;
 }
 case "MEMBER":{
-$page->forward(getAppPath("mebhome"));
+$page->forward(getAppURL("mebhome"));
 break;
 }
 
 default:{
-$page->forward(getAppPath("index"));
+$page->forward(getAppURL("index"));
 break;
 }
 

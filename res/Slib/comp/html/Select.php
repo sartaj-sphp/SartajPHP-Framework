@@ -261,7 +261,7 @@ document.getElementById('$this->name').focus();
     }
 
     public function onrender() {
-        $HTMLParser = readGlobal("HTMLParser");
+        $HTMLParser = new \Sphp\tools\HTMLParser();
         if($this->errmsg!=""){
             $this->setPostTag($this->errmsg);
         }        

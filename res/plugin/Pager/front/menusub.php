@@ -8,7 +8,7 @@ print $sql1a;
 <menu id="pager2" runat="server" caption="<?php print $sqlCat2->getField('aname'); ?>" href="#" funsetSub="">
 <?php global $catp2; $catp2 = $sqlCat2->getField('aname'); $mnut = new TempFile("{$phppath}/plugin/Pager/front/menusub2.php"); $mnut->run(); $mnut->render(); ?>
   <div id="sql12" runat="server" funsetSQL="<?php print $sql2a; ?> AND catname='<?php print $sqlCat2->getField('aname'); ?>' AND pagestatus='NO' AND menustatus='YES' ORDER BY rank" path="libpath/comp/data/SearchQuery.php" funsetCacheTime="-1">
-<menuitem id="menuipag1" runat="server" href="<?php print getEventPath($sql12->getField('pagename'),'','page') ; ?>" ><?php print $sql12->getField('menuname'); ?></menuitem>
+<menuitem id="menuipag1" runat="server" href="<?php print getEventURL($sql12->getField('pagename'),'','page') ; ?>" ><?php print $sql12->getField('menuname'); ?></menuitem>
   </div>
 </menu>
 </div>

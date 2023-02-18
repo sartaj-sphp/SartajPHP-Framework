@@ -28,7 +28,7 @@ $this->form = new HTMLForm($name,'','');
 $this->peg1->tagName = 'div';
 $this->dt1->tagName = 'div';
 $this->form->tagName = 'form';
-$this->form->parameterA['action'] = getThisPath('', true);
+$this->form->parameterA['action'] = getThisURL('', true);
 $this->dt1->setForm($name);
 $this->dt1->setDontUseFormat();
 $this->tbln = $tblName;

@@ -2,9 +2,67 @@
 namespace{
 class TempFile extends Sphp\tools\TempFile { }
 class Control extends Sphp\tools\Control { }
+/**
+* Use getAppURL rather then this
+* @deprecated since version 4.8.4
+*/
 function getAppPath($ControllerName,$extra="",$newbasePath="",$blnSesID=false){}
+/**
+* Use getThisURL rather then this
+* @deprecated since version 4.8.4
+*/
 function getThisPath($extra="",$blnSesID=false){}
+/**
+* Use getEventURL rather then this
+* @deprecated since version 4.8.4
+*/
 function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false){}
+/**
+* Generate URL for a Controller
+* @param string $ControllerName controller like index
+* @param string $extra <P> Extra query string in URL 
+* $extra = 'test=1&mpid=13'
+* </p>
+* @param string $newbasePath <p> new domain url
+* $newbasePath = 'https://domain.com/test
+* </p>
+* @param boolean $blnSesID Add session id default false
+* @return string
+*/
+function getAppURL($ControllerName,$extra="",$newbasePath="",$blnSesID=false){}
+/**
+* Generate URL for Current Application
+* @param string $extra <P> Extra query string in URL 
+* $extra = 'test=1&mpid=13'
+* </p>
+* @param boolean $blnSesID Add session id default false
+* @return string
+*/
+function getThisURL($extra="",$blnSesID=false){}
+/**
+* Generate URL for a Event of Application
+* @param string $eventName <p> Name of Event
+* class index extends Sphp\tools\BasicApp{
+* public function page_event_test($evtp){
+* 
+* }
+* }
+* $eventName = test
+* $controllerName = index
+* Registered Application = apps/index.app
+* </p>
+* @param string $evtp Event Parameter pass to URL
+* @param string $ControllerName controller like index
+* @param string $extra <P> Extra query string in URL 
+* $extra = 'test=1&mpid=13'
+* </p>
+* @param string $newbasePath <p> new domain url
+* $newbasePath = 'https://domain.com/test
+* </p>
+* @param boolean $blnSesID Add session id default false
+* @return string
+*/
+function getEventURL($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false){}
 function getCurrentRequest(){}
 function isRegisterCurrentRequest(){}
 function registerCurrentRequest($apppath,$s_namespace=""){}

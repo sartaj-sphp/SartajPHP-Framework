@@ -10,7 +10,8 @@ class Title extends \Sphp\tools\Control{
 
 public function onrender() {
     $this->unsetRenderTag();
-    \SphpBase::sphp_settings()->title = $this->executePHPCode($this->getInnerHTML());
+    $hh1 = $this->getInnerHTML();
+    \SphpBase::sphp_settings()->title = $this->executePHPCode($hh1);
     \SphpBase::sphp_settings()->metakeywords = $this->getAttribute("metakeywords");
     \SphpBase::sphp_settings()->metadescription = $this->getAttribute("metadescription");
     \SphpBase::sphp_settings()->metaclassification = $this->getAttribute("metaclassification");

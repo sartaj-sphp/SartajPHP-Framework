@@ -29,7 +29,7 @@ $JSServer->addJSONTemp($genFormTemp,'showall_editor');
 break;
 }
 case 'updlist':{
-//$JSServer->addJSONBlock('jsp','proces','$( "#showalledt" ).dialog( "close" ); getURL("'.  getEventPath('updlist','','','','',true).'",{});');
+//$JSServer->addJSONBlock('jsp','proces','$( "#showalledt" ).dialog( "close" ); getURL("'.  getEventURL('updlist','','','','',true).'",{});');
 $JSServer->addJSONComp($showall,'showall_list');
 break;
 }
@@ -99,7 +99,7 @@ $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));
 
 if(SphpBase::page()->isnew)
 {
-SphpBase::page()->forward(getEventPath('show', '', '', '', '', true));
+SphpBase::page()->forward(getEventURL('show', '', '', '', '', true));
     }
 
 if ($blngetFront){

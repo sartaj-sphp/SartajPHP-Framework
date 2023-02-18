@@ -233,7 +233,7 @@ if($this->value !=""){
         $imgtag = '<img src="'.$this->defaultImg.'" width="150" height="100" />';
     }
     if($this->btnDelete){
-        $btnd = '<a href="javascript: '.SphpBase::JSServer()->postServer("'".getEventPath($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
+        $btnd = '<a href="javascript: '.SphpBase::JSServer()->postServer("'".getEventURL($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
     }
 }
 

@@ -1,6 +1,6 @@
 <div class="heading">Admin Login Form</div>
 
-<form id='form2' runat="server" action="<?php print getAppPath('admin');?>">
+<form id='form2' runat="server" action="<?php print getAppURL('admin');?>">
 <table align="center">
 <tr><td>
 User ID

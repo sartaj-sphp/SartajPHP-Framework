@@ -176,7 +176,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function sendCrossCall() {
         $extupdate = $this->Client->session("extupdate");
-        $this->JSServer->addJSONJSBlock("getURL('" . getEventPath("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
+        $this->JSServer->addJSONJSBlock("getURL('" . getEventURL("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
     }
 
     public function page_update() {

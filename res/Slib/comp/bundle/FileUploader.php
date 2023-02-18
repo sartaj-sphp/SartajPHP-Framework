@@ -155,7 +155,7 @@ global $JSClient,$page;
     $this->parameterA['value'] = $this->value;
 if($this->value!=''){
     $this->setPostTag('<input type="hidden" name="hid'.$this->name.'" value="'.$this->value.'" /><div id="out'.$this->name.'">
-        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSClient->postServer("'".getEventPath($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
+        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSClient->postServer("'".getEventURL($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
 }
 }
 }

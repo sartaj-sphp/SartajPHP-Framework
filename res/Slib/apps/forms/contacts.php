@@ -22,7 +22,7 @@ print $str;
 <div class="msgerr"><?php print traceMsg(true); ?></div>
 <p class="heading">Query Form</p>
 
-                    <form id='form2' runat="server" action="<?php print getEventPath('page','quote-submit','index');?>">
+                    <form id='form2' runat="server" action="<?php print getEventURL('page','quote-submit','index');?>">
                       <table border="0" width="80%" align="center">
                         <tbody><tr> 
                           <td>Name:</td>

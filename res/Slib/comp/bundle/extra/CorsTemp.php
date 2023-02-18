@@ -9,7 +9,7 @@ class CorsTemp extends \Sphp\tools\Control{
     private $url = "";
     
     public function onjsrender(){
-        if($this->url == "") $this->url = getEventPath("cfrm" . $this->name);
+        if($this->url == "") $this->url = getEventURL("cfrm" . $this->name);
         \SphpBase::JSServer()->getAJAX();
         addHeaderJSFunctionCode("ready", "cors" . $this->name, 'getURL("'. $this->url .'");');
     }

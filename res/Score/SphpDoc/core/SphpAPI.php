@@ -58,7 +58,7 @@ public function getComponentsDB() {}
 public function isComponent($comp) {}
 /**
 * Add menu in menu list <p>
-* SphpBase::sphp_api()->addMenu("Live Chat",getEventPath("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
+* SphpBase::sphp_api()->addMenu("Live Chat",getEventURL("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
 * SphpBase::sphp_api()->addMenu("Debug", "","fa fa-home","root");
 * SphpBase::sphp_api()->addMenuLink("Debug", 'javascript: debugApp();',"","Debug",true,"","f7");
 * These all features are depend on renderer, customize renderer may be not support all fetaures.
@@ -82,7 +82,7 @@ public function isComponent($comp) {}
 public function addMenu($text, $link = "", $icon = "", $parent = "root", $ajax = false, $roles = "", $akey = "", $settings = null) {}
 /**
 * Add menu link in menu <p>
-* SphpBase::sphp_api()->addMenu("Live Chat",getEventPath("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
+* SphpBase::sphp_api()->addMenu("Live Chat",getEventURL("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
 * SphpBase::sphp_api()->addMenu("Debug", "","fa fa-home","root");
 * SphpBase::sphp_api()->addMenuLink("Debug", 'javascript: debugApp();',"","Debug",true,"","f7");
 * These all features are depend on renderer, customize renderer may be not support all fetaures.

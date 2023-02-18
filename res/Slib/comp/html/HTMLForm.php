@@ -81,7 +81,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             /*
               if(!isset($this->parameterA['action'])){
               $subcode ="
-              getURL('".getThisPath('',true)."',jql('#$this->name').serialize());
+              getURL('".getThisURL('',true)."',jql('#$this->name').serialize());
               ";
               }else{
               $subcode ="
@@ -144,7 +144,7 @@ return false;
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
-        $this->setAttributeDefault("action",getThisPath());
+        $this->setAttributeDefault("action",getThisURL());
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit('');return false;");
         if(!isset($this->onsubmit)){
             addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){var vt = " . $this->name . "_submit(''); event.preventDefault(); return false;}); ");

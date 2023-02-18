@@ -8,7 +8,7 @@ print $sqlm1;
 <h2 class="headerbar"><?php print $sqlCat->row['aname']; ?></h2>
 <ul>
 <div id="sql1" runat="server" funsetSQL="<?php print $sql2 ." WHERE spcmpid='$cmpid' "; ?>  AND catname='<?php print $sqlCat->getField('aname'); ?>' ORDER BY pagename" path="libpath/comp/data/SearchQuery.php"  funsetCacheTime="<?php echo $maxtime; ?>">
-<li class="heading"><a href="<?php print getEventPath($sql1->row['pagename'],'','page') ; ?>" ><?php print $sql1->row['menuname']; ?></a></li>
+<li class="heading"><a href="<?php print getEventURL($sql1->row['pagename'],'','page') ; ?>" ><?php print $sql1->row['menuname']; ?></a></li>
   </div>
   </ul>
 </div>

@@ -9,7 +9,7 @@ print $sqlr1;
 <?php global $catp; $catp = $sqlCat->getField('aname'); $mnut = new TempFile("{$dphppath}/plugin/Pager/front/menusubupdate.php"); $mnut->run(); 
 $mnut->render(); ?>
   <div id="sql1" runat="server" funsetSQL="<?php print $sql2; ?> AND catname='<?php print $sqlCat->getField('aname'); ?>' AND pagestatus='NO' AND menustatus='YES' ORDER BY rank" path="libpath/comp/data/SearchQuery.php" funsetCacheTime="1">
-<menuitem id="menuipag1" runat="server" href="<?php print getEventPath($sql1->getField('pagename'),'','page') ; ?>" ><?php print $sql1->getField('menuname'); ?></menuitem>
+<menuitem id="menuipag1" runat="server" href="<?php print getEventURL($sql1->getField('pagename'),'','page') ; ?>" ><?php print $sql1->getField('menuname'); ?></menuitem>
   </div>
 </menu>
 </div>

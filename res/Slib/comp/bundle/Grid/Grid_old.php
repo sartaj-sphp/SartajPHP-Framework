@@ -83,7 +83,7 @@ break;
 
 }
 
-public function getEventPath($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
 $this->ctrl=$ControllerName;
@@ -165,7 +165,7 @@ $this->blndlg = false;
 public function executeSQL(){
   global $mysql;
   global $libpath;
-  global $HTMLParser;
+  $HTMLParser = new \Sphp\tools\HTMLParser();
   $stro = "";
 // count total page
 $mysql->connect();
@@ -245,10 +245,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventPath($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventPath($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -286,9 +286,9 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST[$this->name.'page']) {
 if($this->blnajax){
-         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
+         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
-         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= "<div style=\"float:left;\">".($k)."</div>";
@@ -323,18 +323,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventPath($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 $strlink = $strlinkP . $strlinkN ;
@@ -447,7 +447,7 @@ window.location = link ;
 ");
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
-</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventPath($this->name.'_newa','','','','',true).'\');" />';
+</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
     $divt = "$ptag<div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
     $this->setPostTag('</div>'.$this->getPostTag());

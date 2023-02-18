@@ -17,7 +17,7 @@ global $ctrl;
       <h3 class="card-title">
           <span style="font-size:22px;" class="pull-left hidden-xs showopacity fa fa-globe"></span> 
           &nbsp;Browse&nbsp;
-          <a href="<?php echo getEventPath(\'print\', \'\', \''.$ctrl->ctrl.'\'); ?>" target="__blank" title="Print">
+          <a href="<?php echo getEventURL(\'print\', \'\', \''.$ctrl->ctrl.'\'); ?>" target="__blank" title="Print">
               <span style="font-size:22px;" class="pull-right hidden-xs showopacity fa fa-print"></span></a>
       </h3>
   </div>

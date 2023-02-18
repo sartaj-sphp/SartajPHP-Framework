@@ -5,9 +5,9 @@ class MenuUi extends BootstrapSideMenu{
         //$this->sphp_api->banMenuLink("Logout","Home");
         //$this->setPosition("fixed-top");
         $this->sphp_api->addMenu("Home");
-        $this->sphp_api->addMenuLink("Home", getAppPath("admhome"),"","Home");
-        $this->sphp_api->addMenuLink("Plugin Home", getAppPath("installer"),"","Home");
-        $this->sphp_api->addMenuLink("Logout", getEventPath("logout","","admin"),"","Home");
+        $this->sphp_api->addMenuLink("Home", getAppURL("admhome"),"","Home");
+        $this->sphp_api->addMenuLink("Plugin Home", getAppURL("installer"),"","Home");
+        $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","admin"),"","Home");
         include_once("plugin/cadmmenu.php"); 
     }
 }

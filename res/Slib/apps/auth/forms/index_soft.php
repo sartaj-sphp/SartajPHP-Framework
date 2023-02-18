@@ -5,7 +5,7 @@
     </div>
     <div style="float: right;">
 <h1 class="heading">Welcome <?php echo $_SESSION['uid'].' '; ?></h1>
-<a href="<?php print getEventPath('logout','','softlog'); ?>">Logout</a>
+<a href="<?php print getEventURL('logout','','softlog'); ?>">Logout</a>
     </div>
       <div style="clear: both;"></div>
 </div>

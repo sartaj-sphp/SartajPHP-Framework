@@ -36,7 +36,7 @@ $this->innerHTML = '<ul>
 		<li><a href="#tabs-1">Tab1</a></li>
 		<li><a href="#tabs-2">Tab2</a></li>
 		<li><a href="#tabs-3">Tab3</a></li>
-                <li><a href="<?php print getEventPath(\'page\',\'data\'); ?>">Ajax Data Tab</a></li>
+                <li><a href="<?php print getEventURL(\'page\',\'data\'); ?>">Ajax Data Tab</a></li>
 	</ul>
 	<div id="tabs-1">
 <p>

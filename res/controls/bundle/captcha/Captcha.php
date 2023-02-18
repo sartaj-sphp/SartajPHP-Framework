@@ -46,7 +46,7 @@ $this->parameterA['value'] = $this->value;
 if($this->maxLen!=''){
 $this->parameterA['maxlength'] = $this->maxLen;
 }
-$this->setPreTag('<img src="'.  getEventPath('captcha').'" width="150px" height="50px"><br>');
+$this->setPreTag('<img src="'.  getEventURL('captcha').'" width="150px" height="50px"><br>');
 
 }
 

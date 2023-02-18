@@ -17,7 +17,7 @@ private $synccomp = '';
 
 public function oncreate($element){
 $this->setHTMLName("");
-$this->url = getEventPath($this->name.'_autocomplete');
+$this->url = getEventURL($this->name.'_autocomplete');
 }
      public function setForm($val) { $this->formName = $val;}
      public function setMsgName($val) { $this->msgName = $val;}
