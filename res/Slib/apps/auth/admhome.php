@@ -3,6 +3,7 @@ SphpBase::page()->tblName = "admin";
 SphpBase::page()->Authenticate("ADMIN");
 //SphpBase::page()->sesSecure();
 $masterFile = $admmasterf;
+$apppath = SphpBase::page()->apppath;
 
 if(SphpBase::page()->isnew)
 {
@@ -30,4 +31,3 @@ include_once("$masterFile");
 	}
 
 }
-?>

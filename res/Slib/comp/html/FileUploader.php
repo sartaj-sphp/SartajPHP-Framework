@@ -53,13 +53,13 @@ $this->filename = $ft['filename'];
 }
 $this->tagName = "input";
 $this->init($this->name,$this->fildName,$this->tablName);
-if(SphpBase::page()->sact== $name.'del'){
+if(\SphpBase::page()->sact== $name.'del'){
 $file = substr(decrypt(\SphpBase::sphp_request()->request('pfn')),3);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
 if($this->fildName!=''){
-$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='SphpBase::page()->evtp'");
+$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='". \SphpBase::page()->evtp . "'");
 }
 $JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
 }
@@ -233,7 +233,7 @@ if($this->value !=""){
         $imgtag = '<img src="'.$this->defaultImg.'" width="150" height="100" />';
     }
     if($this->btnDelete){
-        $btnd = '<a href="javascript: '.SphpBase::JSServer()->postServer("'".getEventURL($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
+        $btnd = '<a href="javascript: '. \SphpBase::JSServer()->postServer("'".getEventURL($this->name.'del',\SphpBase::page()->evtp,'','pfn='.encrypt('t7i' . $this->value),'',true)."'").'">Delete</a>';
     }
 }
 

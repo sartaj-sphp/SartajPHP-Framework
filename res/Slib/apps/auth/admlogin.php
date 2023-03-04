@@ -2,8 +2,10 @@
 SphpBase::page()->tblName = "admin";
 $masterFile = $admmasterf;
 SphpBase::page()->Authenticate("GUEST,ADMIN,MEMBER");
-
-SphpBase::$dynData = new TempFile("{$apppath}/forms/admlogin.php");
+global $msg;
+$msg = "";
+SphpBase::$dynData = new TempFile(SphpBase::page()->apppath . "/forms/admlogin.php");
+$formName =  "";
 
 if(SphpBase::page()->isevent){
 switch(SphpBase::page()->sact){
@@ -29,6 +31,7 @@ if(SphpBase::page()->issubmit){
             setcookie( "algdec", "dome1", $date_of_expiry );
         }
 setSession('ADMIN', $cmpid);
+define("autocompkey","FD45A279GH");
 \SphpBase::sphp_request()->session("edtmode",autocompkey); 
 getWelcome();
 }else{

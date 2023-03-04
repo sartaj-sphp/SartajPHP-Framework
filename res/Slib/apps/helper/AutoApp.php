@@ -67,7 +67,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
     public function page_event_print($param) {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallTemp->getComponent('showall');
-        require($this->phppath . '/classes/base/reports/html2pdf/Temp2PDF.php');
+        require($this->phppath . '/classes/bundle/reports/html2pdf/Temp2PDF.php');
         $showsingleTemp = new Sphp\tools\TempFileChild(__DIR__ ."/forms/pdf_temp.temp",false,null,$this->showallTemp);
         $showall->unsetAddButton();
         $showall->unsetDialog();

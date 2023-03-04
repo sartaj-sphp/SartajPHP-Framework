@@ -24,7 +24,7 @@ public function executeinit()
 {}
 public function execute($globalapp = false)
 {}
-public function sendDataCaseOfError($ermsg="",$erfile="",$erline=0) {}
+public function sendDataCaseOfError($ermsg="",$erfile="",$erline=0,$nofatel=true) {}
 public function stopOutput(){}
 public function cleanOutput(){}
 public function registerRouter($rout)

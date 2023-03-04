@@ -37,7 +37,7 @@ $menu->run();
 <h2 class="heading" style="font-size:36px;"><?php print $cmpname; ?></h2>
             </div></div>
  <div class="row"><div class="col">
-<?php $dynData->render(); ?>
+<?php SphpBase::$dynData->render(); ?>
      </div></div>
 <div class="row"><div class="col">        
         footer
