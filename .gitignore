@@ -2,5 +2,5 @@
 /nbproject/
 /node_modules/
 **/vendor/
-**/composer.lock
+**/**/composer.lock
 
