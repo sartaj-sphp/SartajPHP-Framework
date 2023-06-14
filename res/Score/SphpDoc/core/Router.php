@@ -31,8 +31,10 @@ public function isRegisterCurrentRequest() {}
 * Register Current Request with Application
 * @param string $apppath Application file path like apps/index.app
 * @param string $s_namespace Optional Namespace if any
+* @param string $permtitle Title Display in Permission List
+* @param array $permlist Create Permissions List for application
 */
-public function registerCurrentRequest($apppath, $s_namespace = "") {}
+public function registerCurrentRequest($apppath, $s_namespace = "",$permtitle="",$permlist=null) {}
 /**
 * Register Current Request with different Controller
 * @param string $ctrl <p>
@@ -42,14 +44,14 @@ public function registerCurrentRequest($apppath, $s_namespace = "") {}
 public function registerCurrentController($ctrl) {}
 public function isRootURI() {}
 /**
-* Get Registered Application FilePath of Current Request
-* @return string
+* Get Registered Application FilePath details of Current Request
+* @return array
 */
 public function getCurrentAppPath() {}
 /**
-* Get Registered Application FilePath
+* Get Registered Application FilePath details
 * @param string $ctrl controller
-* @return string
+* @return array
 */
 public function getAppPath($ctrla2) {}
 /**

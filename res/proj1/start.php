@@ -40,7 +40,10 @@ if(isset($argv) && isset($argvm["--sharedpath"])){
 //$respath = "~up/res/";
 $phppath = $sharedpath . "/res";
 include_once("{$phppath}/Score/{$libversion}/global/start.php");
-startSartajPHPEngine();
-
+$globalapp = startSartajPHPEngine();
+if($globalapp != ""){
+    require_once($globalapp);
+    SphpBase::engine()->execute(true);
+}
 // </editor-fold>
 // not editable end

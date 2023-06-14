@@ -165,8 +165,10 @@ public function getCacheItem($url) {}
 * Filename should match with class name
 * </p>
 * @param string $s_namespace if class application is under a name space
+* @param string $permtitle Title Display in Permission List
+* @param array $permlist Create Permissions List for application
 */
-public function registerApp($ctrl, $apppath, $s_namespace = "") {}
+public function registerApp($ctrl, $apppath, $s_namespace = "",$permtitle="",$permlist=null) {}
 /**
 * Check application is registered
 * @param string $ctrl
@@ -174,13 +176,18 @@ public function registerApp($ctrl, $apppath, $s_namespace = "") {}
 */
 public function isRegisterApp($ctrl) {}
 /**
-* Get Application Path that is registered with controller name $ctrl 
+* Get Application Details that is registered with controller name $ctrl 
 * @param string $ctrl
 * @return array
 */
 public function getAppPath($ctrl) {}
 /**
-* Get Controller name that has matched apppath $appfilepath
+* Get List of Registered Applications 
+* @return array
+*/
+public function getRegisteredApps() {}
+/**
+* Get Controller name that has matched apppath with $appfilepath
 * @param string $appfilepath
 * @return string|null
 */
@@ -272,12 +279,19 @@ public function stringToBool($str) {}
 */
 public function in_arrayi($needle, $haystack) {}
 /**
-* Search Needle match anywhere in array values as case insensitive 
-* @param string $needle
-* @param array $haystack
+* Search Needle as array match anywhere in haystack as case insensitive 
+* @param string $haystack
+* @param array $needle
 * @return boolean
 */
-public function array_search_str($needle, $haystack) {}
+public function array_search_str( $haystack,$needle) {}
+/**
+* Search Needle match anywhere in haystack and return line number
+* @param string $haystack
+* @param string $needle
+* @return int line number
+*/
+public function find_line_number($haystack,$needle) {}
 /**
 * Change Case of Values in array
 * @param array $arr
@@ -372,7 +386,7 @@ public function isDebugMode() {}
 * @param type $filepath
 * @return string
 */
-public function getDynamicContent($filepath) {}
+public function getDynamicContent($filepath,$caller=null) {}
 /**
 * Minify PHP code string
 * @param string $filedata
@@ -485,6 +499,44 @@ public function getCombineGlobalJSFiles($min = false, $removeonly = false) {}
 * 
 */
 public function getCombineJSFiles($min = false, $removeonly = false) {}
+/**
+* Advance Function
+* Combine All css files
+* @param boolean $min Optional no use
+* @param boolean $removeonly Optional if true then remove only links no output
+* @return string
+* 
+*/
+public function getCombineCSSFiles($min = false, $removeonly = false) {}
+/**
+* Combine All js and css filelinks and create combine file in $parentfolder folder.
+* It also incudes addFileLink code for browser.
+* Combines multiple css files into one may brake relative path. So you also
+* need to copy assets manually into relative path. If
+* you want to leave css links to combine but combine few css files then use combineFiles function to 
+* combine required css files.
+* in Debug mode=2 it create fresh file on every request but in normal mode
+* it checks file exist and create if not exist.
+* @param string $parentfolder Optional Default=temp parent folder to save combo files
+* @param boolean $addcss Optional Default=false create css css combo file
+* @param boolean $force_overwrite Optional Default=false create fresh combo files
+* 
+*/
+public function getCombineFileLinks($parentfolder = "temp",$addcss=false,$force_overwrite=false) {}
+/**
+* Combine All files path into single file as $outputfilepath
+* It willn't incudes addFileLink code for browser. You need to provide browser
+* code if you need to send link to browser.
+* Combines multiple css files into one may brake relative path. So you also
+* need to copy assets manually into relative path. If
+* in Debug mode=2 it create fresh file on every request but in normal mode
+* it checks file exist and create if not exist.
+* @param array $array_list List of files path
+* @param string $outputfilepath Optional Default=temp/combo2.css Combine file path
+* @param boolean $force_overwrite Optional Default=false create fresh combo files
+* 
+*/
+public function combineFiles($array_list,$outputfilepath = "temp/combo2.css",$force_overwrite=false) {}
 /**
 * Check JS Function Exist in Header Section
 * @param string $funname Function name as id
@@ -769,12 +821,13 @@ public function encrypt($strdata, $key = "sartajphp211") {}
 */
 public function decrypt($strdata, $key = "sartajphp211") {}
 /**
-* Encrypt/Decrypt String. Use Hexadecimal key.
+* Encrypt/Decrypt String. Use Hexadecimal key. Output Length is not big.
+* Data recover is near to impossible if you lost key.  
 * @param string $str
 * @param string $ky Optional Default=CD098AB
 * @return string
 */
-public function endec($str, $ky = "") {}
+public function endec($str, $ky="CD098ABA") {}
 public function rtClassMethod(\ReflectionClass &$refClass) {}
 public function rtClassFile(\ReflectionClass &$refClass) {}
 public function rtMethodSource(\ReflectionMethod &$method, &$arlines) {}

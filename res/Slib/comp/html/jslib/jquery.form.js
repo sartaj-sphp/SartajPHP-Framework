@@ -118,6 +118,7 @@ document.getElementById('ajax_loader').style.visibility = 'visible';
 	if (qx) {
 		q = ( q ? (q + '&' + qx) : qx );
 	}	
+        
 	if (options.type.toUpperCase() == 'GET') {
 		options.url += (options.url.indexOf('?') >= 0 ? '&' : '?') + q;
 		options.data = null;  // data is null for 'get'
@@ -706,6 +707,7 @@ jql.fn.ajaxFormUnbind = function() {
  */
 jql.fn.formToArray = function(semantic) {
 	var a = [];
+
 	if (this.length === 0) {
 		return a;
 	}

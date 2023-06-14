@@ -568,7 +568,7 @@ window.location = link ;
 }
 }
 
-public function onrender(){
+public function onprerender(){
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){

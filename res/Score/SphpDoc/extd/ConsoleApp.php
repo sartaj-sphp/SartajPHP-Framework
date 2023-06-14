@@ -33,6 +33,84 @@ protected $isRunning = false;
 /** @var array $wait_interval default value 1000000 */
 public $wait_interval = 1000000;
 /**
+* Set Password for Sudo command
+* @param string $pas password
+*/
+public function setPassword($pas) {}
+/**
+* enable stdout print
+*/
+public function enableStdout() {}
+/**
+* Disbale stdout print 
+*/
+public function disableStdout() {}
+/**
+* Create Command Que
+* @param array &$ar1 pass by reference to fill command
+* @param string $cmd shell command
+* @param string $msg Message to display command help
+* @param boolean $sudo true = sudo command
+* @param boolean $critical true = stop execution if error in this command
+* @param function $callbackerr callback if error in this command
+*/
+public function createQue(&$ar1, $cmd, $msg = "", $sudo = false, $critical = false, $callbackerr = null) {}
+/**
+* Call Command and wait to finish
+* @param string $cmd shell command
+* @param string &$str1 output text from command
+* @param string $msg help text with command
+* @param boolean $sudo true = run as sudo
+* @return boolean true = run succesfull
+*/
+public function callSync($cmd, &$str1, $msg = "", $sudo = false) {}
+/**
+* Call Command and process callback without wait to end.
+* @param string $cmd shell command
+* @param string $msg help text with command
+* @param function $fun2 callback on data
+* @param function $funer2 callback on error
+* @param function $fun_ready2 callback process ready
+* @return boolean true = run successful
+*/
+public function callf($cmd, $msg = "", $fun2 = null, $funer2 = null, $fun_ready2 = null) {}
+/**
+* Call Shell Command With Sudo without wait for end.
+* @param string $cmd command
+* @param string $msg command help text
+* @param function $fun2 callback on data
+* @param function $funer2 callback on error
+* @param function $fun_ready2 callback on process ready
+* @return boolean true = run successful
+*/
+public function callSudo($cmd, $msg = "", $fun2 = null, $funer2 = null, $fun_ready2 = null) {}
+public function calla($cmd, $msg = "", $fun = null, $funer = null, $callback_ready = null, $statuscall = null) {}
+/**
+* Print Error Message on terminal
+* @param string $str1 error msg
+*/
+public function printer($str1) {}
+/**
+* Print Message on terminal
+* @param string $str1 error msg
+*/
+public function println($str1) {}
+public function processCmdQue(&$ar1) {}
+public function processIAQue(&$ar1, $cmd, $msg1 = '', $sudo = false, $fune = null) {}
+/**
+* print error on console or send to browser
+* @param string $msg
+* @param string $type 'i' mean info other mean error
+*/
+public function sendMsg($msg, $type = 'i') {}
+public function execShellAsync($cmd, $callback, $funer, $callback_ready = null, $cwd = "", $env = null, $options = null) {}
+/**
+* Remove Extra Spaces from text
+* @param string $v1 data
+* @return string
+*/
+public function removeExtraSpaces($v1) {}
+/**
 * Register TempFile with app
 * @param \Sphp\tools\TempFile $tempobj
 */
@@ -216,11 +294,18 @@ public function consoleError($err) {}
 */
 public function consoleReadArgument($argkey) {}
 /**
-* Execute shell command
-* @param string $command
-* @return array return from command
+* Execute shell command and print output directly
+* @param string $command 
+* @return array return from command exit code
 */
 public function execute($command) {}
+/**
+* Execute Shell command With output
+* @param type $cmd Command
+* @param string &$out Reference var to fill output text
+* @return boolean true if execute succesfully 
+*/
+public function execShell($cmd, &$out) {}
 /**
 * Convert argv to string
 * @return string

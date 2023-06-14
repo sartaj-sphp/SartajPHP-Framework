@@ -65,9 +65,9 @@ function getThisURL($extra="",$blnSesID=false){}
 function getEventURL($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false){}
 function getCurrentRequest(){}
 function isRegisterCurrentRequest(){}
-function registerCurrentRequest($apppath,$s_namespace=""){}
+function registerCurrentRequest($apppath,$s_namespace="",$permtitle="",$permlist=null){}
 function registerCurrentController($ctrl){}
-function registerApp($ctrl,$apppath,$s_namespace=""){}
+function registerApp($ctrl,$apppath,$s_namespace="",$permtitle="",$permlist=null){}
 function isRegisterApp($ctrl){}
 function setSession($lType,$uid1){}
 function destSession(){}
@@ -110,7 +110,7 @@ function ListNotrenderFrontSection($secname = "left") {}
 function renderFrontSection($secname = "left") {}
 function encrypt($string, $key = "BA007231") {}
 function decrypt($string, $key = "BA007231") {}
-function endec($str, $ky = "") {}
+function endec($str, $ky = "CD098ABA") {}
 function is_valid_num($val,$datatype){}
 function is_valid_email($email){}
 function executePHPScript($strPHPScript) {}

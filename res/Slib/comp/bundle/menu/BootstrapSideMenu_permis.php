@@ -2,7 +2,7 @@
 
 class BootstrapSideMenu extends \Sphp\tools\MenuGen{
 public $brandicon = "";
-public $navbarClasses = "nav flex-column flex-nowrap overflow-hidden nav-pills";
+public $navbarClasses = "nav nav-pills flex-column flex-nowrap overflow-hidden";
 
 public $template_menu_startroot = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-toggle="collapse" data-target="#$mnuhref2" href="#$mnuhref2" >' . 
 '<i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnutitle</span></a>'

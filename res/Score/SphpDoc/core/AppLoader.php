@@ -30,8 +30,6 @@ public function startApp() {}
 * \Sphp\core\Exception
 */
 class Exception extends \Exception {
-protected $line = 0;
-protected $file = "";
 /**
 * Set Line Number of Error
 * @param int $line

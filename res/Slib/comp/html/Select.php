@@ -253,10 +253,10 @@ document.getElementById('$this->name').focus();
 
     public function processStaticOptions($element) {
         if ($element->tag == 'option') {
-            if (strtolower($element->attr['value']) == strtolower($this->value) || strtolower($element->innertext) == strtolower($this->value)) {
+            if (($element->hasAttribute('value') && strtolower($element->getAttribute('value')) == strtolower($this->value)) || strtolower($element->innertext) == strtolower($this->value)) {
                 $element->attr[' selected'] = 'selected';
-                $this->fstatic = true;
             }
+                $this->fstatic = true;
         }
     }
 

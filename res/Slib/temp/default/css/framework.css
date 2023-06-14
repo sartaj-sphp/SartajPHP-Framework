@@ -16,6 +16,22 @@ border: 10px;
     -1px 1px 0px #686868, -1px 0px 0px #686868, -1px -1px 0px #686868, 
     0px -1px 0px #686868, 1px -1px 0px #686868, 1px 4px 5px #aeaeae;
 }
+.blink {
+  animation: 2s linear infinite condemned_blink_effect;
+}
+
+@keyframes condemned_blink_effect {
+  0% {
+    visibility: hidden;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
 .ani{
 -webkit-transition: all 1.0s ease;
 -moz-transition: all 1.0s ease;

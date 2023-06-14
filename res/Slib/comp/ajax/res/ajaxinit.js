@@ -1,9 +1,9 @@
 var tempobj = {
     websocket: null,
     websockethost: location.host,
-    onwsopen: function(){},
-    onwsclose: function(){},
-    onwsmsg: function(msg){},
+    onwsopen: function(){console.log("sopen");},
+    onwsclose: function(){console.log("sclose");},
+    onwsmsg: function(msg){console.log(msg);},
     ar: {},
     getSphpSocket: function(callback){
         if(tempobj.websocket === null){
@@ -12,15 +12,12 @@ var tempobj = {
             tempobj.websocket = new sphp_wsocket(protocol + "://" + tempobj.websockethost + "/sphp.ws",function(msg){
                 if(msg == "sopen"){
                     tempobj.onwsopen();
-                    console.log(msg);
-                    callback(tempobj.websocket)
+                    callback(tempobj.websocket);
                 }else if(msg == "sclose"){
                     tempobj.websocket = null;
                     tempobj.onwsclose();
-                    console.log(msg);
                 }else{
                     tempobj.onwsmsg(msg);
-                    console.log(msg);      
                 }
             });
 
@@ -136,6 +133,7 @@ displayOverlay(idimg);
 jql.ajax({
 type: "POST",
 url: url,
+headers: {"HTTP_X_REQUESTED_WITH": "XMLHttpRequest" },
 dataType: "text",
 data: data2,
 cache: cache,

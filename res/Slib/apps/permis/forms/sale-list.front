@@ -1,0 +1,73 @@
+<?php
+$pageName = 'User List';
+?>
+<section class="content-header sty-one">
+    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>        
+        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card ">
+                <div class="card-header bg-blue">
+                    <h5 class="text-white m-b-0"><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                    <div id='admProfile_add' runat='server'>
+                        <span style="float:right; margin-top: -20px;">
+                            <a class="btn btn-warning removepd" href="<?php echo getEventPath('addnew'); ?>"><i class="fa fa-plus"></i> Add</a>                        
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-12" style="padding-top:10px;">								
+                    <div class=" " id="frmstatus"></div>
+                    <span style="text-align: center; font-weight: bold; color: red;">##{ traceError(true) }#</span>                                        
+                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr> 
+                                    <th>Invoice No.</th>
+                                    <th>Car Plate No.</th>
+                                    <th>Invoice Date</th>
+                                    <th>Username</th>                                
+                                    
+                                    <th>Action</th>
+                                </tr>
+                            </thead>                            
+                            <tbody id="showall" runat="server" path="libpath/comp/data/Pagination.php" 
+                                  
+                                   funsetAJAX=""  funsetFieldNames="billno,sid,txtplate,createdate" funsetHeaderNames="Invoice,Customer,Dated" dtable="trans,car_reg" funsetWhere="WHERE tc='S' AND sid=car_reg.id"  >
+                                <tr>
+                                    <td><?php echo $this->tempobj->showall->row['billno']; ?></td>
+                                    <td><?php echo $this->tempobj->showall->row['txtplate']; ?></td>
+                                    <td><?php echo $this->tempobj->showall->row['createdate']; ?></td>                                
+                                                                 
+                                    
+                                    <td><?php $timestamp = $this->tempobj->showall->row['submit_timestamp'];
+                                        echo date("d-m-Y", $timestamp) ?></td>                                
+                                    <td>  
+                                        <div id='admProfile_view' runat='server'>
+                                            <a href="<?php echo getEventPath('view', $this->tempobj->showall->row['id']); ?>">
+                                                <i class="fa fa-edit fa-2x"></i>
+                                            </a>
+                                        </div>
+                                        <div id='admProfile_delete' runat='server'>
+                                            <a href="#" onclick="rowclickdel(this, '<?php echo getEventPath('delete', $this->tempobj->showall->row['id']); ?>')">
+                                                <i class="fa fa-trash fa-2x"></i>
+                                            </a>
+                                        </div>
+                                    </td>										
+                                </tr>                                
+                            </tbody>                          
+                        </table>
+                        <div id="pagebar"><?php echo $this->tempobj->showall->getPageBar(); ?></div>                    	
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

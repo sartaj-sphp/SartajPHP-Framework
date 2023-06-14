@@ -94,14 +94,27 @@ $this->counter1 += 1;
 $stro = array();
 // if menu under root and dropdown
 if($mnuSub==0){
-$stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
-'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
-. '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+        $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
+        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
+        . '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+    }else{
+        $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
+        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
+        . '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+    }
 $stro[1] = '</ul></div></li>';
 }else if($mnuSub==1){ // if sub menu and dropdown
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+$stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
+'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
+. '<div class="collapse" id="'. $mnuhref2 .'" aria-expanded="false"><ul class="flex-column pl-2 nav">';
+    }else{
 $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
 '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
 . '<div class="collapse" id="'. $mnuhref2 .'" aria-expanded="false"><ul class="flex-column pl-2 nav">';
+        
+    }
 $stro[1] = '</ul></div></li>';
 }else{ // if menu with no links and no sub menu without dropdown
 $stro[0] = '<li class="nav-item"><a class="nav-link text-truncate" data-mkey="'. $this->mkey .'" href="'.$mnuhref.'"><i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">'.$mnutitle.'</span></a>'; 
@@ -203,6 +216,7 @@ private function init() {
         }
     });
 ',true);
+        /*
     addHeaderCSS("snavbar2", '     .nav-link[data-toggle].collapsed:before {
     content: " ▾";
 }
@@ -211,6 +225,8 @@ private function init() {
 }
 
 ', true);
+         * 
+         */
 
 }
 

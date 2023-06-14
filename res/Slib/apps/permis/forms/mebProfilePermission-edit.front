@@ -1,0 +1,61 @@
+<?php
+$pageName = \SphpBase::sphp_request()->session('formType') . ' Profile Permission';
+?>
+<section class="content-header sty-one">
+    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>        
+        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card ">
+                <div class="card-header bg-blue">
+                    <h5 class="text-white m-b-0"><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                    <span style="float:right; margin-top: -20px;">
+                        <a class="btn btn-default removepd" href="<?php echo getAppUrl(getCurrentRequest()); ?>" > <i class="fa fa-arrow-left"></i> Back</a>
+                    </span>                    
+                </div>
+                <div class="card-body" style="padding-top:10px;">								
+                    <div class=" " id="frmstatus"></div>
+                    <span style="text-align: center; font-weight: bold; color: red;">##{ traceError(true) }#</span>
+                    <form id="form2" runat="server" class="form-horizontal" >
+                        <div class="form-body">
+                            <div class="row"> 
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label>Profile Name</label>
+                                        <input id="profile_name" type="text" class="form-control" dfield="profile_name" funsetForm="form2" runat="server" placeholder="Profile Name" />
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label>Application List</label>
+                                        <?php echo $this->tempobj->parentapp->showApplicationList(); ?>
+                                    </fieldset>
+                                </div>                                
+                            </div>		
+                        </div>
+                        <hr>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button type="submit" class="btn btn-success">##{\SphpBase::sphp_request()->session('formButton');}#</button>                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6"> </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

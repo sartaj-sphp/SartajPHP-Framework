@@ -46,7 +46,11 @@ public function print_r($arr) {}
 * @return array
 */
 public function getMsg() {}
-protected function traceBack($errnom, $errstr, $errfile, $errline) {}
+protected function traceBack($errnom, $errstr, $errfile, $errline,$debug_arry) {}
+/**
+* Advance Function, Internal Use
+*/
+public function callerFun() {}
 /**
 * Advance Function, Internal Use
 */

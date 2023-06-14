@@ -1,19 +1,19 @@
 <?php 
 switch(SphpBase::page()->getAuthenticateType()){
 case 'GUEST':{
-$menupath = "{$slibpath}/temp/default/menu.php";
+$menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/menu.php";
 break;
 }
 case 'ADMIN':{
-$menupath = "{$slibpath}/temp/default/admmenu.php";
+$menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/admmenu.php";
 break;
 }
 case 'MEMBER':{
-$menupath = "{$slibpath}/temp/default/mebmenu.php"; 
+$menupath = SphpBase::sphp_settings()->slib_path."/temp/default/mebmenu.php"; 
 break;
 }
 default:{
-    $menupath = "{$slibpath}/temp/default/menu.php";
+    $menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/menu.php";
     break;    
 }
 
@@ -29,12 +29,14 @@ runFrontPlace('frontEditor',"footer");
 <head lang="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<?php SphpJsM::addBootStrap();  echo getHeaderHTML(); ?>
-<link href="<?php echo $slibrespath ; ?>/temp/default/css/framework.css" rel="stylesheet"  type="text/css" />
-<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo $slibrespath ; ?>/temp/default/imgs/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="<?php echo $slibrespath ; ?>/temp/default/imgs/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="<?php echo $slibrespath ; ?>/temp/default/imgs/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="<?php echo $slibrespath ; ?>/temp/default/imgs/favicon-16x16.png" />
+<?php 
+SphpJsM::addBootStrap();  
+echo getHeaderHTML(); ?>
+<link href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/css/framework.css" rel="stylesheet"  type="text/css" />
+<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-16x16.png" />
 </head>
 <body>
     <div class="container-fluid">
@@ -51,6 +53,9 @@ runFrontPlace('frontEditor',"footer");
 </div>
 </div>
             </div></div></div>
-<?php renderFrontPlace('frontEditor',"footer"); echo getFooterHTML(); echo traceError(); echo traceErrorInner(); ?>
+<?php 
+renderFrontPlace('frontEditor',"footer"); 
+echo getFooterHTML(); 
+echo traceError(); echo traceErrorInner(); ?>
 </body>
 </html>

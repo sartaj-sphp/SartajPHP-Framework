@@ -32,7 +32,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
     public $printstylefile = __DIR__ ."/forms/style.css";
 
     public function onstart() {
-        $this->logoimg = SphpBase::sphp_settings()->res_path ."/apps/helper/forms/logo.png";
+        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/forms/logo.png";
         $this->showallTemp->getComponent('showall')->unsetRenderTag();
         $this->genFormTemp->getComponent('btnDel')->unsetRender();
         $this->showallTemp->getComponent('showall')->setPerPageRows(10);

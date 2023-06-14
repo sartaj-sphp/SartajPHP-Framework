@@ -44,6 +44,7 @@ public function remove_callback() {}
 public function save($filepath='') {}
 public function find($selector, $idx=null) {}
 public function clear() {}
+public function getDoc() {}
 public function dump($show_attr=true) {}
 public function countLines($pos1) {}
 protected function prepare($str, $strlowercase=true) {}

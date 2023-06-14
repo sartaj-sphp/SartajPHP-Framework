@@ -1,5 +1,8 @@
 <?php
 namespace Sphp\tools{
+/**
+* Experimental:- Create a Child process App with PHP
+*/
 class ChildProcessApp extends ConsoleApp{
 public function createProcess($cmd, $cwd = null, array $env = null, array $options = array()) {}
 public function ondata($data) {}

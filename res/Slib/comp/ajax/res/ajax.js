@@ -7,9 +7,9 @@ var onajaxreceive = function($response){
 };
 window['fileList'] = new Array();
 window['fileList2'] = new Array();
-const sconsole = console;
+var sconsole = console;
 
-const sconsoleLog = {
+var sconsoleLog = {
     log: function(msg,type="l"){
         if(window["onconsole"] !== undefined){
             window["onconsole"](msg,type);
@@ -27,6 +27,7 @@ const sconsoleLog = {
     assert: sconsole.assert
     };
 console = sconsoleLog;
+
 window.onerror = function (msg, url, line) {
    console.error("Error: " + msg + " url: " + url + " Line: " + line );
 };
@@ -801,6 +802,7 @@ this.callGlobalApp = function(ctrl,evt="",evtp="",data={}){
 	data2['type'] = "";
 	data2['typeappobj'] = "s";
 	data2['token'] = "";
+	data2['sphpajax'] = "1";
 	data2['bdata'] = data;
 	if(myself.status){
             myself.socket.send(JSON.stringify(data2));
@@ -814,6 +816,7 @@ this.callProcessApp = function(ctrl,evt="",evtp="",data={}){
 	data2['type'] = "";
 	data2['typeappobj'] = "m";
 	data2['token'] = "";
+	data2['sphpajax'] = "1";
 	data2['bdata'] = data;
 	if(myself.status){
             myself.socket.send(JSON.stringify(data2));

@@ -20,7 +20,7 @@ public $sphp_settings = null;
 public $phppath = "";
 public $respath = "";
 public $comppath = "" ;
-public $libpath = "" ;
+public $slibpath = "" ;
 public $debug = null;
 public function getTempobj() {}
 public function setTempobj($tempobj) {}
@@ -37,6 +37,6 @@ public function endupcomp($element,$parentelement) {}
 public function startrender($element,$parentelement) {}    
 public function endrender($element,$parentelement) {}
 public function executeFun($compobj, $key, $val) {}
-public function executePHPCode($strPHPCode) {}
+public function executePHPCode($strPHPCode,$compobj=null) {}
 }
 }

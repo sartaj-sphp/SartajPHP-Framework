@@ -1,0 +1,24 @@
+<?php
+$pageName = 'Dashboard';
+?>
+<section class="content-header sty-one">
+    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>        
+        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <!--<div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Testimonial</span>
+                    <span class="info-box-number"><small></small></span>
+                </div>                
+            </div>            
+        </div>-->                
+    </div>
+</section>

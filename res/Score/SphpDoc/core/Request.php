@@ -115,6 +115,19 @@ public function requestStream() {}
 */
 public function cookie($name, $value = null, $blnRaw = false,$expire=-1,$path='/', $domain="", $secure=false, $httponly=true) {}
 /**
+* Write/Read Cookie with tamper protection. Bad cookie return empty value.
+* @param string $name key
+* @param boolean $blnRaw true mean, no escaping at time of reading
+* @param string|array $value null mean read key
+* @param int $expire
+* @param string $path
+* @param string $domain
+* @param boolean $secure
+* @param boolean $httponly
+* @return string
+*/
+public function cookie_secure($name, $value = null, $blnRaw = false,$expire=-1,$path='/', $domain="", $secure=false, $httponly=true,$prefix="") {}
+/**
 * Advance Function, Internal use
 */
 public function restoreSessionFromStorage() {}
@@ -132,6 +145,10 @@ public function unsetCookie($name) {}
 * @param string $name key
 */
 public function unsetSession($name) {}
+/**
+* Destroy All Session Data
+*/
+public function destroySession() {}
 /**
 * Read/Write Session key
 * @param string $name key

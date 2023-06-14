@@ -30,6 +30,7 @@ public function getNodetype() {}
 public function getTag() {}
 public function getAttr() {}
 public function getChildren() {}
+public function hasChildren() {}
 public function addChild($node) {}
 public function getNodes() {}
 public function addNode($node) {}
@@ -63,6 +64,12 @@ public function find($selector, $idx = null) {}
 protected function seek($selector, $ret) {}
 protected function match($exp, $pattern, $value) {}
 protected function parse_selector($selector_string) {}
+/**
+* Set inner HTML and also clear all children without any save method called. 
+* If you don't want to clear children references then use innertext property
+* @param string $value html text
+*/
+public function setInnerHTML($value) {}
 public function getAllAttributes() {}
 public function getAttribute($name) {}
 public function setAttribute($name, $value) {}

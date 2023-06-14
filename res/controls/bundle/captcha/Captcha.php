@@ -20,7 +20,7 @@ setErr('Captcha', "Secure Image Code is not Correct!");
 
 if(SphpBase::page()->isevent)
 {
-switch(SphpBase::page()->sact){
+switch(SphpBase::page()->getEvent()){
 case "captcha" :{ 
 SphpBase::engine()->cleanOutput();
 SphpBase::sphp_response()->addHttpHeader("Content-Type","image/jpeg");

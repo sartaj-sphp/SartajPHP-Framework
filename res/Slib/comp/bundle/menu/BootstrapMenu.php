@@ -90,10 +90,18 @@ if($mnuhref==''){
 }
 $stro = array();
 if($mnuSub==0){
-$stro[0] = '<li class="nav-item dropdown nav-dli"><a class="nav-link dropdown-toggle nav-dlink" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+        $stro[0] = '<li class="nav-item dropdown nav-dli"><a class="nav-link dropdown-toggle nav-dlink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';
+    }else{
+        $stro[0] = '<li class="nav-item dropdown nav-dli"><a class="nav-link dropdown-toggle nav-dlink" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';
+    }
 $stro[1] = '</ul></li>';
 }else if($mnuSub==1){
-$stro[0] = '<li class="dropdown-submenu nav-dli"><a class="dropdown-item dropdown-toggle nav-dlink2" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';    
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+        $stro[0] = '<li class="dropdown-submenu nav-dli"><a class="dropdown-item dropdown-toggle nav-dlink2" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';    
+    }else{
+        $stro[0] = '<li class="dropdown-submenu nav-dli"><a class="dropdown-item dropdown-toggle nav-dlink2" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';    
+    }
 $stro[1] = '</ul></li>';
 }else{
 $stro[0] = '<li class="nav-item"><a class="nav-link" href="'.$mnuhref.'" >'.$mnutitle.'</a>';    
@@ -132,6 +140,17 @@ $this->brandicon = '  <!-- Brand -->
   <a class="navbar-brand" href="#"><img src="'. $this->brandicon .'" alt="Logo" style="width:40px;"></a>
 ';
 }
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+$bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'"><div class="container-fluid"> '. $this->brandicon .'
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="nav1">
+  <ul class="navbar-nav">
+';
+return array($bootstrapMenu,'</div></div></nav>');
+    }else{
 $bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'"> '. $this->brandicon .'
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav1">
@@ -141,6 +160,7 @@ $bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'
   <ul class="navbar-nav">
 ';
 return array($bootstrapMenu,'</div></nav>');
+    }
 }
 private function setKey($mnuname,$strkeyll) {
 $controlkeys="";
@@ -210,8 +230,12 @@ $controlkeysp = "";
 }
 
 private function init() {
+    $links = 'var links = jql(\'.navbar ul li a\');'; 
+    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+        $links = 'var links = jql(\'.navbar div ul li a\');';
+    }    
         addHeaderJSFunctionCode("ready", "navbar", '
-    var links = jql(\'.navbar ul li a\');
+ '. $links .'    
     jql.each(links, function (key, va) {
         if (va.href == document.URL) {
             jql(this).addClass(\'active\');

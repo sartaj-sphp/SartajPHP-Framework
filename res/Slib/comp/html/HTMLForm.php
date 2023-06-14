@@ -108,6 +108,8 @@ blnSubmit =  " . $this->onvalidation . ";
 }
 ";
         }
+        addFooterJSCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;');
+        addFooterJSFunction($this->name . "_submit2", "function " . $this->name . "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},1000); return vt;}");
         addFooterJSFunction($this->name . "_submit", "function " . $this->name . "_submit(val){
 var blnSubmit = true ;
 var ctlReq = Array();
@@ -147,9 +149,10 @@ return false;
         $this->setAttributeDefault("action",getThisURL());
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit('');return false;");
         if(!isset($this->onsubmit)){
-            addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){var vt = " . $this->name . "_submit(''); event.preventDefault(); return false;}); ");
+            addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){event.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");
         }
         $hdn = "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . \SphpBase::sphp_request()->request($this->recID) . "\" />";
+        if($this->blnajax) $hdn .= "<input type=\"hidden\" name=\"sphpajax\" value=\"1\" />";
         $this->appendHTML($hdn);
         $parenttag = $this->wrapTag("div");
         $parenttag->setAttribute("id","wrp" . $this->name);

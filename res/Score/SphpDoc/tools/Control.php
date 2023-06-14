@@ -420,7 +420,12 @@ protected function bindJSEvent($selector, $eventName, $handlerFunName = "", $ren
 * @param boolean $renderonce Optional default=false, true=ignore on ajax request
 */
 protected function bindJSObjEvent($selector, $obj, $eventName, $handlerFunName = "", $renderonce = false) {}
-public function parseMe() {}
+/**
+* Prase HTML string and trigger onprase event for each node
+* @param string $html
+* @return string process html by onprocess callback
+*/
+public function parseHTML($html) {}
 public final function getHelp() {}
 public final function render() {}
 public final function prerender() {}

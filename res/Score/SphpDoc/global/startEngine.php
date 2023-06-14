@@ -244,7 +244,8 @@ self::$engine->engine_start_time = microtime(true);
 }
 }
 if ($debugmode > 0) {
-error_reporting(E_ALL);
 ini_set("display_errors", 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 }
 function runSartajPHPEngine(){}
