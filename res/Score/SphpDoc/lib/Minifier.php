@@ -33,7 +33,7 @@ protected function  SetIdentifierRegex ( $re )
 {}
 protected function  SetTokens ( $tokens ) 
 {}
-protected function  Reset ( $data = null )
+protected function  Reset ( $data = '' )
 {}
 abstract protected function	MinifyData ( ) ;
 /*--------------------------------------------------------------------------------------------------------------
