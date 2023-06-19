@@ -201,6 +201,13 @@ public function getAppCtrl($appfilepath) {}
 */
 public function getRootPath($val) {}
 /**
+* Convert URL to local server filepath 
+* $a = SphpBase::sphp_api->respathToFilepath("../res/jslib/twitter/bootstarp4/main.css")
+* @param string $fileurl
+* @return array pathinfo,directory,url path,filepath
+*/
+public function respathToFilepath($fileurl) {}
+/**
 * Convert filepath to URL path for browser
 * $a = SphpBase::sphp_api->filepathToRespaths("apps/chat/index.app")
 * @param string $filepath
@@ -441,8 +448,9 @@ public function getrenderType($renderonce = false) {}
 * @param string $filename Optional file identification key. default=filename in fileurl
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
+* @param array $assets path for asset folders to copy with this file when distribute
 */
-public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0") {}
+public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array()) {}
 /**
 * Update CSS, JS File Link for browser 
 * SphpBase::sphp_api()->updateFileLink("temp/default/theme-black2.js",false,"black1","js","2.8")
@@ -451,8 +459,9 @@ public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext 
 * @param string $filename Optional file identification key. default=filename in fileurl
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
+* @param array $assets path for asset folders to copy with this file when distribute
 */
-public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0") {}
+public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array()) {}
 /**
 * Remove CSS, JS File Link for browser 
 * SphpBase::sphp_api()->removeFileLink("temp/default/theme-black2.js",false,"black1","js")
@@ -481,33 +490,41 @@ public function addFileLinkCode($name, $code, $renderonce = false) {}
 * @return boolean
 */
 public function issetFileLink($filename, $ext, $renderonce = false) {}
+public function getParentDirectory($path) {}
+public function directoriesCreate($dirPath,$mod=0775,$owner=""){}
+public function directoryCopy($src,$dst,$fixdst=""){}
 /**
 * Advance Function
-* Combine All render once files
+* Distribute All Global JS Lib (render once=true) JS files. These
+* Files will not load by AJAX.
 * @param boolean $min Optional no use
 * @param boolean $removeonly Optional if true then remove only links
+* @param boolean $combine Optional if true then combine files
+* @param string $distpath Optional Folder Path to copy files Default = cache
 * @return string
-* 
 */
-public function getCombineGlobalJSFiles($min = false, $removeonly = false) {}
+public function getDistGlobalJSFiles($min = false, $removeonly = false,$combine=true,$distpath="cache") {}
 /**
 * Advance Function
-* Combine All render once=false files
+* Distribute All private files (render once=false) JS files. These
+* Files can also load via AJAX
 * @param boolean $min Optional no use
 * @param boolean $removeonly Optional if true then remove only links
+* @param boolean $combine Optional if true then combine files
+* @param string $distpath Optional Folder Path to copy files Default = cache
 * @return string
-* 
 */
-public function getCombineJSFiles($min = false, $removeonly = false) {}
+public function getDistJSFiles($min = false, $removeonly = false,$combine=true,$distpath="cache") {}
 /**
 * Advance Function
-* Combine All css files
+* Distribute All css files
 * @param boolean $min Optional no use
 * @param boolean $removeonly Optional if true then remove only links no output
+* @param boolean $combine Optional if true then combine files
+* @param string $distpath Optional Folder Path to copy files Default = cache
 * @return string
-* 
 */
-public function getCombineCSSFiles($min = false, $removeonly = false) {}
+public function getDistCSSFiles($min = false, $removeonly = false,$combine=true,$distpath="cache") {}
 /**
 * Combine All js and css filelinks and create combine file in $parentfolder folder.
 * It also incudes addFileLink code for browser.

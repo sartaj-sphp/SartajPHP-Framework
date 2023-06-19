@@ -131,12 +131,13 @@ final class SphpJsM {
     public static function addBootStrap() {
         global $jslibpath;
         if(SphpJsM::getJSLibVersion("bootstrap") == -1){ 
-        addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap.min.css", true, "", "", "bootstrap:4");
+            $mpath = "$jslibpath/twitter/bootstrap4";
+        addFileLink("$mpath/css/bootstrap.min.css", true, "", "", "bootstrap:4",["$mpath"]);
         //addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap-grid.min.css", true);
         //addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap-reboot.min.css", true);
         //addFileLink("$jslibpath/twitter/bootstrap4/js/popper.min.js", true);
         //addFileLink("$jslibpath/twitter/bootstrap4/js/bootstrap.min.js", true);
-        addFileLink("$jslibpath/twitter/bootstrap4/js/bootstrap.bundle.min.js", true);
+        addFileLink("$mpath/js/bootstrap.bundle.min.js", true);
         //SphpJsM::addFontAwesome();
         SphpJsM::addAlertDialog();
         SphpJsM::$jslib["bootstrap"] = 4;
@@ -147,7 +148,7 @@ final class SphpJsM {
         global $jslibpath;
         if(SphpJsM::getJSLibVersion("bootstrap") == -1){ 
         SphpJsM::addFontAwesome();
-        addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap.min.css", true, "", "", "bootstrap:4");
+        addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap.min.css", true, "", "", "bootstrap:4",["$jslibpath/twitter/bootstrap4"]);
         addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap-grid.min.css", true);
         addFileLink("$jslibpath/twitter/bootstrap4/css/bootstrap-reboot.min.css", true);
         addFileLink("$jslibpath/fonts/Roboto.css", true);
@@ -183,7 +184,7 @@ final class SphpJsM {
     public static function addFontAwesome() {
         global $jslibpath;
         if(SphpJsM::getJSLibVersion("fontawesome") == -1){ 
-        addFileLink("$jslibpath/fontawesome/css/font-awesome.min.css", true);
+        addFileLink("$jslibpath/fontawesome/css/font-awesome.min.css", true,"","","fontasm:5",["$jslibpath/fontawesome"]);
         SphpJsM::$jslib["fontawesome"] = 4;
         }
     }
@@ -191,7 +192,7 @@ final class SphpJsM {
     public static function addFontAwesome6() {
         global $jslibpath;
         // support both version 4 and 6
-        addFileLink("$jslibpath/fontawesome6/css/all.min.css", true);
+        addFileLink("$jslibpath/fontawesome6/css/all.min.css", true,"","","fontasm:6");
         addFileLink("$jslibpath/fontawesome6/css/v4-shims.min.css", true);
         SphpJsM::$jslib["fontawesome"] = 6;
     }
@@ -216,7 +217,7 @@ final class SphpJsM {
     public static function addjQueryMobile() {
         global $jslibpath;
         //addFileLink("$jslibpath/jquery.mobile-1.4.5/jquery.mobile.custom.structure.min.css", true);
-        addFileLink("$jslibpath/jquery.mobile/jquery.mobile-1.4.5.min.css", true);
+        addFileLink("$jslibpath/jquery.mobile/jquery.mobile-1.4.5.min.css", true,"","","jquerymob:4",["$jslibpath/jquery.mobile"]);
         //addFileLink("$jslibpath/jquery.mobile-1.4.5/jquery.mobile-1.5.0-alpha.1.min.js", true,"","","jQueryM:1.5.0");
         addFileLink("$jslibpath/jquery.mobile/jquery.mobile-1.4.5.min.js", true);
         SphpJsM::$jslib["jquery_mobile"] = 145;

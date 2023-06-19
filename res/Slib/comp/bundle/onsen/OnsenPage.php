@@ -18,7 +18,7 @@ public function oncreate($element){
 
 
 public function onjsrender(){
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.css');
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.css',false,"","","onsen:4",[SphpBase::sphp_settings()->res_path . '/jslib/onsen']);
     addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.js');
 
     addHeaderJSCode('onsen0', ' window["onsen"] = {};');

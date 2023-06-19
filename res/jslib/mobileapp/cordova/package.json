@@ -1,0 +1,27 @@
+{
+  "name": "<?php echo $caller->mobappid ; ?>",
+  "displayName": "<?php echo $caller->mobappname ; ?>",
+  "version": "<?php echo $caller->mobappversion ; ?>",
+  "description": "<?php echo $caller->mobappdes ; ?>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "<?php echo $caller->mobappauthor ; ?>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^10.1.2",
+    "cordova-plugin-dialogs": "^2.0.2"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-dialogs": {}
+    }
+  }
+}

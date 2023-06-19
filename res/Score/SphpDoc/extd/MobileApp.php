@@ -9,7 +9,7 @@ require_once(\SphpBase::sphp_settings()->lib_path . "/lib/DIR.php");
 include_once(\SphpBase::sphp_settings()->lib_path . "/lib/HtmlMinifier.php");
 class MobileApp extends BasicApp{
 public $mobappname = "HelloCordova";
-public $mobappid = "io.cordova.hellocordova";
+public $mobappid = "com.sartajphp.hellocordova";
 public $mobappversion = "0.0.1";
 public $mobappdes = "A sample Apache Cordova application that responds to the deviceready event.";
 public $mobappauthor = "Apache Cordova Team";
@@ -22,6 +22,10 @@ public $cfilename = "";
 public $dir = null;
 public function setGenRootFolder($param) {}
 public function setSpecialMetaTag($val) {}
+/**
+* Set Distribute multi js css files rather then single
+*/
+public function setMultiFiles() {}
 public function setup($tempobj){}
 public function addPage($pageobj) {}
 public function addDistLib($folderpath) {}

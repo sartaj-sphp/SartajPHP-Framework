@@ -1,0 +1,35 @@
+{
+  "name": "SphpPlugin",
+  "version": "<?php echo $caller->mobappversion ; ?>",
+  "description": "Sphp Plugin",
+  "cordova": {
+    "id": "com.sartajphp.scordova",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "local",
+    "path": "apps/cordova/plugins/com.sartajphp.scordova"
+  },
+  "bugs": {
+    "url": "https://github.com/sartajphp"
+  },
+  "keywords": [
+    "cordova"
+  ],
+  "scripts": {
+    "test": "npm run eslint"
+  },
+  "author": "SartajPHP",
+  "license": "Apache-2.0",
+  "engines": {
+    "cordovaDependencies": {
+      "3.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "devDependencies": {
+   }
+}

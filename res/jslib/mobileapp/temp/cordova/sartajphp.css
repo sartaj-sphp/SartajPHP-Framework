@@ -1,12 +1,12 @@
 body{
-background-image: url("../img/bg3.png");
+background-image: url("./favicon/bg3.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
 }
 .page__background{
-background-image: url("../img/bg3.png");
+background-image: url("./favicon/bg3.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

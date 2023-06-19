@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="com.sartajphp.scordova"
+      version="<?php echo $caller->mobappversion ; ?>">
+
+    <name>SphpPlugin</name>
+    <description>SartajPHP Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,sartajPHP</keywords>
+    <repo>https://github.com/sartajphp</repo>
+    <issue>https://github.com/sartajphp/issues</issue>
+
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+          <feature name="SphpPlugin">
+              <param name="android-package" value="com.sartajphp.scordova.SphpPlugin" />
+              <param name="onload" value="true" />
+          </feature>
+        </config-file>
+
+        <source-file src="src/android/SJAPI.java" target-dir="src/com/sartajphp/scordova" />
+        <source-file src="src/android/SphpPlugin.java" target-dir="src/com/sartajphp/scordova" />
+
+        <!-- android specific notification apis -->
+    <js-module src="www/SphpPlugin.js" name="SphpPlugin">
+        <merges target="window.plugins.SphpPlugin" />
+    </js-module>
+
+    </platform>
+
+</plugin>

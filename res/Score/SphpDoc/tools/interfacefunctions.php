@@ -71,8 +71,8 @@ function registerApp($ctrl,$apppath,$s_namespace="",$permtitle="",$permlist=null
 function isRegisterApp($ctrl){}
 function setSession($lType,$uid1){}
 function destSession(){}
-function addFileLink($fileURL,$renderonce=false,$aname="",$ext="",$ver="0"){}
-function updateFileLink($fileURL,$renderonce=false,$aname="",$ext="",$ver="0"){}
+function addFileLink($fileURL,$renderonce=false,$aname="",$ext="",$ver="0",$assets=array()){}
+function updateFileLink($fileURL,$renderonce=false,$aname="",$ext="",$ver="0",$assets=array()){}
 function removeFileLink($fileURL,$renderonce=false,$aname="",$ext=""){}
 function addFileLinkCode($name,$code,$renderonce=false){}
 function issetFileLink($filename, $ext, $renderonce = false) {}
