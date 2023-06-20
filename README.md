@@ -116,8 +116,7 @@ Documentation
 
 * Read the [Getting Started guide][1] if you are new to SartajPHP.
 * Video Tutorial on Youtube [SartajPHP Video Tutorial][3] to learn SartajPHP practically.
-* [SartajPHP v4.3.x API][5]
-* [SartajPHP v4.4.x API][6]
+* [Latest API][5]
  
 
 Community
@@ -138,9 +137,8 @@ If you discover a security vulnerability within SartajPHP PHP Framework, please 
 
 
 
-[1]: http://sartajphp.com
+[1]: https://www.sartajphp.com
 [2]: https://github.com/sartaj-singh/SartajPHP-Framework
 [3]: https://www.youtube.com/channel/UCKENEpj-PZvpS2lC4cqh-7g
 [4]: https://www.facebook.com/DevelopmentFramework/
-[5]: http://www.sartajphp.com/api/
-[6]: http://www.sartajphp.com/api2/
+[5]: https://www.sartajphp.com/api4.7/
