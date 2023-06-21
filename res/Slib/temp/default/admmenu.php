@@ -1,6 +1,8 @@
 <?php 
-include_once($slibpath . "/comp/bundle/menu/BootstrapSideMenu.php"); 
-class MenuUi extends BootstrapSideMenu{
+include_once($slibpath . "/comp/bundle/menu/BootstrapMenu.php"); 
+//include_once($slibpath . "/comp/bundle/menu/BootstrapSideMenu.php"); 
+//class MenuUi extends BootstrapSideMenu{
+class MenuUi extends BootstrapMenu{
     public function onstart() {
         //$this->sphp_api->banMenuLink("Logout","Home");
         //$this->setPosition("fixed-top");

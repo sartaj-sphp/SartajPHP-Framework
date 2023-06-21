@@ -17,6 +17,7 @@ public $engine_start_time = 0.0;
 public $engine_end_time = 0.0;
 public $drespath = "";
 public $dphppath = "";
+public function exitMe() {}
 public function setDebugger(){}
 public function start()
 {}

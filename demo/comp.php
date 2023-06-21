@@ -1,47 +1,48 @@
 <?php
 $cmpid = "demo";
-$cmpname = "Demo Company";
+$cmpname = "SartajPHP Demo";
 
 
 $duser = "root";
-$db = "sphp";
-$dpass = "";
-function getSPDB(){}
-function getPluginDB(){}
+$db = "db1";
+$dpass = "mypass";
+
+$debugmode = 2;
+$admuser = 'admin';
+$admpass = '1234';
 
 if($basepath != ""){
-	$basepath .= "gitdemo/demo/";
+	$basepath .= "/demo";
 }
+
 //app mail settings
 $mailServer = "mail.domain.com";
-$mailUser = "appmail@domain.com";
-$mailPass = "1234";
+$mailUser = "info@domain.com";
+$mailPass = "";
 $mailPort = "26";
 
-
-//$masterf = "temp/new_design/master.php";
+$masterf = "temp/default/master.php";
+//$admmasterf = "temp/admin/master.php";
 
 function getWelcome(){
-global $logType;
-global $fileName;
-global $page;
-global $basepath;
+$page = SphpBase::page();
 
-switch($logType){
+switch(SphpBase::page()->getAuthenticateType()){
 case "ADMIN":{
 $page->forward(getAppPath("admhome",'','',true));
 break;
 }
 case "MEMBER":{
-$page->forward($basepath);
+$page->forward(getAppPath("mebhome"));
 break;
 }
 
 default:{
-$page->forward($basepath);
+$page->forward(getAppPath("index"));
 break;
 }
 
 }
 
 }
+

@@ -1,2 +1,2 @@
-.\..\res\sphpserver\sphpserver-win.exe app.sphp
+.\..\sphpdesk\sphpserver\sphpserver-win.exe app.sphp
 

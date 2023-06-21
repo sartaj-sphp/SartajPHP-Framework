@@ -28,19 +28,22 @@ $menu->run();
 <link rel="icon" type="image/gif" href="<?php print $basepath; ?>/favicon.gif" />
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row"><div class="col-md-3 col-sm-hd bg-dark">
+    <div class="container-fluid padding-top">
+               <div class="row"><div class="col">
+<h1 class="heading padding-top padding-bottom">
+    <img src="<?php print $slibrespath; ?>/temp/default/imgs/favicon-32x32.png" />&nbsp;&nbsp;<?php print $cmpname; ?></h1>
+            </div></div>
+
+        <div class="row"><div class="col">
  <?php print $menu->render(); ?>
       </div>
-    <div class="col-md-9 col-sm-12 bg-white">
-       <div class="row"><div class="col">
-<h2 class="heading" style="font-size:36px;"><?php print $cmpname; ?></h2>
-            </div></div>
+        </div><div class="row">
+    <div class="col">
  <div class="row"><div class="col">
 <?php SphpBase::$dynData->render(); ?>
      </div></div>
 <div class="row"><div class="col">        
-        footer
+        <h2 class="heading padding-top padding-bottom text-center"><a class="text-white" href="https://www.sartajphp.com">Power By SartajPHP</a></h2>
 </div>
 </div>
             </div></div></div>

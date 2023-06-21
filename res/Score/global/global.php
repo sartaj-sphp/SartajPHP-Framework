@@ -79,4 +79,5 @@ $admuser = 'admin';
 $admpass = '1234';
 
 include_once(PROJ_PATH . "/plugin/ccachelist.php");
-include PROJ_PATH . '/comp.php';
+include_once(PROJ_PATH . "/cachelist.php");
+include_once(PROJ_PATH . '/comp.php');

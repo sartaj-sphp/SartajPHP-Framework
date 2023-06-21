@@ -1,64 +1,64 @@
 <?php
+
+// global app type
 SphpBase::page()->tblName = "admin";
 $masterFile = $admmasterf;
 SphpBase::page()->Authenticate("GUEST,ADMIN,MEMBER");
 global $msg;
 $msg = "";
 SphpBase::$dynData = new TempFile(SphpBase::page()->apppath . "/forms/admlogin.php");
-$formName =  "";
+$formName = "";
 
-if(SphpBase::page()->isevent){
-switch(SphpBase::page()->sact){
+if (SphpBase::page()->isevent) {
+    switch (SphpBase::page()->sact) {
 
-case "logout" :{
-    $number_of_days = -1 ;
-    $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-    setcookie( "algdec", "dome1", $date_of_expiry );
-    destSession();
-    getWelcome();
-
-break;
+        case "logout" : {
+                SphpBase::sphp_request()->unsetCookie("algdec");
+                destSession();
+                getWelcome();
+                break;
+            }
+    }
 }
 
-}
-}
-
-if(SphpBase::page()->issubmit){
- if(SphpBase::$dynData->getComponent("txtuserID")->value == $admuser && SphpBase::$dynData->getComponent("txtpass")->value == $admpass){
-        $number_of_days = 10 ;
-        $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-        if(isset($_REQUEST["chkremb"])) {
-            setcookie( "algdec", "dome1", $date_of_expiry );
+if (SphpBase::page()->issubmit) {
+    if (SphpBase::$dynData->getComponent("txtuserID")->value == $admuser && SphpBase::$dynData->getComponent("txtpass")->value == $admpass) {
+        $number_of_days = 10;
+        $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days;
+        if (SphpBase::sphp_request()->isPost("chkremb")) {
+            SphpBase::sphp_request()->cookie("algdec", "dome1",false, $date_of_expiry);
         }
-setSession('ADMIN', $cmpid);
-define("autocompkey","FD45A279GH");
-\SphpBase::sphp_request()->session("edtmode",autocompkey); 
-getWelcome();
-}else{
-  $msg = "Error:- Wrong user name or password";  
-$formName = "admlogin";
-}
+        // authenticate user type ADMIN with value $cmpid
+        setSession('ADMIN', $cmpid);
+        // forward to home page of ADMIN user type
+        getWelcome();
+    } else {
+        $msg = "Error:- Wrong user name or password";
+        $formName = "admlogin";
+    }
 }
 
 
-if(SphpBase::page()->isnew){
-    if(!isset($_COOKIE["algdec"])) {
+if (SphpBase::page()->isnew) {
+    if (! SphpBase::sphp_request()->isCookie("algdec") && SphpBase::page()->getAuthenticateType() !== 'ADMIN') {
+        // open login form
         $formName = "admlogin";
     }else{
+        // authenticate user type ADMIN with value $cmpid
         setSession('ADMIN', $cmpid);
-        getWelcome();    
+        getWelcome();
     }
- }
-switch($formName){
+}
+switch ($formName) {
 
-    case "admlogin":{
-$title = "Login System";
-$metakeywords = "";
-$metadescription = "";
-$metaclassification = "";
-SphpBase::$dynData->run();
-include_once("$masterFile");
-    break;
-	}
-
+    case "admlogin": {
+            SphpBase::sphp_settings()->title = "Login System";
+            SphpBase::sphp_settings()->metakeywords = "";
+            SphpBase::sphp_settings()->metadescription = "";
+            SphpBase::sphp_settings()->metaclassification = "";
+            SphpBase::sphp_settings()->keywords = "login,page,admin";
+            SphpBase::$dynData->run();
+            include_once("$masterFile");
+            break;
+        }
 }

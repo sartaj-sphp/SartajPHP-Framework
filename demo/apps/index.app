@@ -1,95 +1,67 @@
 <?php
 
-class index extends \Sphp\tools\ConsoleApp{
+class index extends \Sphp\tools\BasicApp{
+    private $home_front1 = null;
+     
+    public function onstart() {
+        global $masterf;  
+        // if not authorise then application call getWelcome() function in comp.php
+        //$this->getAuthenticate("GUEST,ADMIN");
 
-        public function onstart(){
-                $this->consoleWriteln("Welcome ");
-        }
+        //set default DB table to deal with
+        //$this->setTableName("tbl1");
 
-    public function onready(){
-        $this->consoleWriteln("SartajPHP working:- ");
-        $this->consoleWriteln("Choose Command");
-        $this->consoleWriteln("Create Project 1");
-        $this->consoleWriteln("Run Sphp Server with sphpdesk 2");
-        $ans = $this->consoleReadln("type command number and press enter? 1 / 2");
-        if($ans == "1\n"){
-            $proj = realpath(PROJ_PATH . "/../../../../");
-            if(file_exists($proj . "/start.php")){
-                echo "Project is already exist in $proj\n";
-            }else{
-                $this->create_project();
-            }
-        }
-        else if($ans == "2\n"){
-            $this->run_server();
-        }
-            $this->consoleWriteln("Bye " . PHP_OS);
+        $this->home_front1 = new \Sphp\tools\TempFile($this->mypath . "/forms/index_front1.front");
+        // use global variable in comp.php file
+        $this->setMasterFile($masterf);        
     }
-    private function create_project(){
-        $proj = realpath(PROJ_PATH . "/../../../../");
-        echo shell_exec('php -f ' . SphpBase::sphp_settings()->php_path . "/classes/scripts/proj_create.php -- " . $proj);   
-        $str = <<<'A'
-<?php
-
-$sharedpath = "vendor/sartajphp/sartajphp";
-$respath = "vendor/sartajphp/sartajphp/res";
-$slibversion = "Slib";
-$libversion = "Sphp";
-
-// not editable start
-// <editor-fold defaultstate="collapsed" desc="This is generated code, any changes can effect the application">
-if(!defined("start_path")){
-    define("start_path", __DIR__);
-}
-if(!isset($argvm) && isset($argv)){
-global $argvm;
-$argvm = array();
-    $total = count($argv);
-    for ($c = 0; $c < $total; $c++) {
-        $next = $c + 1;
-        if ($next >= $total) {
-            $next = $total - 1;
-        }
-        if (strpos($argv[$c], "--") !== FALSE) {
-            if (strpos($argv[$next], "--") !== FALSE) {
-                $value = "";
-                $argvm[$argv[$c]] = $value;
-            } else {
-                $value = $argv[$next];
-                $argvm[$argv[$c]] = $value;
-                $c++;
-            }
-        }
+    
+    //index.html land here
+    public function page_new() {
+        // send temp file to browser
+        $this->setTempFile($this->home_front1);
     }
 
-}
-if(isset($argv) && isset($argvm["--sharedpath"])){
-    chdir(start_path);
-    $sharedpath = $argvm["--sharedpath"];
-    $respath = "~rs/res";
-}
-//$respath = "~up/res/";
-$phppath = $sharedpath . "/res";
-include_once("{$phppath}/Score/{$libversion}/global/start.php");
-startSartajPHPEngine();
+    public function page_event_page($evtp) {
+        // send temp file to browser
+        $this->setTempFile(new TempFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php'));
+    }
 
-// </editor-fold>
-// not editable end
-A;     
-file_put_contents($proj ."/start.php",$str);
-        echo "Project is created in " . $proj . "\n";
+    public function page_event_captcha($evtp) {
+        // pass captcha event to component
+        $temp1 = new TempFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php');
     }
-    private function run_server(){
-        try {
-            if(PHP_OS == "Linux"){
-                echo shell_exec("npx sphpdesk");
-            }else{
-                echo shell_exec("sphpdesk");
-            }
-        echo "Sphp Server is running \n";
-        }catch(Exception $e){
-            echo "Install Sphpdesk with 'npm install -g sphpdesk' \n";
+    //form submit here
+    public function page_submit() {
+        // set dummy error to test getCheckErr, you can watch this error in browser console in debugmode=2
+        //setErr("app1","I am dummy error");
+
+        if(! getCheckErr()){
+            //submit data to mysql database, you need to set db user pass in comp.php file
+            // $this->dbEngine->executeQueryQuick("INSERT INTO tbl1 () values()");
+            // or $this->page->insertData() will insert data automatically with use of control 
+            // dfield and dtable attributes or it can use default table of application.
+            // check app Framework folder ./res/Slib/apps/helper/AutoApp.php file 
+            //set inner html of spn2 control
+            $this->home_front1->spn2->setInnerHTML("Form Submut value = " . $this->home_front1->txtname->value);
+        }else{
+            $this->home_front1->spn2->setInnerHTML("Form Submut with error ");
         }
-        
+        // send temp file to browser
+        $this->setTempFile($this->home_front1);
     }
+
+    //form submit via ajax here
+    public function page_event_formsub($evtp) {
+        //$this->JSServer->addJSONHTMLBlock("spn1","You post to server  " . $this->home_front1->getComponent('txtname')->value);
+        $this->JSServer->addJSONHTMLBlock("spn1","You post to server  " . $this->home_front1->txtaddress->value);
+        $this->JSServer->addJSONJSBlock("$('#txtaddress').css('background-color','#FF0000');");
+    }
+
+    //txtname component submit via ajax here
+    public function page_event_txtname_keyup($evtp) {
+        $this->JSServer->addJSONHTMLBlock("spn2","Server is reading:-  " . $this->home_front1->txtname->value);
+    }
+    
 }
+
