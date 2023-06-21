@@ -1,0 +1,45 @@
+Temp file ##{ $this->tempobj->filePath }# Start Here:-
+<br />
+<div class="row">
+<div class="col">
+    <div>
+        <p>Default Super Admin login:- user:- admin and password:- 1234.</p><p>
+            You can set it in comp.php file. use $admuser = 'admin';
+            $admpass = '1234'; 
+code.  </p>
+<table class="table">
+    <tr><td>Project Path</td><td>##{PROJ_PATH}#</td></tr>
+    <tr><td>Project Registery file reg.php</td><td>##{PROJ_PATH . '/reg.php'}#</td></tr>
+    <tr><td>Project Settings file comp.php</td><td>##{PROJ_PATH . '/comp.php'}#</td></tr>
+    <tr><td>Current Browser Request Controller</td><td>##{\SphpBase::sphp_router()->getCurrentRequest()}#</td></tr>
+    <tr><td>Current Browser Request Event</td><td>##{\SphpBase::page()->getEvent()}#</td></tr>
+    <tr><td>Current Browser Request Event Param</td><td>##{\SphpBase::page()->getEventParameter()}#</td></tr>
+    <tr><td>Register App with Controller which running this file</td><td>##{\SphpBase::sphp_router()->getCurrentAppPath()[0]}#</td></tr>
+    <tr><td>This Temp file Path check setTempFile in app page_new event handler</td><td>##{$this->tempobj->filePath}#</td></tr>
+    <tr><td>Master file Path check setMasterFile in app onstart event handler</td><td>##{\SphpBase::page()->masterfilepath}#</td></tr>
+</table>
+<p>
+Master design file path: <?php echo \SphpBase::page()->masterfilepath; ?>  You can edit menu bar and basic html design
+in this file. Which master design file work is set in application path:-
+        </p>
+       
+    </div>
+<form id="form1" runat="server" class="form-horizontal">
+    <label for="txtname">Name</label><br />
+<span id="spn2" runat="server"></span>
+ <input id="txtname" runat="server" type="text" dfield="" funsubmitAJAX="keyup"  funsetForm="form1" funsetMsgName="Name" funsetRequired="" funsetMinLen="4" funsetMaxLen="8" />
+<input type="submit" value="Submit" />
+</form>
+<!-- AJAX form -->
+<span id="spn1">Server Response Display here</span>
+<form id="form2" runat="server" class="form-horizontal" funsetAJAX=""  action="##{ SphpBase::sphp_router()->getEventURL('formsub',1) }#">
+    <label for="txtaddress">Address</label>
+ <input id="txtaddress" runat="server" type="text" dfield=""  funsetForm="form2" funsetMsgName="Address" funsetRequired="" funsetMinLen="4" funsetMaxLen="8" />
+<input type="submit" value="Submit AJAX" />
+</form>
+</div>
+</div>
+
+<br />
+Temp file ##{ $this->tempobj->filePath }# End Here:-
+<br />
