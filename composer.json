@@ -9,7 +9,6 @@
     ],
     "bin": ["demo/start.php"],
     "require": {
-        "php": ">=5.4",
-        "ext-ionCube_Loader": ">= 1.1"
+        "php": ">=5.4"
     }
 }
