@@ -10,6 +10,7 @@ namespace Sphp\comp\html{
 class FileUploader extends \Sphp\tools\Control{
 public $maxLen = '';
 public $minLen = '';
+public $valuehid = '';
 private $formName = '';
 private $msgName = '';
 private $defaultImg = '';
@@ -204,7 +205,7 @@ public function onjsrender(){
 //SphpBase::JSServer()->getAJAX();
 if($this->formName!=''){
 if($this->req){
-addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
 }
 }
@@ -212,6 +213,9 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
 }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '! </strong>';
+        if(\SphpBase::sphp_request()->isAJAX()){
+            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+        }
         setErr($this->name, $msg);
     }
 
@@ -241,7 +245,8 @@ $this->setAttributeDefault("class", "form-control");
     if($this->value!=''){
     $this->setAttribute('value', $this->value);
 if($this->value!=''){
-    $this->addPostTag('<input type="hidden" name="hid'.$this->name.'" value="'. encrypt('t7i'.$this->value) .'" /><div id="out'.$this->name.'">
+    $this->valuehid = encrypt('t7i'.$this->value);
+    $this->addPostTag('<input type="hidden" name="hid'.$this->name.'" value="'. $this->valuehid .'" /><div id="out'.$this->name.'">
       '. $imgtag . $btnd .'  </div>');
 }
 }

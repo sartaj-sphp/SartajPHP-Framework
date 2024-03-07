@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * DbEdit by Sartaj
+ * <td id="txtedit2" fursetHTMLID="##{ $this->tempobj->showall->getRow('id_c')}#d" 
+ * path="libpath/comp/data/DbEdit.php" data-suburl="index-dbedit.html" 
+                data-field="shipper_c" data-table="leads_cstm" value="##{ $this->tempobj->showall->getRow('shipper_c') }#"  
+                fur_data-recidv="##{ $this->tempobj->showall->getRow('id_c') }#" 
+ * fur_data-mval="##{ $this->tempobj->showall->getRow('shipper_c') }#" 
+ * data-recid="id_c" runat="server">
+ * ##{ $this->tempobj->parentapp->getShipList2($this->tempobj->showall->getRow('shipper_c')) }#
+ * </td>
+ */
 class DbEdit extends \Sphp\tools\Control{
     private $type = "text";
     private $options = "";
@@ -26,16 +36,27 @@ class DbEdit extends \Sphp\tools\Control{
         //$this->setPreTag('<select id="slt'. $this->name .'" style="display:none; position: absolute;">'. $this->options .'</select>');
         addHeaderJSCode('slt2','$("body").append(\'<select id="slt'. $this->name .'" data-recid="" style="display:none; position: absolute;">'. $this->options .'</select>\');');
     }
+        public function setAuth($param) {
+            $blnF = \SphpBase::page()->checkAuth($param);
+            if (!$blnF) {
+                $this->renderTag = false;
+            }
+        }
 
     public function onrender() {
+        if($this->renderTag) $this->renderT1();
+    }
+    private function renderT1() {
         if($this->type == "text"){
         $this->contenteditable = "true";
         $this->setAttribute("class", "dbedit");
-        $this->setAttribute("oninput","fundbedit(this)");
-        addHeaderJSCode('dbedit', ' function fundbedit(obj1){
-            clearTimeout(this.tmr1);
+        $this->setAttribute("oninput","fundbedit()");
+        $this->setAttribute("onclick","return(false)");
+        addHeaderJSCode('dbedit', ' window["fundbedit"] = function(){
+            let obj1 = event.target;
+            clearTimeout(obj1.tmr1);
             $(obj1).css("background-color","#FF0000");
-            this.tmr1 = setTimeout(function(){
+            obj1.tmr1 = setTimeout(function(){
                 let data = {};
                 data["flid"] = $(obj1).data("recid");
                 data["flidv"] = $(obj1).data("recidv");
@@ -46,7 +67,7 @@ class DbEdit extends \Sphp\tools\Control{
                     $(obj1).css("background-color","");                    
                 });
             },1000);
-        }');
+        };');
     }else if($this->type == "select"){
         if($this->ctag < 2){
             $this->ctag += 1;
@@ -55,12 +76,12 @@ class DbEdit extends \Sphp\tools\Control{
         }
         //$this->tagName = "select";
         $this->setAttribute("class", $this->name);
-        $this->setAttribute("onmouseup","fundbedit2(this)");
+        $this->setAttribute("onmouseup","fundbedit2()");
         //$this->setInnerHTML($this->options);
         addHeaderJSCode($this->name , '
-        function fundbedit2(obj1){
+        window["fundbedit2"] = function(){
             //console.log(event);
-            //let obj1 = event.target;
+            let obj1 = event.target;
             var offs = $(obj1).offset();
             $("#slt'. $this->name . '").css("left",offs.left + 10);
             $("#slt'. $this->name . '").css("top",offs.top + 10);
@@ -72,7 +93,7 @@ class DbEdit extends \Sphp\tools\Control{
             $("#slt'. $this->name . '").data("suburl",$(obj1).data("suburl"));
             let slt1 = $(obj1).data("recidv") + "d";
             selectByValue($("#slt'. $this->name . '"),$("#" + slt1).data("mval"));
-    }
+    };
         $("#slt'. $this->name .'").on("change",function(event){
             let obj1 = event.target;
             if($(obj1).data("recid") !== ""){

@@ -77,12 +77,6 @@ function includeOnce2($filepath) {}
 * @return array
 */
 function getGlobals() {}
-/**
-* Extra autoload registered function
-* @param string $name
-*/
-function loadSphpLibClass($name) {}
-spl_autoload_register("loadSphpLibClass");
 class stmycache {
 public $url_extension = ".html";
 public $act = "";

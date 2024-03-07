@@ -1,4 +1,5 @@
 <?php
+$JSServer = SphpBase::JSServer();
 $JSServer->getAJAX();
 
 if(SphpBase::page()->isevent)
@@ -107,12 +108,14 @@ switch($formNo){
     case 1:{
 $genFormTemp->run();
 $dynData = $genFormTemp;
+SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;
     }
     case 2:{
 $showallTemp->run();
 $dynData = $showallTemp;
+SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;
     }

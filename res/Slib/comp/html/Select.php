@@ -47,6 +47,9 @@ class Select extends \Sphp\tools\Control {
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+        if(\SphpBase::sphp_request()->isAJAX()){
+            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+        }
         setErr($this->name, $msg);
     }
 
@@ -247,7 +250,7 @@ class Select extends \Sphp\tools\Control {
 alert('Please Select One Option From " . $this->msgName . "');
 document.getElementById('$this->name').focus();
 }";
-            addFooterJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
+            addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
         }
     }
 

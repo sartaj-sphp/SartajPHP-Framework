@@ -9,7 +9,7 @@ runFrontPlace("mastertemp1","template");
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php SphpJsM::addBootStrapKit5();  echo getHeaderHTML(); ?>
-<link href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/css/framework.css" rel="stylesheet"  type="text/css" />
+<link href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/permis/css/framework.css" rel="stylesheet"  type="text/css" />
 <link rel="icon" type="image/png" sizes="192x192"  href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/android-icon-192x192.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="96x96" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-96x96.png" />

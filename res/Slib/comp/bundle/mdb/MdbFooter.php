@@ -79,7 +79,7 @@ class MdbFooter extends Control {
                 <a href="#!" class="text-reset">Vue</a>
               </p>
               <p>
-                <a href="#!" class="text-reset">Laravel</a>
+                <a href="https://sartajphp.com" target="__blank" class="text-reset">SartajPHP</a>
               </p>
             </div>
             <!-- Grid column -->

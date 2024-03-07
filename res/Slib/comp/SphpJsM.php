@@ -17,7 +17,7 @@ final class SphpJsM {
         SphpJsM::$jslib["jquery"] = 321;
 
 // add jlib
-        addFileLink("{$jslibpath}/jquery/jslib.js", true);
+        addFileLink("{$jslibpath}/jquery/jslib.js", true,"sphp-jslib","js","jslib: 1.0.1");
         SphpJsM::$jslib["jslib"] = 1;
 
 // load js migrate lib 
@@ -25,9 +25,9 @@ final class SphpJsM {
         addHeaderJSFunction('ready', "$(document).ready(function() {", "});", true);
         addHeaderJSFunction('ready', "$(document).ready(function() {", "});");
         addHeaderJSFunction('pageload', "$(window).on('load',function() {", "});", true);
-        addFileLink('sphpjq = window.jQuery = window.$ = jql;', true, "jquery-js-code", "js");
+        addFileLink('window["sphpjq"] = window.jQuery = window.$ = jql;', true, "jquery-js-code", "js");
 // native console = sconsole.log(msg);
-        addHeaderJSFunction('onconsole', "window['onconsole'] = function(msg,type='l'){var nooutput = false;", " if(!nooutput){switch(type){
+        addHeaderJSFunction('onconsole', "window['onconsole'] = function(msg,type){var nooutput = false;", " if(!nooutput){switch(type){
             case \"i\": {sconsole.info(msg); break;}
             case \"w\": {sconsole.warn(msg); break;}
             case \"e\": {sconsole.error(msg);break;}
@@ -36,14 +36,28 @@ final class SphpJsM {
 }};", true);
     }
 
+    public static function setMinimumLib($jquerypath="") {
+        global $jslibpath;
+        if($jquerypath != ""){
+            updateFileLink($jquerypath, true, "jquery-min", "js");
+        }else{
+            updateFileLink("{$jslibpath}/jquery/jquery-min1.10.js", true, "jquery-min", "js");
+        }
+        updateFileLink("{$jslibpath}/jquery/jslib_old_browser.js",true,'sphp-jslib');
+    }    
     public static function addAlertDialog() {
         global $jslibpath;
         addFileLink("$jslibpath/jquery/jquery-confirm.min.css", true);
         addFileLink("$jslibpath/jquery/jquery-confirm.min.js", true);
-        addFileLink("$jslibpath/jquery/alertDialog.js", true);
+        addFileLink("$jslibpath/jquery/alertDialog.js", true,"sphp-jslib");
         SphpJsM::$jslib["alert_dialog"] = 1;
     }
 
+    public static function getSphpLib() {
+        \SphpBase::JSServer()->getAJAX();
+        addFileLink(\SphpBase::sphp_settings()->slib_res_path . "/comp/html/jslib/validation.js", true);
+        addFileLink(\SphpBase::sphp_settings()->slib_res_path . "/comp/html/jslib/jquery.form.js", true);        
+    }
     public static function addjQueryl($default = false, $replaceVar = "") {
         global $jslibpath;
         updateFileLink("$jslibpath/jquery/jquery-3.4.1.min.js", true, "jquery-min", "js", "jquery:3.4.1");
@@ -52,7 +66,7 @@ final class SphpJsM {
         addHeaderJSFunction('pageload', "jql(window).on('load',function() {", "});", true);
 // use code var jql = $.noConflict(true);
         if ($default) {
-            updateFileLink('sphpjq = window.jQuery = window.$ ' . $replaceVar . ' = jql;', true, "jquery-js-code", "js");
+            updateFileLink('window["sphpjq"] = window.jQuery = window.$ ' . $replaceVar . ' = jql;', true, "jquery-js-code", "js");
         }
         SphpJsM::$jslib["jquery"] = 341;
     }
@@ -64,7 +78,7 @@ final class SphpJsM {
         addHeaderJSFunction('readyjq2', "jq2(document).ready(function() {", "});");
         addHeaderJSFunction('pageloadjq2', "jq2(window).on('load',function() {", "});", true);
         if ($default) {
-            updateFileLink('sphpjq = window.jQuery = window.$ = jq2;', true, "jquery-js-code", "js");
+            updateFileLink('window["sphpjq"] = window.jQuery = window.$ = jq2;', true, "jquery-js-code", "js");
         }
         SphpJsM::$jslib["jquery"] = 224;
     }
@@ -81,9 +95,9 @@ final class SphpJsM {
         addHeaderJSFunction('pageloadjq1', "jq1(window).on('load',function() {", "});", true);
         if ($default) {
             if ($latest) {
-                updateFileLink('sphpjq = window.jQuery = window.$ = jq1 = jql;', true, "jquery-js-code", "js");
+                updateFileLink('window["sphpjq"] = window.jQuery = window.$ = window.jq1 = jql;', true, "jquery-js-code", "js");
             } else {
-                updateFileLink('sphpjq = window.jQuery = window.$ = jq1;', true, "jquery-js-code", "js");
+                updateFileLink('window["sphpjq"] = window.jQuery = window.$ = window.jq1 = $.noConflict(true);', true, "jquery-js-code", "js");
             }
         }
         SphpJsM::$jslib["jquery"] = 110;
@@ -95,11 +109,12 @@ final class SphpJsM {
         addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui.min.css", true);
         //addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui.theme.min.css", true);
         //addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui.structure.min.css", true);
-//    addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui-bootstrap.css", true);
-        addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui.min.js", true, "jquery-ui", "", "jqueryui:" . $version);
-        SphpJsM::$jslib["jqueryui"] = 1121;
+    //addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui-bootstrap.css", true);
+        // crass with bootstrap so change name to jquery-ui2 fix in future
+        addFileLink("$jslibpath/jquery-ui-" . $version . "/jquery-ui.min.js", true, "jquery-ui2", "", "jqueryui:" . $version);
+        SphpJsM::$jslib["jqueryui"] = str_replace('\.', '', $version);
     }
-
+    
     public static function addReact() {
         global $jslibpath;
         addFileLink("$jslibpath/react/react.production18.min.js", true, "", "", "react:18");
@@ -139,7 +154,7 @@ final class SphpJsM {
         //addFileLink("$jslibpath/twitter/bootstrap4/js/bootstrap.min.js", true);
         addFileLink("$mpath/js/bootstrap.bundle.min.js", true);
         //SphpJsM::addFontAwesome();
-        SphpJsM::addAlertDialog();
+        //SphpJsM::addAlertDialog();
         SphpJsM::$jslib["bootstrap"] = 4;
         }
     }

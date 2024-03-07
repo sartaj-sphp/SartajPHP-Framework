@@ -1,96 +1,96 @@
 <?php
+
 /**
  * Description of Autocomplete
  *
  * @author SARTAJ
+ * extra == send extra controls value to server with ajax request for autocomplete.
+ * use comma separated string of id attributes 
+ * <input id="txtmodel" runat="server" extra="maker,type" type="text" dfield="txtmodel" class="form-control" path="libpath/comp/bundle/Autocomplete.php" funsetForm="form2" funsetMsgName="Model" funsetMaxLen="20"  />
+ * send data from server
+ *         $sltmaker = $this->genFormTemp->getComponent('sltcar_maker')->value;
+        $s1 = $this->Client->request('term');
+        $res = $this->dbEngine->executeQueryQuick("SELECT txtmodel FROM cartype WHERE sltcar_maker='$sltmaker' AND txtmodel LIKE '%$s1%'");
+        $d1 = array();
+        while($row = mysqli_fetch_assoc($res)){
+            $d1[] = $row['txtmodel'];
+        }
+        $this->genFormTemp->txtmodel->sendData($d1);
  */
+include_once(SphpBase::sphp_settings()->slib_path . "/comp/html/TextField.php");
+class Autocomplete extends \Sphp\comp\html\TextField {
 
+    private $url = "";
+    private $synccomp = '';
+    private $minlen2 = 2;
+    public $valuehid = "";
 
+    public function oninit() {
+        parent::oninit();
+        //$this->setHTMLName("");
+        $this->url = getEventURL($this->name . '_autocomplete');
+    }
 
-class Autocomplete extends Control{
-private $url = ""; 
-private $minlen = "1"; 
-private $req = false;
-private $formName = '';
-private $msgName = '';
-private $synccomp = '';
+    public function setURL($val) {
+        $this->url = $val;
+    }
 
-public function oncreate($element){
-$this->setHTMLName("");
-$this->url = getEventURL($this->name.'_autocomplete');
-}
-     public function setForm($val) { $this->formName = $val;}
-     public function setMsgName($val) { $this->msgName = $val;}
-     public function setRequired() {
-if($this->issubmit){
-if(strlen($this->value) < 1){
-setErr($this->name,"Can not submit Empty");
-            }
-  }
-$this->req = true;
-}
-
-public function setURL($val){
-    $this->url = $val;    
-}
-public function setMinLen($val){
-    $this->minlen = $val;
-}
-public function sendData($val){
-    
-SphpBase::JSServer()->addJSONBlock('js','proces','
-   '. SphpBase::sphp_api()->getJSArray("data",$val) .'
-  var term = "'.$_REQUEST['term'].'" ;
-'.$this->name.'_cache[term] = data;    
-'.$this->name.'_response(data);
+    public function sendData($val) {
+        SphpBase::JSServer()->addJSONBlock('js', 'proces', '
+   ' . SphpBase::sphp_api()->getJSArray("data", $val) . '
+  var term = "' . SphpBase::sphp_request()->post('term') . '" ;
+' . $this->name . '_cache[term] = data;    
+' . $this->name . '_response(data);
     ');
-    
-}
+    }
 
-public function onjsrender(){
-global $jquerypath;
-/*
-addFileLink($jquerypath.'themes/base/jquery.ui.all.css');
-addFileLink($jquerypath.'themes/base/jquery.ui.accordion.css');
-addFileLink($jquerypath.'ui/jquery.ui.core.min.js');
-addFileLink($jquerypath.'ui/jquery.ui.widget.min.js');
-addFileLink($jquerypath.'ui/jquery.ui.position.min.js');
-addFileLink($jquerypath.'ui/jquery.ui.menu.min.js');
-addFileLink($jquerypath.'ui/jquery.ui.autocomplete.min.js');
- * 
- */
-if($this->formName!=''){
-if($this->req){
-addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
-ctlReq['$this->name']= Array('$this->msgName','TextField');");
-}
-}
-
-addHeaderJSFunction($this->name.'_autocomplete', "function ".$this->name.'_autocomplete(request){ ' , "
+    public function onjsrender() {
+        parent::onjsrender();
+        /*
+          addFileLink($jquerypath.'themes/base/jquery.ui.all.css');
+          addFileLink($jquerypath.'themes/base/jquery.ui.accordion.css');
+          addFileLink($jquerypath.'ui/jquery.ui.core.min.js');
+          addFileLink($jquerypath.'ui/jquery.ui.widget.min.js');
+          addFileLink($jquerypath.'ui/jquery.ui.position.min.js');
+          addFileLink($jquerypath.'ui/jquery.ui.menu.min.js');
+          addFileLink($jquerypath.'ui/jquery.ui.autocomplete.min.js');
+         * 
+         */
+        $str1 = '';
+        if($this->element->hasAttribute('extra')){
+            $extra = explode(',',$this->getAttribute('extra'));
+            foreach ($extra as $key => $val) {
+                $str1 .= 'request["'. $val .'"] = $("#'. $val .'").val();';                
+            }
+        }
+        addHeaderJSFunction($this->name . '_autocomplete', "function " . $this->name . '_autocomplete(request){ ', "
     clearTimeout(this.tmr1); this.tmr1 = setTimeout(function(){
+    $str1
 getURL('$this->url',request);    
-    },1000);
+    },800);
 }");
 
-addHeaderJSCode($this->name, ' window["'.$this->name.'_cache"] = {}; window["'.$this->name.'_response"] = null;');
-addHeaderJSFunctionCode('ready',$this->name,'
-    $("#'.$this->name.'").autocomplete({
-    minLength: '.$this->minlen.',
+        addHeaderJSCode($this->name, ' window["' . $this->name . '_cache"] = {}; window["' . $this->name . '_response"] = null;');
+        addHeaderJSFunctionCode('ready', $this->name, '
+    $("#' . $this->name . '").autocomplete({
+    minLength: ' . $this->minlen2 . ',
     source: function( request, response ) {
             var term = request.term;
-            if ( term in '.$this->name.'_cache ) {
-                    response('.$this->name.'_cache[term]);
+            if ( term in ' . $this->name . '_cache ) {
+                    response(' . $this->name . '_cache[term]);
                     return;
             }
-'.$this->name.'_response = response;
- '.$this->name.'_autocomplete(request);
+' . $this->name . '_response = response;
+ ' . $this->name . '_autocomplete(request);
             
+    },
+    select: function(event,ui){
+        $("#'. $this->name .'1").val(ui.item.label);
     }
 });        
     ');
+        if($this->valuehid == '')  $this->valuehid = $this->value;
+        $this->addPreTag('<input id="'. $this->name .'1" name="'. $this->name .'1" type="hidden" value="'. $this->valuehid .'" />');
+    }
+
 }
-
-
-
-}
-?>

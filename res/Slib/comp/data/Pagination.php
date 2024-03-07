@@ -459,17 +459,17 @@ $jsAjax = "true";
 $jsAjax = "false";        
 }
 addHeaderJSCode($this->name,"
-function confirmDel_$this->name(link){
+window['confirmDel_$this->name'] = function (link){
 confirmDel(link,$jsAjax);
-        }    
-function pagiedit_$this->name(link){
+        };    
+window['pagiedit_$this->name'] = function (link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
-function paginew_$this->name(link){
+        };    
+window['paginew_$this->name'] = function (link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
+        };    
 ");
     addHeaderJSCode('pagi',"
 function confirmDel(link,jsajax){
@@ -502,9 +502,9 @@ window.location = link ;
 
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
-</div><div id="'.$this->name.'_toolbar">';
+</div><div id="'.$this->name.'_toolbar" class="padding-bottom padding-top">';
 if($this->blnadd){
-$ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+$ptag .= '<button class="btn btn-primary" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" >Add</button>';
 }
     $divt = "$ptag</div><div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
@@ -525,17 +525,17 @@ $this->startAJAX();
 }else{
 $jsAjax = "false";    
 addHeaderJSCode($this->name,"
-function confirmDel_$this->name(link){
+window['confirmDel_$this->name'] = function(link){
 confirmDel(link,$jsAjax);
-        }    
-function pagiedit_$this->name(link){
+        };
+window['pagiedit_$this->name'] = function (link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
-function paginew_$this->name(link){
+        };
+window['paginew_$this->name'] = function (link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
+        };
 ");
     addHeaderJSCode('pagi',"
 function confirmDel(link,jsajax){
@@ -590,7 +590,23 @@ $this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
 }
 
     public function onholder($obj) {
-        $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+        switch($obj->tagName){
+            case 'img':{
+                if($this->row[$obj->getAttribute("dfield")] != ''){
+                    $obj->setAttribute('src',$this->row[$obj->getAttribute("dfield")]);
+                }else if($obj->hasAttribute('default')){
+                    $obj->setAttribute('src',$obj->getAttribute('default'));                    
+                }
+                break;
+            }default:{
+                if($this->row[$obj->getAttribute("dfield")] != ''){
+                    $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+                }else if($obj->hasAttribute('default')){
+                    $obj->setInnerHTML($obj->getAttribute('default'));                    
+                }
+                break;
+            }
+        }
     }
 
 

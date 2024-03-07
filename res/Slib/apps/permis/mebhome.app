@@ -23,7 +23,7 @@ class mebhome extends PermisApp {
     }
     
     public function page_event_install($evtp) {
-        if($this->hasPermission("mebhome-install")){
+        if($this->hasPermission("install","mebhome")){
         $mysql = $this->dbEngine;
         $mysql->connect();
 
@@ -70,6 +70,7 @@ class mebhome extends PermisApp {
          PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";
         $mysql->createTable($sql);
+        include_once(PROJ_PATH . "/temp/db.php");
         $mysql->disconnect();
         $this->setTempFile(new TempFile("Database Created",true));
         }else{

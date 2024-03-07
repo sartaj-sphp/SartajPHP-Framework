@@ -1,20 +1,21 @@
 <?php
 /**
- * Description of DragAble
+ * Description of Dialog
  *
  * @author SARTAJ
  */
-include_once("$libpath/tools/Control.php");
-include_once("$comppath/jquery.php");
 
-class Dialog extends Control{
+class Dialog extends \Sphp\tools\Control{
 public function oncreate($element){
 $this->setHTMLName("");
+$this->setHTMLID($this->name . '_dlg');
 }
 
 public function onjsrender(){
 global $jquerypath;
-
+//work pending
+//addFileLink($this->myrespath . '/fq-ui.extendeddialog.css');
+//addFileLink($this->myrespath . '/fq-ui.extendeddialog.js');
 
     if($this->getAttribute('parameter')!=''){
 $this->parameterA['parameter'] = ", ".$this->parameterA['parameter'];
@@ -70,14 +71,11 @@ addFileLink($jquerypath.'ui/jquery.ui.effect-blind.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.effect-explode.min.js');
  * 
  */
-if($this->HTMLID==''){
-    $this->HTMLID = $this->name;
-}
 addHeaderJSFunctionCode('ready',$this->HTMLID,'
 $("#'.$this->HTMLID.'").dialog({
 autoOpen: false,
-width: "auto",
-height: "auto",
+width: "700",
+height: "800",
 show: {
         effect: "blind",
         duration: 1000
@@ -112,4 +110,3 @@ $this->parameterA['class'] = 'dragdrop';
 
 
 }
-?>

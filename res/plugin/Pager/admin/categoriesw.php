@@ -1,6 +1,7 @@
 <?php
 $auth = "ADMIN";
 $tblName = "pagcategory";
+SphpBase::page()->tblName = $tblName;
 SphpBase::page()->Authenticate();
 //SphpBase::page()->sesSecure();
 $JSServer->getAJAX();

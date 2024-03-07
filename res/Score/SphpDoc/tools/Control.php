@@ -322,6 +322,11 @@ public function setParameterA($name, $value) {}
 */
 public function getParameterA($name) {}
 /**
+* Get Parent Control if any or null
+* @return \Sphp\tools\Control
+*/
+public function getParentControl() {}
+/**
 * Regsiter Event for Object which uses for Event Driven Programming.
 * @param string $event_name
 */

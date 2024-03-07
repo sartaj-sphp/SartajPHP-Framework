@@ -5,13 +5,16 @@
  * @author SARTAJ
  */
 include_once(__DIR__ . "/PHPMailer.php");
-include_once(__DIR__ . "/SMTP2.php");
+include_once(__DIR__ . "/SMTP.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+//use PHPMailer\PHPMailer\Exception;
 
 class SMTPMail {
 public $mail;
 public $StartText='Dear Sir/Madam,';
 
-public function SMTPMail(){
+public function __construct(){
 global $mailServer;
 global $mailUser;
 global $mailPass;

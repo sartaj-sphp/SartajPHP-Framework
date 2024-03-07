@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class SearchPanel extends Control{
 private $label = "";
 
@@ -16,7 +13,7 @@ public function onrender(){
             <div class="card-header">
                 <h4 class="card-title">';
     if(SphpJsM::getJSLibVersion("bootstrap") == 5){
-        $pre1 .= '<a data-bs-toggle="collapse" data-parent="#accordion" href="#collapseOne">';        
+        $pre1 .= '<a data-bs-toggle="collapse" data-parent="#accordion" href="#collapseOne">';      
     }else{
         $pre1 .= '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">';
     }

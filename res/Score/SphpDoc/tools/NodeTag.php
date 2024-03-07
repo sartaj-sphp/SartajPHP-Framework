@@ -42,6 +42,7 @@ public function fetchAttributes($strdata){}
 public function fetchAttributes3($strdata){}
 public function fetchAttributes2($strdata){}
 public function getAttributesHTML(){}
+public function getAttributesCat($prefix){}
 public function replaceChild($newnode,$oldnode) {}
 public function createElement($taghtml) {}
 public function appendChild($node) {}
@@ -52,6 +53,8 @@ public function hasAttribute($name){}
 public function getAttribute($name){}
 public function removeAttribute($name){}
 public function setAttribute($name,$val){}
+public function appendAttribute($name,$val){}
+public function hasAttributeValue($name,$val){}
 public function setAttributeDyna($name,$runonce=false){}
 public function isDynaAttrRun($name){}
 public function getAttributes() {}
@@ -64,6 +67,10 @@ public function setPreTag($tagdata) {}
 public function setPostTag($tagdata) {}
 public function setInnerPreTag($tagdata) {}
 public function setInnerPostTag($tagdata) {}
+public function appendPreTag($tagdata) {}
+public function appendPostTag($tagdata) {}
+public function appendInnerPreTag($tagdata) {}
+public function appendInnerPostTag($tagdata) {}
 public function setTagName($tagname) {}
 public function wrapTag($taghtml) {}
 public function wrapInnerTags($taghtml) {}

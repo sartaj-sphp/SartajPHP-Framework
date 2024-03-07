@@ -8,9 +8,12 @@ var onajaxreceive = function($response){
 window['fileList'] = new Array();
 window['fileList2'] = new Array();
 var sconsole = console;
-
+//support old browser
+if(typeof undefined === 'undefined') window['undefined'] = 'undefined';
+if(typeof Proxy === 'undefined') window['Proxy'] = function(){};
 var sconsoleLog = {
-    log: function(msg,type="l"){
+    log: function(msg,type){
+        if(type === 'undefined') type = 'i';
         if(window["onconsole"] !== undefined){
             window["onconsole"](msg,type);
         }else{
@@ -52,7 +55,8 @@ function objToString (obj) {
     }
 }
 
-function compileTemp(targetObj,parentTag='body') {
+function compileTemp(targetObj,parentTag) {
+    if(parentTag === 'undefined') parentTag='body';
     var $scope1 = new Proxy(targetObj, {
         get: function(obj, prop) {
             var fg2 = $(parentTag + " [sphp-model='" + prop + "']");
@@ -754,18 +758,19 @@ function hideOverlay(id) {
     });
 }
 function bin2hex(str){
-    let bytes = new TextEncoder("UTF-8").encode(str);
-    return Array.from(bytes,byte => byte.toString(16).padStart(2, "0")).join("");
+    var bytes = new TextEncoder("UTF-8").encode(str);
+    return Array.from(bytes,function(byte){ return byte.toString(16).padStart(2, "0");} ).join("");
 }
 function hex2bin(strhex){
-    let bytes = new Uint8Array(strhex.length / 2);
-    for (let i = 0; i !== bytes.length; i++) {
+    var bytes = new Uint8Array(strhex.length / 2);
+    for (var i = 0; i !== bytes.length; i++) {
         bytes[i] = parseInt(strhex.substr(i * 2, 2), 16);
     }
     return bytes;
     //return new TextDecoder("UTF-8").decode(bytes);
 }
-function sphp_wsocket(url="ws://127.0.0.1:8000/sphp.ws",callBackNativem){
+function sphp_wsocket(url,callBackNativem){
+    if(url === 'undefined') url = "ws://127.0.0.1:8000/sphp.ws";
 var myself = this;
 this.status = false;
 this.socket = new WebSocket(url);
@@ -1036,10 +1041,356 @@ this.rows = [];
 }
 
 });
-jql.fn.outerHTML = function() 
-{
+jql.fn.outerHTML = function() {
   $t = jql(this);
   if( "outerHTML" in $t[0] ) return $t[0].outerHTML; 
   else return $t.clone().wrap('<p>').parent().html(); 
+};
+//ajaxinit
+var tempobj = {
+    websocket: null,
+    websockethost: location.host,
+    onwsopen: function(){console.log("sopen");},
+    onwsclose: function(){console.log("sclose");},
+    onwsmsg: function(msg){console.log(msg);},
+    ar: {},
+    getSphpSocket: function(callback){
+        if(tempobj.websocket === null){
+            var protocol = 'ws';
+            if (location.protocol === 'https:') protocol = 'wss';
+            tempobj.websocket = new sphp_wsocket(protocol + "://" + tempobj.websockethost + "/sphp.ws",function(msg){
+                if(msg == "sopen"){
+                    tempobj.onwsopen();
+                    callback(tempobj.websocket);
+                }else if(msg == "sclose"){
+                    tempobj.websocket = null;
+                    tempobj.onwsclose();
+                }else{
+                    tempobj.onwsmsg(msg);
+                }
+            });
+
+        }else{
+            callback(tempobj.websocket);
+        }
+    },
+
+    registerEvent: function (evt) {
+        tempobj.ar[evt] = {bind: false,triggered: false,handlers: {}};
+    },
+    addHandler: function (evt, name, handler) {
+        if (isset(tempobj.ar[evt])) {
+            tempobj.ar[evt].handlers[name] = handler;
+            tempobj.ar[evt].bind = true;
+            if(tempobj.ar[evt].triggered) handler();
+        }
+    },
+    trigger: function (evt) {
+        if (isset(tempobj.ar[evt])) {
+            tempobj.ar[evt].triggered = true;
+            $.each(tempobj.ar[evt].handlers, function(key,fun){
+                fun();   
+            });
+        }
+    },
+    getHandler: function(evt,name){
+        if (isset(tempobj.ar[evt].handlers[name])) {
+            return tempobj.ar[evt].handlers[name];
+        }
+    },
+propbagback: {},propbag: null};
+var sjsobj = {};
+
+tempobj["propbag"] = compileTemp(tempobj["propbagback"]);
+function bindJsVarRefresh(){
+    $.each(tempobj["propbagback"], function (k, v) {
+        tempobj["propbag"][k] = v;
+    });
+}
+function TempFile(){
+    var compList = {};
+    this.addComponent = function(key){
+        if(! Object.prototype.hasOwnProperty.call(compList, key)){
+            compList[key] = null;
+        }
+    };
+    this.setComponent = function(key,obj){
+        if(compList[key] === null){
+            compList[key] = obj;
+        }
+    };
+    this.getComponent = function(key){
+        return compList[key];
+    };
+    
+}
+function sartajgt(idimg,url,data,cache,dataType){
+    var sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcall(idimg,url,data,cache,dataType);
+}
+function getURL(url,data,runbackground){
+    var sphp_ajax2 = new sphp_ajax();
+sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground);
+}
+function getAJAX(url,data,runbackground,callback){
+    var sphp_ajax2 = new sphp_ajax();
+    sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground,function(r1){
+        callback(r1); 
+    });        
+}
+function getAJAXChunkUpload(url,data,callback,chunkstart,chunkend){
+        if(data === 'undefined') data = {};
+        if(chunkstart === 'undefined') chunkstart = 0;
+        if(chunkend === 'undefined') chunkend = 0;
+    var sphp_ajax2 = new sphp_ajax();
+    data["chunkstart"] = chunkstart;
+    data["chunkend"] = chunkend;
+    sphp_ajax2.ajaxcall('',url,data,false,'json',true,true,callback);
+}
+function parseSphpResponse(data,callback){
+    var sphp_ajax2 = new sphp_ajax();
+    sphp_ajax2.sartajpro(data,callback);
+}
+function sartajpro(data,callback){
+    var sphp_ajax2 = new sphp_ajax();
+    sphp_ajax2.sartajpro(data,callback);
 }
 
+function sphp_ajax() {
+    var MySelf = this;
+this.ajaxcall = function(idimg,url,data2,cache,dataType,async,runbackground1,callback){
+var async2 = true;
+var runbackground = false;
+if(async==false){
+async2 = false;
+}
+if(runbackground1==true){
+runbackground = true;
+}
+if(runbackground==false){
+if(idimg!=''){
+//document.getElementById(idimg).style.visibility = 'visible';
+displayOverlay(jql("#" + idimg).html());
+}else if(document.getElementById("ajax_loader")!=null){
+idimg = "ajax_loader";
+//document.getElementById(idimg).style.visibility = 'visible';	
+displayOverlay(idimg);
+}
+}
+jql.ajax({
+type: "POST",
+url: url,
+headers: {"HTTP_X_REQUESTED_WITH": "XMLHttpRequest" },
+dataType: "text",
+data: data2,
+cache: cache,
+async: async2,
+success: function(html)
+{
+if(runbackground==false && idimg!=''){
+hideOverlay(idimg);
+//document.getElementById(idimg).style.visibility = 'hidden';
+}
+if(callback != undefined){
+MySelf.sartajpro(html,callback); 
+}else{
+MySelf.sartajpro(html,onajaxreceive); 
+}
+}
+});
+};
+this.ajaxcallchunk = function(idimg,url,data2,cache,dataType,async,runbackground1,callback){
+var async2 = true;
+var runbackground = false;
+if(async==false){
+async2 = false;
+}
+if(runbackground1==true){
+runbackground = true;
+}
+if(runbackground==false){
+if(idimg!=''){
+//document.getElementById(idimg).style.visibility = 'visible';
+displayOverlay(jql("#" + idimg).html());
+}else if(document.getElementById("ajax_loader")!=null){
+idimg = "ajax_loader";
+//document.getElementById(idimg).style.visibility = 'visible';	
+displayOverlay(idimg);
+}
+}
+jql.ajax({
+type: "POST",
+url: url,
+dataType: "text",
+data: data2,
+cache: cache,
+async: async2,
+chunking: true,
+ progress: function(e, part) {
+if(callback != undefined){
+MySelf.sartajpro(part,callback); 
+}else{
+MySelf.sartajpro(part,onajaxreceive); 
+}
+     
+ },
+success: function(html)
+{
+if(runbackground==false && idimg!=''){
+hideOverlay(idimg);
+//document.getElementById(idimg).style.visibility = 'hidden';
+}
+if(callback != undefined){
+//MySelf.sartajpro(html,callback); 
+}else{
+//MySelf.sartajpro(html,onajaxreceive); 
+}
+}
+});
+};
+this.sartajpro = function(valm,callback){
+    var jsonobjar = [];
+    try{
+        jsonobjar = JSON.parse("[" + valm + "{}]");
+    }catch(e){
+       console.log("Invalid AJAX Response:- " + valm); 
+    }
+    for(var c=0;c<jsonobjar.length - 1;c++){
+        this.sartajprom(jsonobjar[c],callback);
+    }
+};
+this.sartajprom = function(val,callback){
+    MySelf.sartajpro2(val);
+if(val.response.retobj!= undefined){ 
+    callback(val.response.retobj);
+}else{
+    callback();
+}    
+};
+this.sartajpro2 = function(val){
+if(val.response.jss!= undefined){ 
+jql.each(val.response.jss, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+MySelf.sartajproc('jss',key,value,val);
+});
+});
+MySelf.sartajpro3(val);
+}else{
+MySelf.sartajpro3(val);    
+}
+
+};
+this.sartajpro3 = function(val){
+if(val.response.csfl!= undefined){ 
+jql.each(val.response.csfl, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+//MySelf.sartajproc('csfl',key,value,val);
+servfindex = 0;
+loadFiles(fileList2,'css',MySelf.sartajpro4,val);    
+});
+});
+}else{
+MySelf.sartajpro4(val);    
+}
+};
+this.sartajpro4 = function(val){
+if(val.response.css!= undefined){ 
+jql.each(val.response.css, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+MySelf.sartajproc('css',key,value,val);
+});
+});
+MySelf.ldjs(val);    
+}else{
+MySelf.ldjs(val);    
+}
+
+};
+this.ldjs = function(val){
+if(val.response.jsfl!= undefined){ 
+jql.each(val.response.jsfl, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+//MySelf.sartajproc('jsfl',key,value,val);
+servfindex = 0; 
+loadFiles(fileList,'jsfl',MySelf.ldmid,val);    
+});
+});
+}else{
+MySelf.ldmid(val);    
+}
+};
+this.ldmid = function(val){
+if(val.response.js1!= undefined){ 
+jql.each(val.response.js1, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+MySelf.sartajproc('js1',key,value,val);
+});
+});
+}
+if(val.response.html!= undefined){ 
+jql.each(val.response.html, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+if(key!= undefined){ 
+//MySelf.sartajproc('html',key,value,val);
+//jql('#'+key).html(value);
+setVald('#'+key,value);
+}
+});
+});
+}
+if(val.response.js!= undefined){ 
+jql.each(val.response.js, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+MySelf.sartajproc('js',key,value,val);
+});
+});
+}
+if(val.response.jsp!= undefined){ 
+jql.each(val.response.jsp, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+MySelf.sartajproc('jsp',key,value,val);
+});
+});
+}
+if(val.response.jsf!= undefined ){ 
+jql.each(val.response.jsf, function(keym2, valuem2) {
+jql.each(valuem2, function(key, value) {
+if(key!= undefined){ 
+MySelf.sartajproc2(key,value);
+}
+});
+});
+}
+
+window['sphpajready1']();
+};
+this.sartajproc2 = function(key,value){
+try{
+ if(key!= undefined){ 
+//var funCall = key + "(" + value + ");";
+window[key](value);
+//jql.globalEval(funCall);
+}
+}catch(error){
+  console.error(error);  
+}finally{ }    
+};
+this.sartajproc = function(keym,key,value,val){
+    //console.log(keym + '- ' + key + ' - ' );
+    try{
+if(key!= undefined){ 
+switch(key){
+    case 'proces' :{ 
+    eval(value);
+/* jql.globalEval(value);
+var l1 = Function(value);
+l1(); */
+break;
+    }
+    }
+}
+}catch(error){
+  console.error(error);  
+}finally{ }    
+};
+};

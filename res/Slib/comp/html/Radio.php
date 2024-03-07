@@ -45,7 +45,7 @@ $this->req = true;
 public function onprejsrender(){
 if($this->formName !='' && $this->req){
 $jscode = "if(blnSubmit==true && ". $this->getJSValue()."==false){blnSubmit = false ; alert('Please Select ". $this->msgName . "'); document.getElementById('" . $this->name ."').focus();}";
-addFooterJSFunctionCode("{$this->formName}_submit", "$this->name",$jscode);
+addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name",$jscode);
 }
 }
 

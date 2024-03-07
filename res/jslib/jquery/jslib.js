@@ -197,8 +197,8 @@ jQuery.fn.centerHorizontal = function () {
 }
 function getPosition(mouseEvent,obj){
     var offs = $(obj).offset();
-    let left = mouseEvent.clientX - offs.left;
-    let top = mouseEvent.clientY - offs.top; 
+    var left = mouseEvent.clientX - offs.left;
+    var top = mouseEvent.clientY - offs.top; 
     return [left,top];
 }
 // start global function
@@ -476,15 +476,15 @@ async function checkOnlineStatus(){
   } catch (err) {
     return false; // definitely offline
   }
-};
-const getMethods = (obj) => {
-  let properties = new Set()
-  let currentObj = obj
-  do {
-    Object.getOwnPropertyNames(currentObj).map(item => properties.add(item))
-  } while ((currentObj = Object.getPrototypeOf(currentObj)))
-  return [...properties.keys()].filter(item => typeof obj[item] === 'function')
 }
+const getMethods = (obj) => {
+  var properties = new Set();
+  var currentObj = obj;
+  do {
+    Object.getOwnPropertyNames(currentObj).map(item => properties.add(item));
+  } while ((currentObj = Object.getPrototypeOf(currentObj)))
+  return [...properties.keys()].filter(item => typeof obj[item] === 'function');
+};
 //sjslib code
 class SuperClass{
 	constructor(){
@@ -499,25 +499,25 @@ class Debug extends SuperClass{
 			super();
 		}
 		printerr(msg){
-			let str1 = this.filterMsg(msg);
+			var str1 = this.filterMsg(msg);
 			if(str1.length > 2){
 				console.log("SNode Err:- " + str1);
 			}
 		}
 		printwarn(msg){
-			let str1 = this.filterMsg(msg);
+			var str1 = this.filterMsg(msg);
 			if(str1.length > 2){
 				console.log("SNode Warn:- " + str1);
 			}
 		}
 		println(msg){
-			let str1 = this.filterMsg(msg);
+			var str1 = this.filterMsg(msg);
 			if(str1.length > 2){
 				console.log("SNode:- " + str1);
 			}
 		}
 		print_r(msga){
-			let myself = this.myself;
+			var myself = this.myself;
 			msga.forEach(msg => { 
 				console.log("SNodeA:- " + myself.filterMsg(msg));
 			});
@@ -605,9 +605,9 @@ class BasicApp extends SphpClass{
 class CompApp extends SphpClass{
 		constructor(){
 			super();
-                    let myself = this;
+                    var myself = this;
 			this.state = {};
-                        let textNode = $("body")[0];
+                        var textNode = $("body")[0];
                         if (textNode.addEventListener) {
                             textNode.addEventListener ('DOMNodeInserted', function(e){myself._onupdate(e)}, false);
                             textNode.addEventListener ('DOMNodeInsertedIntoDocument', function(e){myself._onupdate(e)}, false);
@@ -622,13 +622,13 @@ class CompApp extends SphpClass{
                     //myself._setupEventHnadlers();
                 }
                 _setupEventHnadlers(){
-                    let myself = this;
-                    let fun1 = getMethods(this);
+                    var myself = this;
+                    var fun1 = getMethods(this);
                     $.each(fun1,function(index,funname){
-                        let fun2 = funname.split("_");
+                        var fun2 = funname.split("_");
                         if(fun2[0] === "comp"){
-                            let compselector = fun2[2];
-                            let compevent = fun2[3];
+                            var compselector = fun2[2];
+                            var compevent = fun2[3];
                             if(fun2[1] == "class"){
                                 compselector = "." + compselector;
                             }else if(fun2[1] == "id"){
@@ -642,12 +642,12 @@ class CompApp extends SphpClass{
                     //debug.println("node removed document");
                 }
                 setState(val){
-                    let myself = this;
+                    var myself = this;
                     this.state = $.extend(myself.state,val); 
                 }
                 lcomp_class_headerbar_click(e){
-                    let str = 'hello, <b id="bd1" data-text="red">my name is</b> jQuery.';
-                    let html = $.parseHTML( str );
+                    var str = 'hello, <b id="bd1" data-text="red">my name is</b> jQuery.';
+                    var html = $.parseHTML( str );
                     $.each( html, function( i, el ) {
                         if(el.nodeName !== "#text"){
                        //console.log("<li>" + el.nodeName + "</li>");
@@ -670,8 +670,8 @@ class StartEngine {
 			return this.projectDir;
 		}
 		getEventTrigger(evt,evtp,ctrl){
-			let obj2 = this.getApp(ctrl);
-			let fcall = 'page_event_' + evt ;
+			var obj2 = this.getApp(ctrl);
+			var fcall = 'page_event_' + evt ;
 			try{
 			return obj2[fcall](evtp);
 			}catch(e){
@@ -680,14 +680,14 @@ class StartEngine {
 
 		}
 		getAppTrigger(ctrl){
-			let obj2 = this.getApp(ctrl);
+			var obj2 = this.getApp(ctrl);
 			return obj2.page_new();
 		}
 		getApp(ctrl){
 			if(this.lstappsobj[ctrl]){
 				return this.lstappsobj[ctrl];
 			}else{
-				let obj1 = router.ListRegApps[ctrl];
+				var obj1 = router.ListRegApps[ctrl];
 				this.lstappsobj[ctrl] = new obj1();
 				return this.lstappsobj[ctrl];
 			}

@@ -4,7 +4,7 @@
 
 
 class BrowsePanel extends Control{
-private $label = "";
+private $label = "Browse";
 
 public function setLabel($label) {
     $this->label = $label;
@@ -15,7 +15,7 @@ public function onrender(){
   <div class="card-header">
       <h4 class="card-title">
           <span class="pull-left hidden-xs showopacity fa fa-globe"></span> 
-          &nbsp;Browse&nbsp;
+          &nbsp;'.  $this->label .'&nbsp;
           <a href="<?php echo getEventURL(\'print\', \'\', \''. SphpBase::sphp_router()->getCurrentRequest() .'\'); ?>" target="__blank" title="Print">
               <span class="pull-right hidden-xs showopacity fa fa-print"></span></a>
       </h3>

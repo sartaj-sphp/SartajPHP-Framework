@@ -42,7 +42,7 @@ $menu->run();
  <div class="row"><div class="col">
 <?php SphpBase::$dynData->render(); ?>
      </div></div>
-<div class="row"><div class="col">        
+<div class="row"><div class="col footer navbar-fixed-bottom">        
         <h2 class="heading padding-top padding-bottom text-center"><a class="text-white" href="https://www.sartajphp.com">Power By SartajPHP</a></h2>
 </div>
 </div>

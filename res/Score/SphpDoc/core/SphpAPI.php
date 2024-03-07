@@ -365,14 +365,14 @@ public function is_valid_email($email) {}
 * @param array $phpArray
 * @return string
 */
-public function getJSArray($jsVarName, $phpArray) {}
+public function getJSArray($jsVarName, $phpArray, $novar=false) {}
 /**
 * Generate JS Associative Array code for PHP Array
 * @param string $jsVarName JS Associative Array variable name in code
 * @param array $phpArray
 * @return string
 */
-public function getJSArrayAss($jsVarName, $phpArray) {}
+public function getJSArrayAss($jsVarName, $phpArray, $novar=false) {}
 /**
 * Convert HTML string into JS string
 * @param string $strHTML
@@ -449,8 +449,9 @@ public function getrenderType($renderonce = false) {}
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
 * @param array $assets path for asset folders to copy with this file when distribute
+* @param int $async Default=global file setting, 2=defer, 1= async and 0=default
 */
-public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array()) {}
+public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array(),$async=0) {}
 /**
 * Update CSS, JS File Link for browser 
 * SphpBase::sphp_api()->updateFileLink("temp/default/theme-black2.js",false,"black1","js","2.8")
@@ -460,8 +461,9 @@ public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext 
 * @param string $ext Optional default=file extension in fileurl
 * @param string $ver Optional default=0 file version if any
 * @param array $assets path for asset folders to copy with this file when distribute
+* @param int $async Default=global file setting, 2=defer, 1= async and 0=default
 */
-public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array()) {}
+public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array(),$async=0) {}
 /**
 * Remove CSS, JS File Link for browser 
 * SphpBase::sphp_api()->removeFileLink("temp/default/theme-black2.js",false,"black1","js")

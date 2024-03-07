@@ -37,6 +37,9 @@ class TextArea extends \Sphp\tools\Control {
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+        if(\SphpBase::sphp_request()->isAJAX()){
+            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+        }
         setErr($this->name, $msg);
     }
 
@@ -87,15 +90,15 @@ class TextArea extends \Sphp\tools\Control {
     public function onjsrender() {
         if ($this->formName != '') {
             if ($this->minLen != '') {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
 ctlMins['$this->name']= Array('$this->msgName','TextArea','$this->minLen');");
             }
             if ($this->maxLen != '') {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}max", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}max", "
 ctlMax['$this->name']= Array('$this->msgName','TextArea','$this->maxLen');");
             }
             if ($this->req) {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextArea');");
             }
         }

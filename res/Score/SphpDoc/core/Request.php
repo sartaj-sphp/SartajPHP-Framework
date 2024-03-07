@@ -33,6 +33,11 @@ public function parseRequest() {}
 */
 public function isNativeApp() {}
 /**
+* Check if client demand JSON response.
+* @return boolean 
+*/
+public function isAJAX() {}
+/**
 * Read Browser Get Method Data
 * @param string $name key
 * @param boolean $blnRaw true mean, no escaping

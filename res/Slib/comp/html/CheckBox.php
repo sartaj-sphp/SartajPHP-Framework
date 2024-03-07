@@ -37,6 +37,9 @@ namespace Sphp\comp\html {
 
         public function setErrMsg($msg) {
             $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+            if(\SphpBase::sphp_request()->isAJAX()){
+                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+            }
             setErr($this->name, $msg);
         }
 
@@ -71,7 +74,7 @@ namespace Sphp\comp\html {
 alert('Please Accept " . $this->msgName . "');
 document.getElementById('$this->name').focus();
 }";
-                addFooterJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
+                addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
             }
         }
 

@@ -1,12 +1,4 @@
 <?php
-if (!$blnPreLibCache) {
-if ($blnPreLibLoad) {
-include_once("{$libpath}/libsphp1.php");
-} else {
-include_once("{$libpath}/global/libloader.php");
-}
-}
-include_once("{$slibpath}/comp/SphpJsM.php");
 /**
 * SphpPermission class for manage permissions system
 */
@@ -243,9 +235,23 @@ self::$page()->init();
 self::$engine->engine_start_time = microtime(true);
 }
 }
+if (!$blnPreLibCache) {
+if ($blnPreLibLoad) {
+include_once("{$libpath}/libsphp1.php");
+} else {
+include_once("{$libpath}/global/libloader.php");
+}
+}
+include_once("{$slibpath}/comp/SphpJsM.php");
 if ($debugmode > 0) {
 ini_set("display_errors", 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 }
+/**
+* Extra autoload registered function
+* @param string $name
+*/
+function loadSphpLibClass($name) {}
+spl_autoload_register("loadSphpLibClass");
 function runSartajPHPEngine(){}

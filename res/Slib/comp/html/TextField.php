@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html{
 
-class TextField extends \Sphp\tools\Control {
+class TextField extends \Sphp\tools\Control{
 
     public $maxLen = '';
     public $minLen = '';
@@ -40,7 +40,8 @@ class TextField extends \Sphp\tools\Control {
         }
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
-        }        
+        } 
+        
 //        $this->unsetEndTag();
     }
 
@@ -63,6 +64,9 @@ class TextField extends \Sphp\tools\Control {
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '! </strong>';
+        if(\SphpBase::sphp_request()->isAJAX()){
+            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+        }
         setErr($this->name, $msg);
     }
     public function setNumeric() {
@@ -149,22 +153,26 @@ class TextField extends \Sphp\tools\Control {
 
     public function onjsrender() {
         if ($this->formName != '') {
+            if ($this->msgName == "") {
+                $this->setMsgName($this->getAttribute('placeholder'));
+            }
             if ($this->minLen != '') {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
 ctlMins['$this->name']= Array('$this->msgName','TextField','$this->minLen');");
             }
             if ($this->numeric) {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}num", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}num", "
 ctlNums['$this->name']= Array('$this->msgName','TextField');");
             }
             if ($this->email) {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}email", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}email", "
 ctlEmail['$this->name']= Array('$this->msgName','TextField');");
             }
             if ($this->req) {
-                addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
             }
+
         }
     }
 
@@ -172,9 +180,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         if($this->errmsg!=""){
             $this->setPostTag($this->errmsg);
         }
-        if ($this->getAttribute("class") == "") {
-            $this->setAttribute("class","form-control");
-        }
+        $this->setAttributeDefault("class","form-control");
         if ($this->maxLen != '') {
             $this->setAttribute('maxlength', $this->maxLen);
         }

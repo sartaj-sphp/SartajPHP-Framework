@@ -31,11 +31,12 @@ public $metarobot = "index, follow";
 public $metarating = "general";
 public $metaauthor = "";
 public $metapagerank = "10";
-public $metarevisit = "5 days";
+public $metarevisit = "15 days";
 public $run_mode_not_extension = false;
 public $run_hd_parser = false;
 public $blnPreLibLoad = false;
 public $blnStopResponse = false;
+public $default_filelink_load = 0;
 /**
 * Advance Function, Internal Use
 */

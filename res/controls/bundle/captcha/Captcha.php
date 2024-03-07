@@ -41,10 +41,10 @@ break;
 
 public function onrender(){
 if($this->value!=''){
-$this->parameterA['value'] = $this->value;
+$this->setAttribute('value', $this->value);
 }
 if($this->maxLen!=''){
-$this->parameterA['maxlength'] = $this->maxLen;
+$this->setAttribute('maxlength', $this->maxLen);
 }
 $this->setPreTag('<img src="'.  getEventURL('captcha').'" width="150px" height="50px"><br>');
 

@@ -25,7 +25,7 @@ public $HTMLParser = null;
 public $tempFileTag = "";
 public $tempFileTagE = "";
 public $prefixName = "";
-public $blnGlobalPHPOn = true;
+public $intPHPLevel = 3;
 /**
 * Advance Function
 * Set File Path of TempFile
@@ -160,9 +160,12 @@ public function getSjspath() {}
 */
 public function getAppname() {}
 /**
-* Disable Global PHP, Default it is on
+* Disable PHP execution set $intPHPLevel=0, Default it is on 3.
+* Enable php execution in temp file. 0= no php execution, 
+* 1 = only controls attribute, 
+* 2 = php in all tags, 3 = all tags + pass global variables
 */
-public function unsetGlobalPHPOn() {}
+public function disablePHP($level=0) {}
 /**
 * Set SJS file path
 * @param string $webapppath
