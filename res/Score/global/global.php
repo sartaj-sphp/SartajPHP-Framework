@@ -5,6 +5,9 @@ $midtime = "0";
 $maxtime = "0";
 // use ms
 $ajaxready_max = 300;
+// 2= defer, 1= async, 0=nop
+$default_filelink_load = 0;
+
 if(!isset($_SERVER['HTTP_HOST']) || strpos(" " . $_SERVER['HTTP_HOST'], "localhost") !== false) define("autocompkey","FD45A279GH");
 $defenckey = "aHmlP1";
 date_default_timezone_set("America/New_York");
