@@ -8,6 +8,7 @@ private $mkeychar = "";
 private $fixedPos = "";
 private $rootMenu = "sidebar";
 private $counter1 = 1;
+private $bootstrapversion = 5; // set bootstrap version
 
 public function onrun() {
     $this->init();
@@ -16,6 +17,9 @@ public function onrun() {
 public function setPosition($val="sticky-top") {
     // fixed-bottom fixed-top sticky-top
     $this->fixedPos = $val;
+}
+public function setBootstrapVersion($val) {
+    $this->bootstrapversion = $val;
 }
 public function setRootMenu($val) {
     $this->rootMenu = $val;
@@ -94,7 +98,7 @@ $this->counter1 += 1;
 $stro = array();
 // if menu under root and dropdown
 if($mnuSub==0){
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+    if($this->bootstrapversion == 5){ 
         $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
         '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
         . '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
@@ -105,7 +109,7 @@ if($mnuSub==0){
     }
 $stro[1] = '</ul></div></li>';
 }else if($mnuSub==1){ // if sub menu and dropdown
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+    if($this->bootstrapversion == 5){ 
 $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
 '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
 . '<div class="collapse" id="'. $mnuhref2 .'" aria-expanded="false"><ul class="flex-column pl-2 nav">';

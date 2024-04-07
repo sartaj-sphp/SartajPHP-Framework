@@ -28,6 +28,7 @@ namespace Sphp\comp\html {
             }
             if ($this->getAttribute("msgname") != "") {
                 $this->msgName = $this->getAttribute("msgname");
+                $this->label = $this->msgName;
             }
         }
 
@@ -55,6 +56,7 @@ namespace Sphp\comp\html {
 
         public function setMsgName($val) {
             $this->msgName = $val;
+            $this->label = $this->msgName;
             $this->setAttribute('placeholder', $val);
         }
 
@@ -87,8 +89,8 @@ document.getElementById('$this->name').focus();
             //}
             $this->setPostTag('<input type="hidden" name="chktxt' . $this->name . '" value="1" />');
             if ($this->label != "") {
-                $this->setPreTag($this->getPreTag() . '<div class="form-check">');
-                $this->setPostTag('<label class="form-check-label" for="' . $this->name . '">
+                $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
+                $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">
     ' . $this->label . '
   </label></div>' . $this->getPostTag());
             }

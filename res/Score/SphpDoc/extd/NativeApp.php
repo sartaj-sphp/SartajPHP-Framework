@@ -3,6 +3,7 @@ namespace Sphp\tools {
 class NativeApp extends ConsoleApp {
 /** @var int WebSocket Connection ID which start application */
 public $mainConnection = null;
+public $JQuery = null;
 /**
 * Advance function 
 */
@@ -184,6 +185,10 @@ public function callProcess($fun, $data, $type = "childp") {}
 * Override wait event handler of ConsoleAPP
 */
 public function onwait() {}
+/**
+* Exit Manually
+*/
+public function ExitMe() {}
 /**
 * Advance function, Internal use
 */

@@ -799,8 +799,11 @@ this.sendMsg = function(ctrl,msg){
 	data["wsmsg"] = msg;
 	myself.callProcessApp(ctrl,"","",data);
 }
-this.callGlobalApp = function(ctrl,evt="",evtp="",data={}){
-	var data2 = {}; 
+this.callGlobalApp = function(ctrl){
+ var evt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var evtp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var data2 = {}; 
 	data2['ctrl'] = ctrl;
 	data2['evt'] = evt;
 	data2['evtp'] = evtp;
@@ -813,8 +816,11 @@ this.callGlobalApp = function(ctrl,evt="",evtp="",data={}){
             myself.socket.send(JSON.stringify(data2));
 	}
 };
-this.callProcessApp = function(ctrl,evt="",evtp="",data={}){
-	var data2 = {}; 
+this.callProcessApp = function(ctrl){
+ var evt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var evtp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var data2 = {}; 
 	data2['ctrl'] = ctrl;
 	data2['evt'] = evt;
 	data2['evtp'] = evtp;
@@ -827,8 +833,9 @@ this.callProcessApp = function(ctrl,evt="",evtp="",data={}){
             myself.socket.send(JSON.stringify(data2));
 	}
 };
-this.processApp = function(ctrl,data={}){
-    this.callProcessApp(ctrl,"","",data);
+this.processApp = function(ctrl){
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};    
+  this.callProcessApp(ctrl,"","",data);
 };
 
 }

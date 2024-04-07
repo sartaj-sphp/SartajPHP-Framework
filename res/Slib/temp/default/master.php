@@ -1,61 +1,18 @@
-<?php 
-switch(SphpBase::page()->getAuthenticateType()){
-case 'GUEST':{
-$menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/menu.php";
-break;
-}
-case 'ADMIN':{
-$menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/admmenu.php";
-break;
-}
-case 'MEMBER':{
-$menupath = SphpBase::sphp_settings()->slib_path."/temp/default/mebmenu.php"; 
-break;
-}
-default:{
-    $menupath = SphpBase::sphp_settings()->slib_path ."/temp/default/menu.php";
-    break;    
-}
-
-}
-include_once($menupath);
-$menu = new MenuUi();
-$menu->run();
-
-//addFrontPlace('videomenu');
-runFrontPlace('frontEditor',"footer");
-?><!DOCTYPE html>
-<html>
-<head lang="en">
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php 
-SphpJsM::addBootStrap();  
-echo getHeaderHTML(); ?>
-<link href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/css/framework.css" rel="stylesheet"  type="text/css" />
-<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-16x16.png" />
+addFrontPlace("main_master",__DIR__ . '/main.front','centersp1');
+runFrontPlace('main_master','centersp1');
+SphpBase::SphpJsM()::addBootStrap();  echo SphpBase::sphp_api()->getHeaderHTML(); 
+?>
+<link href="<?php echo SphpBase::sphp_settings()->slib_res_path; ?>/temp/default/css/custom.css" rel="stylesheet"  type="text/css" />
 </head>
-<body>
-    <div class="container-fluid">
-        <div class="row"><div class="col panel">
-        <div class="row"><div class="col">
-    <h2 class="heading" style="font-size:36px;"><?php echo $cmpname; ?></h2>
-    </div>
-            </div>
-<div class="row"><div class="col">
-<?php echo $menu->render(); ?>
-    </div></div>
-<div class="row"><div class="col">        
-<?php SphpBase::$dynData->render(); ?>
-</div>
-</div>
-            </div></div></div>
-<?php 
-renderFrontPlace('frontEditor',"footer"); 
-echo getFooterHTML(); 
-echo traceError(); echo traceErrorInner(); ?>
-</body>
+<body class="h-100">
+<?php echo renderFrontPlace('main_master','centersp1'); ?>
+<?php  echo SphpBase::sphp_api()->getFooterHTML(); 
+echo SphpBase::sphp_api()->traceError(true) . SphpBase::sphp_api()->traceErrorInner(true); ?>
+</body>    
 </html>

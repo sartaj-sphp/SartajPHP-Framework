@@ -196,6 +196,18 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         if ($this->value != "") {
             $this->setAttribute('value', htmlentities($this->value, ENT_COMPAT, "UTF-8"));
         }
+        switch($this->styler){
+            case 1:{
+                $this->setPreTag('<div class="form-floating mb-3">');
+                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>');
+                break;
+            }case 2:{
+                $this->setPreTag('<div class="mb-3">
+                <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>');
+                break;
+            }
+        }
     }
 
 // javascript functions used by ajax control and other control

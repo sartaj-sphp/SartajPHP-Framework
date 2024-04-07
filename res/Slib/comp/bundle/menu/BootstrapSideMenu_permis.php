@@ -1,20 +1,20 @@
 <?php
 
 class BootstrapSideMenu extends \Sphp\tools\MenuGen{
-public $brandicon = "";
-public $navbarClasses = "nav nav-pills flex-column flex-nowrap overflow-hidden";
+public $brandicon =  "";
+public $navbarClasses = "nav flex-column  mb-sm-auto mb-0 align-items-center align-items-sm-start";
 
-public $template_menu_startroot = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-toggle="collapse" data-target="#$mnuhref2" href="#$mnuhref2" >' . 
-'<i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnutitle</span></a>'
-. '<div id="$mnuhref2" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+public $template_menu_startroot = '<li><hr class="text-primary" style="height: 4px; background-color: #FFFFFF;" /></li><li class="nav-item nav-dli"><a class="nav-link nav-dlink align-middle px-0" data-bs-toggle="collapse" data-bs-target="#$mnuhref2" href="#$mnuhref2" >' . 
+'<i class="$mnuicon"></i> <span class="ms-1 d-none d-sm-inline">$mnutitle</span></a>'
+. '<div id="$mnuhref2" aria-expanded="true"><ul class="nav flex-column pl-2 ms-1">';
 public $template_menu_endroot = '</ul></div></li>';
-public $template_menu_start = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-toggle="collapse" data-target="#$mnuhref2" href="#$mnuhref2" >' . 
+public $template_menu_start = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed align-middle px-0" data-bs-toggle="collapse" data-bs-target="#$mnuhref2" href="#$mnuhref2" >' . 
 '<i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnutitle</span></a>'
-. '<div class="collapse" id="$mnuhref2" aria-expanded="false"><ul class="flex-column pl-2 nav">';
+. '<div class="collapse" id="$mnuhref2" aria-expanded="false"><ul class="flex-column pl-2 nav ms-1">';
 public $template_menu_end = '</ul></div></li>';
-public $template_menu_startno = '<li class="nav-item"><a class="nav-link text-truncate" data-mkey="$this->mkey" href="$mnuhref"><i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnutitle</span></a>';
+public $template_menu_startno = '<li class="nav-item"><a class="nav-link px-0" data-mkey="$this->mkey" href="$mnuhref"><i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnutitle</span></a>';
 public $template_menu_endno = '</li>';
-public $template_menulink = '<li class="nav-item"><a class="nav-link nav-dli text-truncate" data-mkey="$this->mkey" href="$mnuitemhref"><i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnuitemtext</span></a></li>';
+public $template_menulink = '<li class="nav-item"><a class="nav-link nav-dli px-0" data-mkey="$this->mkey" href="$mnuitemhref"><i class="$mnuicon"></i> <span class="d-none d-sm-inline">$mnuitemtext</span></a></li>';
 
 private $mkey = "";
 private $mkeychar = "";
@@ -23,6 +23,7 @@ private $rootMenu = "sidebar";
 private $counter1 = 1;
 
 public function onrun() {
+    $this->brandicon =  SphpBase::sphp_settings()->res_path . "/Slib/temp/default/imgs/favicon-96x96.png";
     $this->init();
     $this->genMenus();
 }
@@ -104,7 +105,7 @@ SphpBase::JSServer()->getAJAX();
 addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
-private function getB4Menu($mnutext,$mnuhref="",$mnuicon,$blnAjaxLink2=false,$mnuSub=0){
+private function getB4Menu($mnutext,$mnuhref="",$mnuicon="",$blnAjaxLink2=false,$mnuSub=0){
 $mnutitle = $mnutext;
 if($mnuhref==''){
     $mnuhref = "#";
@@ -137,7 +138,7 @@ $stro[1] = strtr($this->template_menu_endno,$vars);
 }
 return $stro;
 }
-private function getB4MenuLink($mnuitemtext,$mnuitemhref="",$mnuicon,$blnAjaxLink2=false){
+private function getB4MenuLink($mnuitemtext,$mnuitemhref="",$mnuicon="",$blnAjaxLink2=false){
 $mnuitemtitle = $mnuitemtext;
 $mnuitemtext = $mnuitemtext . $this->mkeychar;
 $tfun = "menu_ajax";
@@ -158,7 +159,11 @@ return strtr($this->template_menulink,$vars);
 public function genMenuBar() {
 if($this->brandicon != ""){
 $this->brandicon = '  <!-- Brand -->
-<div><a class="" href="#"><img class="img img-fluid img-circle" src="'. $this->brandicon .'" alt="Logo"></a></div>';
+<div class="col-12 text-center"><a class="" href="#">
+<img class="img img-fluid rounded-circle shadow-4-strong" src="'. $this->brandicon .'" alt="Logo">'
+        . '</a>'
+        . '<h4>Menu</h4><hr />'
+        . '</div>';
 }
 $bootstrapMenu = $this->brandicon . '<div class="snavbar"><ul class="'. $this->navbarClasses .'">';
 return array($bootstrapMenu,'</ul></div>');
@@ -237,12 +242,16 @@ private function init() {
             });
         }
     });
+    //jql(\'.nav-dlink\').click();
+jql.each(jql(\'.nav-dlink\'), function (key, va) {
+    va.click();
+});
 ',true);
-    addHeaderCSS("snavbar2", '     .nav-link[data-toggle].collapsed:before {
-    content: " ▾";
+    addHeaderCSS("snavbar", '.nav-link[data-bs-toggle].collapsed:before {
+    content: " \2191";
 }
-.nav-link[data-toggle]:not(.collapsed):before {
-    content: " ▴";
+.nav-link[data-bs-toggle]:not(.collapsed):before {
+    content: " \2193";
 }
 
 ', true);

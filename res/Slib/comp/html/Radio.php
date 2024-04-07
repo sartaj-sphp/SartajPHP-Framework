@@ -61,6 +61,13 @@ $this->setAttribute('checked', '');
 }
 $this->setAttribute('value', $vt);
 next($this->vals);
+            if ($this->styler > 0) {
+                $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
+                $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">
+    ' . $this->msgName . '
+  </label></div>' . $this->getPostTag());
+            }
+
 }
 
 

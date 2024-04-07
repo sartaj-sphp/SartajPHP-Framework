@@ -44,7 +44,7 @@ SphpCodeBlock::addCodeBlock('btn-marker',function($element,$args,$lst1){
  '<svg width="1em" height="1em" viewBox="0 0 16 16" class="position-absolute top-100 start-50 translate-middle mt-1 bi bi-caret-down-fill" fill="#212529" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>'
 ); 
 
-//$cb['para'] = SphpCodeBlock::addCodeBlock('p','para text-primary','<p>@arg1</p>','<span>@arg2</span>','<i>@arg3</i>','<b>@arg0</b>'); 
+// 2 args= width or style,color
 SphpCodeBlock::addCodeBlock('border',function($element,$args,$lst1){
   if(isset($args[0])){
   if(is_numeric($args[0])){
@@ -64,6 +64,7 @@ SphpCodeBlock::addCodeBlock('border',function($element,$args,$lst1){
   }
   
 });
+
 SphpCodeBlock::addCodeBlock('rounded',function($element,$args,$lst1){
     //rounded='' list:- 0 to 3, top,end,bootom,start,circle,pill
   if(isset($args[0])){
@@ -73,6 +74,7 @@ SphpCodeBlock::addCodeBlock('rounded',function($element,$args,$lst1){
   }
   
 });
+
 SphpCodeBlock::addCodeBlock('color',function($element,$args,$lst1){
  // color:- primary,secondary,success,danger,warning,info,light,dark,white,body,transparent
   if(isset($args[0])){

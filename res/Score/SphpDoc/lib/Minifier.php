@@ -1,6 +1,7 @@
 <?php
 class	MinifierException	extends \RuntimeException	{} ;
-abstract class  Minifier		   {
+abstract class  Minifier		
+{
 const		TOKEN_NONE			=  0 ;
 const		TOKEN_SPACE			=  1 ;
 const		TOKEN_NEWLINE			=  2 ;

@@ -1,11 +1,16 @@
 <?php
+// disable bootstrap 4
+//SphpJsM::$jslib["bootstrap"] = 5;
 //permissions system is not implemented, only menu ban works
 class BootstrapMenu extends \Sphp\tools\MenuGen{
 private $brandicon = "";
 private $navbarClasses = "navbar navbar-expand-md bg-dark navbar-dark";
+private $navmenuClasses = "navbar-nav";
+private $navbar = true;
 private $fixedPos = "";
 private $rootMenu = "root";
 private $blnAjaxLink = false;
+private $bootstrapversion = 5; // set bootstrap version
 
 public function onrun() {
     $this->init();
@@ -15,11 +20,20 @@ public function setPosition($val="sticky-top") {
     // fixed-bottom fixed-top sticky-top
     $this->fixedPos = $val;
 }
+public function setBootstrapVersion($val) {
+    $this->bootstrapversion = $val;
+}
 public function setRootMenu($val) {
     $this->rootMenu = $val;
 }
 public function setNavBarCss($val) {
     $this->navbarClasses = $val;
+}
+public function disableNavBar() {
+    $this->navbar = false;
+}
+public function setNavMenuCss($val) {
+    $this->navmenuClasses = $val;
 }
 public function setBrandIcon($val) {
     $this->brandicon = $val;
@@ -28,7 +42,7 @@ public function setBrandIcon($val) {
 public function genMenus() {
     $strmbar = $this->genMenuBar();
     $mnuroot = $this->sphp_api->getMenuList($this->rootMenu);
-    // generate bootstrap 4 menu
+    // generate bootstrap menu
     $str1 = "";
     foreach ($mnuroot as $mnuName => $lstMenu) {
         $str1 .= $this->genMenu($lstMenu);
@@ -90,14 +104,14 @@ if($mnuhref==''){
 }
 $stro = array();
 if($mnuSub==0){
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+    if($this->bootstrapversion == 5){
         $stro[0] = '<li class="nav-item dropdown nav-dli"><a class="nav-link dropdown-toggle nav-dlink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';
     }else{
         $stro[0] = '<li class="nav-item dropdown nav-dli"><a class="nav-link dropdown-toggle nav-dlink" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';
     }
 $stro[1] = '</ul></li>';
 }else if($mnuSub==1){
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+    if($this->bootstrapversion == 5){
         $stro[0] = '<li class="dropdown-submenu nav-dli"><a class="dropdown-item dropdown-toggle nav-dlink2" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';    
     }else{
         $stro[0] = '<li class="dropdown-submenu nav-dli"><a class="dropdown-item dropdown-toggle nav-dlink2" data-toggle="dropdown" href="'.$mnuhref.'" >'.$mnutitle.'</a><ul class="dropdown-menu">';    
@@ -140,16 +154,21 @@ $this->brandicon = '  <!-- Brand -->
   <a class="navbar-brand" href="#"><img src="'. $this->brandicon .'" alt="Logo" style="width:40px;"></a>
 ';
 }
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+    if($this->bootstrapversion == 5){
+        if($this->navbar){
 $bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'"><div class="container-fluid"> '. $this->brandicon .'
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="nav1">
-  <ul class="navbar-nav">
+  <ul class="'. $this->navmenuClasses .'">
 ';
-return array($bootstrapMenu,'</div></div></nav>');
+return array($bootstrapMenu,'</ul></div></div></nav>');
+        }else{
+return array('<ul class="'. $this->navmenuClasses .'">','</ul>');
+            
+        }
     }else{
 $bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'"> '. $this->brandicon .'
   <!-- Toggler/collapsibe Button -->
@@ -157,7 +176,7 @@ $bootstrapMenu = '<nav class="'. $this->navbarClasses . ' ' . $this->fixedPos .'
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="nav1">
-  <ul class="navbar-nav">
+  <ul class="'. $this->navmenuClasses .'">
 ';
 return array($bootstrapMenu,'</div></nav>');
     }
@@ -231,7 +250,7 @@ $controlkeysp = "";
 
 private function init() {
     $links = 'var links = jql(\'.navbar ul li a\');'; 
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){ 
+    if($this->bootstrapversion == 5){ 
         $links = 'var links = jql(\'.navbar div ul li a\');';
     }    
         addHeaderJSFunctionCode("ready", "navbar", '

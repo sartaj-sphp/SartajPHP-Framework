@@ -53,6 +53,8 @@ public $parentobj = null;
 public $tempobj = null;
 public $children = array();
 protected $proplist = array();
+/** @var int  */
+protected $styler = 0;
 /**
 * Create Component Object. Don't override this function in component, 
 * if you don't understand the life cycle of object.
@@ -62,6 +64,11 @@ protected $proplist = array();
 * @param string $fieldName Database Field name for binding
 * @param string $tableName Database Table name for binding
 */
+/**
+* Set Styler for multi layout html output.
+* @param int $styler
+*/
+public function setStyler($styler) {}
 /**
 * Set Name of Object which is used for html tag id and name.
 * @param String $val

@@ -88,8 +88,12 @@ imagettftext($image, $size, $angle5, 110, $size+15, $textColor5, $font5, $letter
 //header('Content-type: image/jpeg');
 //Output image to browser
 //echo "hello";
+ob_start (); 
 imagejpeg($image);
+$image_data = ob_get_contents (); 
+ob_end_clean (); 
 //Destroys the image
 imagedestroy($image);
+return base64_encode($image_data);
 }
 }

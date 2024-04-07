@@ -279,6 +279,19 @@ document.getElementById('$this->name').focus();
                 $this->innerHTML .= '<option selected="selected">' . $this->value . '</option>';
             }
         }
+        switch($this->styler){
+            case 1:{
+                $this->setPreTag('<div class="form-floating mb-3">');
+                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>');
+                break;
+            }case 2:{
+                $this->setPreTag('<div class="mb-3">
+                <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>');
+                break;
+            }
+        }
+        
     }
 
     public function getOptionsHTML() {

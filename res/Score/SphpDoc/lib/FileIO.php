@@ -56,7 +56,8 @@ $ext = substr($fileURL,$rt+1,strlen($fileURL)-$rt-1);
 return $ext;
 }
 public static function getFileName($fileURL){
-$file = basename($fileURL);             return $file;
+$file = basename($fileURL);         
+return $file;
 }
 public function isFileExpired($filename,$ttl=0){}
 public function openFileBytes($filepath){}
