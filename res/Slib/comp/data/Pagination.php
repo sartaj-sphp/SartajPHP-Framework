@@ -45,6 +45,7 @@ private $cachekey = 'id';
 private $cachesave = false;
 private $header = '';
 private $footer = '';
+private $roote = null;
 public $buttonnext = '';
 public $buttonprev = '';
 public $links = '';
@@ -301,13 +302,15 @@ $stro .= $this->getPaging();
 else if($this->strFormat!=''){
     //$this->tempobj->HTMLParser->executePHPCode()
 $stro = "";
-$roote = $this->tempobj->getChildrenWrapper($this);
+if($this->roote == null){
+    $this->roote = $this->tempobj->getChildrenWrapper($this);
+}
 foreach($this->result as $key1=>$keyar){
  foreach($keyar as $index=>$this->row){
 //$tmpf = new \Sphp\tools\TempFileChild($this->strFormat,true,null,$this->tempobj);
 //$tmpf->run();
 //$stro .= $tmpf->data;
-$stro .= $this->tempobj->parseComponentChildren($roote);
+$stro .= $this->tempobj->parseComponentChildren($this->roote);
  } }
  //echo $stro;
 $this->unsetrenderTag();
@@ -584,7 +587,10 @@ $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->wher
 }
 
 $this->parameterA['class'] = 'pag';
-$this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
+//$this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
+
+$this->element->replaceChildren($this->header. $this->executeSQL() . $this->footer);
+//SphpBase::debug()->println("pagi end");
 //$this->innerHTML = $this->header.$this->footer;
 //$this->unsetrender();
 }

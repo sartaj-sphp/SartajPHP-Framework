@@ -6,7 +6,7 @@ class HeaderImage extends Control {
         $this->tagName = 'section';
         $this->element->appendAttribute('class', 'hero');
         if(! $this->element->hasAttribute('src')) $this->src = SphpBase::sphp_settings()->slib_res_path . '/temp/default/assets/img/hero-bg.jpg';
-        $this->element->setInnerPreTag('<img src="'. $this->src .'" data-aos="fade-in" class="aos-init aos-animate" /><div class="container">');
+        $this->element->setInnerPreTag('<img src="'. $this->src .'" data-aos="fade-in"  /><div class="container">');
         $this->element->setInnerPostTag('</div>');
         addHeaderCSS('headerimage', '.hero .container {
 	position: relative;

@@ -1,6 +1,7 @@
 <?php
 final class SphpCodeBlock{
     private static $cb = array();
+    private static $blnresload = false;
 /**
  * Add Code Block for TempFile. use runcb="" and sphp-cb-blockName on tag
  * @param string $name Name of code block
@@ -24,7 +25,14 @@ private static function genCodeBlock($callback=null,$css="",$pclass="",$pretag="
     return $a1;
 }
 public static function getCodeBlocks(){
+    if(! SphpCodeBlock::$blnresload){
+        SphpCodeBlock::$blnresload = true;
+        addFileLink(SphpBase::sphp_settings()->slib_res_path . "/comp/res/sphpcodeblocks.css", true);
+    }
     return SphpCodeBlock::$cb;
+}
+public static function getCodeBlock($name){
+    return SphpCodeBlock::$cb[$name];
 }
 }
 
@@ -94,6 +102,98 @@ SphpCodeBlock::addCodeBlock('color',function($element,$args,$lst1){
     $element->appendAttribute('class',' bg-gradient'); 
   }
 });
+
+SphpCodeBlock::addCodeBlock('parallax',function($element,$args,$lst1){
+    $element->appendAttribute("class"," cbv parallax"); 
+    if(isset($args[0])){
+        $element->setInnerPreTag('<img src="'. $args[0] .'" class="parallax-img" /><div class="container py-4">');
+    }else{
+        $r1 = null;
+        $element->iterateChildren(function($event,$ele1) use (&$r1){
+            if($ele1->tagName == "img") {
+                $r1 = $ele1;
+                return true;
+            }
+            return false;
+        });
+        if($r1 != null){
+            $r1->appendAttribute("class","parallax-img");
+            $element->setInnerPreTag($r1->render() . '<div class="container py-4">'); 
+            $r1->setOuterHTML(''); // remove tag
+        }else{
+            $element->setInnerPreTag('<img src="'. SphpBase::sphp_settings()->slib_res_path .'/temp/default/assets/img/cta-bg.jpg"  class="parallax-img" /><div class="container py-4">');
+        }
+    }
+    $element->setInnerPostTag("</div>");
+    
+}); 
+
+SphpCodeBlock::addCodeBlock('teamlist',function($element,$args,$lst1){
+    $r1 = array();
+    $element->iterateChildren(function($event,$ele1) use(&$r1){
+        if(!$event){
+            switch($ele1->tagName){
+                case 'member':{
+                    $ele1->appendAttribute("class"," col-lg-4 col-md-6 member");
+                    $ele1->setDefaultAttribute("data-aos","fade-up");
+                    $ele1->setDefaultAttribute("data-aos-delay", random_int(100, 300));
+                    // wrap memeber info name post and detail
+                    if(count($r1) > 0){
+                        $elef = $r1[0];
+                        $elel = $r1[count($r1) - 1];
+                        $elef->setPreTag('<div class="member-info text-center" >');
+                        $elel->setPostTag('</div>');
+                    }
+                     $ele1->tagName = "div";
+                    break;
+                }
+                case 'pic':{
+                    // scoial not implemented
+                    $social = '<div class="social">
+                <a href="#"><i class="bi bi-twitter"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-linkedin"></i></a>
+              </div>';
+                    $ele1->setPreTag('<div class="member-img">');
+                    //$ele1->setPostTag($social . '</div');
+                    $ele1->setPostTag('</div>');
+                    $ele1->appendAttribute("class"," img-fluid");
+                     $ele1->tagName = "img";
+                    break;
+                }case 'name':{
+                    $r1[] = $ele1;
+                    $ele1->tagName = "h4";
+                    break;
+                }case 'post':{
+                    $r1[] = $ele1;
+                    $ele1->tagName = "span";
+                    break;
+                }case 'detail':{
+                    $r1[] = $ele1;
+                    $ele1->tagName = "p";
+                    break;
+                }
+            }
+        }else if($ele1->tagName == 'member'){
+                $r1 = array(); 
+        }
+            return false; // iterate all
+        });
+    
+    $element->appendAttribute("class"," cbv team section"); 
+    $pre = "";
+    if(isset($args[0])){
+        $pre .= '<h2>'. $args[0] .'</h2>';
+    }
+    if(isset($args[1])){
+        $pre .= '<p>'. $args[1] .'</p>';        
+    }
+    $pre = '<div class="container section-title" data-aos="fade-up">' . $pre . '</div>';
+    //$element->setPreTag($pre);
+    $element->setInnerPreTag($pre . '<div class="container"><div class="row gy-5">');
+    $element->setInnerPostTag('</div></div>');
+}); 
 
 SphpCodeBlock::addCodeBlock('position',function($element,$args,$lst1){
     $align = "left";
@@ -226,6 +326,121 @@ $element->setPostTag($element->posttag . '</div>
     </div></div>
 </div>');
     }
+}); 
+
+SphpCodeBlock::addCodeBlock('aos',function($element,$args,$lst1){
+    // not work in ajax mode
+    addFileLink(SphpBase::sphp_settings()->slib_res_path . '/comp/res/aos.css',true);
+    addFileLink(SphpBase::sphp_settings()->slib_res_path . '/comp/res/aos.js',true);
+    addHeaderJSCode('aos', 'AOS.init();',true);
+    if(isset($args[0])){
+        $element->setAttribute("data-aos",$args[0]);
+    }else{
+        $element->setAttribute("data-aos","fade-up");        
+    }
+    if(isset($args[1])){
+        $element->setAttribute("data-aos-delay",$args[1]);
+    }
+}); 
+
+SphpCodeBlock::addCodeBlock('counter',function($element,$args,$lst1){
+    // precounter https://github.com/srexi/purecounterjs
+    if(! $element->hasAttribute("sphp-cb-aos")){
+        $cb1 = SphpCodeBlock::getCodeBlock("aos");
+        $cb1["callback"]($element,[],$lst1);
+    }
+    addHeaderJSCode('purecounter', '  var prcounter = new PureCounter();',true);
+    $spn1 = '<span class="purecounter" data-purecounter-start="';
+    if($element->hasAttribute("data-purecounter-start")){
+        $spn1 .= $element->getAttribute("data-purecounter-start") . '"';
+    }else{
+        $spn1 .= '0"';
+    }
+    if(isset($args[0])){
+        $spn1 .= ' data-purecounter-end="' . $args[0] .'"';
+    }else{
+        $spn1 .= ' data-purecounter-end="250"';
+    }
+    if(isset($args[1])){
+        $spn1 .= ' data-purecounter-duration="' . $args[1] .'"';
+    }else{
+        $spn1 .= ' data-purecounter-end="1"';
+    }
+    $spn1 .= '></span>';
+    $element->setInnerHTML($spn1);
+    $element->tagName = "div";
+}); 
+/**
+ * arg:- 0-> bounce,fold,puff,pulsate,shake,size,slide
+ * arg: 1-> JS Event to Trigger default mouseenter
+ * arg: 2-> extra options for effect as {} array
+ * arg 3-> timer1 in ms
+ * arg 4-> timer2 in ms
+ * More:- https://api.jqueryui.com/category/effects/
+ */
+SphpCodeBlock::addCodeBlock('jui',function($element,$args,$lst1){
+    $evt1 = "mouseenter";
+    $effect1 = "shake";
+    $opt1 = "{}";
+    $timer1 = 2000;
+    $timer2 = 1000;
+    SphpBase::JQuery()->getJQKit();
+    if(isset($args[0])) $effect1 = $args[0];
+    if(isset($args[1])) $evt1 = $args[1];
+    if(isset($args[2])) $opt1 = $args[2];
+    if(isset($args[3])) $timer1 = $args[3];
+    if(isset($args[4])) $timer2 = $args[4];
+ 
+    $element->appendAttribute("class"," $effect1");
+    addHeaderJSFunctionCode('ready', "jui" . $effect1, ' $(".'. $effect1 .'").on("'. $evt1 .'",function(){$(this).toggle("'. $effect1 .'",'. $opt1.','. $timer1 .',function(){$(this).toggle("'. $effect1 .'",{},'. $timer2.');});});');
+    
+}); 
+/**
+ * arg0:- color1 in hex code like #FFFFFF or rgb like 238,174,202
+ * arg1:- color2 in hex code or rgb
+ * arg2:- radial or linear 
+ * arg3:- 90deg or circle or any 
+ */
+SphpCodeBlock::addCodeBlock('bggrad',function($element,$args,$lst1){
+    $color1 = "238,174,202";
+    $color2 = "148,187,233";
+    $type1 = "radial";
+    $deg1 = "circle";
+    if(isset($args[0])){
+        $r = $g = $b = 235;
+        if($args[0][0] == '#'){
+            list($r, $g, $b) = sscanf($args[0], "#%02x%02x%02x");
+        }else{
+            list($r,$g,$b) = explode(',', $args[0]);
+        }
+        $color1 = "$r,$g,$b";
+        $r += intval($r * 0.25);
+        $g += intval($g * 0.25);
+        $b += intval($b * 0.25);
+        if($r>255) $r = 255 - ($r - 255);
+        if($g>255) $g =255 - ($g - 255);
+        if($b>255) $b = 255 - ($b - 255);
+        $color2 = "$r,$g,$b";
+    }
+    if(isset($args[1])){
+        $r = $g = $b = 235;
+        if($args[1][0] == '#'){
+            list($r, $g, $b) = sscanf($args[1], "#%02x%02x%02x");
+        }else{
+            list($r,$g,$b) = explode(',', $args[1]);
+        }
+        $color2 = "$r,$g,$b";
+    }
+    if(isset($args[2])) $type1 = $args[2];
+    if(isset($args[3])){
+        $deg1 = $args[3];
+    }else if($type1 == "linear"){
+        $deg1 = "90deg";
+    }else{
+        $deg1 = "circle";
+    }
+    $bg1 = "background: rgb($color1);background: $type1-gradient($deg1, rgba($color1,1) 0%, rgba($color2,1) 100%);";
+    $element->appendAttribute("style"," $bg1");
 }); 
 
 include_once(PROJ_PATH . "/temp/sphpcodeblock.php");
