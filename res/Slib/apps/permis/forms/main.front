@@ -1,24 +1,22 @@
-<?php
-$pageName = 'Dashboard';
-?>
-<section class="content-header sty-one">
-    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+    <h1 class="text-black">Dashboard</h1>
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>        
-        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+        <li><i class="fa fa-angle-right"></i>Dashboard</li>
     </ol>
-</section>
-
-<section class="content">
-    <div class="row">
-        <!--<div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Testimonial</span>
-                    <span class="info-box-number"><small></small></span>
-                </div>                
-            </div>            
-        </div>-->                
+        </div>                
     </div>
-</section>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <p>
+            If you want use only single login as super admin then set as user and pass in comp.php file. 
+            Or for multi profile and manage permissions, you can create database tables with 
+            <a href="##{getEventURL('install','install','mebhome')}#">this install link.</a>
+            This link also need extra "temp/db.php" file inside your project to install all your project.
+            </p><p>
+            For Customize this file create mebmain.front file inside your project folder> "apps/forms/mebmain.front".
+            </p>
+        </div>                
+    </div>

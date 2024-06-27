@@ -45,7 +45,11 @@ public function genMenus() {
     // generate bootstrap menu
     $str1 = "";
     foreach ($mnuroot as $mnuName => $lstMenu) {
-        $str1 .= $this->genMenu($lstMenu);
+        if($lstMenu[4] == ""){
+            $str1 .= $this->genMenu($lstMenu);            
+        }else if(SphpBase::sphp_permissions()->isPermission($lstMenu[4])){
+            $str1 .= $this->genMenu($lstMenu);
+        }
     }
     $this->htmlout = $strmbar[0] . $str1 . $strmbar[1];
 }
@@ -56,7 +60,11 @@ private function genMenu($lstMenu,$submenu=0){
     $str1 = "";
     if($mnuroot != null){
         foreach ($mnuroot as $mnuName => $lstMenu2) {
-            $str .= $this->genMenu($lstMenu2,1);
+            if($lstMenu2[4] == ""){
+                $str .= $this->genMenu($lstMenu2,1);
+            }else if(SphpBase::sphp_permissions()->isPermission($lstMenu2[4])){
+                $str .= $this->genMenu($lstMenu2,1);
+            }
         }
         $str1 = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
         if($str1 != ""){
@@ -81,7 +89,11 @@ private function genMenuLinks($mnuroot){
     $str = "";
     if($mnuroot != null){
     foreach ($mnuroot as $mnuLinkName => $lstMenuLink) {
-        $str .= $this->getB4MenuLink($lstMenuLink);        
+        if($lstMenuLink[4] == ""){
+            $str .= $this->getB4MenuLink($lstMenuLink);   
+        }else if(SphpBase::sphp_permissions()->isPermission($lstMenuLink[4])){
+            $str .= $this->getB4MenuLink($lstMenuLink);   
+        }
     }
     }
     return $str;

@@ -1,0 +1,3 @@
+<input id="pagename" runat="server" type="hidden" />
+<div id="tinydetails" runat="server" path="controls/TinyEditor/TinyEditor.php" rows="50" funsetAuth="ADMIN">
+</div>

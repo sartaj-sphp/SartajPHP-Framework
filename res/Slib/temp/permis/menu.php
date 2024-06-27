@@ -10,7 +10,7 @@ class MenuUi extends BootstrapSideMenu{
         $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"fa fa-home","Home");
         $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
 
-        include_once(PROJ_PATH . "/temp/permismenu.php");  
+        include_once(PROJ_PATH . "/temp/permis/permismenu.php");  
         include_once("plugin/cmenu.php"); 
         
     }

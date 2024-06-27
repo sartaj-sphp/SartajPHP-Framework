@@ -5,7 +5,7 @@ class mebProfilePermission extends PermisApp {
 
     public function onstart() {
         global $mebmasterf;
-        $this->getAuthenticate("ADMIN,MEMBER,MEMBERT");
+        $this->page->getAuthenticatePerm("view");
         $this->setTableName("profile_permission");
         $this->Client->session("appName", "Profile Permission");
         $this->genFormTemp = new TempFile($this->apppath . "/forms/mebProfilePermission-edit.front", false, $this);
@@ -55,7 +55,7 @@ class mebProfilePermission extends PermisApp {
                 }
             }
         }
-        
+       /* 
         foreach(SphpBase::sphp_api()->getRegisteredApps() as $key => $armain) { 
             if($armain[3] !== null){
             foreach($armain[3] as $key2 => $permission) {
@@ -67,11 +67,15 @@ class mebProfilePermission extends PermisApp {
             }
             }
         }
-
+*/
         $permission = array();
+        $lih = "";
+        $lih2 = "";
         foreach(SphpBase::sphp_api()->getRegisteredApps() as $key => $armain) {
+            $lih = "";
+            $lih2 = "";
             if($armain[3] !== null){
-                $list .= '<li>'
+                $lih = '<li>'
                         . '<label style="font-weight: bold;">'.$armain[2].'</label>'
                     . '</li>';
             foreach($armain[3] as $key2 => $permission2) {        
@@ -86,7 +90,8 @@ class mebProfilePermission extends PermisApp {
                     $permission[1] = $permission2;
                 }
                     $id = $key . "-" . $permission[0];
-
+                // permission will not show if login user don't have
+                if(SphpBase::sphp_permissions()->hasPermission($id)){
                 $cls = '';
                     //$cls = '';
                     if(isset($ar1[$id])) {
@@ -94,14 +99,19 @@ class mebProfilePermission extends PermisApp {
                     }
 
 
-                $list .= '<li>'
+                $lih2 .= '<li>'
                             . '<span style="padding-left: 20px;">&nbsp;</span>'
                             . '<input '.$cls.' name="permissionlist[]" id="'.$no.'" value="'.$id.'" type="checkbox">'
                             . '<label for='.$no.' style="padding-left: 5px;">'.$permission[1].'</label>'
                         . '</li>';
                 $no++;
             }
-        }            
+            
+            } // for
+            // extend list
+            if($lih2 != "") $list .= $lih . $lih2;
+        } // if perm found
+        
         }
         $list .= '</ul>';
                           

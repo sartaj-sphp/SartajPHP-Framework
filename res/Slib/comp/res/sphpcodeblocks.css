@@ -149,6 +149,7 @@ section, .section {
 .team .member .member-info p {
   margin-bottom: 0;
   font-size: 14px;
+  text-align: justify;
 }
 
 .team .member:hover .member-img .social {

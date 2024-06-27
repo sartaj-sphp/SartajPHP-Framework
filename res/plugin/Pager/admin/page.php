@@ -1,13 +1,16 @@
 <?php
-$auth = "ADMIN";
+global $formFields,$libpath,$genForm,$formHead,$cmpid,$showformhead;
 $tblName = "pagdet";
-SphpBase::page()->Authenticate();
+SphpBase::page()->tblName = $tblName;
+SphpBase::page()->getAuthenticatePerm("ADMIN,MEMBER");
+//SphpBase::page()->Authenticate();
 //SphpBase::page()->sesSecure();
-$JSServer->getAJAX();
+SphpBase::JSServer()->getAJAX();
 
-$masterFile = $admmasterf;
+$masterFile = $mebmasterf;
 $formHead = "Add Edit Web Pages";
-$formFields = '
+function comp_genForm_on_create($e){
+    $genForm = $e["element"]->getComponent();
 $genForm->setField("pagesubttitle","Web Title","text","r","2","300");
 $genForm->setField("pagetitle","Page Heading","text","","","70");
 $genForm->setField("pagedes","Meta Description","text","","","150");
@@ -21,8 +24,9 @@ $genForm->setField("filepath1","FileName","file","","2","200000");
 $genForm->setField("filepath2","FileName","file","","2","200000");
 $genForm->setField("details","Page Code","controls/TinyEditor/TinyEditor.php");
 $genForm->setField("spcmpid"," ","hidden");
+$genForm->setField("catid"," ","hidden");
 $genForm->setField("pagename"," ","hidden");
-';
+}
 
 $genFormTemp = new TempFile("{$libpath}/tpl/db/GenForm.php");
 if($details->issubmit){
@@ -32,7 +36,7 @@ $pagename->value = str_replace("-", "",  $pagename->value);
 $pagename->setDataBound();
 }
 
-$catname->setOptionsFromTable('aname','','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
+$catname->setOptionsFromTable('id,aname','id,aname','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
 $details->unsetDataBound();
 $filepath1->setFileSavePath("pagres/". $pagename->value .'-1.'.$filepath1->getFileExtention());
 $filepath2->setFileSavePath("pagres/". $pagename->value .'-2.'.$filepath2->getFileExtention());
@@ -49,7 +53,7 @@ file_put_contents("pagres/". $pagename->getValue().".html",$details->getValue())
 $showallTemp = new TempFile("{$libpath}/tpl/db/Showall.php");
 $showall->setFieldNames("pagename,pagestatus,catname");
 $showall->setHeaderNames("Name,Ban,Category");
-$showall->setWhere("WHERE spcmpid='".$_SESSION['uid']."'  ORDER BY catname");
+$showall->setWhere("WHERE spcmpid='". $cmpid ."'  ORDER BY catname");
 $showall->setColWidths("");
 $showall->setEdit();
 $showall->setDelete();
@@ -81,11 +85,9 @@ else if(getCheckErr() && !$blnert){
 
 
 if(SphpBase::page()->isinsert){
-if($mysql->isRecordExist("SELECT pagename FROM pagdet WHERE spcmpid='$cmpid' AND pagename='$pagename->value'")){
+if(SphpBase::dbEngine()->isRecordExist("SELECT pagename FROM pagdet WHERE spcmpid='$cmpid' AND pagename='$pagename->value'")){
      setErr('Pagename', 'You can not add more pages with same name!');
 	}
-$spcmpid->value = $_SESSION['uid'];
-$spcmpid->setDataBound();
 //getProdLimit();
 }
 if(SphpBase::page()->isview){
@@ -103,12 +105,20 @@ SphpBase::page()->viewData($form2,SphpBase::page()->evtp);
 $pathf = "pagres/".$pagename->getValue().".html";
 if(file_exists($pathf)){unlink($pathf);}
 }
+
+if(SphpBase::page()->isinsert || SphpBase::page()->isupdate){
+    $spcmpid->value = $cmpid;
+    $spcmpid->setDataBound();
+    $catid->value = explode(",",$catname->value)[0];
+    $catid->setDataBound();
+    $callbackfun = function(){
+        // update cache data
+        //SphpBase::debug()->println('y');
+        include(__DIR__ . "/../front/menuupdate.php");
+    };    
+    
+}
+
 //addHeaderJSFunctionCode('pageload', 'jh', 'alert("load done")',true);
 include_once("{$libpath}/tpl/db/autoapp.php");
 
-// update cache data
-if(SphpBase::page()->isinsert || SphpBase::page()->isupdate){
-$tmp = new TempFile("{$phppath}/plugin/Pager/front/menuupdate.php");
-$tmp->run();
-}
-?>

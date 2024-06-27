@@ -26,6 +26,7 @@ public $posttag = "";
 public $innerpretag = "";
 public $innerposttag = "";
 public $myclass = "Sphp\\tools\\NodeTag";
+public $tempobj = null;
 public function init($strtag){}
 public function setRefComp($compobj) {}
 public function checkSelfClose(){}

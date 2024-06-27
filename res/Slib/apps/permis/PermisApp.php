@@ -13,42 +13,7 @@ class PermisApp extends \Sphp\tools\BasicApp {
      * @var type TempFile
      */
     protected $showallTemp = null;
-    public $lstPermApp = null;
-    public $ctrl = null;
-    public static $lstPermission = null;
-
-    public function __construct() {
-        $this->getProfilePermission();
-        parent::__construct();
-        $this->ctrl = getCurrentRequest();
-    }
         
-    protected function getProfilePermission() {
-        $permission_list = SphpBase::sphp_request()->session('lstpermis');
-        $a1 = array();
-        
-        if((SphpBase::page()->getAuthenticateType() == "MEMBER" || SphpBase::page()->getAuthenticateType() == "MEMBERT") && intval(SphpBase::sphp_request()->session("uid")) === 0) { 
-            foreach(SphpBase::sphp_api()->getRegisteredApps() as $key => $armain) { 
-                if($armain[3] !== null){
-                foreach($armain[3] as $key2 => $permission) {
-                    if(is_array($permission)){
-                        $a1[$key . "-" . $permission[0]] = true;
-                    }else{
-                        $a1[$key . "-" . $permission] = true;                        
-                    }
-                }
-                }
-            }
-        }else if(SphpBase::page()->getAuthenticateType() == "MEMBER" && intval(SphpBase::sphp_request()->session("uid")) > 0){
-            $permission_list_Ary = explode(",", $permission_list);
-            foreach($permission_list_Ary as $key => $value) {
-                $a1[$value] = true;
-            } 
-        } 
-        //print_r($a1); 
-        //echo SphpBase::page()->getAuthenticateType() . SphpBase::sphp_request()->session("uid");
-        SphpBase::sphp_permissions()->setPermissions($a1);
-    } 
     
     public function page_event_showallShow($param) {
         $showall = $this->showallTemp->getComponent('showall');
@@ -65,11 +30,12 @@ class PermisApp extends \Sphp\tools\BasicApp {
     }
     
     public function page_new(){
+        // no any permission check, you can overwrite this behaviour in your app
         $this->setTempFile($this->showallTemp);
     }
 
     public function page_event_addnew($param) {
-        if($this->hasPermission("add")){
+        if($this->page->hasPermission("add")){
             $this->Client->session("formType", "Add");
             $this->Client->session("formButton", "Save");
             $this->setTempFile($this->genFormTemp);
@@ -78,17 +44,9 @@ class PermisApp extends \Sphp\tools\BasicApp {
         }
     }
     
-    public function hasPermission($param,$ctrl="") {
-        if($ctrl === "") $ctrl = $this->ctrl;
-        if(SphpBase::sphp_permissions()->hasPermission($ctrl .'-' . $param)){
-            return true;
-        }else{
-            return false;
-        }
-    }
     
     public function page_view() {
-        if($this->hasPermission("view")){
+        if($this->page->hasPermission("view")){
             $this->Client->session("formType", "Edit");
             $this->Client->session("formButton", "Update");
             $this->page->viewData($this->genFormTemp->getComponent('form2'));
@@ -100,7 +58,7 @@ class PermisApp extends \Sphp\tools\BasicApp {
     
     public function page_insert() {
         global $cmpid;
-        if($this->hasPermission("add")){
+        if($this->page->hasPermission("add")){
             $this->extra[]['userid'] = $_SESSION['sid'];
             $this->extra[]['parentid'] = $_SESSION['parentid'];
             $this->extra[]['spcmpid'] = $cmpid;
@@ -126,7 +84,7 @@ class PermisApp extends \Sphp\tools\BasicApp {
     }
     
     public function page_update() {
-        if($this->hasPermission("view")){
+        if($this->page->hasPermission("view")){
             if (!getCheckErr()) {                        
                 $this->page->updateData($this->extra);
                 if (!getCheckErr()) {
@@ -146,7 +104,7 @@ class PermisApp extends \Sphp\tools\BasicApp {
     }
     
     public function page_delete() {
-        if($this->hasPermission("delete")){
+        if($this->page->hasPermission("delete")){
             $this->page->deleteRec();
             if (!getCheckErr()) {
                 setMsg("app1",'delete Successfully');

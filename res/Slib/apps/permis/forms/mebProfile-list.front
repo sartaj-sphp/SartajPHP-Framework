@@ -4,7 +4,7 @@ $pageName = 'User List';
 <section class="content-header sty-one">
     <h1 class="text-black"><?php echo $pageName; ?></h1>
     <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>        
+        <li><a href="##{getAppUrl('mebhome')}#">Home</a></li>        
         <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
     </ol>
 </section>
@@ -13,8 +13,8 @@ $pageName = 'User List';
     <div class="row">
         <div class="col-lg-12">
             <div class="card ">
-                <div class="card-header bg-blue">
-                    <h5 class="text-white m-b-0"><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                <div class="card-header">
+                    <h5 class=""><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
                     <div id='admProfile_add' runat='server'>
                         <span style="float:right; margin-top: -20px;">
                             <a class="btn btn-warning removepd" href="<?php echo getEventPath('addnew'); ?>"><i class="fa fa-plus"></i> Add</a>                        

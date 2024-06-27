@@ -6,12 +6,18 @@ class FooterMenuUi extends BootstrapFooterMenu{
         // just remove to empty for use root menu as same as in header
         $this->setRootMenu("footer");
         $this->sphp_api->addMenu("Home2", "","fa fa-home","footer");
-        $this->sphp_api->addMenu("Home", "","fa fa-home","footer");
+        $this->sphp_api->addMenu("Home", "","fa fa-home","Home2");
+        $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
+        $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
         
-        $this->sphp_api->addMenuLink("Home", getAppPath("index"),"fa fa-home","Home2");
-        $this->sphp_api->addMenuLink("Admin Login", getAppPath("admin"),"fa fa-home","Home2");
-        //$this->sphp_api->addMenuLink("User Login", getAppPath("signin"),"fa fa-home","Home2");
-        $this->sphp_api->addMenuLink("Contact Us", getEventPath('page','contacts','index'),"fa fa-fw fa-clock-o","Home2");
+        if(SphpBase::page()->getAuthenticateType() == "GUEST"){
+            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+            include_once("plugin/cmenu.php"); 
+        }else{            
+            $this->sphp_api->addMenuLink("Dashboard",getAppPath('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
+            include_once("plugin/cmenu.php"); 
+        }
          
         
         include_once("plugin/cmenu.php"); 

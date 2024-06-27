@@ -13,6 +13,10 @@ class HTMLForm extends \Sphp\tools\Control {
     public $recID = 'txtid';
     private $onvalidation = '';
     private $blnajax = false;
+    private $blnsocket = false;
+    private $socketctrl = "index";
+    private $socketevt = "";
+    private $socketevtp = "";
     private $ajax = null;
     private $target = "";
 
@@ -36,6 +40,13 @@ class HTMLForm extends \Sphp\tools\Control {
         addFileLink($this->myrespath . "/jslib/jquery.form.js", true);
     }
 
+    public function setSocket($ctrl,$evt="",$evtp="") {
+        $this->blnsocket = true;
+        $this->socketctrl = $ctrl;
+        $this->socketevt = $evt;
+        $this->socketevtp = $evtp;
+    }
+    
     public function setAjaxTarget($val) {
         $this->target = $val;
     }
@@ -92,7 +103,15 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
              */
 
             //addHeaderJSFunctionCode('ready', $this->name, "jql('#" . $this->name . "').ajaxForm(); ");
-        } else {
+        }else if($this->blnsocket){
+            \SphpBase::JSServer()->getAJAX();
+            $subcode = " tempobj.getSphpSocket(function(wsobj1){
+    var formData = jql('#" . $this->name . "').serializeAssoc();
+	delete formData['sphpajax'];
+    wsobj1.callProcessApp('{$this->socketctrl}','{$this->socketevt}','{$this->socketevtp}',formData);
+});";
+            
+} else {
             $subcode = "
 if(val==''){
 objc1.submit();

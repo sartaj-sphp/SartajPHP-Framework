@@ -69,7 +69,7 @@ public function isComponent($comp) {}
 * @param string $parent Optional parent name for menu as sub menu, default is root
 * @param boolean $ajax Optional if true then use AJAX request
 * @param string $roles Optional <p>
-* comma separtaed list for user Authentication types or permissions, if match then menu display in HTML code 
+* comma separated list for user Authentication types or permissions, if match then menu display in HTML code 
 * </p>
 * @param string $akey Optional keyboard shortcut <p>
 * SphpBase::sphp_api()->addMenuLink("Debug", 'javascript: debugApp();',"","Debug",true,"","f7");

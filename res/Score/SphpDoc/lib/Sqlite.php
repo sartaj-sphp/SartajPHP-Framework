@@ -35,7 +35,23 @@ public function createTable($sql) {}
 public function dropTable($tableName) {}
 public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
+public function row_fetch_array($result) {}
 public function last_insert_id() {}
 public function fetchQuery($sql = "", $ttl = 0, $filename = "", $key = "id", $issave = false) {}
+/**
+* List Tables in Database. execute SHOW TABLES query. Override this function when you need to
+* create of database adapter.
+* @return array
+*/
+public function getDbTables() {}
+/**
+* List Fields in a Table. Override this function when you need to
+* create of database adapter. Default work with MySQL
+* @param string $tablename <p>
+* pass table name in database
+* </p>
+* @return array
+*/
+public function getTableColumns($tablename) {}
 }
 }

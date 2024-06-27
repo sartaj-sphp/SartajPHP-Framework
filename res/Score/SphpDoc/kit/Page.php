@@ -117,6 +117,25 @@ public function init() {}
 * Overload, Event Handler For App Type development
 */
 /**
+* Set which user Permission can access this application. Default Permission is ALL.
+* You can set session variable in login app 
+* SphpBase::sphp_request()->session('lstpermis','profile-view,prfile-delete');
+* If user is not login with specific permission then application exit and
+* redirect according to the getWelcome function in comp.php
+* @param string $perm Default=null mean, permission to everyone<p>
+* permission to allow app. Example:- AuthenticatePerm("view")
+* </p>
+* @return boolean true if permission match with session variable lstpermis, never return false
+*/
+public function getAuthenticatePerm($perm=null) {}
+/**
+*  Check Permission is given to authorised user or not given.
+* @param string $perm permission to check
+* @param string $ctrl optional Default is current App, permission like index-view where index is controller.
+* @return bool return true if permission found
+*/
+public function hasPermission($perm,$ctrl=null) {}
+/**
 * Set which user can access this application. Default user is GUEST.
 * You can set session variable in login app 
 * SphpBase::sphp_request()->session('logType','ADMIN');
@@ -135,7 +154,7 @@ public function Authenticate($auth="") {}
 */
 public function AuthenticateSVAR($auth="") {}
 /**
-* Check if user type in session logType = unauthorise
+* Check if user type in session logType = unauthorised
 * @param string $param <p>
 * comma separated list of string. Example:- checkUnAuth("GUEST,ADMIN") or checkUnAuth("ADNIN")
 * </p>
@@ -143,7 +162,7 @@ public function AuthenticateSVAR($auth="") {}
 */
 public function checkUnAuth($param) {}
 /**
-* Check if user type in session logType = authorise
+* Check if user type in session logType = authorised
 * @param string $param <p>
 * comma separated list of string. Example:- checkAuth("GUEST,ADMIN") or checkAuth("ADNIN")
 * </p>
@@ -245,6 +264,19 @@ public function cleanQuery($string) {}
 */
 public function clearQuery($string) {}
 /**
+* Serialize to a filepath
+* @param array|object $data
+* @param string $filename filepath 
+* @return boolean on error return false
+*/
+public function saveToCache($data, $filename) {}
+/**
+* Unserialize from file if exist.
+* @param string $filename filepath
+* @return array|object on error return empty array
+*/
+public function getFromCache($filename) {}
+/**
 * Import table data as PHP Code. Override this function when you need to
 * create of database adapter. Default work with MySQL
 * @param string $tablenl <p>
@@ -279,18 +311,5 @@ public function getDbTables() {}
 * @return string
 */
 public function getCreateTableSQL($table) {}
-/**
-* Serialize to a filepath
-* @param array|object $data
-* @param string $filename filepath 
-* @return boolean on error return false
-*/
-public function saveToCache($data, $filename) {}
-/**
-* Unserialize from file if exist.
-* @param string $filename filepath
-* @return array|object on error return empty array
-*/
-public function getFromCache($filename) {}
 }
 }

@@ -6,7 +6,7 @@ $maxtime = "0";
 // use ms
 $ajaxready_max = 300;
 // 2= defer, 1= async, 0=nop
-$default_filelink_load = 0;
+$default_filelink_load = 2;
 
 if(!isset($_SERVER['HTTP_HOST']) || strpos(" " . $_SERVER['HTTP_HOST'], "localhost") !== false) define("autocompkey","FD45A279GH");
 $defenckey = "aHmlP1";
@@ -60,10 +60,10 @@ $dhost = "localhost:3306";
 $jsProtection = false;
 
 $masterf = "{$slibpath}/temp/default/master.php";
-$mobimasterf = "{$slibpath}/temp/default/mobimaster.php";
+//$mobimasterf = "{$slibpath}/temp/default/mobimaster.php";
 $admmasterf = "{$slibpath}/temp/default/admmaster.php";
 $mebmasterf = "{$slibpath}/temp/default/master.php";
-$softmasterf = "{$slibpath}/temp/default/softmaster.php";
+//$softmasterf = "{$slibpath}/temp/default/softmaster.php";
 
 if (filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_FLAG_EMPTY_STRING_NULL)) {
     if (isset($_SERVER["HTTPS"]) && ( $_SERVER["HTTPS"] == "on" || $_SERVER["HTTPS"] == 1)){

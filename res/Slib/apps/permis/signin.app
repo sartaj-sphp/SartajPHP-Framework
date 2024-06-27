@@ -8,6 +8,7 @@ class signin extends \Sphp\tools\BasicApp {
         global $masterf;
         //echo $this->page->getAuthenticateType();
         //$this->getAuthenticate("GUEST,MEMBER,ADMIN");
+        //$this->page->getAuthenticatePerm("GUEST,ADMIN,MEMBER"); 
         $this->setTableName("member");
         $this->signinvar = new TempFile($this->apppath . "/forms/signin.front", false, $this);
         $this->setMasterFile($masterf);
@@ -15,6 +16,7 @@ class signin extends \Sphp\tools\BasicApp {
 
     public function page_new() {
         if(!$this->Client->isCookie("algdec")) {
+            destSession();
             $this->setTempFile($this->signinvar);
         }else{
             $authcookie = json_decode(decrypt($this->Client->cookie("algdec2")),true);
@@ -26,7 +28,7 @@ class signin extends \Sphp\tools\BasicApp {
             $this->Client->session('profile_id',$authcookie['profile_id']);            
             $this->Client->session('lstpermis',$authcookie['lstpermis']);  
             if($authcookie['profile_id'] == 0){
-                setSession('MEMBERT', intval($authcookie['sid']));
+                setSession('ADMIN', intval($authcookie['sid']));
             }else{
                 setSession('MEMBER', intval($authcookie['sid']));                
             }
@@ -36,6 +38,7 @@ class signin extends \Sphp\tools\BasicApp {
 
     public function page_submit() {
         global $cmpid,$admuser,$admpass;
+        if(! getCheckErr()){
         $authcookie = array();
         $this->debug->println("Call Signin Event");
         $uname = $this->signinvar->getComponent("uname")->getValue();
@@ -59,11 +62,11 @@ class signin extends \Sphp\tools\BasicApp {
             $authcookie['lstpermis'] = '';            
             $number_of_days = 10 ;
             $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-            //if(isset($_REQUEST["chkremb"])) {
+            if($this->Client->isRequest("chkremb")) {
                 $this->Client->cookie("algdec", "dome1",false, $date_of_expiry );
                 $this->Client->cookie("algdec2", encrypt(json_encode($authcookie)),false, $date_of_expiry );
-            //}
-            setSession('MEMBERT', 0);
+            }
+            setSession('ADMIN', 0);
             //print_r($_SESSION);
             getWelcome();
         } else {
@@ -91,19 +94,21 @@ class signin extends \Sphp\tools\BasicApp {
                     //This is for permission management---------------------
 
                     $usertype = $rows['usertype'];
-            $authcookie['sid'] = $this->Client->session('sid');            
-            $authcookie['parentid'] = $this->Client->session('parentid'); 
-            $authcookie['admin-name'] = $this->Client->session('admin-name');            
-            $authcookie['email'] = $this->Client->session('email');            
-            $authcookie['usertype'] = $this->Client->session('usertype');  
-            $authcookie['profile_id'] = $this->Client->session('profile_id');            
-            $authcookie['lstpermis'] = $this->Client->session('lstpermis');            
+                    $authcookie['sid'] = $this->Client->session('sid');            
+                    $authcookie['parentid'] = $this->Client->session('parentid'); 
+                    $authcookie['admin-name'] = $this->Client->session('admin-name');            
+                    $authcookie['email'] = $this->Client->session('email');            
+                    $authcookie['usertype'] = $this->Client->session('usertype');  
+                    $authcookie['profile_id'] = $this->Client->session('profile_id');            
+                    $authcookie['lstpermis'] = $this->Client->session('lstpermis');            
                     $number_of_days = 10 ;
                     $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-                    //if(isset($_REQUEST["chkremb"])) {
+                    
+                    if($this->Client->isRequest("chkremb")) {
                         $this->Client->cookie("algdec", "dome1",false, $date_of_expiry );
                         $this->Client->cookie("algdec2", encrypt(json_encode($authcookie)),false, $date_of_expiry );
-                    //}
+                    }
+                    
                     setSession('MEMBER', $rows['id']);
                     getWelcome();
                 } else {
@@ -114,6 +119,10 @@ class signin extends \Sphp\tools\BasicApp {
                 setErr('app2', 'Invalid Username or Password');
                 $this->setTempFile($this->signinvar);
             }
+        }
+        } else {
+                setErr('app2', 'Invalid Username or Password');
+                $this->setTempFile($this->signinvar);
         }
     }
 

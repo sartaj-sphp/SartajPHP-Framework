@@ -235,7 +235,7 @@ $this->result = $mysql->fetchQuery($this->sql." LIMIT $startat,$this->perPageRow
 $stro = '';
 if ($this->result){
 if($this->fieldNames!='' && $this->strFormat==''){
-$stro = '<table class="pagtable">';
+$stro = '<table class="table table-striped pagtable">';
 if($this->headNames==''){
 $this->headNames = $this->fieldNames;
 }
@@ -248,7 +248,7 @@ $arrw = explode(',',$this->colwidths);
 $lenw = count($arrw)-1;
 $startw = 0;
 }
-$stro .= "<tr class=\"paghead\">";
+$stro .= "<thead><tr class=\"paghead\">";
 foreach($arr as $key=>$val){
 if($lenw>=$startw){
 $w = ' width="'.$arrw[$startw].'"';
@@ -264,7 +264,7 @@ $stro .= "<th width=\"10\">Edit</th>";
 if($this->blnDelete){
 $stro .= "<th width=\"10\">Delete</th>";
 }
-$stro .= "</tr>";
+$stro .= "</tr></thead><tbody>";
 $blnf = true;
 foreach($this->result as $key1=>$keyar){
 foreach($keyar as $key=>$row){
@@ -296,7 +296,7 @@ $stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".get
 $stro .= "</tr>";
 }
 }
-$stro .= "</table>";
+$stro .= "</tbody></table>";
 $stro .= $this->getPaging();
 }
 else if($this->strFormat!=''){

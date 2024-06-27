@@ -4,7 +4,7 @@ $pageName = \SphpBase::sphp_request()->session('formType').' User';
 <section class="content-header sty-one">
     <h1 class="text-black"><?php echo $pageName; ?></h1>
     <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>        
+        <li><a href="##{getAppUrl('mebhome')}#">Home</a></li>        
         <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
     </ol>
 </section>
@@ -13,10 +13,10 @@ $pageName = \SphpBase::sphp_request()->session('formType').' User';
     <div class="row">
         <div class="col-lg-12">
             <div class="card ">
-                <div class="card-header bg-blue">
-                    <h5 class="text-white m-b-0"><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                <div class="card-header">
+                    <h5 class=""><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
                     <span style="float:right; margin-top: -20px;">
-                        <a class="btn btn-default removepd" href="<?php echo getAppPath(getCurrentRequest()); ?>" > <i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-primary removepd" href="<?php echo getAppPath(getCurrentRequest()); ?>" > <i class="fa fa-arrow-left"></i> Back</a>
                     </span>                    
                 </div>
                 <div class="card-body" style="padding-top:10px;">								

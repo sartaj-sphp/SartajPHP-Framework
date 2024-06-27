@@ -1,4 +1,7 @@
 <?php
+if(!isset($callbackfun)){
+    $callbackfun = function(){};
+}
 if(SphpBase::page()->isevent)
 {
 switch(SphpBase::page()->sact){
@@ -59,7 +62,9 @@ if(SphpBase::page()->isnew)
 $formNo = 1;
 $blngetFront = true;
  }
-
+// callback
+ $callbackfun();
+ 
 if ($blngetFront){
 switch($formNo){
     case 1:{

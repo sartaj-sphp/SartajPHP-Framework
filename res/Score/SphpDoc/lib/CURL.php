@@ -26,7 +26,7 @@ public function get_ftp_file_list($url,$username,$password){}
 * @param string $referer url
 * @return boolean 
 */
-public function post_data_json($post, $posturl, $n=false, $session=false, $referer="")
+public function post_data_json($post, $posturl, $n=false, $session=false, $referer="",$header=array())
 {} 
 public function post_data($post, $posturl, $n=false, $session=false, $referer="")
 {} 

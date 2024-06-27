@@ -6,13 +6,13 @@ private function random_string2($len=5, $str='')
   for($i=1; $i<=$len; $i++)
    {
     //generates a random number that will be the ASCII code of the character. We only want numbers (ascii code from 48 to 57) and caps letters.
-    $ord=rand(48, 57);
-    if(($ord >= 48) && ($ord <= 57)){
+    $ord=rand(65, 90);
+    if(($ord >= 65) && ($ord <= 90)){
 //    if((($ord >= 48) && ($ord <= 57)) || (($ord >= 65) && ($ord <= 90)))
         $str.=chr($ord);
     //If the number is not good we generate another one
     }    else{
-        $str.=chr(57);
+        $str.=chr(90);
   }}
   return $str;
 }
@@ -23,30 +23,25 @@ $bpath = __DIR__;
 //print $bpath;
 //create the random string using the upper function (if you want more than 5 characters just modify the parameter)
 $rand_str= $this->random_string2(5);
+//We memorize the md5 sum of the string into a session variable
+SphpBase::sphp_request()->session('image_value', md5($rand_str));
 
 //Get each letter in one valiable, we will format all letters different
-$letter1="Add";
-$letter2=" ";
-$letter3= intval(substr($rand_str,0,1));
-//$letter2=substr($rand_str,1,1);
-//$letter3=substr($rand_str,2,1);
-$letter4 = " ";
-//$letter4=substr($rand_str,3,1);
-$letter5= intval(substr($rand_str,4,1));
-//$letter5="=";
-//$letter5= intval(substr($rand_str,4,1));
-//We memorize the md5 sum of the string into a session variable
-SphpBase::sphp_request()->session('image_value', md5($letter3 + $letter5));
+$letter1=substr($rand_str,0,1);
+$letter2=substr($rand_str,1,1);
+$letter3=substr($rand_str,2,1);
+$letter4=substr($rand_str,3,1);
+$letter5=substr($rand_str,4,1);
 
 //Creates an image from a png file. If you want to use gif or jpg images, just use the coresponding functions: imagecreatefromjpeg and imagecreatefromgif.
 $image=imagecreatefrompng("{$bpath}/res/noise.png");
 
 //Get a random angle for each letter to be rotated with.
-$angle1 = rand(-25, 25);
-$angle2 = rand(-25, 25);
-$angle3 = rand(-25, 25);
-$angle4 = rand(-25, 25);
-$angle5 = rand(-25, 25);
+$angle1 = rand(-20, 20);
+$angle2 = rand(-20, 20);
+$angle3 = rand(-20, 20);
+$angle4 = rand(-20, 20);
+$angle5 = rand(-20, 20);
 
 //Get a random font. (In this examples, the fonts are located in "fonts" directory and named from 1.ttf to 10.ttf)
 $font1 = "{$bpath}/fonts/".rand(1, 2).".ttf";
@@ -88,12 +83,8 @@ imagettftext($image, $size, $angle5, 110, $size+15, $textColor5, $font5, $letter
 //header('Content-type: image/jpeg');
 //Output image to browser
 //echo "hello";
-ob_start (); 
 imagejpeg($image);
-$image_data = ob_get_contents (); 
-ob_end_clean (); 
 //Destroys the image
 imagedestroy($image);
-return base64_encode($image_data);
 }
 }

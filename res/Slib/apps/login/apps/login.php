@@ -131,4 +131,3 @@ include_once("temp/master.php");
 }
 }
 
-?>

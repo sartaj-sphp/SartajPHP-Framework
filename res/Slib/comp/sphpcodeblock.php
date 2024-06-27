@@ -73,6 +73,16 @@ SphpCodeBlock::addCodeBlock('border',function($element,$args,$lst1){
   
 });
 
+SphpCodeBlock::addCodeBlock('align',function($element,$args,$lst1){
+    //align='' left,center,right
+  if(isset($args[0])){
+    $element->appendAttribute('class',' d-flex justify-content-' . $args[0]);      
+  }else{
+    $element->appendAttribute('class',' d-flex justify-content-center');      
+  }
+  
+});
+
 SphpCodeBlock::addCodeBlock('rounded',function($element,$args,$lst1){
     //rounded='' list:- 0 to 3, top,end,bootom,start,circle,pill
   if(isset($args[0])){
@@ -134,9 +144,11 @@ SphpCodeBlock::addCodeBlock('teamlist',function($element,$args,$lst1){
         if(!$event){
             switch($ele1->tagName){
                 case 'member':{
-                    $ele1->appendAttribute("class"," col-lg-4 col-md-6 member");
+                    $ele1->appendAttribute("class"," px-4 py-4 member");
+                    $ele1->appendPreTag('<div class="col-12 col-sm-12 col-md-6 col-lg-4">');
+                    $ele1->appendPostTag('</div>');
                     $ele1->setDefaultAttribute("data-aos","fade-up");
-                    $ele1->setDefaultAttribute("data-aos-delay", random_int(100, 300));
+                    $ele1->setDefaultAttribute("data-aos-delay", rand(100, 300));
                     // wrap memeber info name post and detail
                     if(count($r1) > 0){
                         $elef = $r1[0];
@@ -379,7 +391,7 @@ SphpCodeBlock::addCodeBlock('counter',function($element,$args,$lst1){
  * More:- https://api.jqueryui.com/category/effects/
  */
 SphpCodeBlock::addCodeBlock('jui',function($element,$args,$lst1){
-    $evt1 = "mouseenter";
+    $evt1 = "click";
     $effect1 = "shake";
     $opt1 = "{}";
     $timer1 = 2000;

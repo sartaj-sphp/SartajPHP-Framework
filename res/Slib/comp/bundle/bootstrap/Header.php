@@ -129,16 +129,16 @@ class Header extends Control {
                  $menusub = '';
                 $menuo = $this->getMenu(function($menu) use (&$menusub){
                     $menu->disableNavBar();
-                    $menu->setNavMenuCss('nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0');
+                    $menu->setNavMenuCss('nav col-xs-auto me-lg-auto mb-2 justify-content-center mb-md-0');
                     $menusub = $menu->getHeaderSubMenu();
                 });
                 $this->setAttributeDefault("class", "p-3 mb-3 border-bottom");
                 if( $menusub == ''){
-                $menusub = '<div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                $menusub = '<div class="dropdown text-end ">
+          <a href="#" class="d-block nav-dlink text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="'. SphpBase::sphp_settings()->slib_res_path . "/temp/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
-          <ul class="dropdown-menu text-small">
+          <ul class="dropdown-menu text-small nav-dlink">
             <li><a class="dropdown-item" href="#">use setSubMenuFile as temp file</a></li>
             <li><a class="dropdown-item" href="#">for override this</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -150,12 +150,12 @@ class Header extends Control {
                 }
                 
                 $st = '<div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <div class="d-flex flex-wrap align-items-center justify-content-right justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
            <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
         </a>
 '. $menuo .'
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" id="frmsearch" action="'. getEventURL('search','','index').'" method="post" enctype="mutipart/form-data">
+        <form class="col-12 col-lg-auto  mb-3 mb-lg-0 me-lg-3 d-none d-lg-block" role="search" id="frmsearch" action="'. getEventURL('search','','index').'" method="post" enctype="mutipart/form-data">
           <input id="txtsearch" name="txtsearch" type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
 '. $menusub .'        
@@ -202,7 +202,7 @@ class Header extends Control {
             $this->element->appendAttribute('class', ' fixed-top');
             addHeaderJSFunctionCode('ready', 'header', '$(window).on("scroll",function(){'
                     . 'const threshold = $(document).scrollTop() > 50;
-   $("#'. $this->name .'").toggleClass(\'scrolled\', threshold);});');
+   $("#'. $this->name .'").toggleClass(\'scrolled\', threshold);});$(window).scroll();');
         }
       
     }

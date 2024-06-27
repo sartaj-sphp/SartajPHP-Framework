@@ -222,7 +222,7 @@ public function genForm(){
 $stro = '';
 $idobj = null;
 if($this->strFormat==''){
-$stro = '<table class="pagtable">';
+$stro = '<table class="table table-striped pagtable">';
 $blnf = true;
 foreach($this->fields as $key=>$arrn){
 $label = $arrn[0];

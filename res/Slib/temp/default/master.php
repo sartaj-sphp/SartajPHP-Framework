@@ -6,7 +6,9 @@
 <?php 
 addFrontPlace("main_master",__DIR__ . '/main.front','centersp1');
 runFrontPlace('main_master','centersp1');
-SphpBase::SphpJsM()::addBootStrap();  echo SphpBase::sphp_api()->getHeaderHTML(); 
+$sj1 = SphpBase::SphpJsM();
+$sj1::addBootStrap(); 
+echo SphpBase::sphp_api()->getHeaderHTML(); 
 ?>
 <link href="<?php echo SphpBase::sphp_settings()->slib_res_path; ?>/temp/default/css/custom.css" rel="stylesheet"  type="text/css" />
 </head>

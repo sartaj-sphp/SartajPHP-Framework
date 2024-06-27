@@ -7,9 +7,8 @@ class mebhome extends PermisApp {
     public function onstart() {
         global $mebmasterf;
         //echo $this->page->getAuthenticateType();
-        $this->getAuthenticate("ADMIN,MEMBER,MEMBERT");
+        $this->page->getAuthenticatePerm("ADMIN,MEMBER");
         //$this->setTableName("omer_employee"); 
-        parent::onstart();
         if(file_exists("apps/forms/mebmain.front")){
             $this->genFormTemp = new TempFile("apps/forms/mebmain.front", false,null, $this); 
         }else{
@@ -23,13 +22,56 @@ class mebhome extends PermisApp {
     }
     
     public function page_event_install($evtp) {
-        if($this->hasPermission("install","mebhome")){
+        if($this->page->hasPermission("install","mebhome")){
         $mysql = $this->dbEngine;
         $mysql->connect();
-
+        if($mysql instanceof Sqlite){
         // 1. Member Tbl
         $sql = "CREATE TABLE IF NOT EXISTS member (
-         id bigint(20) NOT NULL AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usertype VARCHAR(10) NOT NULL,
+    userid BIGINT NOT NULL,
+    parentid BIGINT NOT NULL,
+    profile_id INTEGER NOT NULL,
+    fname VARCHAR(50) NOT NULL,
+    lname VARCHAR(30) NOT NULL,
+    pic VARCHAR(100),
+    address1 VARCHAR(100),
+    address2 VARCHAR(100),
+    city VARCHAR(100),
+    country VARCHAR(100),
+    postal VARCHAR(20),
+    website VARCHAR(200),
+    email VARCHAR(200),
+    mobile VARCHAR(20),
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    submit_timestamp VARCHAR(20) NOT NULL,
+    status TINYINT NOT NULL,
+    varification TINYINT NOT NULL,
+    uniqueno VARCHAR(30),
+    spcmpid VARCHAR(14)
+)";
+        $mysql->createTable($sql);
+
+        // 2. Profile Permission Tbl
+        $sql = "CREATE TABLE IF NOT EXISTS profile_permission (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid BIGINT NOT NULL,
+    parentid BIGINT NOT NULL,
+    sid BIGINT NOT NULL,
+    profile_name VARCHAR(50) NOT NULL,
+    permission_id VARCHAR(2048) NOT NULL,
+    status TINYINT NOT NULL,
+    submit_timestamp VARCHAR(20) NOT NULL,
+    spcmpid VARCHAR(14)
+)";
+        $mysql->createTable($sql);
+            
+        }else{
+        // 1. Member Tbl
+        $sql = "CREATE TABLE IF NOT EXISTS member (
+         id INTEGER PRIMARY KEY AUTOINCREMENT,
          usertype varchar(10) NOT NULL COMMENT 'ADMIN,MEMBER',
          userid bigint(20) NOT NULL,
          parentid bigint(20) NOT NULL,
@@ -70,6 +112,8 @@ class mebhome extends PermisApp {
          PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";
         $mysql->createTable($sql);
+        }
+        
         include_once(PROJ_PATH . "/temp/db.php");
         $mysql->disconnect();
         $this->setTempFile(new TempFile("Database Created",true));

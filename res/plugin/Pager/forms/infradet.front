@@ -1,25 +1,76 @@
-<h1 title="<?php print getKeyword(); ?>" class="headerbar"><?php print $list->row['pagesubttitle']; ?></h1>
-<div class="panel">
-<div id="list" runat="server" path="libpath/comp/data/Pagination.php" funsetCacheTime="<?php print $maxtime; ?>" dtabel="pagdet"  
-funsetFieldNames="pagesubttitle,pagetitle,pagedes,pagekey,filepath1,filepath2" funsetWhere="<?php global $pagname; if(SphpBase::page()->sact!=''){$pagname = SphpBase::page()->sact;}else{$pagname = 'home';} print "WHERE spcmpid='$cmpid' AND  pagename='$pagname'"; ?>">
-<code>
-<?php
-$title = $list->row['pagetitle'];
-$metakeywords = $list->row['pagekey'];
-$metadescription = $list->row['pagedes'];
-$metaclassification = "$cmpname ".$list->row['pagetitle'];
-$keywords = explode(',',$metakeywords);
+<h1 class="headerbar" title="<?php print getKeyword(); ?>">
+    <?php print $this->tempobj->list->getRow('pagetitle'); ?> 
+    <button id="btndet" runat="server" funsetrender="pagea-edit" class="btn btn-primary">Edit</button>
+</h1>
+<div class="content">
+    <span id="btncat" runat="server" funsetrender="pagea-catadd" >
+        <a href="#." onclick="getURL('catfsav-pgnew.html');">Add Category</a><br />
+</span>
+    <span id="btncat1" runat="server" funsetrender="pagea-add" >
+        <a href="#." onclick="getURL('pagefsav-pgnew.html');">Add Page</a><br />
+</span>
+    <span class="breadcrumb">    
+    <span id="btncat2" runat="server" funsetrender="pagea-catedit" >
+&nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('catid')}#';getURL('catfsav-pgedit.html',data);">
+    <i class="fa fa-edit"></i></a> &nbsp;
+    </span>
+<?php echo explode(",",$this->tempobj->list->getRow('catname'))[1]; ?> 
+
+    <span id="btncat3" runat="server" funsetrender="pagea-catdel" >
+ &nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('catid')}#' ;getURL('catfsav-pgdel.html',data);">
+        <i class="fa fa-trash"></i></a> &nbsp;
+    </span>
+
+    <span id="btncat4" runat="server" funsetrender="pagea-edit" >
+&nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('id')}#';getURL('pagefsav-pgedit.html',data);">
+    <i class="fa fa-edit"></i></a> &nbsp;
+    </span>
+<?php echo ' > ' . $this->tempobj->list->getRow('pagesubttitle'); ?>
+    <span id="btncat5" runat="server" funsetrender="pagea-del" >
+ &nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('id')}#' ;getURL('pagefsav-pgdel.html',data);">
+        <i class="fa fa-trash"></i></a> &nbsp;
+    </span>
+    </span>
+    <?php
+global $cmpname;
+SphpBase::sphp_settings()->title = $this->tempobj->list->getRow('pagetitle');
+SphpBase::sphp_settings()->metakeywords = $this->tempobj->list->getRow('pagekey');
+SphpBase::sphp_settings()->metadescription = $this->tempobj->list->getRow('pagedes');
+SphpBase::sphp_settings()->metaclassification = "$cmpname ". $this->tempobj->list->getRow('pagetitle');
+SphpBase::sphp_settings()->keywords = explode(',',SphpBase::sphp_settings()->metakeywords);
 ?>
-</code>
-<div class="align-center">
-<?php if($list->row['filepath1']!=''){print '<img src="'.$list->row['filepath1'].'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
-</div>
-<div class="text">
-    <?php print html_entity_decode(file_get_contents("pagres/".$pagname.".html")); ?>
+
+
+<div id="list" runat="server" path="libpath/comp/data/Pagination.php" funsetCacheTime="<?php global $maxtime; print $maxtime; ?>"
+funsetFieldNames="pagesubttitle,pagetitle,pagedes,pagekey,filepath1,filepath2,catname,catid" funsetWhere="WHERE spcmpid='##{$cmpid}#' AND  pagename='##{SphpBase::page()->getEvent()}#'">
 </div>
 <div class="align-center">
-<?php if($list->row['filepath2']!=''){print '<img src="'.$list->row['filepath2'].'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
+<?php if($this->tempobj->list->getRow('filepath1')!=''){print '<img src="'.$this->tempobj->list->getRow('filepath1').'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
 </div>
 
+    <form id="frmdet" runat="server" action="##{ getEventURL('pgdata','','pagefsav') }#" funsetAuth="ADMIN">
+        <script runas="jsfunctioncode" function="ready">
+            $("#pgdatae").css("display","none");
+            $("#btndet").on("click",function(){
+                $("#pgdatae").css("display","block"); 
+                $("#pgdata").css("display","none");
+            });
+        </script>
+        <input id="pagename" runat="server" type="hidden" value="##{ SphpBase::page()->getEvent() }#" />
+<div id="pgdatae" runat="server">
+    <div id="tinydetails" runat="server" path="controls/TinyEditor/TinyEditor.php" rows="100" cols="50" funsetAuth="ADMIN"
+         funsetValue="#{ if(file_exists('pagres/' . SphpBase::page()->getEvent() .'.html')) {echo file_get_contents('pagres/' . SphpBase::page()->getEvent() .'.html'); } }#" >
+    </div>
 </div>
+    </form>
+<div class="text" id="pgdata" runat="server">
+    <?php echo html_entity_decode($this->tempobj->tinydetails->convertValue(file_get_contents("pagres/".SphpBase::page()->getEvent().".html")), ENT_COMPAT, "UTF-8"); ?>
 </div>
+        <div class="align-center">
+<?php if($this->tempobj->list->getRow('filepath2')!=''){print '<img src="'.$this->tempobj->list->getRow('filepath2').'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
+</div>
+
+
+</div>
+
+<div id="sdpage_dlg" class="dragdrop"><div id="sdpage_editor" style="width:100%;height:100%;"></div></div>

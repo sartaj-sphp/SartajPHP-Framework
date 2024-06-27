@@ -15,7 +15,7 @@ class MenuUi extends BootstrapSideMenu{
         $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"fa fa-fw fa-clock-o","Home");
 
 
-        include_once(PROJ_PATH . "/temp/permismenu.php");  
+        include_once(PROJ_PATH . "/temp/permis/permismenu.php");  
         include_once(PROJ_PATH . "/plugin/cmebmenu.php");  
         
     }

@@ -42,6 +42,7 @@ public function createTable($sql) {}
 public function dropTable($tableName) {}
 public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
+public function row_fetch_array($result) {}
 public function last_insert_id() {}
 public function isCacheExpired($filename, $ttl) {}
 public function fetchQuery($sql = "", $ttl = 0, $filename = "", $key = "id", $issave = false) {}
