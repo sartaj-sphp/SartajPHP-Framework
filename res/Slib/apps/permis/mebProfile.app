@@ -5,7 +5,7 @@ class mebProfile extends PermisApp {
 
     public function onstart() {
         global $mebmasterf;
-        //$this->getAuthenticate("ADMIN,MEMBER");
+        $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("member");
         $this->genFormTemp = new TempFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
@@ -17,7 +17,6 @@ class mebProfile extends PermisApp {
         $this->showallTemp->getComponent('showall')->setWhere($this->defWhere);
 
         $this->setMasterFile($mebmasterf);
-        parent::onstart();   
         
     }
     

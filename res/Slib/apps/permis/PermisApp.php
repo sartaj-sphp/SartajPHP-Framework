@@ -33,7 +33,11 @@ class PermisApp extends \Sphp\tools\BasicApp {
         // no any permission check, you can overwrite this behaviour in your app
         $this->setTempFile($this->showallTemp);
     }
-
+    
+    public function hasPermission($p){
+        return $this->page->hasPermission($p);
+    }
+    
     public function page_event_addnew($param) {
         if($this->page->hasPermission("add")){
             $this->Client->session("formType", "Add");
@@ -59,11 +63,12 @@ class PermisApp extends \Sphp\tools\BasicApp {
     public function page_insert() {
         global $cmpid;
         if($this->page->hasPermission("add")){
-            $this->extra[]['userid'] = $_SESSION['sid'];
-            $this->extra[]['parentid'] = $_SESSION['parentid'];
+            $this->extra[]['userid'] = $this->Client->session('sid');
+            $this->extra[]['parentid'] = $this->Client->session('parentid');
             $this->extra[]['spcmpid'] = $cmpid;
-            
             $this->extra[]['submit_timestamp'] = time();
+            $this->extra[]['update_timestamp'] = time();
+            
             //$this->debug->println("Call Insert Event");
             if (!getCheckErr()) {
                 $this->insertedid = $this->page->insertData($this->extra);            
@@ -126,8 +131,8 @@ class PermisApp extends \Sphp\tools\BasicApp {
     
     public function checkUserName($username) {  
         $check = false;
-        $result = $this->dbEngine->executeQueryQuick("SELECT * FROM member WHERE username = '$username' ");
-        if(mysqli_num_rows($result) > 0) {
+        //$result = $this->dbEngine->executeQueryQuick("SELECT * FROM member WHERE username = '$username' ");
+        if($this->dbEngine->isRecordExist("SELECT * FROM member WHERE username = '$username' ")) {
             $check = true;
         }
         return $check;
@@ -135,8 +140,8 @@ class PermisApp extends \Sphp\tools\BasicApp {
     
     public function checkUserEmail($email) {  
         $check = false;
-        $result = $this->dbEngine->executeQueryQuick("SELECT * FROM member WHERE email = '$email' ");
-        if(mysqli_num_rows($result) > 0) {
+//        $result = $this->dbEngine->executeQueryQuick("SELECT * FROM member WHERE email = '$email' ");
+        if($this->dbEngine->isRecordExist("SELECT * FROM member WHERE email = '$email' ")) {
             $check = true;
         }
         return $check;

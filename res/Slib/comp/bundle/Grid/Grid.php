@@ -459,20 +459,27 @@ hide2: {
         effect: "explode",
         duration: 300
 },
-position: [10,10],
+position: { my: "center", at: "center", of: window },
 title: "Grid Editor Form",
 create: function(event, ui) { 
+        $("#'.$this->name.'_dlg").dialog("moveToTop");
       var widget = $(this).dialog("widget");
       $(".ui-dialog-titlebar-close", widget)
           .html(\'<span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>\')
           .addClass("ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close");
    },
 closeText: "",
-modal: false,
+modal: true,
 beforeClose: function(){
     $("#'.$this->name.'_editor").html("");
 }
     });
+    var maxZI = Math.max.apply(null, 
+    $.map($(\'body *\'), function(el,index) {
+      if ($(el).css(\'position\') != \'static\')
+        return parseInt($(el).css(\'z-index\')) || 0;
+  }));
+$("#'.$this->name.'_dlg").parent(".ui-dialog").css("z-index",maxZI+1);
 ');
     addHeaderCSS('dragdrop', '
 .dragdrop
@@ -490,14 +497,14 @@ $jsAjax = "true";
 $jsAjax = "false";        
 }
 addHeaderJSCode($this->name,"
-function confirmDel_$this->name(link){
+window['confirmDel_$this->name'] = function(link){
 confirmDel(link,$jsAjax);
         }    
 var {$this->name}_setg = {
 sortby: '',
 dir: 1
 };
-function getSortBy(obj,field,link){
+window['getSortBy'] = function(obj,field,link){
 data = {};
 var setg = {$this->name}_setg ;
 var span1 = $(obj).children('span:first');
@@ -527,21 +534,21 @@ data['dir'] = setg.dir;
 
 getURL(link,data);
 return false;
- }
-    function rowclick(obj,link,data){
+ };
+    window['rowclick'] = function(obj,link,data){
         if(data==undefined){
             data = {};
         }
         $('table').find('tr.highlight').removeClass('highlight');
         $(obj).addClass('highlight');
         getURL(link,data);
-    }
-    function setFormAsNew(formid){
+    };
+    window['setFormAsNew'] = function(formid){
         readyFormAsNew(formid);
         $('table').find('tr.highlight').removeClass('highlight');
         $('#btnDel').css('display','none');
-    }
-    function readyFormAsNew(formid){
+    };
+    window['readyFormAsNew'] = function(formid){
         $('#' + formid).find('input[name=\"txtid\"]').val('');
         $(':input','#' + formid)
         .not(':button, :submit, :reset, :hidden')
@@ -550,20 +557,20 @@ return false;
         .removeAttr('selected');
         $('select', '#' + formid).each(function(i,e){selectByValue(e,\"empt\")});
         $('textarea', '#' + formid).each(function(i,e) { $(e).val(''); $(e).html(''); });
-    }
-function runanierr(type){
+    };
+window['runanierr'] = function (type){
     $(\"#sphp\" + type).fadeIn(1);
     $(\"#sphp\" + type).css(\"display\",\"block\");
     $(\"#sphp\" + type).delay(5000).fadeOut(\"slow\", function () { $(this).css(\"display\",\"none\"); });            
-}
-function pagiedit_$this->name(link){
+};
+window['pagiedit_$this->name'] = function(link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
-function paginew_$this->name(link){
+        };    
+window['paginew_$this->name'] = function(link){
 $opendlg
 pagiedit(link,$jsAjax);
-        }    
+        };    
 ");
     addHeaderJSCode('pagi',"
 function confirmDel(link,jsajax){
@@ -591,17 +598,18 @@ getURL(link);
 window.location = link ; 
   }
 }
+$(\"#btnadd{$this->name}\").on('click',function(){paginew_{$this->name}('" . getEventURL($this->name.'_newa','','','','',true) . "');});
 ");
 
 if($this->blnadd){
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;" ></div>    
-</div><div id="'.$this->name.'_toolbar">';
+</div><div id="'.$this->name.'_toolbar" class="pb-4">';
 }else{
 $ptag = '<div id="'.$this->name.'_toolbar">';    
 }
 if($this->blnadd){
-$ptag .= '<input class="btn btn-primary" type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+$ptag .= '<input id="btnadd'. $this->name .'" class="btn btn-primary" type="button" value="Add"  />';
 }
 $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     <div id="sphpwarning" class="alert alert-warning" style="display: none;">

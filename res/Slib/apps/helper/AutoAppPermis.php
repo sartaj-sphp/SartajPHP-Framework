@@ -137,7 +137,12 @@ class AutoAppPermis extends PermisApp {
         if(! $this->hasPermission("add")){
             setErr("app2", "Permission Denied");
         }
+        $this->extra[]['userid'] = $this->Client->session('sid');
+        $this->extra[]['parentid'] = $this->Client->session('parentid');
         $this->extra[]['spcmpid'] = $cmpid;
+        $this->extra[]['submit_timestamp'] = time();
+        $this->extra[]['update_timestamp'] = time();
+        
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
             $this->insertedid = $this->page->insertData($this->extra);
@@ -212,7 +217,8 @@ class AutoAppPermis extends PermisApp {
             setErr("app2", "Permission Denied");
         }
         $blnsendList = $this->checkCrossCall();
-        $this->page->deleteRec();
+        if (!getCheckErr()) {
+            $this->page->deleteRec();
         if (!getCheckErr()) {
             if ($blnsendList) {
                 $this->JSServer->addJSONComp($this->showallTemp->getComponent('showall'), 'showall');
@@ -225,6 +231,10 @@ class AutoAppPermis extends PermisApp {
             $this->sendSuccess('Record is Deleted');
         } else {
             setErr('app1', 'Record could not be deleted');
+            $this->sendError();
+        }
+        } else {
+            setErr('app1', 'Record could not be deleted P');
             $this->sendError();
         }
     }

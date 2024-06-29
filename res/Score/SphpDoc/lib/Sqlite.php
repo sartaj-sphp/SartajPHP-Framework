@@ -53,5 +53,11 @@ public function getDbTables() {}
 * @return array
 */
 public function getTableColumns($tablename) {}
+/**
+*  Check if result has rows of data
+* @param Result Object From Database $param
+* @return boolean true if rows exist
+*/
+public function is_rows($result) {}
 }
 }

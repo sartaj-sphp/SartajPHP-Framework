@@ -7,7 +7,8 @@ class mebhome extends PermisApp {
     public function onstart() {
         global $mebmasterf;
         //echo $this->page->getAuthenticateType();
-        $this->page->getAuthenticatePerm("ADMIN,MEMBER");
+        $this->getAuthenticate("ADMIN,MEMBER");
+        $this->page->getAuthenticatePerm();
         //$this->setTableName("omer_employee"); 
         if(file_exists("apps/forms/mebmain.front")){
             $this->genFormTemp = new TempFile("apps/forms/mebmain.front", false,null, $this); 
@@ -46,10 +47,11 @@ class mebhome extends PermisApp {
     mobile VARCHAR(20),
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
-    submit_timestamp VARCHAR(20) NOT NULL,
     status TINYINT NOT NULL,
     varification TINYINT NOT NULL,
     uniqueno VARCHAR(30),
+    submit_timestamp VARCHAR(20) NOT NULL,
+    update_timestamp VARCHAR(20) NOT NULL,
     spcmpid VARCHAR(14)
 )";
         $mysql->createTable($sql);
@@ -64,6 +66,7 @@ class mebhome extends PermisApp {
     permission_id VARCHAR(2048) NOT NULL,
     status TINYINT NOT NULL,
     submit_timestamp VARCHAR(20) NOT NULL,
+    update_timestamp VARCHAR(20) NOT NULL,
     spcmpid VARCHAR(14)
 )";
         $mysql->createTable($sql);
@@ -89,10 +92,11 @@ class mebhome extends PermisApp {
          mobile varchar(20) ,
          username varchar(50) NOT NULL,
          password varchar(50) NOT NULL,
-         submit_timestamp varchar(20) NOT NULL,
          status tinyint(2) NOT NULL COMMENT '0 : Inactive, 1 : Active',
          varification tinyint(1) NOT NULL,
          uniqueno varchar(30) ,
+        submit_timestamp VARCHAR(20) NOT NULL,
+        update_timestamp VARCHAR(20) NOT NULL,
          spcmpid varchar(14) ,
          PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";
@@ -107,7 +111,8 @@ class mebhome extends PermisApp {
          profile_name varchar(50) NOT NULL,
          permission_id varchar(2048) NOT NULL,
          status tinyint(4) NOT NULL,
-         submit_timestamp varchar(20) NOT NULL,
+        submit_timestamp VARCHAR(20) NOT NULL,
+        update_timestamp VARCHAR(20) NOT NULL,
          spcmpid varchar(14) ,
          PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";

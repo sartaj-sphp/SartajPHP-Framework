@@ -2,17 +2,22 @@
 
 class SearchPanel extends Control{
 private $label = "";
+private $bs = 5;
 
 public function setLabel($label) {
     $this->label = $label;
 }
+public function setBS($param) {
+    SphpJsM::setJSLibVersion("bootstrap", $param);
+    $this->bs = SphpJsM::getJSLibVersion("bootstrap");
+}
 public function onrender(){
     $this->tagName = 'div';
-    $pre1 = '<div class="card-group dpanel" id="accordion">
+    $pre1 = '<div class="card-group dpanel pb-2" id="accordion">
         <div class="card card-primary">
             <div class="card-header">
                 <h4 class="card-title">';
-    if(SphpJsM::getJSLibVersion("bootstrap") == 5){
+    if($this->bs == 5){
         $pre1 .= '<a data-bs-toggle="collapse" data-parent="#accordion" href="#collapseOne">';      
     }else{
         $pre1 .= '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">';
@@ -24,7 +29,7 @@ public function onrender(){
             <div  id="collapseOne" class="card-collapse collapse in">
             <div class="card-block">
             <div class="block">
-            <div class="content">
+            <div class="content px-4 py-4">
 ';
     $this->setPreTag($pre1);
     $this->class = "col-md-12"; 

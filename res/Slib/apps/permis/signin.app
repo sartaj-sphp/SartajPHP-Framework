@@ -71,9 +71,8 @@ class signin extends \Sphp\tools\BasicApp {
             getWelcome();
         } else {
             $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpid FROM member,profile_permission WHERE username = '$uname' AND password = '$pword' AND member.status = '1' AND profile_id=profile_permission.id ");
-            $num = mysqli_num_rows($result);
-            if ($num > 0) {
-                $rows = mysqli_fetch_assoc($result);
+            if ($this->dbEngine->is_rows($result)) {
+                $rows = $this->dbEngine->row_fetch_assoc($result);
                 if (!getCheckErr()) {
                     $this->Client->session('sid', $rows['id']);
 

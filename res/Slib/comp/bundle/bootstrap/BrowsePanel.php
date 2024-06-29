@@ -25,7 +25,7 @@ public function onrender(){
          
 
 ');
-    $this->class = "content"; 
+    $this->class = "content px-4 py-4"; 
     $this->setPostTag('</div></div></div>');        
     
 }

@@ -5,6 +5,7 @@ class mebProfilePermission extends PermisApp {
 
     public function onstart() {
         global $mebmasterf;
+        $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("profile_permission");
         $this->Client->session("appName", "Profile Permission");
@@ -46,9 +47,8 @@ class mebProfilePermission extends PermisApp {
         $ar1 = array();
         if($eventParam != '') {
             $result1 = $this->dbEngine->executeQueryQuick("SELECT * FROM profile_permission WHERE id = '$eventParam' ");
-            $num1 = mysqli_num_rows($result1);
-            if($num1 > 0) {
-                $row = mysqli_fetch_assoc($result1);
+            if($this->dbEngine->is_rows($result1)) {
+                $row =  $this->dbEngine->row_fetch_assoc($result1);
                 $ar2 = explode(",", $row["permission_id"]);
                 foreach ($ar2 as $key => $value2) {
                     $ar1[$value2] = true;

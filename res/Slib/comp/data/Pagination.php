@@ -431,9 +431,10 @@ hide: {
         effect: "explode",
         duration: 1000
 },
-position: [10,10],
+position: { my: "center", at: "center", of: window },
 title: "Grid Editor Form",
 create: function(event, ui) { 
+        $("#'.$this->name.'_dlg").dialog("moveToTop");
       var widget = $(this).dialog("widget");
       $(".ui-dialog-titlebar-close", widget)
           .html(\'<span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>\')
@@ -445,6 +446,12 @@ beforeClose: function(){
     $("#'.$this->name.'_editor").html("");
 }
     });
+    var maxZI = Math.max.apply(null, 
+    $.map($(\'body *\'), function(el,index) {
+      if ($(el).css(\'position\') != \'static\')
+        return parseInt($(el).css(\'z-index\')) || 0;
+  }));
+$("#'.$this->name.'_dlg").parent(".ui-dialog").css("z-index",maxZI+1);
 ');
     addHeaderCSS('dragdrop', '
 .dragdrop
@@ -500,14 +507,16 @@ getURL(link);
 window.location = link ; 
   }
 }
+$(\"#btnadd{$this->name}\").on('click',function(){paginew_{$this->name}('" . getEventURL($this->name.'_newa','','','','',true) . "');});
+
 ");
 
 
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
-</div><div id="'.$this->name.'_toolbar" class="padding-bottom padding-top">';
+</div><div id="'.$this->name.'_toolbar" class="pb-4">';
 if($this->blnadd){
-$ptag .= '<button class="btn btn-primary" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" >Add</button>';
+$ptag .= '<button id="btnadd'. $this->name .'" class="btn btn-primary" >Add</button>';
 }
     $divt = "$ptag</div><div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
