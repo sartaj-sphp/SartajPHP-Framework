@@ -1299,9 +1299,35 @@ if(callback != undefined){
 this.sartajpro = function(valm,callback){
     var jsonobjar = [];
     try{
+        // fix if unvalid response
+        var strerr = "";
+        var i1 = 0;
+        var i2 = valm.length;
+        var blnf1 = false;
+        if(valm.charAt(0) !== '{'){
+            blnf1 = true;
+            var i3 = valm.indexOf('{"res');
+            if(i3 > -1){
+                i1 = i3;
+                strerr = valm.substring(0,i1);  
+            }
+        }
+        if(valm.charAt(valm.length - 1) !== ','){
+            blnf1 = true;
+            var i4 = valm.lastIndexOf('},');
+            if(i4 > -1){
+                i2 = i4;
+                i2 += 2;
+                strerr += valm.substring(i2);                
+            }
+        }
+        if(blnf1){
+            console.error(strerr);
+        }
+        valm = valm.substring(i1,i2-i1);
         jsonobjar = JSON.parse("[" + valm + "{}]");
     }catch(e){
-       console.log("Invalid AJAX Response:- " + valm); 
+       console.error("Invalid AJAX Response:- " + valm); 
     }
     for(var c=0;c<jsonobjar.length - 1;c++){
         this.sartajprom(jsonobjar[c],callback);

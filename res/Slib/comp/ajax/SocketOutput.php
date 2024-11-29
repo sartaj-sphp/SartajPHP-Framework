@@ -31,7 +31,8 @@ class SocketOutput extends \Sphp\tools\Control {
 ');
         if (\SphpBase::sphp_request()->server('HTTPS') == 1) $protocol = "wss";
         if ($this->url == '')
-            $this->url = $protocol . '://' . SphpBase::sphp_request()->server('HTTP_HOST') . '/sphp.ws';
+           // $this->url = $protocol . '://' . SphpBase::sphp_request()->server('HTTP_HOST') . '/sphp.ws';
+            $this->url = SphpBase::sphp_request()->server('HTTP_HOST') ;
         addHeaderJSFunctionCode("ready", "socketnative", 'tempobj.websockethost = "'. $this->url .'"; tempobj.getSphpSocket(function(wsobj1){
         window["'. $this->name . '"] = wsobj1;
         tempobj.onwsmsg = function(msg){ 

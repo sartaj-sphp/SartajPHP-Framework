@@ -43,14 +43,6 @@ public function dropTable($tableName) {}
 public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
 public function row_fetch_array($result) {}
-public function last_insert_id() {}
-public function isCacheExpired($filename, $ttl) {}
-public function fetchQuery($sql = "", $ttl = 0, $filename = "", $key = "id", $issave = false) {}
-public function insertCache($filename, $key, $data = array(), $tbls = "", $sql = "") {}
-public function clearCache($filename) {}
-public function updateCache($filename, $keymap, $data = array(), $where = "", $tbls = "", $sql = "") {}
-public function deleteCache($filename, $keymap, $where = "", $tbls = "", $sql = "") {}
-public function updateCacheSQL($filename, $key, $sql, $priority = 1) {}
-public function executeUpdateCacheSQL($filename) {}
+public function last_insert_id() {}        
 }
 }

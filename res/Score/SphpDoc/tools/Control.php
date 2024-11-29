@@ -371,9 +371,22 @@ protected function raiseEventJS($event_name, $arglst = array()) {}
 * in temp file use:- funsubmitAJAX="click,|index-p1.html,|textarea1,textbox1"
 * @param type $eventName JS Event Name
 * @param type $url Optional Default=page_event_compname_$eventName URL to post data
-* @param type $extracomp Comma Separated list html id to send data
+* @param type $extracomp Comma Separated list html tag id or class with prefix . to send data
 */
 public function submitAjax($eventName, $url = "", $extracomp = "") {}
+/**
+* Submit Component value via WS Request and it 
+* generate all required JS code automatically.
+* in temp file use:- funsubmitWS="click,|domain:8084,|textarea1,textbox1,|aigen,|picture"
+* @param string $eventName JS Event Name
+* @param string $host Optional Default=find socket in page to post data, it will ignore if socket already exist.
+* @param string $extracomp Comma Separated list html id to send data
+* @param string $ctrl Controller of native app to submit data
+* @param string $evt Event of native app to trigger
+* @param string $evtp Event Parameter to pass any data
+* 
+*/
+public function submitWS($eventName, $host = "", $extracomp = "",$ctrl="main",$evt="",$evtp="") {}
 /**
 * 
 * @param string $eventName JS Event Name

@@ -6,17 +6,17 @@ class Control extends Sphp\tools\Control { }
 * Use getAppURL rather then this
 * @deprecated since version 4.8.4
 */
-function getAppPath($ControllerName,$extra="",$newbasePath="",$blnSesID=false){}
+function getAppPath($ControllerName,$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Use getThisURL rather then this
 * @deprecated since version 4.8.4
 */
-function getThisPath($extra="",$blnSesID=false){}
+function getThisPath($extra="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Use getEventURL rather then this
 * @deprecated since version 4.8.4
 */
-function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false){}
+function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Generate URL for a Controller
 * @param string $ControllerName controller like index
@@ -26,19 +26,23 @@ function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbaseP
 * @param string $newbasePath <p> new domain url
 * $newbasePath = 'https://domain.com/test
 * </p>
-* @param boolean $blnSesID Add session id default false
+* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
+* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getAppURL($ControllerName,$extra="",$newbasePath="",$blnSesID=false){}
+function getAppURL($ControllerName,$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Generate URL for Current Application
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
-* @param boolean $blnSesID Add session id default false
+* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
+* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getThisURL($extra="",$blnSesID=false){}
+function getThisURL($extra="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Generate URL for a Event of Application
 * @param string $eventName <p> Name of Event
@@ -59,10 +63,12 @@ function getThisURL($extra="",$blnSesID=false){}
 * @param string $newbasePath <p> new domain url
 * $newbasePath = 'https://domain.com/test
 * </p>
-* @param boolean $blnSesID Add session id default false
+* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
+* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getEventURL($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false){}
+function getEventURL($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 function getCurrentRequest(){}
 function isRegisterCurrentRequest(){}
 function registerCurrentRequest($apppath,$s_namespace="",$permtitle="",$permlist=null){}
