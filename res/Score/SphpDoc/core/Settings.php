@@ -2,6 +2,7 @@
 namespace Sphp{
 class Settings{
 public $blnEditMode = false ;
+public $editCtrl = "" ;
 public $blnGlobalApp = false ;
 public $translatermode = false ;
 public $response_method = "NORMAL";

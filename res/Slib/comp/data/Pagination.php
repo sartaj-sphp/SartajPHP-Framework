@@ -582,7 +582,14 @@ window.location = link ;
 
 public function onprerender(){
 // set default values
-$spt = explode(',', $this->dtable);
+$commaPos = strpos($this->dtable, ",");
+$spacePos = strpos($this->dtable, " ");
+if($spacePos !== false && ($commaPos === false || $spacePos < $commaPos)){
+    $spt = explode(' ', $this->dtable,2);    
+}else{
+    $spt = explode(',', $this->dtable,2);
+}
+
 if(count($spt)>0){
     $idf = $spt[0].".id";
 }else{

@@ -2,6 +2,8 @@
 
 class PermisApp extends \Sphp\tools\BasicApp {       
     public $extra = array();
+    protected $insertedid = 0;
+    protected $defWhere = "";
     /**
      *
      * @var type TempFile

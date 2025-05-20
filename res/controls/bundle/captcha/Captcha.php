@@ -20,14 +20,15 @@ setErr('Captcha', "Secure Image Code is not Correct!");
 
 if(SphpBase::page()->isevent)
 {
-switch(SphpBase::page()->sact){
+switch(SphpBase::page()->getEvent()){
 case "captcha" :{ 
 SphpBase::engine()->cleanOutput();
 SphpBase::sphp_response()->addHttpHeader("Content-Type","image/jpeg");
 SphpBase::sphp_response()->addHttpHeader("Cache-Control","no-cache, must-revalidate");
 includeOnce("{$this->mypath}/cap.php");
 $df = new CaptchaSub();
-$df->genImage();
+$dt1  = $df->genImage();
+SphpBase::JSServer()->addJSONHTMLBlock('div'. $this->name, '<img src="data:image/jpeg;base64,'.  $dt1.'" width="150px" height="50px" />');
 break;
 }
 
@@ -40,14 +41,16 @@ break;
 
 
 public function onrender(){
+    SphpBase::JSServer()->getAJAX();
 if($this->value!=''){
-$this->parameterA['value'] = $this->value;
+$this->setAttribute('value', $this->value);
 }
 if($this->maxLen!=''){
-$this->parameterA['maxlength'] = $this->maxLen;
+$this->setAttribute('maxlength', $this->maxLen);
 }
-$this->setPreTag('<img src="'.  getEventURL('captcha').'" width="150px" height="50px"><br>');
-
+//$this->setPreTag('<img src="'.  getEventURL('captcha').'" width="150px" height="50px"><br>');
+$this->setPreTag('<div id="div'. $this->name .'"></div>');
+addHeaderJSFunctionCode('ready', 'div' . $this->name, 'setTimeout(function(){getURL("'.  getEventURL('captcha').'");},4000);');
 }
 
 }

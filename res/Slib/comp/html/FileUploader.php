@@ -181,15 +181,26 @@ if (\SphpBase::sphp_request()->isFile($this->name) && \SphpBase::sphp_request()-
     {
         $this->setErrMsg(\SphpBase::sphp_request()->files($this->name)["error"]);
        }
-  else
-    {
-	if(!move_uploaded_file(\SphpBase::sphp_request()->files($this->name)["tmp_name"], $FilePath )){
-        $this->setErrMsg("Can not save file on server");
-            }else{
-                $this->value = $FilePath;
-            }
-//    $this->value = $FilePath;
-    }
+  else{
+      $p1 = "";
+       if(\SphpBase::sphp_request()->isNativeClient){
+           $p1 = \SphpBase::sphp_request()->request($this->name);
+        if(file_exists($p1) && !rename($p1,$FilePath )){
+            $this->setErrMsg("Can not save file on server");
+                }else{
+                    $this->value = $FilePath;
+                }
+       }else{
+          $p1 = \SphpBase::sphp_request()->files($this->name)["tmp_name"];           
+            if(!move_uploaded_file($p1, $FilePath )){
+                $this->setErrMsg("Can not save file on server");
+                    }else{
+                        $this->value = $FilePath;
+                    }
+       }
+       
+        }
+
     }
     
 }

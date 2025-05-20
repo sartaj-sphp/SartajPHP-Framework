@@ -77,6 +77,13 @@ function includeOnce2($filepath) {}
 * @return array
 */
 function getGlobals() {}
+/**
+* 
+* @param string $strdata
+* @param string $key
+* @return string
+*/
+function decrypt($strdata, $key = "sartajphp211") {}
 class stmycache {
 public $url_extension = ".html";
 public $act = "";
@@ -98,6 +105,7 @@ public $argv = array();
 public $type = "NORMAL"; 
 public $isNativeClient = false;
 public $edtmode = false;
+public $edtctrl = "";
 public $ytetimestart1 = 0;
 public $ytetimestart2 = 0;
 public function findbdataToStr($str1) {}

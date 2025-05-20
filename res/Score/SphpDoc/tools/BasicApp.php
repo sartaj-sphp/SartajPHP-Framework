@@ -6,6 +6,9 @@ namespace Sphp\tools {
 * @author Sartaj Singh
 */
 class BasicApp extends SphpApp {
+protected $auth = "GUEST";
+protected $tblName = "";
+protected $masterFile = "";
 /** @var \Sphp\kit\Page $page */
 public $page = "";
 /** @var \Sphp\tools\TempFile $tempform */

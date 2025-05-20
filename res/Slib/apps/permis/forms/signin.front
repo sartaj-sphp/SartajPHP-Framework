@@ -1,8 +1,8 @@
 <div class="row d-flex justify-content-center"><div class="col-sm-12 col-lg-8 py-5 ">
-<h3 class="login-box-msg">##{ $cmpname }# Login</h3>
+<h3 class="login-box-msg">Login</h3>
 <span style="text-align: center; font-weight: bold;">##{ traceError(true) }#</span>
 <form id="formsignin" runat="server" method="post" class="py-4" runcb="true" sphp-cb-card="">
-        <input type="text" runat="server" id="uname" funsetForm="formsignin" placeholder="User" funsetRequired="" funsetMinLen="4" funsetStyler="2">
+        <input type="text" runat="server" id="uname" funsetForm="formsignin" placeholder="Email" funsetRequired="" funsetMinLen="4" funsetStyler="2">
         <input type="password" runat="server" id="pword" funsetForm="formsignin" placeholder="Password" funsetRequired="" funsetMinLen="4" funsetStyler="2">
 
         <div class="row">
@@ -14,12 +14,29 @@
                   <!--<a href="#" class="pull-right"><i class="fa fa-lock"></i> Forgot pwd?</a>-->
             </div>
         </div>
-        <!-- /.col -->
+       
         <div class="col-sm-4 m-t-1">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
         </div>
-        <!-- /.col --> 
+        
     </div>
 </form>
-    </div>
+    
+   <div class="row py-3 px-3">
+        <div class="col-sm-4"> 
+            <h1>OR</h1>
+    <a href="##{getEventPath('gauth')}#" class="btn btn-primary google-login-btn">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">
+                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path fill="#FBBC05" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
+                    </svg>
+                </span>
+                Login with Google
+            </a>
+
+ </div>
+</div>
+           
+</div>
 </div>

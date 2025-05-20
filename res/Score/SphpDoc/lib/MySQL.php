@@ -35,11 +35,17 @@ public function executeQueryJFX($sql) {}
 public function executeQueryQuickJFX($sql) {}
 public function disconnect() {}
 public function updateSQL($frm, $txttbl, $where) {}
+public function runSQL($table,$ar) {}        
 public function insertSQL($frm, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}
 public function createDatabase() {}
 public function createTable($sql) {}
 public function dropTable($tableName) {}
+/**
+* 
+* @param string $sql
+* @return bool|Array
+*/
 public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
 public function row_fetch_array($result) {}

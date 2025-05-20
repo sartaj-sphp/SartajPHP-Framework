@@ -1,0 +1,9 @@
+<div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+
+    <div id="header1" runat="server" funsetIcon="##{SphpBase::sphp_settings()->slib_res_path}#/temp/default/imgs/ms-icon-310x310.png" funsetMenuFile="##{$this->tempobj->fileDir}#/menu.php" class="py-3 mb-4" funsetFixed="" funsetStyler="4" funsetFullSize="" path="libpath/comp/bundle/bootstrap/Header.php"></div>
+    <main id="maindiv" class="container px-4 py-4" runat="server">
+    <section id="hero" runat="server" path="libpath/comp/bundle/bootstrap/HeaderImage.php" funsetStyler="1"></section>
+    <?php SphpBase::$dynData->render(); ?>
+    </main>
+    <div id="footer1" runat="server" funsetMenuFile="##{$this->tempobj->fileDir}#/menu_footer.php" funsetStyler="2" funsetFullSize="" path="libpath/comp/bundle/bootstrap/Footer.php"></div>
+</div>

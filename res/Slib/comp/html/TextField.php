@@ -198,13 +198,13 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         }
         switch($this->styler){
             case 1:{
-                $this->setPreTag('<div class="form-floating mb-3">');
-                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>');
+                $this->setPreTag($this->getPreTag() . '<div class="form-floating mb-3">');
+                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
                 break;
             }case 2:{
-                $this->setPreTag('<div class="mb-3">
+                $this->setPreTag($this->getPreTag() .'<div class="mb-3">
                 <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>');
+                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
                 break;
             }
         }

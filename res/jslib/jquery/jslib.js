@@ -401,22 +401,53 @@ function setValue(obj,val){
     }
 }
 function getValue(obj){
-    var type = $(obj).prop("tagName");
+    var a1 = $(obj);
+    var type = a1.prop("tagName");
+    var a2 = {};
     switch(type){
         case 'INPUT':{
-            return $(obj).val();
+                if(a1.length > 1){
+                    $.each(a1,function(i,e){
+                        if($(e).attr("type") == "checkbox"){
+                            if($(e).prop("checked") ) a2[$(e).attr("id")] = $(e).val();                            
+                        }else{
+                            a2[$(e).attr("id")] = $(e).val();
+                        }
+                    });
+                    return a2;
+                }else{
+                    return a1.val();
+                }
             break;
         }case 'TEXTAREA':{
-            return $(obj).html();
+            if(a1.length > 1){
+                $.each(a1,function(i,e){
+                    a2[$(e).attr("id")] = $(e).html();
+                });
+                return a2;
+            }else{
+                return a1.html();
+            }
             break;
         }case 'SELECT':{
-            return obj.options[obj.selectedIndex].value;
-            break;
-        }case 'DIV':{
-            return $(obj).html();
+            if(a1.length > 1){
+                $.each(a1,function(i,e){
+                    a2[$(e).attr("id")] = $(e).options[$(e).selectedIndex].value;
+                });
+                return a2;
+            }else{
+                return a1.options[a1.selectedIndex].value;
+            }
             break;
         }default:{
-            return $(obj).html();  
+            if(a1.length > 1){
+                $.each(a1,function(i,e){
+                    a2[$(e).attr("id")] = $(e).html();
+                });
+                return a2;
+            }else{
+                return a1.html();
+            }
         }
     }
 }

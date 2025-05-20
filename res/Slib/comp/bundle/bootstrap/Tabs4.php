@@ -9,7 +9,7 @@ class Tabs4 extends Control{
     private $activeblock = 1;
     
     public function oncreate($element) {
-        global $Client;
+        $Client = SphpBase::sphp_request();
         if($Client->request($this->name .'li')!="" && $Client->request($this->name .'li')!="null"){
             $this->activeli = $Client->request($this->name . 'li');
         }
@@ -19,6 +19,9 @@ class Tabs4 extends Control{
         foreach ($arr as $key => $value) {
             $this->disabletabs[$value] = $value;            
         }
+    }
+    public function onchildevent($event, $obj){
+        echo $event;
     }
     public function onparse($event,$element) {
         global $ctrl;
@@ -67,7 +70,7 @@ class Tabs4 extends Control{
     public function onrender(){
     global $ctrl;
 
-        $this->parseMe();
+        //$this->parseMe();
         $this->class .= "tabblock";
     }
 

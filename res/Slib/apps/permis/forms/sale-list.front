@@ -55,7 +55,7 @@ $pageName = 'User List';
                                             </a>
                                         </div>
                                         <div id='admProfile_delete' runat='server'>
-                                            <a href="#" onclick="rowclickdel(this, '<?php echo getEventPath('delete', $this->tempobj->showall->row['id']); ?>')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventPath('delete', $this->tempobj->showall->row['id']); }#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>

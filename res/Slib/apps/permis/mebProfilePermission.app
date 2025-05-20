@@ -14,6 +14,7 @@ class mebProfilePermission extends PermisApp {
          
         $this->defWhere = " WHERE profile_permission.parentid = '".$_SESSION['parentid']."' ORDER BY profile_permission.id ASC ";
         $this->showallTemp->getComponent('showall')->setWhere($this->defWhere);
+        SphpBase::sphp_api()->addProp('page_title',"Manage Profiles");
 
         $this->setMasterFile($mebmasterf);
         parent::onstart();

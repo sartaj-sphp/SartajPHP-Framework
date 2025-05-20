@@ -18,8 +18,9 @@ public function oncreate($element){
 
 
 public function onjsrender(){
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.css',false,"","","onsen:4",[SphpBase::sphp_settings()->res_path . '/jslib/onsen']);
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.js');
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsenui.css',false,"","","onsen:4",[SphpBase::sphp_settings()->res_path . '/jslib/onsen/css']);
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsen-css-components.min.css',false,"","","onsen:4",[SphpBase::sphp_settings()->res_path . '/jslib/onsen/css']);
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/js/onsenui.min.js');
 
     addHeaderJSCode('onsen0', ' window["onsen"] = {};');
     addHeaderJSFunction('comp_'. $this->name .'_init', 'function comp_'. $this->name .'_init(event) {', '}');

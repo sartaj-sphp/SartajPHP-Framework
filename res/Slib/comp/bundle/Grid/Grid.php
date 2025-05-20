@@ -51,6 +51,7 @@ private $sortby = false;
 private $blnpagebar = true;
 private $handleeventapp = false;
 public $content_section = null;
+private $roote = null;
 
 
 public function oncreate($element) {
@@ -180,6 +181,13 @@ $this->header = $val;
 public function setFooter($val){
 $this->footer = $val;
 }
+public function getRow($field) {
+       if(isset($this->row[$field])){
+           return $this->row[$field];
+       }else{
+           return "";
+       }
+   }
 public function unsetDialog(){
 $this->blndlg = false;
 }
@@ -277,10 +285,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURLSecure($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURLSecure($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -292,13 +300,16 @@ $stro .= $this->getPaging();
 }
 }else if($this->strFormat!=''){
     $stro = ""; 
-$roote = $this->tempobj->getChildrenWrapper($this);
+    // SphpBase::debug()->println($this->sql . " grid " . $this->name);
+if($this->roote == null){
+    $this->roote = $this->tempobj->getChildrenWrapper($this);
+}
 foreach($this->result as $key1=>$keyar){
     foreach($keyar as $index=>$this->row){ 
         //$tmpf = new TempFile($this->strFormat,true,false,$this->tempobj->parentapp);
         //$tmpf->run();
         //$stro .= $tmpf->data;
-        $stro .= $this->tempobj->parseComponentChildren($roote); 
+        $stro .= $this->tempobj->parseComponentChildren($this->roote); 
     } 
 }
 //$this->unsetrenderTag();
@@ -308,7 +319,8 @@ $strom = $this->getPaging();
 }
 
 }
-}
+} 
+ //SphpBase::debug()->println(" where " . $this->sql . $startat);
 return $stro;
 
 }
@@ -331,13 +343,13 @@ $strstart = "";
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $pg) {
 if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)
-  ."'); return false;\"><div class=\"pfloat-left\">".($k)."</div></a>";
+         $lynx .= $strstart. "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)
+  ."'); return false;\">".($k)."</a></li>";
 }else{
-         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\"><div class=\"pfloat-left\">".($k)."</div></a>";    
+         $lynx .= $strstart."<li class=\"page-item\"><a class=\"page-link\" href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></li>";    
 }
         } else {
-         $lynx .= $strstart . "<div class=\"pfloat-left-down\">".($k)."</div>";
+         $lynx .= $strstart . "<li class=\"page-item active\"><span class=\"page-link\"  >".($k)."</span></li>";
         }
 }
 $startPage2 = $this->getPageNo();
@@ -369,18 +381,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<li class=\"page-item\"><a class=\"page-link\"  href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<li class=\"page-item\"><a class=\"page-link\"  href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+    $strlinkN = "<li class=\"page-item\"><a class=\"page-link\"   href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<li class=\"page-item\"><a class=\"page-link\"  href=\"".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>";    
 }
 }
 
@@ -390,15 +402,12 @@ $strout = '';
 $strlink = $strlinkP . $strlinkN ;
 $this->buttonnext = $strlinkN;
 $this->buttonprev = $strlinkP;
-$this->links = $lynx;
 if($strlink!=''){
-$strout = '<div class="pagbar"><div class="pagnums">&nbsp; '.$lynx.'</div>
-<div class="pagprevnext">'.
-$strlink .$edt.$del.'
-</div></div>
-<div style="clear:both"></div>';
+$strout = '<nav aria-label="pagination"><ul class="pagination pagination-lg">'. $strlinkP . $lynx . $strlinkN . '</ul></nav>';
 }
-}
+} 
+$this->links = $strout;
+
 return $strout;
 }
 
@@ -505,7 +514,7 @@ sortby: '',
 dir: 1
 };
 window['getSortBy'] = function(obj,field,link){
-data = {};
+var data = {};
 var setg = {$this->name}_setg ;
 var span1 = $(obj).children('span:first');
 if(setg.sortby!=field){
@@ -610,7 +619,7 @@ $ptag = '<div id="'.$this->name.'_toolbar">';
 }
 if($this->blnadd){
 $ptag .= '<input id="btnadd'. $this->name .'" class="btn btn-primary" type="button" value="Add"  />';
-}
+
 $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     <div id="sphpwarning" class="alert alert-warning" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -630,9 +639,14 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     </div>
 </div><div id="srvmsg"></div>';
     $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\">";     
-    $this->setPreTag($divt.$this->getPreTag());    
-    $this->setPostTag('</div>'.$this->getPostTag());
-    
+    if($this->tagName == "tbody"){
+        $p1 = $this->element->parentNode;
+    }else{
+        $p1 = $this->element;
+    }
+    $p1->setPreTag($divt . $p1->pretag);    
+    $p1->setPostTag('</div>'.$p1->posttag);
+}
 }
 
 
@@ -745,7 +759,14 @@ public function onprerender(){
 $Client = \SphpBase::sphp_request();
 $ctrl = \SphpBase::sphp_router();
 // set default values
-$spt = explode(',', $this->dtable);
+$commaPos = strpos($this->dtable, ",");
+$spacePos = strpos($this->dtable, " ");
+if($spacePos !== false && ($commaPos === false || $spacePos < $commaPos)){
+    $spt = explode(' ', $this->dtable,2);    
+}else{
+    $spt = explode(',', $this->dtable,2);
+}
+
 if(count($spt)>0){
     $idf = $spt[0].".id";
 }else{
@@ -807,7 +828,11 @@ public function onparse($event,$element) {
      //echo "parse event " . $event; 
 }
     public function onholder($obj) {
-        $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+        if(isset($this->row[$obj->getAttribute("dfield")])){
+            $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+        }else{
+            $obj->setInnerHTML('');
+        }
     }
 
 }

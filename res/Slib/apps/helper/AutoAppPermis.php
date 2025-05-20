@@ -13,6 +13,11 @@ class AutoAppPermis extends PermisApp {
     public $heading = "heading";
     public $footer = "set footer property of app, for logo image set logoimg";
     public $logoimg = "apps/helper/forms/logo.png";
+    public $phone = "6AA-AAA-AAAA";    
+    public $mobile = "AAA-AAA-AAAA";    
+    public $address = "address";    
+    public $city = "Mississauga";    
+    public $country = "Canada";    
     protected $insertedid = -1;
 
     public $extra = array();
@@ -27,6 +32,7 @@ class AutoAppPermis extends PermisApp {
         $this->showallTemp->getComponent('showall')->unsetRenderTag();
         $this->genFormTemp->getComponent('btnDel')->unsetRender();
         $this->showallTemp->getComponent('showall')->setPerPageRows(10);
+        SphpBase::sphp_api()->addProp('page_title',$this->heading);
     }
 
     public function page_event_loadform($evtp) {
@@ -64,9 +70,14 @@ class AutoAppPermis extends PermisApp {
         $showall->unsetDialog();
         $showall->unsetPageBar();
 //        $showsingleTemp->addMetaData('uni_id',"FF45678");
+        //$showsingleTemp->run();
+        //echo $showsingleTemp->data;
+        
         $pdf = new Temp2PDF($showsingleTemp);
         $pdf->setDefaultFont('Arial');
         $pdf->render('sample.pdf', 'I');
+          
+         
     }
 
     public function page_event_usersrch($param) {

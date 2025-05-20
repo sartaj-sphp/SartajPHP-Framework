@@ -44,6 +44,32 @@ function getAppURL($ControllerName,$extra="",$newbasePath="",$blnSesID=false,$ex
 */
 function getThisURL($extra="",$blnSesID=false,$ext='',$noncache=false){}
 /**
+* Generate Secure URL for a Event of Application
+* @param string $eventName <p> Name of Event
+* class index extends Sphp\tools\BasicApp{
+* public function page_event_test($evtp){
+* 
+* }
+* }
+* $eventName = test
+* $controllerName = index
+* Registered Application = apps/index.app
+* </p>
+* @param string $evtp Event Parameter pass to URL
+* @param string $ControllerName controller like index
+* @param string $extra <P> Extra query string in URL 
+* $extra = 'test=1&mpid=13'
+* </p>
+* @param string $newbasePath <p> new domain url
+* $newbasePath = 'https://domain.com/test
+* </p>
+* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
+* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
+* @return string
+*/
+function getEventURLSecure($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
+/**
 * Generate URL for a Event of Application
 * @param string $eventName <p> Name of Event
 * class index extends Sphp\tools\BasicApp{
@@ -114,8 +140,19 @@ function runFrontSection($secname = "left") {}
 function addrunFrontSection($secname = "left") {}
 function ListNotrenderFrontSection($secname = "left") {}
 function renderFrontSection($secname = "left") {}
+/**
+* 
+* @param string $string
+* @param string $key
+* @return string
+*/
 function encrypt($string, $key = "BA007231") {}
-function decrypt($string, $key = "BA007231") {}
+/**
+* 
+* @param string $str
+* @param string $ky
+* @return string
+*/
 function endec($str, $ky = "CD098ABA") {}
 function is_valid_num($val,$datatype){}
 function is_valid_email($email){}

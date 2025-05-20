@@ -9,6 +9,7 @@ class MenuUi extends BootstrapMenu{
         if(SphpBase::page()->getAuthenticateType() == "GUEST"){
             $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
             include_once("plugin/cmenu.php"); 
+            include_once(PROJ_PATH . "/temp/default/menu.php"); 
         }else{
             // set menu permissions or login type, as comma separated value
             // not work if app is not using permission system like extend as PermisApp
@@ -25,6 +26,7 @@ class MenuUi extends BootstrapMenu{
             include_once("plugin/cmenu.php"); 
             include_once("plugin/cmebmenu.php"); 
             include_once("plugin/cadmmenu.php"); 
+            include_once(PROJ_PATH . "/temp/default/admmenu.php"); 
         }
     }
     

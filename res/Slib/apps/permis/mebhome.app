@@ -26,6 +26,9 @@ class mebhome extends PermisApp {
         if($this->page->hasPermission("install","mebhome")){
         $mysql = $this->dbEngine;
         $mysql->connect();
+        //$mysql->dropTable("member");
+        //$mysql->dropTable("profile_permission");
+        
         if($mysql instanceof Sqlite){
         // 1. Member Tbl
         $sql = "CREATE TABLE IF NOT EXISTS member (
@@ -74,48 +77,48 @@ class mebhome extends PermisApp {
         }else{
         // 1. Member Tbl
         $sql = "CREATE TABLE IF NOT EXISTS member (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         usertype varchar(10) NOT NULL COMMENT 'ADMIN,MEMBER',
-         userid bigint(20) NOT NULL,
-         parentid bigint(20) NOT NULL,
-         profile_id int(2) NOT NULL,
-         fname varchar(50) NOT NULL,
-         lname varchar(30) NOT NULL,
-         pic varchar(100),
-         address1 varchar(100),
-         address2 varchar(100),
-         city varchar(100),
-         country varchar(100),
-         postal varchar(20),
-         website varchar(200) ,
-         email varchar(200) ,
-         mobile varchar(20) ,
-         username varchar(50) NOT NULL,
-         password varchar(50) NOT NULL,
-         status tinyint(2) NOT NULL COMMENT '0 : Inactive, 1 : Active',
-         varification tinyint(1) NOT NULL,
-         uniqueno varchar(30) ,
-        submit_timestamp VARCHAR(20) NOT NULL,
-        update_timestamp VARCHAR(20) NOT NULL,
-         spcmpid varchar(14) ,
-         PRIMARY KEY (id)
-        ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    usertype VARCHAR(10) NOT NULL,
+    userid BIGINT NOT NULL,
+    parentid BIGINT NOT NULL,
+    profile_id INT NOT NULL,
+    fname VARCHAR(50) NOT NULL,
+    lname VARCHAR(30) NOT NULL,
+    pic VARCHAR(100),
+    address1 VARCHAR(100),
+    address2 VARCHAR(100),
+    city VARCHAR(100),
+    country VARCHAR(100),
+    postal VARCHAR(20),
+    website TEXT, 
+    email VARCHAR(200),
+    mobile VARCHAR(20),
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL, 
+    status TINYINT NOT NULL,
+    varification TINYINT NOT NULL, 
+    uniqueno VARCHAR(30),
+    submit_timestamp INT NOT NULL,
+    update_timestamp INT NOT NULL,
+    spcmpid VARCHAR(14)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+";
         $mysql->createTable($sql);
 
         // 2. Profile Permission Tbl
-        $sql = "CREATE TABLE  IF NOT EXISTS profile_permission (
-         id bigint(20) NOT NULL AUTO_INCREMENT,
-         userid bigint(20) NOT NULL,
-         parentid bigint(20) NOT NULL,
-         sid bigint(20) NOT NULL,
-         profile_name varchar(50) NOT NULL,
-         permission_id varchar(2048) NOT NULL,
-         status tinyint(4) NOT NULL,
-        submit_timestamp VARCHAR(20) NOT NULL,
-        update_timestamp VARCHAR(20) NOT NULL,
-         spcmpid varchar(14) ,
-         PRIMARY KEY (id)
-        ) ENGINE=InnoDB DEFAULT CHARSET='UTF8'";
+        $sql = "CREATE TABLE IF NOT EXISTS profile_permission (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid BIGINT NOT NULL,
+    parentid BIGINT NOT NULL,
+    sid BIGINT NOT NULL,
+    profile_name VARCHAR(50) NOT NULL,
+    permission_id TEXT NOT NULL, 
+    status TINYINT NOT NULL,
+    submit_timestamp INT NOT NULL,
+    update_timestamp INT NOT NULL,
+    spcmpid VARCHAR(14)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+";
         $mysql->createTable($sql);
         }
         

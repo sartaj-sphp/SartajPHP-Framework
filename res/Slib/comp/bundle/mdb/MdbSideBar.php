@@ -15,7 +15,7 @@ class MdbSideBar extends Control{
                 </a>');
             $obj->setPostTag('</div>');
         }else if($obj->getAttribute("data-sphp-colid") == 2){
-            $obj->setPreTag('<div class="col py-3">');
+            $obj->setPreTag('<div class=" col-md-9 col-xl-10 px-sm-10 py-3">');
             $obj->setPostTag('</div>');
         }else{
             $obj->setPreTag('<div class="col py-3">');

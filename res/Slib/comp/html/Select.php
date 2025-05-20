@@ -11,6 +11,9 @@ namespace Sphp\comp\html{
 class Select extends \Sphp\tools\Control {
 
     public $options = '';
+    private $separator = " ";
+    private $blnopttxtreplace = false;
+    private $opttxtreplace = array();
     public $opt = Array();
     public $blnuseasoc = false;
     public $selectedIndex = 0;
@@ -21,6 +24,9 @@ class Select extends \Sphp\tools\Control {
 // use for check static option tag == value or not found
     private $fstatic = false;
     private $strFirstValue = "null";
+    private $cssfield = "";
+    private $cssvals = array();
+    private $blnsearch = false;
 
     protected function genhelpPropList() {
         parent::genhelpPropList();
@@ -52,7 +58,35 @@ class Select extends \Sphp\tools\Control {
         }
         setErr($this->name, $msg);
     }
-
+    /**
+     * Find and replace string in option text
+     * @param type $find find string
+     * @param type $rep replace string
+     */
+    public function replace($find,$rep){
+        $this->blnopttxtreplace = true;
+        $this->opttxtreplace = array($find,$rep);
+    }
+/**
+ * Separator for Option Text from multi fields of db with this Character
+ * @param string $sepa default = " " 
+ */
+    public function setSeparator($sepa){
+        $this->separator = $sepa;
+    }
+    /**
+     * DB Table Field use for set as class in option tag
+     * @param string $tblfield DB Table field
+     */
+    public function setCssField($tblfield){
+        $this->cssfield = $tblfield;
+    }
+    /**
+     * Make Select as Type-able and Searchable
+     */
+    public function enableSearch(){
+        $this->blnsearch = true;
+    }
     public function setForm($val) {
         $this->formName = $val;
     }
@@ -141,6 +175,11 @@ class Select extends \Sphp\tools\Control {
         $this->options = '';
         $this->genOptionList();
     }
+    /**
+     * Set JSON String as key value pairs.
+     * funsetOptionsJSON='[["0","Parent"], ["1", "Child"]]'
+     * @param string $val json string
+     */
     public function setOptionsJSON($val) {
         $this->opt = json_decode($val,true);
         $this->options = '';
@@ -192,6 +231,13 @@ class Select extends \Sphp\tools\Control {
         $blnMultiTextField = false;
         $blnMultiValField = false;
         $arr1 = Array();
+        $blncsfield = false;
+        $csfield = "";
+        
+        if($this->cssfield != ""){
+            $csfield = ',' . $this->cssfield;
+            $blncsfield = true;
+        }
         $ar1 = explode(",", $textField);
         if (count($ar1) > 1) {
             $blnMultiTextField = true;
@@ -211,9 +257,9 @@ class Select extends \Sphp\tools\Control {
             }else{
                 $textField = $valueField;                
             }
-            $sql = "SELECT $valueField FROM $tableName $logic";
+            $sql = "SELECT $valueField $csfield FROM $tableName $logic";
         } else {
-            $sql = "SELECT $valueField,$textField FROM $tableName $logic";
+            $sql = "SELECT $valueField,$textField $csfield FROM $tableName $logic";
         }
         }
 
@@ -224,7 +270,7 @@ class Select extends \Sphp\tools\Control {
                 $strt1 = "";
                 if ($blnMultiTextField) {
                     foreach ($ar1 as $key => $value) {
-                        $strt1 .= $row[$value] . ' ';
+                        $strt1 .= $row[$value] . $this->separator;
                     }
                 } else {
                     $strt1 = $row[$textField];
@@ -236,7 +282,8 @@ class Select extends \Sphp\tools\Control {
                 } else {
                     $strv1 = $row[$valueField];
                 }
-                $arr1[] = Array($strv1, $strt1);
+                $arr1[] = Array($strv1, $strt1);                    
+                if($blncsfield) $this->cssvals[] = $row[$this->cssfield]; // use for set class attribute of option tag
             }
         }
         $this->setOptionsKeyArray();
@@ -247,7 +294,7 @@ class Select extends \Sphp\tools\Control {
         if ($this->formName != '' && $this->notvalue != '') {
             $jscode = "if(blnSubmit==true && " . $this->getJSValue() . "=='" . $this->notvalue . "'){
     blnSubmit = false ;
-alert('Please Select One Option From " . $this->msgName . "');
+displayValidationError(document.getElementById('$this->name'),'Please Select One Option From " . $this->msgName . "');
 document.getElementById('$this->name').focus();
 }";
             addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
@@ -265,6 +312,16 @@ document.getElementById('$this->name').focus();
 
     public function onrender() {
         $HTMLParser = new \Sphp\tools\HTMLParser();
+        if($this->blnsearch){
+            addFileLink($this->myrespath . "/jslib/select2.min.css");
+            addFileLink($this->myrespath . "/jslib/select2.min.js");
+            addHeaderJSFunctionCode("ready", "select2","$(\"#{$this->name}\").select2({
+        theme: \"classic\",
+        width: '100%',
+        placeholder: \"{$this->placeholder}\",
+        dropdownParent: $('body')
+    });");
+        }
         if($this->errmsg!=""){
             $this->setPostTag($this->errmsg);
         }        
@@ -300,6 +357,11 @@ document.getElementById('$this->name').focus();
         $CF = 0;
         $arr1 = Array();
 
+        $blncsfield = false; 
+        if(count($this->cssvals) > 0){
+            $blncsfield = true;
+        }
+
         if ($this->strFirstValue != "null") {
             $stra = explode(',', $this->strFirstValue);
             if (count($stra) > 1) {
@@ -308,36 +370,49 @@ document.getElementById('$this->name').focus();
                 $arr1[] = Array($stra[0], $stra[0]);
             }
             $holder = array_merge($arr1, $this->opt);
+            $ar2 = array('firstopt');
+            if($blncsfield) $this->cssvals = array_merge($ar2,$this->cssvals);
         } else {
             $holder = $this->opt;
         }
 
-
+        
         if ($vals != '') {
             $holder2 = $vals;
             foreach ($holder as $key2 => $val) {
+                $cssatr = "";
+                if($blncsfield) $cssatr = 'class="'. $this->cssvals[$key2] .'"';
+                
                 $key = $val[0];
                 if (!$this->blnuseasoc) {
                     $key = $val[1];
                 }
+                // replace text according to replace string
+                if($this->blnopttxtreplace) $val[1] = str_replace($this->opttxtreplace[0],$this->opttxtreplace[1],$val[1]);
 
                 if ($key == $holder2) {
-                    $strOut .= "<option value=\"$key\" selected>" . $val[1] . "</option>";
+                    $strOut .= "<option $cssatr value=\"$key\" selected>" . $val[1] . "</option>";
                 } else {
-                    $strOut .= "<option value=\"$key\">" . $val[1] . "</option>";
+                    $strOut .= "<option  $cssatr value=\"$key\">" . $val[1] . "</option>";
                 }
             }
         } else {
             foreach ($holder as $key2 => $val) {
+                $cssatr = "";
+                if($blncsfield) $cssatr = 'class="'. $this->cssvals[$key2] .'"';
+
                 $key = $val[0];
                 if (!$this->blnuseasoc) {
                     $key = $val[1];
                 }
+                // replace text according to replace string
+                if($this->blnopttxtreplace) $val[1] = str_replace($this->opttxtreplace[0],$this->opttxtreplace[1],$val[1]); 
+                
                 if ($CF == $this->selectedIndex) {
                     $this->value = $key;
-                    $strOut .= "<option value=\"$key\" selected>" . $val[1] . "</option>";
+                    $strOut .= "<option  $cssatr value=\"$key\" selected>" . $val[1] . "</option>";
                 } else {
-                    $strOut .= "<option value=\"$key\">" . $val[1] . "</option>";
+                    $strOut .= "<option  $cssatr value=\"$key\">" . $val[1] . "</option>";
                 }
                 $CF += 1;
             }

@@ -3,7 +3,7 @@
     "type1": "srvapp,deskapp,consoleapp",
     "type": "deskapp",
     "comment": "port 0 mean auto",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "port": 0,
     "secure": 0,
     "php": "php",

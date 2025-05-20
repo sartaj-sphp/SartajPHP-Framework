@@ -56,7 +56,7 @@ limit = ctlText[c][2];
 val1 = getVal(c,type);
 if(val1.length > limit){
 returnval = false;
-alert("Please Type less then " + limit + "  chracters in " + msg);
+displayValidationError(obj1,"Please Type less then " + limit + "  chracters in " + msg);
 break;
 }
 
@@ -180,7 +180,7 @@ msg = ctlText[c][0];
 val1 = getVal(c,type);
 if(val1 == ''){
 returnval = false;
-displayValidationError(obj1,msg + " can not Empty! " + c);
+displayValidationError(obj1,msg + " can not Empty! ");
 break;
 }
 }
@@ -192,9 +192,10 @@ return returnval;
 
 function displayValidationError(obj,msg){
 //clearValidationError(obj);
-$(obj).on("keyup",clearValidationError);
+//$(obj).on("keyup",clearValidationError);
 $(obj).addClass("valide alert-danger");
-$(obj).attr("data-toggle","tooltip");
+$(obj).after('<span class="alert-danger validate-help">'+ msg +'</span>');
+/* $(obj).attr("data-toggle","tooltip");
 $(obj).attr("title",msg);
 $(obj).attr("data-original-title",msg);
 $(function () {
@@ -204,11 +205,13 @@ $(function () {
       $(obj).tooltip('fixTitle');
   }
 });
- 
+*/ 
 //alert(msg);
 obj.focus();
 }
 function clearValidationError(obj){
 $('.valide').removeClass("valide alert-danger");
+$('.validate-help').remove();
+
 }
 

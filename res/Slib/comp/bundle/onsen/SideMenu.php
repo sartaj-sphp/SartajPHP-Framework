@@ -18,8 +18,9 @@ public function oncreate($element){
 
 
 public function onjsrender(){
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.css');
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/onsen.js');
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsenui.css');
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsen-css-components.min.css');
+    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/js/onsenui.min.js');
 
     addHeaderJSCode('onsen0', ' window["onsen"] = {};');
     addHeaderJSCode('onsen3', ' window.onsen.loadPage = function(page,data){ var content = document.getElementById(\''. $this->name.'content\');

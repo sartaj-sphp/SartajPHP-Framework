@@ -23,6 +23,12 @@ class AutoApp extends \Sphp\tools\BasicApp {
     public $heading = "heading";
     public $footer = "set footer property of app, for logo image set logoimg";
     public $logoimg = "apps/helper/forms/logo.png";
+     public $phone = "6AA-AAA-AAAA";    
+    public $mobile = "AAA-AAA-AAAA";    
+    public $address = "address";    
+    public $city = "Mississauga";    
+    public $country = "Canada";    
+
     protected $insertedid = -1;
 
     public $extra = array();

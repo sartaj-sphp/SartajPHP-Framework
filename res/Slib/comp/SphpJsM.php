@@ -44,6 +44,7 @@ final class SphpJsM {
         }else{
             updateFileLink("{$jslibpath}/jquery/jquery-min1.10.js", true, "jquery-min", "js");
         }
+        updateFileLink('var jql = $;', true, "jquery-js-code", "js");
         updateFileLink("{$jslibpath}/jquery/jslib_old_browser.js",true,'sphp-jslib');
     }    
     public static function addAlertDialog() {
@@ -197,16 +198,16 @@ final class SphpJsM {
         global $jslibpath;
         if(SphpJsM::getJSLibVersion("bootstrap") == -1){ 
         SphpJsM::addFontAwesome6();
-        addFileLink("$jslibpath/twitter/bootstrap5/css/bootstrap.min.css", true, "", "", "bootstrap:5");
-        addFileLink("$jslibpath/twitter/bootstrap5/css/bootstrap-grid.min.css", true);
-        addFileLink("$jslibpath/twitter/bootstrap5/css/bootstrap-reboot.min.css", true);
-        addFileLink("$jslibpath/twitter/bootstrap5/css/mdb.min.css", true);
-        addFileLink("$jslibpath/twitter/bootstrap5/css/style.css", true);
-        //addFileLink("$jslibpath/twitter/bootstrap5/js/popper.min.js", true);
-        //addFileLink("$jslibpath/twitter/bootstrap5/js/bootstrap.esm.min.js", true);
-        addFileLink("$jslibpath/twitter/bootstrap5/js/bootstrap.bundle.min.js", true);
+        addFileLink("$jslibpath/twitter/bootstrap5a/css/bootstrap.min.css", true, "", "", "bootstrap:5");
+        addFileLink("$jslibpath/twitter/bootstrap5a/css/bootstrap-grid.min.css", true);
+        addFileLink("$jslibpath/twitter/bootstrap5a/css/bootstrap-reboot.min.css", true);
+        addFileLink("$jslibpath/twitter/bootstrap5a/css/mdb.min.css", true);
+        addFileLink("$jslibpath/twitter/bootstrap5a/css/style.css", true);
+        //addFileLink("$jslibpath/twitter/bootstrap5a/js/popper.min.js", true);
+        //addFileLink("$jslibpath/twitter/bootstrap5a/js/bootstrap.esm.min.js", true);
+        addFileLink("$jslibpath/twitter/bootstrap5a/js/bootstrap.bundle.min.js", true);
         // js file click twice bug in firefox
-        //addFileLink("$jslibpath/twitter/bootstrap5/js/mdb.min.js", true);
+        //addFileLink("$jslibpath/twitter/bootstrap5a/js/mdb.min.js", true);
         SphpJsM::addAlertDialog();
         SphpJsM::$jslib["bootstrap"] = 5;
         }

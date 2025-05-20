@@ -5,11 +5,30 @@
 
 class EditPanel extends Control{
 private $label = "";
+private $lstcomp = "";
 
-public function setLabel($label) {
+public function setLabel($label,$tfield="") {
+    $this->label = $label;
+    $this->lstcomp = $tfield;
+}
+private function setLabel2($label,$tfield="") {
+    if(SphpBase::page()->getEvent() == 'view' || SphpBase::page()->getEvent() == 'rowclick'){
+        if($tfield != ""){
+            $v1 = explode(",", $tfield);
+            $tfield = "";
+            foreach($v1 as $i => $col){
+            $tfield .= " " . $this->tempobj->getComponent($col)->value;      
+            }
+            //$tfield = SphpBase::sphp_request()->request("txtid");
+        }
+        $label = "Edit " . $label . $tfield;
+    }else{
+        $label = "Add " . $label;
+    }
     $this->label = $label;
 }
 public function onrender(){
+    $this->setLabel2($this->label,$this->lstcomp);
     $this->tagName = 'div';
     $this->setPreTag('<div class="card card-primary">
   <div class="card-header">

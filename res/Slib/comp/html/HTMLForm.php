@@ -127,8 +127,8 @@ blnSubmit =  " . $this->onvalidation . ";
 }
 ";
         }
-        addHeaderJSCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;');
-        addHeaderJSFunction($this->name . "_submit2", "function " . $this->name . "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},1000); return vt;}");
+        addHeaderJSCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;$("#'. $this->name .'").on("keydown",clearValidationError);');
+        addHeaderJSFunction($this->name . "_submit2", "function " . $this->name .  "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},1000); return vt;}");
         addHeaderJSFunction($this->name . "_submit", "function " . $this->name . "_submit(val){
 var blnSubmit = true ;
 var ctlReq = Array();
@@ -136,7 +136,9 @@ var ctlEmail = Array();
 var ctlNums = Array();
 var ctlMins = Array();
 var ctlMax = Array();
+clearValidationError('');
 ", "
+ 
 if(blnSubmit==true && checkTextEmpty(ctlReq)==false){
     blnSubmit = false ;
 }
@@ -165,10 +167,10 @@ return false;
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
-        $this->setAttributeDefault("action",getThisURL());
-        //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit('');return false;");
+        $this->setAttributeDefault("action",getThisURL("",false,".app"));
+        //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit2('');return false;");
         if(!isset($this->onsubmit)){
-            addHeaderJSFunctionCode("ready", $this->name .'rd1', "jql('#" . $this->name . "').on('submit',function(){event.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");
+            addHeaderJSFunctionCode("ready", $this->name .'rd1', "$('#" . $this->name . "').on('submit',function(e){e.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");
         }
         $hdn = "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . \SphpBase::sphp_request()->request($this->recID) . "\" />";
         if($this->blnajax) $hdn .= "<input type=\"hidden\" name=\"sphpajax\" value=\"1\" />";

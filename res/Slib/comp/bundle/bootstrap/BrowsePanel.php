@@ -18,7 +18,7 @@ public function onrender(){
           &nbsp;'.  $this->label .'&nbsp;
           <a href="<?php echo getEventURL(\'print\', \'\', \''. SphpBase::sphp_router()->getCurrentRequest() .'\'); ?>" target="__blank" title="Print">
               <span class="pull-right hidden-xs showopacity fa fa-print"></span></a>
-      </h3>
+      </h4>
   </div>
   <div class="card-block scrollbar" style="overflow: auto; white-space: nowrap;">
 <div class="block">

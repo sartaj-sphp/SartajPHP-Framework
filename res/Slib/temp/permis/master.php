@@ -1,24 +1,21 @@
-<?php 
-addFrontPlace('mastertemp1',__DIR__ . "/template1.front","template");
-runFrontPlace("mastertemp1","template");
-//addFrontPlace('videomenu');
-//runFrontPlace('frontEditor',"footer");
-?><!DOCTYPE html>
-<html>
-<head lang="en">
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<?php SphpJsM::addBootStrapKit5();  echo getHeaderHTML(); ?>
+<?php 
+addFrontPlace("main_master",__DIR__ . '/main.front','centersp1');
+if(getCurrentRequest() == "index") getFrontPlace("main_master",'centersp1')->maindiv->unsetRenderTag();
+runFrontPlace('main_master','centersp1');
+$sj1 = SphpBase::SphpJsM();
+$sj1::addBootStrap(); 
+echo SphpBase::sphp_api()->getHeaderHTML(); 
+?>
 <link href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/permis/css/framework.css" rel="stylesheet"  type="text/css" />
-<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/android-icon-192x192.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="96x96" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-96x96.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="<?php echo SphpBase::sphp_settings()->slib_res_path ; ?>/temp/default/imgs/favicon-16x16.png" />
 </head>
-<body>
-    <div class="container-fluid">
-<?php renderFrontPlace("mastertemp1","template"); ?>        
-</div>
-<?php renderFrontPlace('frontEditor',"footer"); echo getFooterHTML(); echo traceError(); echo traceErrorInner(); ?>
-</body>
+<body class="h-100">
+<?php echo renderFrontPlace('main_master','centersp1'); ?>
+<?php  echo SphpBase::sphp_api()->getFooterHTML(); 
+echo SphpBase::sphp_api()->traceError(true) . SphpBase::sphp_api()->traceErrorInner(true); ?>
+</body>    
 </html>

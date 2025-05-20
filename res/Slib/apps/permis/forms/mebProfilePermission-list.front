@@ -42,13 +42,13 @@ $pageName = \SphpBase::sphp_request()->session('appName');
                                     <td><?php echo $this->tempobj->showall->row['profile_name']; ?></td>
                                     <td><?php echo $this->tempobj->showall->row['permission_id']; ?></td>
                                     <td>  
-                                        <div id='admPreference_view' runat='server'>
-                                            <a href="<?php echo getEventPath('view', $this->tempobj->showall->row['id']); ?>">
+                                        <div id='admPreference_view' class="btn-action" runat='server'>
+                                            <a href="<?php echo getEventURLSecure('view', $this->tempobj->showall->row['id']); ?>">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
-                                        <div id='admPreference_delete' runat='server'>
-                                            <a href="#" onclick="rowclickdel(this, '<?php echo getEventPath('delete', $this->tempobj->showall->row['id']); ?>')">
+                                        <div id='admPreference_delete' class="btn-action" runat='server'>
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $this->tempobj->showall->row['id']);}#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
