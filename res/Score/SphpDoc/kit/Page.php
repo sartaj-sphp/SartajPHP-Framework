@@ -123,11 +123,12 @@ public function init() {}
 * If user is not login with specific permission then application exit and
 * redirect according to the getWelcome function in comp.php
 * @param string $perm Default=null mean, permission to everyone<p>
+* @param string $ctrl optional Default is current App, permission like index-view where index is controller.
 * permission to allow app. Example:- AuthenticatePerm("view")
 * </p>
 * @return boolean true if permission match with session variable lstpermis, never return false
 */
-public function getAuthenticatePerm($perm=null) {}
+public function getAuthenticatePerm($perm=null,$ctrl=null) {}
 /**
 *  Check Permission is given to authorised user or not given.
 * @param string $perm permission to check
