@@ -12,6 +12,9 @@ public $fileDir = "";
 public $compList = array();
 public $name = "";
 public $webapp = null;
+/**
+* @var \Sphp\tools\BasicApp
+*/
 public $parentapp = null;
 public $metadata = array();
 public $blncodebehind = false;

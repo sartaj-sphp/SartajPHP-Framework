@@ -29,6 +29,12 @@ public $Client = null;
 public $dbEngine = null;
 /** @var \Sphp\core\DebugProfiler debug */
 public $debug = null;
+/**
+* 
+* @param string $filepath temp file path
+* @param boolean $noprefix false mean add prefix as parent component name to all controls
+* @return \Sphp\tools\TempFile
+*/
 public function createTempFile($filepath,$noprefix=false) {}
 public function setup($tempobj) {}
 public function process($tempobj) {}

@@ -13,6 +13,9 @@ public $curelement = null;
 public $curlineno = 0;
 public $codebehind = array();
 public $blncodebehind = false;
+/**
+* @var \Sphp\tools\TempFile
+*/
 public $tempobj;
 public $dhtmldom;
 /** @var Sphp\Settings */

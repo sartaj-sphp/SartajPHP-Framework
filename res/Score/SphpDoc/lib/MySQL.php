@@ -37,6 +37,13 @@ public function disconnect() {}
 public function updateSQL($frm, $txttbl, $where) {}
 public function runSQL($table,$ar) {}        
 public function insertSQL($frm, $txttbl) {}
+/**
+* Create Insert SQL for Multiple Records from array
+* @param array $arr multiple rows of array [["row1"=>"1"],["row2"=>"2"]]
+* @param string $txttbl Database Table Name use in insert query
+* @return string
+*/
+public function insertSQLMulti($arr, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}
 public function createDatabase() {}
 public function createTable($sql) {}

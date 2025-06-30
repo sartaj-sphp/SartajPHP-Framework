@@ -89,6 +89,13 @@ public function getName() {}
 public function setValue($val) {}
 public function getValue() {}
 /**
+* escape single or double quotation in value. This don't need DB Connection.
+* It is not escape sql characters. Use dbEngine->cleanQuery() for properly safe value but
+* it need db connection.
+* @return string
+*/
+public function getSqlSafeValue() {}
+/**
 * Set Default Value
 * It will over write value of component if 
 * component is not submit by browser and  it is empty.
