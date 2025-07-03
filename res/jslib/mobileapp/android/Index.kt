@@ -19,10 +19,11 @@ class Index(JSServer: JSServerC, ctrl:String, evt:String, evtp:String, data: JSO
 
                 // Simulate a task that takes time
                 Thread.sleep(2000) // Sleep for 5 seconds (5000 milliseconds)
-                val currentDateTime = LocalDateTime.now()
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                val formattedDateTime = currentDateTime.format(formatter)
-                JSServer.addJSONHTMLBlock("p1", "Hello from kotlin " + formattedDateTime);
+                //val currentDateTime = LocalDateTime.now()
+                //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                //val formattedDateTime = currentDateTime.format(formatter)
+                //JSServer.addJSONHTMLBlock("p1", "Hello from kotlin " + formattedDateTime);
+                JSServer.addJSONHTMLBlock("p1", "Hello from kotlin " + i.toString());
                 JSServer.flush()
             }
             JSServer.addJSONJSBlock("onsen.loadPage(\"page2.html\");")

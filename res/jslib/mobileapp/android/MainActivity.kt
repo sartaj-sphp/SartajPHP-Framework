@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         //register App
         webViewManager = WebViewManager(this)
         sRouter = webViewManager.getRouter()
-        sRouter.RegisterApp("index","com.sartajphp.sphpview.Index")
+        sRouter.RegisterApp("index","<?php echo $caller->mobappid ; ?>.Index")
 
         setContent {
             WebViewScreen()
