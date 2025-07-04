@@ -1,0 +1,18 @@
+{
+  "name": "sartajphp-electron-demo",
+  "version": "1.0.0",
+  "description": "SartajPhp Framework run inside Electron Js Project",
+  "main": "main.js",
+  "scripts": {
+	"start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sartaj",
+  "license": "ISC",
+  "dependencies": {
+    "sphpdesk": "^1.3.2"
+  },
+  "devDependencies": {
+    "electron": "^37.2.0"
+  }
+}

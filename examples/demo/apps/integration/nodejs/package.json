@@ -1,0 +1,14 @@
+{
+  "name": "sartajphp-binding",
+  "version": "1.0.0",
+  "description": "Bind Node JS with SartajPhp Framework Project with NativeApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sartaj",
+  "license": "ISC",
+  "dependencies": {
+    "sphpdesk": "^1.3.0"
+  }
+}
