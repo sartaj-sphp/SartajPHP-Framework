@@ -1,0 +1,23 @@
+
+[2023-02-13: 23:48:17] URL:- /res/proj1/ Exception: Class 'Sphp\tools\Controls' not found File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 2 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-13: 23:48:50] URL:- /res/proj1/ Exception: Class 'Sphp\tools\Controls' not found File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 2 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-13: 23:49:21] URL:- /res/proj1/ Exception: Class 'Sphp\tools\Controls' not found File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 2 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-13: 23:49:23] URL:- /res/proj1/ Exception: Class 'Sphp\tools\Controls' not found File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 2 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-13: 23:49:42] URL:- /res/proj1/ Exception: Class 'Sphp\tools\Controls' not found File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 2 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-13: 23:52:55] URL:- /res/proj1/ Exception: Cannot access private property SphpBase::$sphp_response File:- /home/sartaj/www/res/proj1/prerun.php Line:- 10 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-14: 00:06:48] URL:- /res/proj1/ Exception: syntax error, unexpected end of file File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 20 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-14: 00:07:42] URL:- /res/proj1/ Exception: Call to undefined method sweetalert::hasAttribute() File:- /home/sartaj/www/res/proj1/comp/sweetalert.php Line:- 13 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2023-02-14: 00:26:38] URL:- /res/proj1/ Fatel Error:- Type:-8 Msg:-Only variables should be passed by reference File:-/home/sartaj/www/res/Slib/comp/html/Title.php on line no. 13 
+                ENDLOG_DATA
+[2023-02-14: 00:26:45] URL:- /res/proj1/ Fatel Error:- Type:-8 Msg:-Only variables should be passed by reference File:-/home/sartaj/www/res/Slib/comp/html/Title.php on line no. 13 
+                ENDLOG_DATA
+[2023-02-17: 18:55:57] URL:- /res/proj1/ Exception: Call to undefined function getEventURL() File:- /home/sartaj/www/res/Slib/temp/default/menu.php Line:- 8 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA

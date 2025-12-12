@@ -4,6 +4,7 @@
 <form id="formsignin" runat="server" method="post" class="py-4" runcb="true" sphp-cb-card="">
         <input type="text" runat="server" id="uname" funsetForm="formsignin" placeholder="Email" funsetRequired="" funsetMinLen="4" funsetStyler="2">
         <input type="password" runat="server" id="pword" funsetForm="formsignin" placeholder="Password" funsetRequired="" funsetMinLen="4" funsetStyler="2">
+    <input type="text" runat="server" id="catcaha" path="controls/bundle/captcha/Captcha.php"  funsetMaxLen="5" funsetRequired="" funsetForm="formsignin" funsetMsgName="Secure Code">
 
         <div class="row">
         <div class="col-sm-4">
@@ -22,7 +23,7 @@
     </div>
 </form>
     
-   <div class="row py-3 px-3">
+<div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentapp->getAuthGoogle(); }#" >
         <div class="col-sm-4"> 
             <h1>OR</h1>
     <a href="##{getEventPath('gauth')}#" class="btn btn-primary google-login-btn">

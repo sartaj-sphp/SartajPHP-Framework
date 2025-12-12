@@ -1,16 +1,37 @@
-<div class="container"><div class="row d-flex justify-content-center"><div class="col-12 col-sm-12 col-md-8">
 <title metakeywords="Contact Address" metadescription="Contact Address" metaclassification="Contacts" keywords="contact,address">Contact Address</title>
-<h1>Contacts</h1>
+
+<div class="container"><div class="row py-4 px-4">
+<h1>Inquiry Form</h1>
+        <div class="col-12 col-sm-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>    
+                    <div class="card">
+                        <div class="card-head">
+                            <img class="img img-fluid" src="temp/images/logo.png" />
+                        </div>
+                        <div class="card-body">
+                            <address>
+                                <strong>##{$cmpname}#</strong><br>
+                                #{ if($cmpaddress1 != "") echo $cmpaddress1 . "<br>" }#
+                                #{ if($cmpaddress2 != "") echo $cmpaddress2 . "<br>" }#
+                                      <a href="tel:##{$cmpphone1}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
+                                      <a href="tel:##{$cmpphone2}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
+
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8">
 <div class="card">
-<div class="card-header">    
-    <img src="##{SphpBase::sphp_settings()->slib_res_path}#/temp/default/assets/img/contact_address.webp" class="img img-fluid col-12 col-md-2" alt="Contacts Address" />
-</div>
 <div class="card-body">
-<h5 class="card-title">Fill Query Form of <?php echo $cmpname; ?></h5>    
+<h5 class="card-title">Fill the Following Details:-</h5>    
 <div class="error"><?php print traceError(true); ?></div>
 <div class="msgerr"><?php print traceMsg(true); ?></div>
 
-                    <form id='form2' runat="server" action="<?php print getEventURL('page','quote-submit','index');?>">
+                    <form id='form2' runat="server" action="<?php print getEventURL('subquote','','index2');?>">
                       <table border="0" width="80%" align="center">
                         <tbody><tr> 
                           <td>Name:</td>

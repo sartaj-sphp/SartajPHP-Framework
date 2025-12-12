@@ -1,0 +1,394 @@
+<div id="div1" runat="server">
+      <div id="browse_panel" class="panel" style="overflow:auto;">
+          <include id="filebrowser" runat="server" funsetTempFile="##{$tempobj->fileDir}#/../TinyEditor/splugins/advimage/file_browser.front"></include>
+</div>
+
+</div>
+
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .image-preview {
+            max-width: 100%;
+            border: 1px dashed #ccc;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="image-preview-container mb-3 text-center">
+            <img id="image-preview" class="image-preview" />
+            <div class="mt-2 small text-muted" id="image-dimensions">Original dimensions: 0 × 0</div>
+        </div>
+        
+        <div class="accordion" id="imageEditorAccordion">
+            <!-- Basic Properties -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingBasic">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic" aria-expanded="true" aria-controls="collapseBasic">
+                        <i class="fas fa-cog me-2"></i>Basic Properties
+                    </button>
+                </h2>
+                <div id="collapseBasic" class="accordion-collapse collapse show" aria-labelledby="headingBasic" data-bs-parent="#imageEditorAccordion">
+                    <div class="accordion-body">
+                        <div class="mb-2">
+                            <label for="image-src" class="form-label">Image URL</label>
+                            <input type="text" id="image-src" class="form-control" placeholder="Enter image URL">
+                        </div>
+                        <div class="mb-2">
+                            <label for="image-alt" class="form-label">Alternative Text</label>
+                            <input type="text" id="image-alt" class="form-control" placeholder="Enter alt text">
+                        </div>
+                        <div class="mb-2">
+                            <label for="image-alt" class="form-label">Title</label>
+                            <input type="text" id="image-title" class="form-control" placeholder="Enter Title">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label for="image-width" class="form-label">Width (px)</label>
+                                    <input type="number" id="image-width" class="form-control" placeholder="Width" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label for="image-height" class="form-label">Height (px)</label>
+                                    <input type="number" id="image-height" class="form-control" placeholder="Height" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="responsive-image">
+                            <label class="form-check-label" for="responsive-image">Make image responsive (img-fluid)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Border Properties -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingBorder">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBorder" aria-expanded="false" aria-controls="collapseBorder">
+                        <i class="fas fa-border-style me-2"></i>Border Properties
+                    </button>
+                </h2>
+                <div id="collapseBorder" class="accordion-collapse collapse" aria-labelledby="headingBorder" data-bs-parent="#imageEditorAccordion">
+                    <div class="accordion-body">
+                        <div class="mb-2">
+                            <label for="image-border" class="form-label">Border Size (px)</label>
+                            <input type="number" id="image-border" class="form-control" placeholder="Border size" value="0" min="0">
+                        </div>
+                        <div class="mb-2">
+                            <label for="image-border-color" class="form-label">Border Color</label>
+                            <select id="image-border-color" class="form-select">
+                                <option value="">Default (black)</option>
+                                <option value="border-primary">Primary</option>
+                                <option value="border-secondary">Secondary</option>
+                                <option value="border-success">Success</option>
+                                <option value="border-danger">Danger</option>
+                                <option value="border-warning">Warning</option>
+                                <option value="border-info">Info</option>
+                                <option value="border-light">Light</option>
+                                <option value="border-dark">Dark</option>
+                                <option value="border-white">White</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Style Properties -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingStyle">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStyle" aria-expanded="false" aria-controls="collapseStyle">
+                        <i class="fas fa-paint-brush me-2"></i>Style Properties
+                    </button>
+                </h2>
+                <div id="collapseStyle" class="accordion-collapse collapse" aria-labelledby="headingStyle" data-bs-parent="#imageEditorAccordion">
+                    <div class="accordion-body">
+                        <div class="mb-2">
+                            <label for="image-style" class="form-label">Image Style</label>
+                            <select id="image-style" class="form-select">
+                                <option value="">Default</option>
+                                <option value="rounded">Rounded</option>
+                                <option value="rounded-top">Rounded Top</option>
+                                <option value="rounded-end">Rounded End</option>
+                                <option value="rounded-bottom">Rounded Bottom</option>
+                                <option value="rounded-start">Rounded Start</option>
+                                <option value="rounded-circle">Circle</option>
+                                <option value="rounded-pill">Pill</option>
+                                <option value="img-thumbnail">Thumbnail</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="image-align" class="form-label">Alignment</label>
+                            <select id="image-align" class="form-select">
+                                <option value="">None</option>
+                                <option value="float-start">Left</option>
+                                <option value="mx-auto d-block">Center</option>
+                                <option value="float-end">Right</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="image-margin" class="form-label">Margin</label>
+                            <select id="image-margin" class="form-select">
+                                <option value="">None</option>
+                                <option value="m-0">m-0 (No margin)</option>
+                                <option value="m-1">m-1 (Small margin)</option>
+                                <option value="m-2">m-2</option>
+                                <option value="m-3">m-3</option>
+                                <option value="m-4">m-4</option>
+                                <option value="m-5">m-5 (Large margin)</option>
+                                <option value="m-auto">m-auto (Auto margin)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+function updatepicurl(src,alt,title){
+    document.getElementById('image-src').value=src;
+    document.getElementById('image-alt').value=alt;
+    document.getElementById('image-title').value=title;
+    $('#picselected').html(title);
+    // Set preview image
+       var previewImg = document.getElementById('image-preview');
+       if (previewImg) {
+           previewImg.src = src || '';
+           previewImg.alt = alt || '';
+
+        // Apply initial styles to preview
+        updatePreview();
+    }
+}
+</script>
+
+    <script>
+        // Global variables
+        var aspectRatio = 0;
+        var dialogId = '';
+        // Listen for messages from parent
+        window.addEventListener('message', function(e) {
+            if (e.data.action === 'init') {
+                dialogId = e.data.dialogId;
+                initForm(e.data.imageData);
+            } else if (e.data.action === 'getFormData' && e.data.dialogId === dialogId) {
+                // Send form data back to parent
+                window.parent.postMessage({
+                    action: 'formData',
+                    dialogId: dialogId,
+                    src: document.getElementById('image-src').value,
+                    alt: document.getElementById('image-alt').value,
+                    title: document.getElementById('image-title').value,
+                    width: parseInt(document.getElementById('image-width').value) || 0,
+                    height: parseInt(document.getElementById('image-height').value) || 0,
+                    borderSize: parseInt(document.getElementById('image-border').value) || 0,
+                    borderColorClass: document.getElementById('image-border-color').value,
+                    styleClass: document.getElementById('image-style').value,
+                    alignClass: document.getElementById('image-align').value,
+                    marginClass: document.getElementById('image-margin').value,
+                    isResponsive: document.getElementById('responsive-image').checked
+                }, '*');
+            }
+        });
+        
+        // Initialize form with image data
+        function initForm(imageData) {
+            // Set form values
+            document.getElementById('image-src').value = imageData.src || '';
+            document.getElementById('image-alt').value = imageData.alt || '';
+            document.getElementById('image-title').value = imageData.title || '';
+            if(imageData.isResponsive){
+                document.getElementById('image-width').value = 0;
+                document.getElementById('image-height').value = 0;                
+            }else{
+                document.getElementById('image-width').value = imageData.width || 0;
+                document.getElementById('image-height').value = imageData.height || 0;
+            }
+            document.getElementById('image-border').value = imageData.borderSize || 0;
+            document.getElementById('image-border-color').value = imageData.borderColorClass || '';
+            document.getElementById('image-style').value = imageData.styleClass || '';
+            document.getElementById('image-align').value = imageData.alignClass || '';
+            document.getElementById('image-margin').value = imageData.marginClass || '';
+            document.getElementById('responsive-image').checked = imageData.isResponsive || false;
+            
+            // Set aspect ratio data
+            aspectRatio = imageData.aspectRatio || 0;
+            
+            // Update dimensions text
+            var dimensionsText = document.getElementById('image-dimensions');
+            if (dimensionsText && imageData.width && imageData.height) {
+                dimensionsText.textContent = `Original dimensions: ${imageData.width} × ${imageData.height}`;
+            }
+            
+            // Set preview image
+            var previewImg = document.getElementById('image-preview');
+            if (previewImg) {
+                previewImg.src = imageData.src || '';
+                previewImg.alt = imageData.alt || '';
+                
+                // Apply initial styles to preview
+                updatePreview();
+            }
+            
+            // Add event listeners
+            addEventListeners();
+        }
+        
+        // Add event listeners to form elements
+        function addEventListeners() {
+            // Source URL
+            var srcInput = document.getElementById('image-src');
+            if (srcInput) {
+                srcInput.addEventListener('input', function() {
+                    var previewImg = document.getElementById('image-preview');
+                    if (previewImg) {
+                        previewImg.src = this.value;
+                    }
+                });
+            }
+            
+            // Width input
+            var widthInput = document.getElementById('image-width');
+            if (widthInput) {
+                widthInput.addEventListener('input', function() {
+                    calculateDimensions('width');
+                });
+            }
+            
+            // Height input
+            var heightInput = document.getElementById('image-height');
+            if (heightInput) {
+                heightInput.addEventListener('input', function() {
+                    calculateDimensions('height');
+                });
+            }
+            
+            // Border size
+            var borderInput = document.getElementById('image-border');
+            if (borderInput) {
+                borderInput.addEventListener('input', updatePreview);
+            }
+            
+            // Border color
+            var borderColorSelect = document.getElementById('image-border-color');
+            if (borderColorSelect) {
+                borderColorSelect.addEventListener('change', updatePreview);
+            }
+            
+            // Style
+            var styleSelect = document.getElementById('image-style');
+            if (styleSelect) {
+                styleSelect.addEventListener('change', updatePreview);
+            }
+            
+            // Responsive checkbox
+            var responsiveCheckbox = document.getElementById('responsive-image');
+            if (responsiveCheckbox) {
+                responsiveCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // If responsive, set width and height to 0
+                        document.getElementById('image-width').value = 0;
+                        document.getElementById('image-height').value = 0;
+                        updatePreview();
+                    }else{
+                        document.getElementById('image-width').value = 200;
+                        calculateDimensions('width');
+
+                    }
+                });
+            }
+        }
+        
+        // Calculate dimensions based on aspect ratio
+        function calculateDimensions(changedField) {
+            var widthInput = document.getElementById('image-width');
+            var heightInput = document.getElementById('image-height');
+            
+            if (!widthInput || !heightInput || aspectRatio === 0) return;
+            
+            var width = parseInt(widthInput.value) || 0;
+            var height = parseInt(heightInput.value) || 0;
+            
+            if (changedField === 'width' && width > 0) {
+                // Calculate height based on width and aspect ratio
+                heightInput.value = Math.round(width / aspectRatio);
+            } else if (changedField === 'height' && height > 0) {
+                // Calculate width based on height and aspect ratio
+                widthInput.value = Math.round(height * aspectRatio);
+            }
+            
+            // Update preview
+            updatePreview();
+        }
+        
+        // Update preview image
+        function updatePreview() {
+            var previewImg = document.getElementById('image-preview');
+            if (!previewImg) return;
+            
+            var widthInput = document.getElementById('image-width');
+            var heightInput = document.getElementById('image-height');
+            var borderInput = document.getElementById('image-border');
+            var borderColorSelect = document.getElementById('image-border-color');
+            var styleSelect = document.getElementById('image-style');
+            
+            // Apply width and height
+            var width = parseInt(widthInput.value) || 0;
+            var height = parseInt(heightInput.value) || 0;
+            
+            if (width > 0) {
+                previewImg.style.width = width + 'px';
+            } else {
+                previewImg.style.width = '';
+            }
+            
+            if (height > 0) {
+                previewImg.style.height = height + 'px';
+            } else {
+                previewImg.style.height = '';
+            }
+            
+            // Apply border
+            var borderSize = parseInt(borderInput.value) || 0;
+            if (borderSize > 0) {
+                var borderColorClass = borderColorSelect.value;
+                var borderColor = '#000'; // Default black
+                
+                if (borderColorClass) {
+                    // Map Bootstrap border classes to actual colors
+                    var colorMap = {
+                        'border-primary': '#0d6efd',
+                        'border-secondary': '#6c757d',
+                        'border-success': '#198754',
+                        'border-danger': '#dc3545',
+                        'border-warning': '#ffc107',
+                        'border-info': '#0dcaf0',
+                        'border-light': '#f8f9fa',
+                        'border-dark': '#212529',
+                        'border-white': '#fff'
+                    };
+                    borderColor = colorMap[borderColorClass] || '#000';
+                }
+                
+                previewImg.style.border = borderSize + 'px solid ' + borderColor;
+            } else {
+                previewImg.style.border = 'none';
+            }
+            
+            // Apply style classes
+            var styleClass = styleSelect.value;
+            previewImg.className = 'image-preview';
+            if (styleClass) {
+                previewImg.classList.add(styleClass);
+            }
+        }
+    </script>

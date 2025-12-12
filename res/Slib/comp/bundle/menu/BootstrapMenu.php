@@ -1,7 +1,7 @@
 <?php
 // disable bootstrap 4
 //SphpJsM::$jslib["bootstrap"] = 5;
-//permissions system is not implemented, only menu ban works
+//permissions system is also implemented, menu ban works
 class BootstrapMenu extends \Sphp\tools\MenuGen{
 private $brandicon = "";
 private $navbarClasses = "navbar navbar-expand-md bg-dark navbar-dark";
@@ -11,6 +11,13 @@ private $fixedPos = "";
 private $rootMenu = "root";
 private $blnAjaxLink = false;
 private $bootstrapversion = 5; // set bootstrap version
+public $tempfiledir = "";
+
+public function __construct($filedir="") {
+    if($filedir == "") $filedir = getcwd();
+    $this->tempfiledir = $filedir;
+    parent::__construct();
+}
 
 public function onrun() {
     $this->init();
@@ -261,34 +268,34 @@ $controlkeysp = "";
 }
 
 private function init() {
-    $links = 'var links = jql(\'.navbar ul li a\');'; 
+    $links = 'var links = $(\'.navbar ul li a\');'; 
     if($this->bootstrapversion == 5){ 
-        $links = 'var links = jql(\'.navbar div ul li a\');';
+        $links = 'var links = $(\'.navbar div ul li a\');';
     }    
         addHeaderJSFunctionCode("ready", "navbar", '
  '. $links .'    
-    jql.each(links, function (key, va) {
+    $.each(links, function (key, va) {
         if (va.href == document.URL) {
-            jql(this).addClass(\'active\');
-            var pa = jql(this).parents(\'li.nav-dli\');
-            jql.each(pa, function (key2, va2) {
-                jql(va2).children("a.nav-dlink:first").addClass(\'active\');
+            $(this).addClass(\'active\');
+            var pa = $(this).parents(\'li.nav-dli\');
+            $.each(pa, function (key2, va2) {
+                $(va2).children("a.nav-dlink:first").addClass(\'active\');
             });
         }
     });
-    jql(\'.dropdown-menu a.dropdown-toggle\').on(\'click\', function(e) {
-  if (!jql(this).next().hasClass(\'show\')) {
-    jql(this).parents(\'.dropdown-menu\').first().find(\'.show\').removeClass("show"); 
+    $(\'.dropdown-menu a.dropdown-toggle\').on(\'click\', function(e) {
+  if (!$(this).next().hasClass(\'show\')) {
+    $(this).parents(\'.dropdown-menu\').first().find(\'.show\').removeClass("show"); 
   }
-  var $subMenu = jql(this).next(".dropdown-menu");
+  var $subMenu = $(this).next(".dropdown-menu");
   $subMenu.toggleClass(\'show\');
-  jql(this).parents(\'li.nav-item.dropdown.show\').on(\'hidden.bs.dropdown\', function(e) {
-    jql(\'.dropdown-submenu .show\').removeClass("show");
+  $(this).parents(\'li.nav-item.dropdown.show\').on(\'hidden.bs.dropdown\', function(e) {
+    $(\'.dropdown-submenu .show\').removeClass("show");
   });
   return false;
 });
-//jql(\'.nav-dlink\').click();
-jql.each(jql(\'.nav-dlink\'), function (key, va) {
+//$(\'.nav-dlink\').click();
+$.each($(\'.nav-dlink\'), function (key, va) {
     //va.click();
 });
 ',true);

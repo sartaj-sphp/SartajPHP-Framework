@@ -67,7 +67,7 @@ class TextField extends \Sphp\tools\Control{
         if(\SphpBase::sphp_request()->isAJAX()){
             \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
         }
-        setErr($this->name, $msg);
+        setErr($this->name, $msg); 
     }
     public function setNumeric() {
         if ($this->issubmit) {
@@ -193,9 +193,13 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         if ($this->readOnly == true) {
             $this->setAttribute('readonly', 'readonly');
         }
+        if ($this->password == true) {
+            $this->value = "";
+        }
         if ($this->value != "") {
             $this->setAttribute('value', htmlentities($this->value, ENT_COMPAT, "UTF-8"));
         }
+        if($this->getVisible()){
         switch($this->styler){
             case 1:{
                 $this->setPreTag($this->getPreTag() . '<div class="form-floating mb-3">');
@@ -207,6 +211,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
                 $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
                 break;
             }
+        }
         }
     }
 

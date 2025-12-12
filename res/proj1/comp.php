@@ -7,10 +7,10 @@ $duser = "root";
 $db = "dbproj";
 $dpass = "";
 
-$debugmode = 0;
+$debugmode = 1;
 
 if($basepath != ""){
-	$basepath .= "demo/";
+	$basepath .= "/res/proj1";
 }
 
 //app mail settings
@@ -27,16 +27,16 @@ $page = SphpBase::page();
 
 switch(SphpBase::page()->getAuthenticateType()){
 case "ADMIN":{
-$page->forward(getAppPath("admhome",'','',true));
+$page->forward(getAppURL("admhome",'','',true));
 break;
 }
 case "MEMBER":{
-$page->forward(getAppPath("mebhome"));
+$page->forward(getAppURL("mebhome"));
 break;
 }
 
 default:{
-$page->forward(getAppPath("index"));
+$page->forward(getAppURL("index"));
 break;
 }
 

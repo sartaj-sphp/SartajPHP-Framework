@@ -1,8 +1,0 @@
-<div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
-
-<div id="header1" runat="server" funsetMenuFile="##{SphpBase::sphp_settings()->slib_path}#/temp/default/menu.php" class="py-3 mb-4" funsetFixed="" funsetStyler="4" funsetFullSize="" path="libpath/comp/bundle/bootstrap/Header.php"></div>
-<main class="container  px-4 py-4">
-<?php SphpBase::$dynData->render(); ?>
-</main>
-<div id="footer1" runat="server" funsetMenuFile="##{SphpBase::sphp_settings()->slib_path}#/temp/default/menu_footer.php" funsetStyler="2" funsetFullSize="" path="libpath/comp/bundle/bootstrap/Footer.php"></div>
-</div>

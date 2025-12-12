@@ -3,12 +3,20 @@
 class BootstrapSideMenu extends \Sphp\tools\MenuGen{
 public $brandicon = "";
 public $navbarClasses = "nav flex-column flex-nowrap overflow-hidden nav-pills";
+private $navmenuClasses = "navbar-nav";
 private $mkey = "";
 private $mkeychar = "";
 private $fixedPos = "";
 private $rootMenu = "sidebar";
 private $counter1 = 1;
 private $bootstrapversion = 5; // set bootstrap version
+public $tempfiledir = "";
+public $text = "demo text";
+
+public function __construct($filedir) {
+    $this->tempfiledir = $filedir;
+    parent::__construct();
+}
 
 public function onrun() {
     $this->init();
@@ -27,16 +35,22 @@ public function setRootMenu($val) {
 public function setNavBarCss($val) {
     $this->navbarClasses = $val;
 }
+public function setNavMenuCss($val) {
+    $this->navmenuClasses = $val;
+}
+
 public function setBrandIcon($val) {
     $this->brandicon = $val;
 }
 public function genMenus() {
     $strmbar = $this->genMenuBar();
-    $mnuroot = $this->sphp_api->getMenuList("root");
+    $mnuroot = $this->sphp_api->getMenuList($this->rootMenu);
     // generate bootstrap 4 menu
     $str1 = "";
+    if(is_array($mnuroot)){
     foreach ($mnuroot as $mnuName => $lstMenu) {
             $str1 .= $this->genMenu($lstMenu);            
+    }
     }
     $this->htmlout = $strmbar[0] . $str1 . $strmbar[1];
 }
@@ -83,7 +97,7 @@ SphpBase::JSServer()->getAJAX();
 addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
-private function getB4Menu($mnutext,$mnuhref="",$mnuicon,$blnAjaxLink2=false,$mnuSub=0){
+private function getB4Menu($mnutext,$mnuhref="",$mnuicon="",$blnAjaxLink2=false,$mnuSub=0){
 $mnutitle = $mnutext;
 if($mnuhref==''){
     $mnuhref = "#";
@@ -100,22 +114,22 @@ $stro = array();
 if($mnuSub==0){
     if($this->bootstrapversion == 5){ 
         $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
-        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
-        . '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'-></span></a>'
+        . '<div id="'. $mnuhref2 .'" class="collapse show" aria-expanded="true"><ul class="flex-column pl-2 nav">';
     }else{
         $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink text-truncate" data-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
-        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
-        . '<div id="'. $mnuhref2 .'" aria-expanded="true"><ul class="flex-column pl-2 nav">';
+        '<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'-></span></a>'
+        . '<div id="'. $mnuhref2 .'" class="collapse show" aria-expanded="true"><ul class="flex-column pl-2 nav">';
     }
 $stro[1] = '</ul></div></li>';
 }else if($mnuSub==1){ // if sub menu and dropdown
     if($this->bootstrapversion == 5){ 
 $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-bs-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
-'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
+'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'-></span></a>'
 . '<div class="collapse" id="'. $mnuhref2 .'" aria-expanded="false"><ul class="flex-column pl-2 nav">';
     }else{
 $stro[0] = '<li class="nav-item nav-dli"><a class="nav-link nav-dlink collapsed text-truncate" data-toggle="collapse" data-target="#'. $mnuhref2 .'" href="#'.$mnuhref2.'" >' . 
-'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'</span></a>'
+'<i class="'. $mnuicon .'"></i> <span class="d-none d-sm-inline">' . $mnutitle.'-></span></a>'
 . '<div class="collapse" id="'. $mnuhref2 .'" aria-expanded="false"><ul class="flex-column pl-2 nav">';
         
     }
@@ -126,7 +140,7 @@ $stro[1] = '</li>';
 }
 return $stro;
 }
-private function getB4MenuLink($mnuitemtext,$mnuitemhref="",$mnuicon,$blnAjaxLink2=false){
+private function getB4MenuLink($mnuitemtext,$mnuitemhref="",$mnuicon="",$blnAjaxLink2=false){
 $mnuitemtitle = $mnuitemtext;
 $mnuitemtext = $mnuitemtext . $this->mkeychar;
 $tfun = "menu_ajax";
@@ -140,9 +154,9 @@ return '<li class="nav-item"><a class="nav-link nav-dli text-truncate" data-mkey
 public function genMenuBar() {
 if($this->brandicon != ""){
 $this->brandicon = '  <!-- Brand -->
-<div><a class="" href="#"><img class="img img-fluid img-circle" src="'. $this->brandicon .'" alt="Logo"></a></div>';
+<div class="col text-center"><a class="" href="#"><img class="img img-fluid rounded-circle" src="'. $this->brandicon .'" alt="Logo"></a><h3 class="text-white">'. $this->text .'</h3></div>';
 }
-$bootstrapMenu = $this->brandicon . '<div class="snavbar"><ul class="'. $this->navbarClasses .'">';
+$bootstrapMenu = $this->brandicon . '<div class="snavbar px-3 py-3 "><ul class="'. $this->navbarClasses .'">';
 return array($bootstrapMenu,'</ul></div>');
 }
 private function setKey($key,$controlkeys="") {

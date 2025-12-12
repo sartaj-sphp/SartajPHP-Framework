@@ -9,6 +9,8 @@ class TempFile {
 public $data = "";
 public $filePath = "";
 public $fileDir = "";
+public $mypath = "";
+public $myrespath = "";
 public $compList = array();
 public $name = "";
 public $webapp = null;

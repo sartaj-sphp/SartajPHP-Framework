@@ -40,6 +40,7 @@ public function endupcomp($element,$parentelement) {}
 public function startrender($element,$parentelement) {}    
 public function endrender($element,$parentelement) {}
 public function executeFun($compobj, $key, $val) {}
+public function resolvePathVar($val){}
 public function executePHPCode($strPHPCode,$compobj=null) {}
 }
 }

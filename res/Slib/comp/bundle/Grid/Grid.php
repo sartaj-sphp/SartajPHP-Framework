@@ -52,19 +52,21 @@ private $blnpagebar = true;
 private $handleeventapp = false;
 public $content_section = null;
 private $roote = null;
+public $sesbasename = "";
 
 
 public function oncreate($element) {
+    $this->sesbasename = \SphpBase::sphp_router()->ctrl . $this->name;
 if(\SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
 if(\SphpBase::sphp_request()->isRequest('page')){
-\SphpBase::sphp_request()->session($this->name.'p',\SphpBase::sphp_request()->request('page'));
-\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->ctrl);
+\SphpBase::sphp_request()->session($this->sesbasename.'p',\SphpBase::sphp_request()->request('page'));
+\SphpBase::sphp_request()->session($this->sesbasename.'pc', \SphpBase::sphp_router()->ctrl);
 }else{
 \SphpBase::sphp_request()->request('page',false, 1);
-if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::sphp_router()->ctrl){
-\SphpBase::sphp_request()->request('page',false,$_SESSION[$this->name.'p']);
+if(isset($_SESSION[$this->sesbasename.'pc']) && $_SESSION[$this->sesbasename.'pc'] == \SphpBase::sphp_router()->ctrl){
+\SphpBase::sphp_request()->request('page',false,$_SESSION[$this->sesbasename.'p']);
 }
 }
 $this->pageNo = \SphpBase::sphp_request()->request('page') - 1;
@@ -108,8 +110,8 @@ $this->extraData = $val;
 }
 public function setPageNo($val){
 $this->pageNo = $val - 1;
-\SphpBase::sphp_request()->session($this->name.'p',$val);
-\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->ctrl);
+\SphpBase::sphp_request()->session($this->sesbasename.'p',$val);
+\SphpBase::sphp_request()->session($this->sesbasename.'pc', \SphpBase::sphp_router()->ctrl);
 \SphpBase::sphp_request()->request('page',false, $val);
 }
 public function getPageNo(){
@@ -610,16 +612,16 @@ window.location = link ;
 $(\"#btnadd{$this->name}\").on('click',function(){paginew_{$this->name}('" . getEventURL($this->name.'_newa','','','','',true) . "');});
 ");
 
-if($this->blnadd){
+//if($this->blnadd){
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;" ></div>    
 </div><div id="'.$this->name.'_toolbar" class="pb-4">';
-}else{
-$ptag = '<div id="'.$this->name.'_toolbar">';    
-}
+//}else{
+//$ptag = '<div id="'.$this->name.'_toolbar">';    
+//}
 if($this->blnadd){
 $ptag .= '<input id="btnadd'. $this->name .'" class="btn btn-primary" type="button" value="Add"  />';
-
+}
 $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     <div id="sphpwarning" class="alert alert-warning" style="display: none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -646,7 +648,7 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     }
     $p1->setPreTag($divt . $p1->pretag);    
     $p1->setPostTag('</div>'.$p1->posttag);
-}
+
 }
 
 
@@ -772,7 +774,7 @@ if(count($spt)>0){
 }else{
     $idf = "id";
 }
-$storesql = $Client->session($this->name .'store');
+$storesql = $Client->session($this->sesbasename .'store');
 if(!is_array($storesql)) $storesql = array();
 if(isset($storesql['lastapp']) && $storesql['lastapp'] == $ctrl->ctrl){
 if($this->ordersortby==""){
@@ -786,7 +788,7 @@ if($this->where==""){
     }
 }
 }
-if(strpos($this->where,"WHERE")===false){
+if(stripos($this->where,"WHERE")===false){
         $this->where = $this->whereDef;
 }
 
@@ -794,6 +796,9 @@ if($this->pageCountSQL==''){
 $this->pageCountSQL = "SELECT count($idf) FROM ".$this->dtable." ".$this->where;
 } 
 if($this->sql==''){
+    if(stripos($this->where,"ORDER BY") !== false){
+        if(stripos($this->ordersortby,"ORDER BY") !== false) $this->ordersortby = str_ireplace("ORDER BY",",",$this->ordersortby);
+    }
 $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
 }
 $storesql['lastsql'] = $this->sql;
@@ -801,9 +806,9 @@ $storesql['lastpagecountsql'] = $this->pageCountSQL;
 $storesql['lastapp'] = $ctrl->ctrl;
 $storesql['sortby'] = $this->ordersortby;
 $storesql['whereby'] = $this->where;
-$Client->session($this->name .'store',$storesql);
+$Client->session($this->sesbasename .'store',$storesql);
 
-$this->parameterA['class'] = 'pag';
+$this->element->appendAttribute('class', ' pag');
 if($this->content_section===null){ 
 $this->setInnerHTML($this->header. $this->executeSQL() . $this->footer);
 }else{

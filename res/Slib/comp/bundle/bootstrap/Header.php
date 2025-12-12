@@ -2,16 +2,21 @@
 
 class Header extends Control {
     private $menufile = null;
+    private $vertimenufile = null;
     private $text = "";
     private $icon = "";
     private $fullsize = false;
     private $fixed = false;
+    private $vertimenu = false;
 
     public function setText($val) {
         $this->text = $val;
     }
     public function setFullSize() {
         $this->fullsize = true;
+    }
+    public function setVericalMenuTitle($a="") {
+       
     }
     public function setIcon($val) {
         $this->icon = $val;
@@ -22,23 +27,48 @@ class Header extends Control {
     public function setMenuFile($menupath) {
         $this->menufile = $menupath;
     }
+    public function setVerticalMenuFile($menupath) {
+        if($menupath == ""){
+            $this->vertimenu = false;
+        }else{
+            $this->vertimenu = true;            
+        }
+        $this->vertimenufile = $menupath;
+    }
     private function getMenu($callback) {
         $menuo = "";
         if($this->menufile != null){
             include_once($this->menufile);
-            $menu = new MenuUi();
+            $menu = new MenuUi($this->tempobj->fileDir);
             $callback($menu);
             $menu->run();
             $menuo = $menu->render();
         }
         return $menuo;
     }
-    public function onrender() {
+    private function getVertiMenu($callback) {
+        $menuo = "";
+        if($this->vertimenufile != null){
+            include_once($this->vertimenufile);
+            $menu = new MenuUiSide($this->tempobj->fileDir);
+            $menu->brandicon = $this->icon;
+            $menu->text = $this->text;
+            $callback($menu);
+            $menu->run();
+            $menuo = $menu->render();
+        }
+        return $menuo;
+    }
+
+    public function onaftercreate() {
         global $cmpname;
+        parent::onaftercreate();
         if($this->text == "")  $this->text = $cmpname;
         if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_res_path . "/temp/default/imgs/android-icon-192x192.png";
+    }
+    public function onrender() {
         
-        $this->setTagName("header");
+        //$this->setTagName("header");
 
         
         switch($this->styler){
@@ -196,14 +226,76 @@ class Header extends Control {
             
         }
         
+        $this->unsetRenderTag();
+        $cls = $this->getAttribute("class");
+        if($this->fixed) $cls .= ' fixed-top';
         
-        $this->setInnerHTML($st);
+        // if vertical menu enable then add left side bar + vertimenu
+        $stin = "";
+        if($this->vertimenu){
+            $t1 = ($this->menufile != "")? true: false;
+            $mn1 = $this->getVertiMenu(function($menu) use ($t1){
+                if($t1) $menu->brandicon = "";
+                    //$menu->disableNavBar();
+                    //$menu->setNavMenuCss('nav me-auto');
+                });
+            $str2 = ""; // add padding if menubar also true
+            if($t1){
+                $str2 = "margin-top: 400px;";
+            }else{
+                $st = "";
+            }
+            $stin = '<div class="row"><div class="sidebar-container col-4" style="z-index: 1040;"><div class="py-3 bg-dark border-right-2 rounded shadow-lg" style="'. $str2 .'"><button class="sidebar-toggle-btn">
+            <i class="fas fa-chevron-left"></i>
+        </button>'. $mn1 .'</div></div><div class="overlay"></div><div class="content-column col border rounded shadow-lg">';
+            $this->element->setInnerPostTag('</div></div>');
+            addHeaderJSFunctionCode('ready', 'header1a',"// Sidebar toggle functionality
+        const sidebarContainer = $('.sidebar-container');
+        const sidebarToggleBtn = $('.sidebar-toggle-btn');
+        const mobileSidebarToggle = $('.mobile-sidebar-toggle');
+        const overlay = $('.overlay');
+        
+        // Desktop toggle
+        sidebarToggleBtn.on('click', function() {
+            sidebarContainer.toggleClass('collapsed');
+            
+            // Change icon direction
+            const icon = $(this).find('i');
+            if (sidebarContainer.hasClass('collapsed')) {
+                icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+            } else {
+                icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+            }
+        });
+        
+        // Mobile toggle
+        mobileSidebarToggle.on('click', function() {
+            sidebarContainer.toggleClass('mobile-open');
+        });
+        
+        // Close sidebar when clicking overlay on mobile
+        overlay.on('click', function() {
+            sidebarContainer.removeClass('mobile-open');
+        });
+        
+        // Close sidebar when clicking on a link (mobile)
+        $('.sidebar-container a').on('click', function() {
+            if (window.innerWidth < 769) {
+                sidebarContainer.removeClass('mobile-open');
+            }
+        });",true);
+        }
+        
+        $this->setInnerPreTag('<button class="mobile-sidebar-toggle d-lg-none">
+    <i class="fas fa-bars"></i>
+</button><header id="'. $this->name .'" class="'. $cls .'">' . $st . '</header>' . $stin);
+        
         if($this->fixed){
-            $this->element->appendAttribute('class', ' fixed-top');
             addHeaderJSFunctionCode('ready', 'header', '$(window).on("scroll",function(){'
                     . 'const threshold = $(document).scrollTop() > 50;
    $("#'. $this->name .'").toggleClass(\'scrolled\', threshold);});$(window).scroll();');
         }
       
+        
     }
 }

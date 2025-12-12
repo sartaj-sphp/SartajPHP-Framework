@@ -5,14 +5,12 @@ class PermisApp extends \Sphp\tools\BasicApp {
     protected $insertedid = 0;
     protected $defWhere = "";
     /**
-     *
-     * @var type TempFile
+     *  @var \Sphp\tools\TempFile
      */
     protected $genFormTemp = null;
 
     /**
-     *
-     * @var type TempFile
+     *  @var \Sphp\tools\TempFile
      */
     protected $showallTemp = null;
         

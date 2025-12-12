@@ -390,10 +390,12 @@ public function getServLanguage() {}
 public function isDebugMode() {}
 /**
 * Get string from php content
-* @param type $filepath
+* @param string $filepath filepath or string
+* @param object $caller variable pass as object or array to use inside content as $caller->myprop
+* @param bool $stringpass $filepath as string
 * @return string
 */
-public function getDynamicContent($filepath,$caller=null) {}
+public function getDynamicContent($filepath,$caller=null,$stringpass=false) {}
 /**
 * Minify PHP code string
 * @param string $filedata

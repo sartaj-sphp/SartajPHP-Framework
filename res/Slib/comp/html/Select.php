@@ -26,7 +26,7 @@ class Select extends \Sphp\tools\Control {
     private $strFirstValue = "null";
     private $cssfield = "";
     private $cssvals = array();
-    private $blnsearch = false;
+    public $blnsearch = false;
 
     protected function genhelpPropList() {
         parent::genhelpPropList();
@@ -178,10 +178,21 @@ class Select extends \Sphp\tools\Control {
     /**
      * Set JSON String as key value pairs.
      * funsetOptionsJSON='[["0","Parent"], ["1", "Child"]]'
+     * funsetOptionsJSON='{"0":"Parent", "1": "Child"}'
      * @param string $val json string
      */
     public function setOptionsJSON($val) {
-        $this->opt = json_decode($val,true);
+        //$val = trim($val);
+        $opt2 = json_decode($val,true);
+        $opt1 = array();
+        if($val[0] == '{'){
+            foreach($opt2 as $key=>$val){
+                $opt1[] = [$key,$val];
+            }
+            $this->opt = $opt1;
+        }else{
+            $this->opt = $opt2;            
+        }
         $this->options = '';
         $this->setOptionsKeyArray();
         $this->genOptionList();
@@ -270,7 +281,11 @@ class Select extends \Sphp\tools\Control {
                 $strt1 = "";
                 if ($blnMultiTextField) {
                     foreach ($ar1 as $key => $value) {
-                        $strt1 .= $row[$value] . $this->separator;
+                        if($strt1 != ""){
+                            $strt1 .= $this->separator . $row[$value] ;
+                        }else{
+                            $strt1 .= $row[$value] ;                            
+                        }
                     }
                 } else {
                     $strt1 = $row[$textField];
@@ -309,12 +324,18 @@ document.getElementById('$this->name').focus();
                 $this->fstatic = true;
         }
     }
-
-    public function onrender() {
-        $HTMLParser = new \Sphp\tools\HTMLParser();
+    
+    public function onprerender() {
         if($this->blnsearch){
             addFileLink($this->myrespath . "/jslib/select2.min.css");
             addFileLink($this->myrespath . "/jslib/select2.min.js");
+        }
+    }
+
+    public function onrender() {
+         if($this->getVisible()){
+        $HTMLParser = new \Sphp\tools\HTMLParser();
+        if($this->blnsearch){
             addHeaderJSFunctionCode("ready", "select2","$(\"#{$this->name}\").select2({
         theme: \"classic\",
         width: '100%',
@@ -348,7 +369,9 @@ document.getElementById('$this->name').focus();
                 break;
             }
         }
-        
+         }else{
+             $this->setAttribute('value', $this->getSelectedValue());
+         }
     }
 
     public function getOptionsHTML() {

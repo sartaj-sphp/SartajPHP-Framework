@@ -10,14 +10,12 @@ include_once("{$libpath}/dev/QueryBuilder.php");
 class AutoApp extends \Sphp\tools\BasicApp {
 
     /**
-     *
-     * @var type TempFile
+     *  @var \Sphp\tools\TempFile
      */
     protected $genFormTemp = null;
 
     /**
-     *
-     * @var type TempFile
+     *  @var \Sphp\tools\TempFile
      */
     protected $showallTemp = null;
     public $heading = "heading";

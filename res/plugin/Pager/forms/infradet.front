@@ -1,73 +1,114 @@
-<h1 class="headerbar" title="<?php print getKeyword(); ?>">
-    <?php print $this->tempobj->list->getRow('pagetitle'); ?> 
-    <button id="btndet" runat="server" funsetrender="pagea-edit" class="btn btn-primary">Edit</button>
-</h1>
-<div class="content">
-    <span id="btncat" runat="server" funsetrender="pagea-catadd" >
-        <a href="#." onclick="getURL('catfsav-pgnew.html');">Add Category</a><br />
-</span>
-    <span id="btncat1" runat="server" funsetrender="pagea-add" >
-        <a href="#." onclick="getURL('pagefsav-pgnew.html');">Add Page</a><br />
-</span>
-    <span class="breadcrumb">    
-    <span id="btncat2" runat="server" funsetrender="pagea-catedit" >
-&nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('catid')}#';getURL('catfsav-pgedit.html',data);">
-    <i class="fa fa-edit"></i></a> &nbsp;
-    </span>
-<?php echo explode(",",$this->tempobj->list->getRow('catname'))[1]; ?> 
+<div class="content py-4">
 
-    <span id="btncat3" runat="server" funsetrender="pagea-catdel" >
- &nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('catid')}#' ;getURL('catfsav-pgdel.html',data);">
-        <i class="fa fa-trash"></i></a> &nbsp;
-    </span>
+<div class="px-2 py-2 d-flex gap-2">    
+  <div id="btncat" runat="server" funsetrender="pagea-catadd">
+    <a href="#." 
+       onclick="getURL('catfsav-pgnew.html');" 
+       class="btn btn-sm btn-success" 
+       data-bs-toggle="tooltip" title="Create a new category">
+       <i class="fa fa-plus"></i> Category
+    </a>
+  </div>
 
-    <span id="btncat4" runat="server" funsetrender="pagea-edit" >
-&nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('id')}#';getURL('pagefsav-pgedit.html',data);">
-    <i class="fa fa-edit"></i></a> &nbsp;
-    </span>
-<?php echo ' > ' . $this->tempobj->list->getRow('pagesubttitle'); ?>
-    <span id="btncat5" runat="server" funsetrender="pagea-del" >
- &nbsp;<a href="#." onclick=" var data={}; data['txtid']='##{$this->tempobj->list->getRow('id')}#' ;getURL('pagefsav-pgdel.html',data);">
-        <i class="fa fa-trash"></i></a> &nbsp;
-    </span>
-    </span>
-    <?php
-global $cmpname;
-SphpBase::sphp_settings()->title = $this->tempobj->list->getRow('pagetitle');
-SphpBase::sphp_settings()->metakeywords = $this->tempobj->list->getRow('pagekey');
-SphpBase::sphp_settings()->metadescription = $this->tempobj->list->getRow('pagedes');
-SphpBase::sphp_settings()->metaclassification = "$cmpname ". $this->tempobj->list->getRow('pagetitle');
-SphpBase::sphp_settings()->keywords = explode(',',SphpBase::sphp_settings()->metakeywords);
-?>
+  <div id="btncat2" runat="server" funsetrender="pagea-catedit">
+    <a href="#." 
+       onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgedit.html',data);" 
+       class="btn btn-sm btn-primary" 
+       data-bs-toggle="tooltip" title="Edit selected category">
+       <i class="fa fa-edit"></i> Category
+    </a>
+  </div>
 
-
-<div id="list" runat="server" path="libpath/comp/data/Pagination.php" funsetCacheTime="<?php global $maxtime; print $maxtime; ?>"
-funsetFieldNames="pagesubttitle,pagetitle,pagedes,pagekey,filepath1,filepath2,catname,catid" funsetWhere="WHERE spcmpid='##{$cmpid}#' AND  pagename='##{SphpBase::page()->getEvent()}#'">
+  <div id="btncat3" runat="server" funsetrender="pagea-catdel">
+    <a href="#." 
+       onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgdel.html',data);" 
+       class="btn btn-sm btn-danger" 
+       data-bs-toggle="tooltip" title="Delete selected category">
+       <i class="fa fa-trash"></i> Category
+    </a>
+  </div>
 </div>
-<div class="align-center">
-<?php if($this->tempobj->list->getRow('filepath1')!=''){print '<img src="'.$this->tempobj->list->getRow('filepath1').'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
+
+<div class="px-2 py-2 d-flex gap-2">
+  <div id="btncat1" runat="server" funsetrender="pagea-add">
+    <a href="#." 
+       onclick="getURL('pagefsav-pgnew.html');" 
+       class="btn btn-sm btn-success" 
+       data-bs-toggle="tooltip" title="Create a new page">
+       <i class="fa fa-plus"></i> Page
+    </a>
+  </div>
+
+  <div id="btncat4" runat="server" funsetrender="pagea-edit">
+    <a href="#." 
+       onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgedit.html',data);" 
+       class="btn btn-sm btn-primary" 
+       data-bs-toggle="tooltip" title="Edit selected page">
+       <i class="fa fa-edit"></i> Page
+    </a>
+  </div>
+
+  <div id="btncat5" runat="server" funsetrender="pagea-del">
+    <a href="#." 
+       onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgdel.html',data);" 
+       class="btn btn-sm btn-danger" 
+       data-bs-toggle="tooltip" title="Delete selected page">
+       <i class="fa fa-trash"></i> Page
+    </a>
+  </div>
 </div>
+    
+    
+<div class="px-4 py-2">
+<nav aria-label="breadcrumb" id="spn4" runat="server">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <?php echo explode(",",$parentapp->getRow('catname'))[1]; ?>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <?php echo $parentapp->getRow('pagetitle'); ?>
+    </li>
+  </ol>
+</nav>
+
+</div>
+
+<?php if($parentapp->getRow('pagetitle') != ""){ ?>
+<h2 class="headerbar px-4" title="<?php print getKeyword(); ?>">
+    <?php print $parentapp->getRow('pagetitle'); ?> 
+</h2>
+<?php } ?>
+    
+<div id="btncat7" class="px-2" runat="server" funsetrender="pagea-edit" >
+    <button id="btndet" class="btn btn-primary">Edit</button>
+</div>
+   
+    <alert id="app1" runat="server" funsetAuth="ADMIN,MEMBER" funsetShowAll=""></alert>
 
     <form id="frmdet" runat="server" action="##{ getEventURL('pgdata','','pagefsav') }#" funsetAuth="ADMIN">
         <script runas="jsfunctioncode" function="ready">
             $("#pgdatae").css("display","none");
             $("#btndet").on("click",function(){
                 $("#pgdatae").css("display","block"); 
-                $("#pgdata").css("display","none");
+                $("#pgdata").css("display","none"); 
             });
         </script>
-        <input id="pagename" runat="server" type="hidden" value="##{ SphpBase::page()->getEvent() }#" />
+        <input id="pagename" runat="server" type="hidden" value="##{ $parentapp->eventname }#" />
+        <input id="txtidtiny" runat="server" type="hidden" value="##{ $parentapp->getRow('id'); }#" />
 <div id="pgdatae" runat="server">
-    <div id="tinydetails" runat="server" path="controls/TinyEditor/TinyEditor.php" rows="100" cols="50" funsetAuth="ADMIN"
-         funsetValue="#{ if(file_exists('pagres/' . SphpBase::page()->getEvent() .'.html')) {echo file_get_contents('pagres/' . SphpBase::page()->getEvent() .'.html'); } }#" >
+    <div id="tinydetails" runat="server" path="mypath/../TinyEditor/TinyEditor.php" rows="100" cols="50" funsetAuth="ADMIN"
+         funsetValue="#{ if(file_exists('pagres/a' . $parentapp->getRow('id') . '.html')) {echo file_get_contents('pagres/a' . $parentapp->getRow('id') .'.html'); } }#" >
     </div>
 </div>
     </form>
+    
+    <title metakeywords="##{$parentapp->getRow('pagekey')}#" metadescription="##{$parentapp->getRow('pagedes')}#" 
+       metaclassification="##{$cmpname . ' '. $parentapp->getRow('pagetitle')}#"  runat="server" id="title1">
+<?php global $cmpname; echo $cmpname . "|" . $parentapp->getRow('pagesubttitle'); ?>
+</title>
+
 <div class="text" id="pgdata" runat="server">
-    <?php echo html_entity_decode($this->tempobj->tinydetails->convertValue(file_get_contents("pagres/".SphpBase::page()->getEvent().".html")), ENT_COMPAT, "UTF-8"); ?>
-</div>
-        <div class="align-center">
-<?php if($this->tempobj->list->getRow('filepath2')!=''){print '<img src="'.$this->tempobj->list->getRow('filepath2').'" alt="'.getKeyword().'" title="'.getKeyword().'" />';} ?>
+    <include id="b1" runat="server" funsetTempFile="#{ $_REQUEST['txtid'] = $parentapp->getRow('id');  echo 'pagres/b' . $parentapp->getRow('id') . '.html' }#"></include>
 </div>
 
 

@@ -41,6 +41,7 @@ private $blnadd = true;
 private $ajax = null;
 public $cacheTime = 0;
 private $cachefile = '';
+private $primarykey = "id";
 private $cachekey = 'id';
 private $cachesave = false;
 private $header = '';
@@ -77,6 +78,7 @@ $this->dtable = $tableName;
 $this->setHTMLName('');
 }
 
+
     protected function genhelpPropList() {
         $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
@@ -101,6 +103,7 @@ $this->setHTMLName('');
         $this->addHelpPropList('dtable','comma list for database tables to query');
     }
 
+    
 public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
@@ -119,6 +122,10 @@ $this->sesID=$blnSesID;
         }
     }
 public function setMsgName($val) { $this->msgName = $val;}
+public function setPrimaryKey($val){ 
+    $this->primarykey = $val; 
+    if($this->cachekey == "id") $this->cachekey = $this->primarykey;    
+}
 public function setSQL($sql){
 $this->sql = $sql;
 }
@@ -591,9 +598,9 @@ if($spacePos !== false && ($commaPos === false || $spacePos < $commaPos)){
 }
 
 if(count($spt)>0){
-    $idf = $spt[0].".id";
+    $idf = $spt[0].".{$this->primarykey}";
 }else{
-    $idf = "id";
+    $idf = $this->primarykey;
 }
 if($this->pageCountSQL==''){
 $this->pageCountSQL = "SELECT count($idf) FROM ".$this->dtable." ".$this->where;
