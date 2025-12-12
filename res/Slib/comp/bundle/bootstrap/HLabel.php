@@ -18,9 +18,11 @@ public function setSize($lblsize,$compsize) {
 public function setRequired() {
     $this->blnReq = true;
 }
+public function onprerender(){
+        $this->class = "controls";
+}
 public function onrender(){
     $this->tagName = 'div';
-    $this->class = "controls";
     $this->setHTMLID("");
     $this->setHTMLName("");
 //    $this->unsetRenderTag();

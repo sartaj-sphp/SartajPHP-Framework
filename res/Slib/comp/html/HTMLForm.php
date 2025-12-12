@@ -128,7 +128,7 @@ blnSubmit =  " . $this->onvalidation . ";
 ";
         }
         addHeaderJSCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;$("#'. $this->name .'").on("keydown",clearValidationError);');
-        addHeaderJSFunction($this->name . "_submit2", "function " . $this->name .  "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},1000); return vt;}");
+        addHeaderJSFunction($this->name . "_submit2", "function " . $this->name .  "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},4000); return vt;}");
         addHeaderJSFunction($this->name . "_submit", "function " . $this->name . "_submit(val){
 var blnSubmit = true ;
 var ctlReq = Array();

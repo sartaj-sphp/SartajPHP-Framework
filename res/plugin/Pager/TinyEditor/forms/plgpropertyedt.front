@@ -1,0 +1,10 @@
+<div id="divprop1" class="p-3" style="max-height: 100vh; overflow-y: auto;">
+</div>
+<script runas="filelink"  src="respath/plugin/Pager/TinyEditor/js/property-editors.js" ></script>
+<script runas="jsfunctioncode" function="ready">
+    const element = window.top.currentElement;
+    window.PropertyEditors.currentElement = element;
+    const tagName = element.tagName.toLowerCase();
+    let ht1 = window.PropertyEditors.initEditors(tagName);
+    $("#divprop1").html(ht1);    
+</script>

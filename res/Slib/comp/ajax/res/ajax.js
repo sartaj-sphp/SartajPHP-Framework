@@ -12,18 +12,19 @@ var sconsole = console;
 if(typeof undefined === 'undefined') window['undefined'] = 'undefined';
 if(typeof Proxy === 'undefined') window['Proxy'] = function(){};
 var sconsoleLog = {
-    log: function(msg,type){
+    logm: function(msg,type, ...arg1){
         if(type === 'undefined') type = 'i';
         if(window["onconsole"] !== undefined){
-            window["onconsole"](msg,type);
+            window["onconsole"](msg,type,arg1);
         }else{
-            sconsole.log(msg);
+            sconsole.log(msg,arg1);
         }
     },
-    dir: function(msg){sconsole.dir(msg);},
-    info: function(msg){sconsoleLog.log(msg,"i");},
-    warn: function(msg){sconsoleLog.log(msg,"w")},
-    error: function(msg){sconsoleLog.log(msg,"e")},
+    log: function(...arg1){sconsole.log(...arg1);},
+    dir: function(...arg1){sconsole.dir(...arg1);},
+    info: function(...arg1){sconsole.info(...arg1);},
+    warn: function(...arg1){sconsole.warn(...arg1)},
+    error: function(...arg1){sconsole.error(...arg1)},
     time: sconsole.time,
     timeEnd: sconsole.timeEnd,
     timeStamp: sconsole.timeStamp,
@@ -54,7 +55,29 @@ function objToString (obj) {
         return obj;
     }
 }
-
+(function($) {
+    $.observable = function(initialValue) {
+        let value = initialValue;
+        const listeners = $({});
+        
+        return {
+            get: function() {
+                return value;
+            },
+            set: function(newValue) {
+                if (value !== newValue) {
+                    value = newValue;
+                    listeners.trigger('change', [value]);
+                }
+            },
+            onChange: function(callback) {
+                listeners.on('change', function(e, newValue) {
+                    callback(newValue);
+                });
+            }
+        };
+    };
+})(jQuery);
 function compileTemp(targetObj,parentTag) {
     if(parentTag === 'undefined') parentTag='body';
     var $scope1 = new Proxy(targetObj, {
@@ -798,6 +821,12 @@ function hideOverlay(id) {
         "visibility": "hidden"
     });
 }
+function encodeText(str,encode="utf-8"){
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder(encode);
+    const storyTexta = encoder.encode(str);
+    return decoder.decode(storyTexta);
+}
 function bin2hex(str){
     var bytes = new TextEncoder("UTF-8").encode(str);
     return Array.from(bytes,function(byte){ return byte.toString(16).padStart(2, "0");} ).join("");
@@ -829,8 +858,7 @@ this.socket.onmessage = function (event) {
 };
 this.socket.onclose = function (event) {
 myself.status = false;
-	callBackNativem("sclose");
-  //console.log("close by server ");
+callBackNativem("sclose");
 };
 this.socket.onerror = function (event) {
   console.log("socket error " + event);
@@ -839,7 +867,7 @@ this.sendMsg = function(ctrl,msg){
 	data = {};
 	data["wsmsg"] = msg;
 	myself.callProcessApp(ctrl,"","",data);
-}
+};
 this.callGlobalApp = function(ctrl){
  var evt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
   var evtp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
@@ -1454,8 +1482,12 @@ this.sartajproc = function(keym,key,value,val){
     try{
 if(key!= undefined){ 
 switch(key){
-    case 'proces' :{ 
+    case 'proces' :{
+    try{
     eval(value);
+    }catch(error){
+  console.error(error);  
+    }
 /* $.globalEval(value);
 var l1 = Function(value);
 l1(); */

@@ -2,6 +2,8 @@
 
 class index extends \Sphp\tools\BasicApp{
     private $temp1 = "";
+    public $eventname = "home";
+    private $record = array();
     
     public function onstart() {
      $this->setTableName('pagdet');
@@ -11,14 +13,42 @@ class index extends \Sphp\tools\BasicApp{
     }
 
     public function onready() {
+        global $cmpid;
+        $cmpid2 = $cmpid;
+        $this->eventname = SphpBase::page()->getEvent(); 
         if($this->page->isevent){
+            if($this->eventname == "home") $cmpid2 = "demo";
              $this->setTempFile($this->temp1);
+        }else{ // home page
+            $cmpid2 = "demo";
+            $this->eventname = "home";
+            $this->setTempFile($this->temp1);
         }
+        // don't show breadcromb on home page
+         if($this->eventname == "home") $this->temp1->getComponent("spn4")->unsetRender();
+        $this->getRecord($cmpid2);
         if($this->page->checkAuth("ADMIN,MEMBER")){
             $this->getDialogBox();
         }
     }
     
+    private function getRecord($cmpid2){
+        global $cache_time;
+            $sql = "SELECT * FROM pagdet WHERE spcmpid='$cmpid2' AND  pagename='$this->eventname'";
+            $result = SphpBase::dbEngine()->fetchQuery($sql,$cache_time);
+            $this->record = current($result["news"]);
+            if($this->record == false){
+                $this->record = array();
+                $this->record["catname"] = '1,Error';
+            }
+    }
+    public function getRow($col){
+        if(isset($this->record[$col])){
+            return $this->record[$col];
+        }else{
+            return "";
+        }
+    }
     private function getDialogBox(){
         SphpBase::SphpJsM()->addJqueryUI();
     $c1 = SphpBase::sphp_settings()->slib_path . "/comp/html/HTMLForm";

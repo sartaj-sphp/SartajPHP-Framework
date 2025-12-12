@@ -293,7 +293,7 @@ SphpCodeBlock::addCodeBlock('card',function($element,$args,$lst1){
         $str1 = '';
         $str3 = '';
         if(! $element->getParent()->hasAttributeValue("class","card")){
-            $str1 .= '<div class="card">';
+            $str1 = '<div class="card">';
             $str3 = '</div>';
         }
     if(isset($args[0])){

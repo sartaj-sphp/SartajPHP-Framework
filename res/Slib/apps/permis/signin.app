@@ -21,11 +21,11 @@ class signin extends \Sphp\tools\BasicApp {
     }
 
     public function page_new() {
-        if(!$this->Client->isCookie("algdec")) {
+        if($this->Client->cookie("algdec") != "dome1") {
             destSession();
             $this->setTempFile($this->signinvar);
         }else{
-            $authcookie = json_decode(decrypt($this->Client->cookie("algdec2")),true);
+            $authcookie = json_decode(decryptme($this->Client->cookie("algdec2"),'ab7291df2v4d'),true);
             $this->Client->session('sid',intval($authcookie['sid']));            
             $this->Client->session('parentid',intval($authcookie['parentid'])); 
             $this->Client->session('admin-name',$authcookie['admin-name']);            
@@ -46,10 +46,11 @@ class signin extends \Sphp\tools\BasicApp {
         global $cmpid,$admuser,$admpass;
         if(! getCheckErr()){
         $authcookie = array();
+       // print_r($_REQUEST); 
         //$this->debug->println("Call Signin Event");
         $uname = $this->signinvar->getComponent("uname")->getValue();
         $pword = $this->signinvar->getComponent("pword")->getValue();
-        
+        //$this->debug->println('user ' . $uname . ' = ' . $admuser);
         if ($uname == $admuser && $pword == $admpass) {
             $this->Client->session('sid', '0');
             $this->Client->session('parentid', '0');
@@ -70,9 +71,15 @@ class signin extends \Sphp\tools\BasicApp {
             $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
             if($this->Client->isRequest("chkremb")) {
                 $this->Client->cookie("algdec", "dome1",false, $date_of_expiry );
-                $this->Client->cookie("algdec2", encrypt(json_encode($authcookie)),false, $date_of_expiry );
+                $this->Client->cookie("algdec2", encryptme(json_encode($authcookie),'ab7291df2v4d'),false, $date_of_expiry );
             }
             setSession('ADMIN', 0);
+            // enable session on sphp app mode
+            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeApp()){
+                // Generate a unique session id
+                $sid = session_create_id();
+                $this->Client->cookie(SphpBase::sphp_settings()->getSession_name(), $sid,false, $date_of_expiry);
+            }
             //print_r($_SESSION);
             getWelcome();
         } else {
@@ -87,7 +94,7 @@ class signin extends \Sphp\tools\BasicApp {
                 }
         }
         } else {
-                setErr('app2', 'Invalid Username or Password');
+                setErr('app2', 'Invalid Data');
                 $this->setTempFile($this->signinvar);
         }
     }
@@ -133,6 +140,10 @@ class signin extends \Sphp\tools\BasicApp {
         }  
     }
     
+    public function getAuthGoogle(){
+        global $google_oauth_client_secret;
+        if($google_oauth_client_secret == null || strlen($google_oauth_client_secret) < 4) $this->signinvar->getComponent("divgog")->unsetRender();
+    }
      public function page_event_gauth($param) {
          global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
         // set in your comp.php file 
@@ -258,9 +269,9 @@ class signin extends \Sphp\tools\BasicApp {
     }
     
     public function page_event_logout($param) {
-        $number_of_days = -1 ;
-        $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-        $this->Client->cookie( "algdec", "dome1", false, $date_of_expiry );
+        $number_of_days = 2 ;
+        $date_of_expiry = time() - 60 * 60 * 24 * $number_of_days ;
+        $this->Client->cookie( "algdec", "", false, $date_of_expiry );
         $this->Client->cookie("algdec2", "", false, $date_of_expiry );
         destSession();
         $this->page->forward("index.html");

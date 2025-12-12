@@ -11,3 +11,134 @@
 .scrolled{
     background-color: #000;
 }
+/* Collapsible Sidebar Styles */
+.sidebar-container {
+    transition: width 0.3s ease;
+    width: 25%;
+    position: relative;
+}
+
+.sidebar-container.collapsed {
+    width: 60px;
+}
+
+.sidebar-toggle-btn {
+    position: relative;
+    top: 15px;
+    right: -20px;
+    background: #343a40;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.sidebar-content {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar-container.collapsed .sidebar-content {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar-container.collapsed .nav-text,
+.sidebar-container.collapsed .brand-text {
+    display: none !important;
+}
+
+.sidebar-container.collapsed .snavbar {
+    padding: 10px 5px !important;
+}
+
+.sidebar-container.collapsed .nav-link {
+    justify-content: center;
+    padding: 10px 5px !important;
+    margin: 2px 5px !important;
+}
+
+.sidebar-container.collapsed .nav-link i {
+    margin-right: 0 !important;
+}
+
+/* Adjust main content when sidebar collapses */
+.content-column {
+    transition: width 0.3s ease;
+    width: 75%;
+}
+
+.sidebar-container.collapsed ~ .content-column {
+    width: calc(100% - 60px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .sidebar-container {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        height: 100vh;
+        width: 250px !important;
+        z-index: 1040;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar-container.mobile-open {
+        left: 0;
+    }
+    
+    .sidebar-toggle-btn {
+        right: 10px;
+        top: 10px;
+    }
+    
+    .mobile-sidebar-toggle {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1030;
+        background: #343a40;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1035;
+    }
+    
+    .sidebar-container.mobile-open ~ .overlay {
+        display: block;
+    }
+    
+    .content-column {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-sidebar-toggle {
+        display: none;
+    }
+    .overlay {
+        display: none !important;
+    }
+}

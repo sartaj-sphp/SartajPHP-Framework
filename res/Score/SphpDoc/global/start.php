@@ -83,7 +83,7 @@ function getGlobals() {}
 * @param string $key
 * @return string
 */
-function decrypt($strdata, $key = "sartajphp211") {}
+function decryptme($strdata, $key = "sartajphp211") {}
 class stmycache {
 public $url_extension = ".html";
 public $act = "";

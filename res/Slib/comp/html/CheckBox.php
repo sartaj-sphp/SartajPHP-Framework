@@ -88,20 +88,41 @@ document.getElementById('$this->name').focus();
                 $this->class .= " form-check-input";
             //}
             $this->setPostTag('<input type="hidden" name="chktxt' . $this->name . '" value="1" />');
-            if ($this->label != "") {
-                $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
-                $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">
-    ' . $this->label . '
-  </label></div>' . $this->getPostTag());
-            }
-
+            
             if ($this->value != '1') {
                 $this->setAttribute('value', '1');
             } else {
                 $this->setAttribute('value', '1');
                 $this->setAttribute('checked', 'checked');
             }
+            
+             switch($this->styler){
+            case 1:{
+                $this->setPreTag($this->getPreTag() . '<div class="form-floating mb-3 form-check">');
+                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
+                break;
+            }case 2:{
+                $this->setPreTag($this->getPreTag() .'<div class="mb-3 form-check">
+                <label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
+                break;
+            }case 3:{
+                $this->element->getParent()->setAttribute("class","input-group mb-3");
+                $this->setPreTag($this->getPreTag() .'<div class="input-group-text">
+                <label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .' </label>');
+                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
+                break; 
+            }
+            default:{
+                if ($this->label != "") {
+                    $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
+                    $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">' . $this->label . '</label></div>' . $this->getPostTag());
+                }            
+                break;
+            }
         }
+        
+    }
 
 // javascript functions
         public function getJSValue() {

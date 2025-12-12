@@ -13,12 +13,15 @@ class MySQL extends \Sphp\kit\DbEngine {
 public static $dlink;
 public static $isConnect = false;
 public $all_query_ok = true;
+public $sphp_api = null;
 /**
 * Class Constructor
 * This returns the MySQL class object
 * @return MySQL
 */
+public function connectServer($dhost1, $duser1, $dpass1) {}
 public function connect($db1 = "", $dhost1 = "", $duser1 = "", $dpass1 = "") {}
+public function selectDB($db1) {}
 public function cleanQuery($string) {}
 public function clearQuery($string) {}
 public function executeQuery($sql) {}

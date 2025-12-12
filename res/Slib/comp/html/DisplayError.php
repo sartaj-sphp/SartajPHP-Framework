@@ -3,10 +3,15 @@
 namespace Sphp\comp\html{
 
 class DisplayError extends \Sphp\tools\Control {
-    private $innerErr = false;
-    
+    private $innerErr = true;
+    private $showall = false;
+    // by deafult enable
     public function setInnerError() {
         $this->innerErr = true;
+    }
+    // show all errors
+    public function setShowAll() {
+        $this->showall = true;
     }
     protected function genhelpPropList() {
         $this->addHelpPropFunList('setInnerError','Display Inner Error','','');
@@ -15,14 +20,20 @@ class DisplayError extends \Sphp\tools\Control {
         $this->tagName = "span";
         $stro = "";
         //<strong class="alert-danger">' . $msg . '</strong>
-        $msg = getMsg($this->name);
+        if($this->showall){
+            $msg = traceMsg(true);
+            $emsg = traceError(true);
+            if($this->innerErr) $emsg .= traceErrorInner(true);            
+        }else{
+            $msg = getMsg($this->name);
+            $emsg = getErrMsg($this->name);
+            if($this->innerErr) $emsg .= getErrMsgInner($this->name);
+        }        
         if($msg != ""){
-             $stro .= '<strong class="alert-info">' . $msg . '</strong>';
+             $stro .= '<strong class="alert alert-info">' . $msg . '</strong>';
         }
-        $emsg = getErrMsg($this->name);
-        $emsg .= getErrMsgInner($this->name);
         if($emsg != ""){
-             $stro .= '<strong class="alert-danger">' . $emsg . '</strong>';
+             $stro .= '<strong class="alert alert-danger">' . $emsg . '</strong>';
         }
         $this->setInnerHTML($stro);
     }

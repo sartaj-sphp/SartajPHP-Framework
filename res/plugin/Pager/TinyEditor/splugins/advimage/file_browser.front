@@ -1,0 +1,36 @@
+<div id="picselected">Please Click on any Picture</div>
+<div id="tiny_filelist">
+<?php
+$dir = new DIR();
+$filelist = "";
+$colnum = 0 ;
+$maindir = "tiny_editor_imgs";
+$arrfiles = $dir->fileCount($maindir);
+foreach ($arrfiles as $key => $value) {
+$filepath = $basepath . "/$maindir/$value";
+$relpath = "$maindir/$value";
+$patha = pathinfo($filepath);
+$filename = $patha['basename'];
+$filelist .= '<div style="width:105px;float:left;"><table width="92" height="80" align="center"><tr><td><a href="#" 
+ onclick="updatepicurl(\''.$filepath.'\',\''.$filename.'\',\''.$filename.'\');return false;" ondblclick="updatepicurl(\''.$filepath.'\',\''.$filename.'\',\''.$filename.'\');ImageDialog.insert();return false;">
+ <img src="'.$filepath.'" width="92" height="70" title="'. $filename .'" /></a></td></tr><tr><td width="92" height="10" align="center" >'. substr($filename,0,12) .'
+ (<a href="javascript: getURL(\''.getEventURL('tinyfile1del',SphpBase::page()->evtp,'','','',true).'\',{pfn: \''.encryptme($relpath).'\'});">Delete</a>)</td></tr></table></div>';    
+$colnum += 1 ;
+if($colnum==4){
+$filelist .= '<div style="clear:both;"></div>';
+$colnum = 0 ;
+}
+}
+print $filelist;
+?>
+
+<div style="clear:both;"></div>
+</div>
+<div id="tiny_imgup">
+<form id="form3" runat="server" action="<?php echo getEventURL('tiny_imgup'); ?>" funsetAJAX="">
+Upload Picture <input id="file1" type="file" fuisetFileTypesAllowed="image/pjpeg,image/jpeg,image/gif,image/png" 
+                      fuisetFileSavePath="tiny_editor_imgs/<?php echo $tempobj->file1->getValue(); ?>"  funsetMsgName="Picture File" funsetForm="form3" 
+       fuisetFileMaxLen="800000000" runat="server" /> 
+<input type="submit" value="Upload"  style="width: 100px;" />
+</form>
+</div>

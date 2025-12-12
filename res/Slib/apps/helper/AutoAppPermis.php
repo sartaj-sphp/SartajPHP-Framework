@@ -19,6 +19,7 @@ class AutoAppPermis extends PermisApp {
     public $city = "Mississauga";    
     public $country = "Canada";    
     protected $insertedid = -1;
+    protected $blndisableperm = false;
 
     public $extra = array();
     public $recID = "";
@@ -106,7 +107,7 @@ class AutoAppPermis extends PermisApp {
     }
 
     public function page_event_rowclick($param) {
-        if($this->hasPermission("view")){
+        if($this->blndisableperm == true || $this->hasPermission("view")){
         $this->Client->session("formType", "Edit");
         $this->page->viewData($this->genFormTemp->getComponent('form2'));
         $this->genFormTemp->getComponent('btnDel')->setRender();
@@ -119,7 +120,7 @@ class AutoAppPermis extends PermisApp {
         }
 
     }
-
+ 
     public function page_event_showall_newa($param) {
         $this->page_event_addform($param);
     }
@@ -145,7 +146,7 @@ class AutoAppPermis extends PermisApp {
 
     public function page_insert() {
         global $cmpid;
-        if(! $this->hasPermission("add")){
+        if($this->blndisableperm == false && !$this->hasPermission("add")){
             setErr("app2", "Permission Denied");
         }
         $this->extra[]['userid'] = $this->Client->session('sid');
@@ -197,7 +198,7 @@ class AutoAppPermis extends PermisApp {
     }
 
     public function page_update() {
-        if(! $this->hasPermission("view")){
+        if($this->blndisableperm == false && !$this->hasPermission("view")){
             setErr("app2", "Permission Denied");
         }
         $blnsendList = $this->checkCrossCall();
@@ -224,7 +225,7 @@ class AutoAppPermis extends PermisApp {
     }
 
     public function page_delete() {
-        if(! $this->hasPermission("delete")){
+        if($this->blndisableperm == false && !$this->hasPermission("delete")){
             setErr("app2", "Permission Denied");
         }
         $blnsendList = $this->checkCrossCall();
@@ -267,7 +268,7 @@ class AutoAppPermis extends PermisApp {
             $erri = traceErrorInner(true);
             if ($erri != "") {
                 $errorInner = "Something goes wrong!";
-            }
+            } 
         }
         if ($msg != "") {
             $this->JSServer->addJSONBlock('html', 'sphpinfomsg', $msg);

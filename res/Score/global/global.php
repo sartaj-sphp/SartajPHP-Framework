@@ -1,8 +1,17 @@
 <?php
-// cache time in sec
-$mintime = "0";
-$midtime = "0";
-$maxtime = "0";
+// default cache time in sec
+$cache_time = "100";
+//default company info
+$cmpid = "demo";
+$cmpname = "Demo";
+$cmpemail = "info@domain.com";
+$cmpaddress1 = "Address1 Lane1";
+$cmpaddress2 = "Address2 ON Canada";
+$cmpphone1 = "+1000-111-0000";
+$cmpphone2 = "+1000-000-1111";
+// for google login, set in comp.php file
+$google_oauth_client_secret = "";
+
 // use ms
 $ajaxready_max = 300;
 // 2= defer, 1= async, 0=nop
@@ -29,7 +38,7 @@ $errorLog = true;
 $sphpRunasLib = false;
 $run_hd_parser = false; // not working under process
 $translatermode = false;
-$blnEditMode = false;
+$blnEditMode = false; // remove in future only testing purpose
 // true mean use of php preload in ini
 //opcache.preload=D:/www/res/Sphp/preload_lib.php
 //opcache.preload_user=www-data
@@ -61,7 +70,7 @@ $jsProtection = false;
 
 $masterf = "{$slibpath}/temp/default/master.php";
 //$mobimasterf = "{$slibpath}/temp/default/mobimaster.php";
-$admmasterf = "{$slibpath}/temp/default/admmaster.php";
+$admmasterf = "{$slibpath}/temp/default_1/admmaster.php";
 $mebmasterf = "{$slibpath}/temp/default/master.php";
 //$softmasterf = "{$slibpath}/temp/default/softmaster.php";
 
@@ -84,3 +93,6 @@ $admpass = '1234';
 include_once(PROJ_PATH . "/plugin/ccachelist.php");
 include_once(PROJ_PATH . "/cachelist.php");
 include_once(PROJ_PATH . '/comp.php');
+// just interface function remove when need in comp.php file
+function getPluginDB(){}
+function getSPDB(){}

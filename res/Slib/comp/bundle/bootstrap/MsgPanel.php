@@ -46,11 +46,11 @@ class MsgPanel extends Control{
     }
 }
 ', true);
-        addHeaderJSCode("runanierr", 'function runanierr(type){
+        addHeaderJSCode("runanierr", 'window["runanierr"] = function(type){
     $("#sphp" + type).fadeIn(1);
     $("#sphp" + type).css("display","block");
     $("#sphp" + type).delay(5000).fadeOut("slow", function () { $(this).css("display","none"); });            
-                }',true);
+                };',true);
     }
 public function onrender(){
 

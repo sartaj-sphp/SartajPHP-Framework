@@ -42,7 +42,7 @@ class TextArea extends \Sphp\tools\Control {
         }
         setErr($this->name, $msg);
     }
-
+    
     public function setForm($val) {
         $this->formName = $val;
     }
@@ -114,6 +114,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextArea');");
         if ($this->value != '') {
             $this->setInnerHTML($this->value);
         }
+        if($this->getVisible()){
         $this->setAttributeDefault('rows', '10');
         $this->setAttributeDefault('cols', '20');
                 switch($this->styler){
@@ -128,7 +129,10 @@ ctlReq['$this->name']= Array('$this->msgName','TextArea');");
                 break;
             }
         }
-
+        }else{
+            $this->element->setAttribute("value", $this->getInnerHTML());
+            $this->setInnerHTML('');
+        }
     }
 
 // javascript functions used by ajax control and other control

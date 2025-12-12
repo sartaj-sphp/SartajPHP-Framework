@@ -146,7 +146,7 @@ function renderFrontSection($secname = "left") {}
 * @param string $key
 * @return string
 */
-function encrypt($string, $key = "BA007231") {}
+function encryptme($string, $key = "BA007231") {}
 /**
 * 
 * @param string $str
@@ -157,7 +157,7 @@ function endec($str, $ky = "CD098ABA") {}
 function is_valid_num($val,$datatype){}
 function is_valid_email($email){}
 function executePHPScript($strPHPScript) {}
-function executePHPCode($strPHPCode,$blnNoGlobal=true) {}
+function executePHPCode($strPHPCode,$blnGlobal=true) {}
 function executePHP($strPHPCode) {}
 function executePHPGlobal($strPHPCode) {}
 function executePHPFunc($strPHPCode) {}

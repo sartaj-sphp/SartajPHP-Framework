@@ -10,7 +10,9 @@ class mebhome extends PermisApp {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm();
         //$this->setTableName("omer_employee"); 
-        if(file_exists("apps/forms/mebmain.front")){
+        if($this->page->getAuthenticateType() == "ADMIN" && file_exists("apps/forms/admmebmain.front")){
+            $this->genFormTemp = new TempFile("apps/forms/admmebmain.front", false,null, $this); 
+        }else if(file_exists("apps/forms/mebmain.front")){
             $this->genFormTemp = new TempFile("apps/forms/mebmain.front", false,null, $this); 
         }else{
             $this->genFormTemp = new TempFile($this->apppath . "/forms/main.front", false,null, $this);  

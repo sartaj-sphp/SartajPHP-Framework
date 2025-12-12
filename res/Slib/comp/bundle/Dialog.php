@@ -11,12 +11,18 @@ $this->setHTMLName("");
 $this->setHTMLID($this->name . '_dlg');
 }
 
+public function sendAJAX($content){
+    SphpBase::JSServer()->addJSONHTMLBlock($this->name . "_body",$content);
+}
+
 public function onjsrender(){
 global $jquerypath;
 //work pending
 //addFileLink($this->myrespath . '/fq-ui.extendeddialog.css');
 //addFileLink($this->myrespath . '/fq-ui.extendeddialog.js');
-
+    SphpJsM::addjQueryUI();
+   $this->setInnerHTML('<div id="'. $this->name .'_body"></div>');
+   
     if($this->getAttribute('parameter')!=''){
 $this->parameterA['parameter'] = ", ".$this->parameterA['parameter'];
 }
@@ -93,6 +99,7 @@ $( "'.$this->getAttribute('opener').'" ).click(function() {
 			$( "#'.$this->HTMLID.'" ).dialog( "open" );
 			return false;
 		});
+ $(".ui-dialog-titlebar-close").html("X");
 
 ');
 if($this->getAttribute('class') == ''){

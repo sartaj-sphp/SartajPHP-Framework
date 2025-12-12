@@ -82,7 +82,7 @@ return $tmp2;
             setErr('Catname', 'You can not add more Category with same name!');
             $this->JSServer->addJSONHTMLBlock('frmerrdet','You can not add more pages with same name!');
         }else{
-            $tmp2->spcmpid->value = $_SESSION['uid'];
+            $tmp2->spcmpid->value = $cmpid;
             $tmp2->spcmpid->setDataBound();
             if(!getCheckErr()){
                 $this->page->insertData();
@@ -101,11 +101,18 @@ return $tmp2;
         $tmp2->genForm->firecompcreate();
         $txtid = $this->Client->request("txtid");
         $this->page->evtp = $txtid;
+        if($txtid == "1"){
+            setErr("app1", "Home Category Can't Delete!");
+        }else{
+            $result = $this->dbEngine->executeQueryQuick("SELECT COUNT(*) AS total FROM pagdet WHERE catid='$txtid'");
+            $row = mysqli_fetch_assoc($result);
+            if($row["total"] > 0) setErr("app1", "First Remove All Pages From Category! Total Pages Found in this Category = " . $row["total"]);
+        }
         //$this->page->viewData($tmp2->form2,$txtid);
         if(!getCheckErr()){
             $this->page->deleteRec();
         }else{
-            
+            $this->JSServer->addJSONHTMLBlock('app1',traceMsg(true) . traceError(true).traceErrorInner(true));            
         }
     }
 }
