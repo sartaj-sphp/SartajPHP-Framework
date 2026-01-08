@@ -44,7 +44,7 @@ public function page_init() {}
 */
 public function page_load() {}
 /** Advance 
-* Controller Event handler like (url=index-page-contacts.html)
+* Appgate Event handler like (url=index-page-contacts.html)
 * this function gives $event = page and $evtp = contacts
 * @param string $event
 * @param string $evtp
@@ -60,35 +60,35 @@ public function page_event($event, $evtp) {}
 public function page_action($act, $event, $evtp) {}
 /** Special Event
 * Delete Event Handler, occur when browser get (url=index-delete.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_delete() {}
 /** Special Event
 * View Event Handler, occur when browser get (url=index-view-19.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 * view = event name 
 * 19 = recid of database table or any other value.
 */
 public function page_view() {}
 /** Special Event
 * Submit Event Handler, occur when browser post form (url=index.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_submit() {}
 /** Special Event
 * Insert Event Handler, occur when browser post form (url=index.html) as new form
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_insert() {}
 /** Special Event
 * Update Event Handler, occur when browser post form (url=index.html) as filled form
 * from database with view_data function
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_update() {}
 /** Special Event
 * New Event Handler, occur when browser get (url=index.html) first time
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_new() {}
 /** Advance 
@@ -96,12 +96,12 @@ public function page_new() {}
 */
 public function page_unload() {}
 /**
-* Get Controller Event name of current request
+* Get Appgate Event name of current request
 * @return string
 */
 public function getEvent() {}
 /**
-* Get Controller Event parameter of current request
+* Get Appgate Event parameter of current request
 * @return string
 */
 public function getEventParameter() {}
@@ -123,7 +123,7 @@ public function init() {}
 * If user is not login with specific permission then application exit and
 * redirect according to the getWelcome function in comp.php
 * @param string $perm Default=null mean, permission to everyone<p>
-* @param string $ctrl optional Default is current App, permission like index-view where index is controller.
+* @param string $ctrl optional Default is current App, permission like index-view where index is Appgate.
 * permission to allow app. Example:- AuthenticatePerm("view")
 * </p>
 * @return boolean true if permission match with session variable lstpermis, never return false
@@ -132,7 +132,7 @@ public function getAuthenticatePerm($perm=null,$ctrl=null) {}
 /**
 *  Check Permission is given to authorised user or not given.
 * @param string $perm permission to check
-* @param string $ctrl optional Default is current App, permission like index-view where index is controller.
+* @param string $ctrl optional Default is current App, permission like index-view where index is Appgate.
 * @return bool return true if permission found
 */
 public function hasPermission($perm,$ctrl=null) {}
@@ -214,13 +214,13 @@ public function deleteRec($recid="") {}
 public function insertData($extra = array()) {}
 /**
 * When Components use Database Binding. Then This Function Fill the values from database table to a
-* control value.<br>
+* Component value.<br>
 * changeable $sql = "SELECT $fldList FROM $tbln $where"<br>
-* $tbln = use defualt tblName of application or controls dtable attribute
+* $tbln = use default tblName of application or Components dtable attribute
 * SphpBase::page()->viewData(,,"WHERE id='1'");<br>
 * SphpBase::page()->viewData('','aname,pass,lst',"WHERE lastname='devel'");<br>
-* @param type $form <p> Form control
-* Read value from database and fill all controls of TempFile object which is bind with field of table.
+* @param type $form <p> Form Component
+* Read value from database and fill all Components of FrontFile object which is bind with field of table.
 * </p>
 * @param string $recID <p>
 *  Every table should have unique,auto increment and primary filed and default it has name id. 
@@ -235,7 +235,7 @@ public function insertData($extra = array()) {}
 public function viewData($form , $recID = "", $fldList = "", $where = "") {}
 /**
 * When Components use Database Binding. Then This Function Update the values to database<br> table from a
-* control value. This update old record in table.<br>
+* Component value. This update old record in table.<br>
 * $extra = array()
 * $extra['table']['dateupdate'] = date('Y-m-d)
 *  OR

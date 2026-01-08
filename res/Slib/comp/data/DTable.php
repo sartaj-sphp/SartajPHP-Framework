@@ -6,7 +6,7 @@
  */
 namespace {
 
-class DTable  extends \Sphp\tools\Control{
+class DTable  extends \Sphp\tools\Component{
 private $strFormat = '';
 public $fields = array();
 private $app = '';
@@ -15,40 +15,37 @@ private $form = '';
 private $blnDontuseFormat = false;
 
 
-public function __construct($name='',$fieldName='',$tableName='') {
+protected function oninit() {
 $tblName = \SphpBase::page()->tblName;
-$this->init($name,'','');
 if($tableName==''){
 $this->dtable = $tblName;
-}else{
-$this->dtable = $tableName;
     }
 $this->RenderComp = new \Sphp\tools\RenderComp();
 }
 
-     public function setMsgName($val) { $this->msgName = $val;}
-public function setApp($val){
+     public function fu_setMsgName($val) { $this->msgName = $val;}
+public function fu_setApp($val){
 $this->app = $val;
 }
-public function setForm($val){
+public function fu_setForm($val){
 $this->form = $val;
 }
 
-public function setField($dfield,$label='',$type='',$req='',$min='',$max=''){
+public function fu_setField($dfield,$label='',$type='',$req='',$min='',$max=''){
 if($label==''){
    $label = $dfield;
 }
 $this->fields[] = array($label,$dfield,$type,$req,$min,$max);
 }
-public function setDontUseFormat(){
+public function fu_setDontUseFormat(){
 $this->blnDontuseFormat = true;
 }
 
 public function createComp($id,$path='',$class=''){
 $comp = $this->RenderComp->createComp2($id,$path,$class,$id);
 $comp->setForm($this->form);
-$comp->setTempobj($this->tempobj);
-$this->tempobj->setComponent($comp->name,$comp); 
+$comp->setFrontobj($this->frontobj);
+$this->frontobj->setComponent($comp->name,$comp); 
 \SphpBase::sphp_api()->addComponent($comp->name,$comp);
 return $comp;
 }
@@ -266,7 +263,7 @@ return $stro;
 
 }
 
-public function oncreate($element){
+protected function oncreate($element){
 if(!$this->blnDontuseFormat){
 $this->strFormat = $element->innertext;
 }
@@ -277,10 +274,10 @@ $this->genComp();
 }
     
 
-public function onjsrender(){
+protected function onjsrender(){
 }
 
-public function onrender(){
+protected function onrender(){
 // set default values
 //$this->parameterA['class'] = 'pag';
 $this->innerHTML = $this->genForm();

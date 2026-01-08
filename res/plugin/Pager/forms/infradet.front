@@ -1,7 +1,7 @@
 <div class="content py-4">
 
 <div class="px-2 py-2 d-flex gap-2">    
-  <div id="btncat" runat="server" funsetrender="pagea-catadd">
+  <div id="btncat" runat="server" fun-setrender="pagea-catadd">
     <a href="#." 
        onclick="getURL('catfsav-pgnew.html');" 
        class="btn btn-sm btn-success" 
@@ -10,7 +10,7 @@
     </a>
   </div>
 
-  <div id="btncat2" runat="server" funsetrender="pagea-catedit">
+  <div id="btncat2" runat="server" fun-setrender="pagea-catedit">
     <a href="#." 
        onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgedit.html',data);" 
        class="btn btn-sm btn-primary" 
@@ -19,7 +19,7 @@
     </a>
   </div>
 
-  <div id="btncat3" runat="server" funsetrender="pagea-catdel">
+  <div id="btncat3" runat="server" fun-setrender="pagea-catdel">
     <a href="#." 
        onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgdel.html',data);" 
        class="btn btn-sm btn-danger" 
@@ -30,7 +30,7 @@
 </div>
 
 <div class="px-2 py-2 d-flex gap-2">
-  <div id="btncat1" runat="server" funsetrender="pagea-add">
+  <div id="btncat1" runat="server" fun-setrender="pagea-add">
     <a href="#." 
        onclick="getURL('pagefsav-pgnew.html');" 
        class="btn btn-sm btn-success" 
@@ -39,7 +39,7 @@
     </a>
   </div>
 
-  <div id="btncat4" runat="server" funsetrender="pagea-edit">
+  <div id="btncat4" runat="server" fun-setrender="pagea-edit">
     <a href="#." 
        onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgedit.html',data);" 
        class="btn btn-sm btn-primary" 
@@ -48,7 +48,7 @@
     </a>
   </div>
 
-  <div id="btncat5" runat="server" funsetrender="pagea-del">
+  <div id="btncat5" runat="server" fun-setrender="pagea-del">
     <a href="#." 
        onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgdel.html',data);" 
        class="btn btn-sm btn-danger" 
@@ -63,29 +63,29 @@
 <nav aria-label="breadcrumb" id="spn4" runat="server">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <?php echo explode(",",$parentapp->getRow('catname'))[1]; ?>
+      ##{$a = explode(",",$parentapp->getRow('catname')); $b = $a[1];}#
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-      <?php echo $parentapp->getRow('pagetitle'); ?>
+      ##{$parentapp->getRow('pagetitle'); }#
     </li>
   </ol>
 </nav>
 
 </div>
 
-<?php if($parentapp->getRow('pagetitle') != ""){ ?>
-<h2 class="headerbar px-4" title="<?php print getKeyword(); ?>">
-    <?php print $parentapp->getRow('pagetitle'); ?> 
+#{if($parentapp->getRow('pagetitle') != "")}#
+<h2 class="headerbar px-4" title="##{getKeyword()}#">
+    ##{$parentapp->getRow('pagetitle') }# 
 </h2>
-<?php } ?>
+#{endif}#
     
-<div id="btncat7" class="px-2" runat="server" funsetrender="pagea-edit" >
+<div id="btncat7" class="px-2" runat="server" fun-setrender="pagea-edit" >
     <button id="btndet" class="btn btn-primary">Edit</button>
 </div>
    
-    <alert id="app1" runat="server" funsetAuth="ADMIN,MEMBER" funsetShowAll=""></alert>
+    <alert id="app1" runat="server" fun-setAuth="ADMIN,MEMBER" fun-setShowAll=""></alert>
 
-    <form id="frmdet" runat="server" action="##{ getEventURL('pgdata','','pagefsav') }#" funsetAuth="ADMIN">
+    <form id="frmdet" runat="server" action="##{ getEventURL('pgdata','','pagefsav') }#" fun-setAuth="ADMIN">
         <script runas="jsfunctioncode" function="ready">
             $("#pgdatae").css("display","none");
             $("#btndet").on("click",function(){
@@ -96,19 +96,17 @@
         <input id="pagename" runat="server" type="hidden" value="##{ $parentapp->eventname }#" />
         <input id="txtidtiny" runat="server" type="hidden" value="##{ $parentapp->getRow('id'); }#" />
 <div id="pgdatae" runat="server">
-    <div id="tinydetails" runat="server" path="mypath/../TinyEditor/TinyEditor.php" rows="100" cols="50" funsetAuth="ADMIN"
-         funsetValue="#{ if(file_exists('pagres/a' . $parentapp->getRow('id') . '.html')) {echo file_get_contents('pagres/a' . $parentapp->getRow('id') .'.html'); } }#" >
-    </div>
+    <div id="tinydetails" runat="server" path="mypath/../TinyEditor/TinyEditor.php" rows="100" cols="50" lfun-setAuth="ADMIN" on-startrender="true"  ></div>
 </div>
     </form>
     
     <title metakeywords="##{$parentapp->getRow('pagekey')}#" metadescription="##{$parentapp->getRow('pagedes')}#" 
-       metaclassification="##{$cmpname . ' '. $parentapp->getRow('pagetitle')}#"  runat="server" id="title1">
-<?php global $cmpname; echo $cmpname . "|" . $parentapp->getRow('pagesubttitle'); ?>
+       metaclassification="##{readGlobal('cmpname') . ' '. $parentapp->getRow('pagetitle')}#"  runat="server" id="title1">
+##{readGlobal('cmpname') . "|" . $parentapp->getRow('pagesubttitle')}#
 </title>
 
 <div class="text" id="pgdata" runat="server">
-    <include id="b1" runat="server" funsetTempFile="#{ $_REQUEST['txtid'] = $parentapp->getRow('id');  echo 'pagres/b' . $parentapp->getRow('id') . '.html' }#"></include>
+    <include id="b1" lrunat="server" fun-setFrontFile="##{$parentapp->Client->request('txtid',false,$parentapp->getRow('id'));  'pagres/b' . $parentapp->getRow('id') . '.html' }#"></include>
 </div>
 
 

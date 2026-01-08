@@ -8,15 +8,15 @@
                     <h5 class="card-title"></h5>    
                     <div class="card">
                         <div class="card-head">
-                            <img class="img img-fluid" src="temp/images/logo.png" />
+                            <img class="img img-fluid" src="masters/images/logo.png" />
                         </div>
                         <div class="card-body">
                             <address>
-                                <strong>##{$cmpname}#</strong><br>
-                                #{ if($cmpaddress1 != "") echo $cmpaddress1 . "<br>" }#
-                                #{ if($cmpaddress2 != "") echo $cmpaddress2 . "<br>" }#
-                                      <a href="tel:##{$cmpphone1}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
-                                      <a href="tel:##{$cmpphone2}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
+                                <strong>##{$a= 3; $b=2;readGlobal('cmpname')}#</strong><br>
+                                ##{ raw:readGlobal('cmpaddress1') != "" ? readGlobal('cmpaddress1') . "<br>" : "" }#
+                                ##{ raw:readGlobal('cmpaddress2') != "" ? readGlobal('cmpaddress2') . "<br>" : "" }#
+                                      <a href="tel:##{readGlobal('cmpphone1')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
+                                      <a href="tel:##{readGlobal('cmpphone2')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
 
                             </address>
                         </div>
@@ -28,23 +28,23 @@
 <div class="card">
 <div class="card-body">
 <h5 class="card-title">Fill the Following Details:-</h5>    
-<div class="error"><?php print traceError(true); ?></div>
-<div class="msgerr"><?php print traceMsg(true); ?></div>
+<div class="error">##{traceError(true); }#</div>
+<div class="msgerr">##{traceMsg(true); }#</div>
 
-                    <form id='form2' runat="server" action="<?php print getEventURL('subquote','','index2');?>">
+                    <form id='form2' runat="server" action="##{getEventURL('subquote','','index2');}#">
                       <table border="0" width="80%" align="center">
                         <tbody><tr> 
                           <td>Name:</td>
                         </tr>
                         <tr> 
- <td><input name="qname" type="text" runat="server" funsetForm="form2" funsetMinLen="2" funsetMsgName="Name" funsetRequired="" /></td>
+ <td><input name="qname" type="text" runat="server" fui-setForm="form2" fui-setMinLen="2" fui-setMsgName="Name" fui-setRequired="" /></td>
                         </tr>
                         <tr> 
                           <td>Email:</td>
                         </tr>
                         <tr> 
                           <td>
-                            <input name="qemail" type="text" runat="server" funsetForm="form2" funsetMinLen="5" funsetEmail="" funsetMsgName="Email" funsetRequired="" />
+                            <input name="qemail" type="text" runat="server" fui-setForm="form2" fui-setMinLen="5" fui-setEmail="" fui-setMsgName="Email" fui-setRequired="" />
                             </td>
                         </tr>
                         <tr>
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                           <td>
-                            <input name="qphone" type="text" runat="server" funsetForm="form2" funsetMinLen="10" funsetNumeric="" funsetMsgName="Phone" funsetRequired="" />
+                            <input name="qphone" type="text" runat="server" fui-setForm="form2" fui-setMinLen="10" fui-setNumeric="" fui-setMsgName="Phone" fui-setRequired="" />
                             </td>
                         </tr>
                         <tr>
@@ -60,7 +60,7 @@
                         </tr>
                         <tr>
                           <td>
-<textarea name="qadd" runat="server" funsetForm="form2" funsetMinLen="5" funsetMsgName="Address" funsetRequired="" cols="10" rows="3"></textarea>
+<textarea name="qadd" runat="server" fui-setForm="form2" fui-setMinLen="5" fui-setMsgName="Address" fui-setRequired="" cols="10" rows="3"></textarea>
                             </td>
                         </tr>
                         <tr> 
@@ -68,7 +68,7 @@
                         </tr>
                         <tr> 
                           <td>
-<textarea name="qcomments" runat="server" funsetForm="form2" funsetMinLen="12" funsetMsgName="Comments" funsetRequired=""></textarea>
+<textarea name="qcomments" runat="server" fui-setForm="form2" fui-setMinLen="12" fui-setMsgName="Comments" fui-setRequired=""></textarea>
 </td>
                         </tr>
                         <tr> 
@@ -76,13 +76,12 @@
                         </tr>
                         <tr> 
                           <td>
-<input type="text" runat="server" id="catcaha" path="controls/bundle/captcha/Captcha.php"  funsetMaxLen="5" funsetRequired="" funsetForm="form2" funsetMsgName="Secure Code">
+<input type="text" runat="server" id="catcaha" path="components/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="form2" fui-setMsgName="Secure Code">
 </td>
                         </tr>
                         <tr> 
-                          <td>
+                          <td> 
                               <input name="Submit" value="Submit" type="submit" class="btn btn-primary" />
-                              
                             </td>
                         </tr>
                       </tbody></table>

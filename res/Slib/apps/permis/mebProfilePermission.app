@@ -9,8 +9,8 @@ class mebProfilePermission extends PermisApp {
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("profile_permission");
         $this->Client->session("appName", "Profile Permission");
-        $this->genFormTemp = new TempFile($this->apppath . "/forms/mebProfilePermission-edit.front", false, $this);
-        $this->showallTemp = new TempFile($this->apppath . "/forms/mebProfilePermission-list.front", false, $this);
+        $this->genFormTemp = new FrontFile($this->apppath . "/forms/mebProfilePermission-edit.front", false, $this);
+        $this->showallTemp = new FrontFile($this->apppath . "/forms/mebProfilePermission-list.front", false, $this);
          
         $this->defWhere = " WHERE profile_permission.parentid = '".$_SESSION['parentid']."' ORDER BY profile_permission.id ASC ";
         $this->showallTemp->getComponent('showall')->setWhere($this->defWhere);
@@ -21,7 +21,7 @@ class mebProfilePermission extends PermisApp {
     }
     
     public function page_new(){
-        $this->setTempFile($this->showallTemp);
+        $this->setFrontFile($this->showallTemp);
     }       
     
     public function page_insert() {

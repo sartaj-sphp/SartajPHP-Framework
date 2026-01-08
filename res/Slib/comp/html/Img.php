@@ -6,21 +6,16 @@
  */
 namespace Sphp\comp\html{
 
-class Img extends \Sphp\tools\Control{
+class Img extends \Sphp\tools\Component{
 
-public function __construct($name='',$fieldName='',$tableName='') {
+protected function oninit() {
 $this->tagName = "img";
-$this->init($name,$fieldName,$tableName);
 $this->unsetEndTag();
 //$this->unsetSubmit();
 }
 
 
-public function onjsrender(){
-
-}
-
-public function onrender(){
+protected function onrender(){
     $sphp_settings = getSphpSettings();
 $basepath = $sphp_settings->base_path;
 if($this->value!=''){

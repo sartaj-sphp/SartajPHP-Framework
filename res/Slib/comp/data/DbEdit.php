@@ -1,26 +1,26 @@
 <?php
 /**
  * DbEdit by Sartaj
- * <td id="txtedit2" fursetHTMLID="##{ $this->tempobj->showall->getRow('id_c')}#d" 
+ * <td id="txtedit2" fursetHTMLID="##{ $this->frontobj->showall->getRow('id_c')}#d" 
  * path="libpath/comp/data/DbEdit.php" data-suburl="index-dbedit.html" 
-                data-field="shipper_c" data-table="leads_cstm" value="##{ $this->tempobj->showall->getRow('shipper_c') }#"  
-                fur_data-recidv="##{ $this->tempobj->showall->getRow('id_c') }#" 
- * fur_data-mval="##{ $this->tempobj->showall->getRow('shipper_c') }#" 
+                data-field="shipper_c" data-table="leads_cstm" value="##{ $this->frontobj->showall->getRow('shipper_c') }#"  
+                fur_data-recidv="##{ $this->frontobj->showall->getRow('id_c') }#" 
+ * fur_data-mval="##{ $this->frontobj->showall->getRow('shipper_c') }#" 
  * data-recid="id_c" runat="server">
- * ##{ $this->tempobj->parentapp->getShipList2($this->tempobj->showall->getRow('shipper_c')) }#
+ * ##{ $this->frontobj->parentapp->getShipList2($this->frontobj->showall->getRow('shipper_c')) }#
  * </td>
  */
-class DbEdit extends \Sphp\tools\Control{
+class DbEdit extends \Sphp\tools\Component{
     private $type = "text";
     private $options = "";
     private $ctag = 0;
     
-    public function oncreate($param) {
+    protected function oncreate($element) {
         $this->setHTMLID("");
         $this->setHTMLName("");
 
     }
-    public function setOptions($param) {
+    public function fu_setOptions($param) {
         $this->type = "select";
         $this->options = "";
         if(is_string($param)){
@@ -36,14 +36,14 @@ class DbEdit extends \Sphp\tools\Control{
         //$this->setPreTag('<select id="slt'. $this->name .'" style="display:none; position: absolute;">'. $this->options .'</select>');
         addHeaderJSCode('slt2','$("body").append(\'<select id="slt'. $this->name .'" data-recid="" style="display:none; position: absolute;">'. $this->options .'</select>\');');
     }
-        public function setAuth($param) {
+        public function fu_setAuth($param) {
             $blnF = \SphpBase::page()->checkAuth($param);
             if (!$blnF) {
                 $this->renderTag = false;
             }
         }
 
-    public function onrender() {
+    protected function onrender() {
         if($this->renderTag) $this->renderT1();
     }
     private function renderT1() {

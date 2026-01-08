@@ -11,17 +11,17 @@ class mebhome extends PermisApp {
         $this->page->getAuthenticatePerm();
         //$this->setTableName("omer_employee"); 
         if($this->page->getAuthenticateType() == "ADMIN" && file_exists("apps/forms/admmebmain.front")){
-            $this->genFormTemp = new TempFile("apps/forms/admmebmain.front", false,null, $this); 
+            $this->genFormTemp = new FrontFile("apps/forms/admmebmain.front", false,null, $this); 
         }else if(file_exists("apps/forms/mebmain.front")){
-            $this->genFormTemp = new TempFile("apps/forms/mebmain.front", false,null, $this); 
+            $this->genFormTemp = new FrontFile("apps/forms/mebmain.front", false,null, $this); 
         }else{
-            $this->genFormTemp = new TempFile($this->apppath . "/forms/main.front", false,null, $this);  
+            $this->genFormTemp = new FrontFile($this->apppath . "/forms/main.front", false,null, $this);  
         }
         $this->setMasterFile($mebmasterf);
     }
     
     public function page_new() {  
-        $this->setTempFile($this->genFormTemp);
+        $this->setFrontFile($this->genFormTemp);
     }
     
     public function page_event_install($evtp) {
@@ -124,9 +124,9 @@ class mebhome extends PermisApp {
         $mysql->createTable($sql);
         }
         
-        include_once(PROJ_PATH . "/temp/db.php");
+        include_once(PROJ_PATH . "/masters/db.php");
         $mysql->disconnect();
-        $this->setTempFile(new TempFile("Database Created",true));
+        $this->setFrontFile(new FrontFile("Database Created",true));
         }else{
             $this->page->forward("mebhome.html");
         }

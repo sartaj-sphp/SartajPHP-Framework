@@ -1,7 +1,7 @@
 <?php
 include_once(SphpBase::sphp_settings()->php_path . "/classes/bundle/email/SMTPMail.php");
 
-class emailer extends \Sphp\tools\Control{
+class emailer extends \Sphp\tools\Component{
     private $tempcomp = null;
     
     public function onchildevent($event,$obj){
@@ -67,8 +67,8 @@ class emailer extends \Sphp\tools\Control{
     private function handleHolder($element){
         $str2 = $element->getInnerHTML();
         foreach($_REQUEST as $key=>$val){
-            if(isset($this->tempobj->compList[$key])){
-                $str2 = str_replace('$'. $key,$this->tempobj->compList[$key]->getValue(),$str2);
+            if(isset($this->frontobj->compList[$key])){
+                $str2 = str_replace('$'. $key,$this->frontobj->compList[$key]->getValue(),$str2);
             }
         }
         return $str2;
@@ -76,7 +76,7 @@ class emailer extends \Sphp\tools\Control{
     
     public function onrender(){
         // replace html
-        $this->unsetRenderTag();
+        $this->fu_unsetRenderTag();
         $this->setInnerHTML('<input type="hidden" name="'. $this->name .'" value="l" />');
     }
     

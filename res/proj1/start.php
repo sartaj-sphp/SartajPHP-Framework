@@ -3,7 +3,7 @@
 $sharedpath = "../..";
 $respath = "../../res";
 $slibversion = "Slib";
-$libversion = "Sphp8e";
+$libversion = "Sphp";
 
 // not editable start
 // <editor-fold defaultstate="collapsed" desc="This is generated code, any changes can effect the application">

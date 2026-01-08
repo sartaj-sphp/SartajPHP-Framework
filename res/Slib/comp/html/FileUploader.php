@@ -7,7 +7,7 @@
 namespace Sphp\comp\html{
 
 
-class FileUploader extends \Sphp\tools\Control{
+class FileUploader extends \Sphp\tools\Component{
 public $maxLen = '';
 public $minLen = '';
 public $valuehid = '';
@@ -20,7 +20,7 @@ private $fileExtention = '';
 private $filename = '';
 private $fileTypeA = '';
 private $fileSize = '';
-private $fileTempName = '';
+private $fileFrontName = '';
 private $fildName = '';
 private $tablName = '';
 private $fileSavePath = '';
@@ -28,23 +28,20 @@ private $btnDelete = false;
 private $imgTag = false;
 private $errmsg = "";
 
-public function __construct($name='',$fieldName='',$tableName='') {
+protected function oncreate($element) {
 $page = \SphpBase::page();
 $tblName = \SphpBase::page()->tblName;
 $JSServer = \SphpBase::JSServer();
 $Client = \SphpBase::sphp_request();
 $mysql = \SphpBase::dbEngine();
 
-$this->name = $name;
-$this->fildName = $fieldName;
-$this->tablName = $tableName;
 $this->unsetEndTag();
-if(\SphpBase::sphp_request()->isFile("$name")){
-    $f1 = \SphpBase::sphp_request()->files("$name");
+if(\SphpBase::sphp_request()->isFile("$this->name")){
+    $f1 = \SphpBase::sphp_request()->files("$this->name");
 $this->fileType = $f1["type"];
 $this->fileSize = $f1["size"];
-$this->fileTempName = $f1["tmp_name"];
-if($this->fileTempName!=''){
+$this->fileFrontName = $f1["tmp_name"];
+if($this->fileFrontName!=''){
 \SphpBase::sphp_request()->request($this->name,false,$f1["name"]);
 $ft = pathinfo($f1["name"]);
 $this->fileExtention = $ft['extension'];
@@ -53,17 +50,21 @@ $this->filename = $ft['filename'];
 }
 }
 $this->tagName = "input";
-$this->init($this->name,$this->fildName,$this->tablName);
-if(\SphpBase::page()->sact== $name.'del'){
+if(\SphpBase::page()->sact== $this->name.'del'){
 $file = substr(decryptme(\SphpBase::sphp_request()->request('pfn')),3);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
 if($this->fildName!=''){
-$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='". \SphpBase::page()->evtp . "'");
+$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='". \SphpBase::page()->getEventParameter() . "'");
 }
 $JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
 }
+    $this->setAttribute('type', 'file');
+    if($this->getAttribute('blndontsave')!= "true"){
+        $this->saveFile($this->fileSavePath);
+    }
+
 }
 
     protected function genhelpPropList() {
@@ -103,23 +104,23 @@ public function isUpdateFile() {
         return false;
     }    
 }
-public function setDisplayFile() {
+public function fu_setDisplayFile() {
     $this->imgTag = true;
 }
-public function setDeleteButton() {
+public function fu_setDeleteButton() {
     $this->btnDelete = true;
 }
-public function onit() {
+protected function onit() {
         if($this->getAttribute("placeholder") != ""){
             $this->msgName = $this->getAttribute("placeholder");
         }        
 
 }
 
-     public function setImage($val) { $this->defaultImg = $val;}
-     public function setForm($val) { $this->formName = $val;}
-     public function setMsgName($val) { $this->msgName = $val; $this->setAttribute('placeholder', $val);}
-     public function setRequired() {
+     public function fu_setImage($val) { $this->defaultImg = $val;}
+     public function fi_setForm($val) { $this->formName = $val;}
+     public function fu_setMsgName($val) { $this->msgName = $val; $this->setAttribute('placeholder', $val);}
+     public function fi_setRequired() {
 if($this->issubmit){
 if(strlen($this->value) < 1){
 $this->setErrMsg($this->getAttribute("placeholder") .' ' . "Can not submit Empty");
@@ -127,7 +128,7 @@ $this->setErrMsg($this->getAttribute("placeholder") .' ' . "Can not submit Empty
   }
 $this->req = true;
 }
-     public function setFileMaxLen($val)
+     public function fi_setFileMaxLen($val)
      {
          $this->maxLen = $val;
 if($this->issubmit){
@@ -137,7 +138,7 @@ $this->setErrMsg($this->getAttribute("placeholder") .' ' . "Maximum File Length 
               }
          }
      public function getFileMaxLen() { return $this->maxLen; }
-     public function setFileMinLen($val)
+     public function fi_setFileMinLen($val)
      {
          $this->minFileLen = $val;
 if($this->issubmit){
@@ -147,17 +148,17 @@ if($this->getValue()!='' && $this->getFileSize() < $val ){
 }
          }
 public function getFileMinLen() { return $this->minLen; }
-     public function setFileType($val){$this->fileType = $val;}
+     public function fi_setFileType($val){$this->fileType = $val;}
      public function getFileType(){return $this->fileType;}
-     public function setFileSize($val){$this->fileSize = $val;}
+     public function fi_setFileSize($val){$this->fileSize = $val;}
      public function getFileSize(){return $this->fileSize;}
-     public function setFileTypesAllowed($val){$this->fileTypeA = $val; $this->findTypeAllowed();}
+     public function fi_setFileTypesAllowed($val){$this->fileTypeA = $val; $this->findTypeAllowed();}
      public function getFileTypesAllowed(){return $this->fileTypeA;}
-     public function getFileTempName(){return $this->fileTempName;}
+     public function getFileFrontName(){return $this->fileFrontName;}
      public function getFileName(){return $this->filename;}
      public function getFilePrevName(){return \SphpBase::sphp_request()->request('hid'.$this->name);}
-     public function getFileExtention(){return $this->fileExtention;}
-     public function setFileSavePath($val){$this->fileSavePath = $val;}
+     public function getFileExtension(){return $this->fileExtention;}
+     public function fi_setFileSavePath($val){$this->fileSavePath = $val;}
 
 private function findTypeAllowed(){
 $blnFound = false;
@@ -205,14 +206,8 @@ if (\SphpBase::sphp_request()->isFile($this->name) && \SphpBase::sphp_request()-
     
 }
 
-public function oncreate($element){ 
-    $this->setAttribute('type', 'file');
-    if($this->getAttribute('blndontsave')!= "true"){
-        $this->saveFile($this->fileSavePath);
-    }
-}
 
-public function onjsrender(){
+protected function onjsrender(){
 //SphpBase::JSServer()->getAJAX();
 if($this->formName!=''){
 if($this->req){
@@ -230,7 +225,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         setErr($this->name, $msg);
     }
 
-public function onrender(){
+protected function onrender(){
 $page = \SphpBase::page();
 $imgtag = '';
 $btnd = '';

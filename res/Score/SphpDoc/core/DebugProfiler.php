@@ -8,7 +8,7 @@ public $msg = array();
 * @ignore
 */
 public $debugmode = 0;
-public $cur_temp_file = "";
+public $cur_front_file = "";
 /**
 * Clear all messages
 */

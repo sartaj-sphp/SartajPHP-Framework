@@ -5,7 +5,7 @@
  * @author SARTAJ
  */
 
-class OnsenPage extends Control{
+class OnsenPage extends \Sphp\tools\Component{
     public static $navigator = false;
     
 public function oncreate($element){

@@ -111,42 +111,12 @@ public function execShellAsync($cmd, $callback, $funer, $callback_ready = null, 
 */
 public function removeExtraSpaces($v1) {}
 /**
-* Register TempFile with app
-* @param \Sphp\tools\TempFile $tempobj
-*/
-public function registerTemp($tempobj) {}
-/**
-* Advance Function
-* @ignore
-*/
-public function triggerAppEvent() {}
-/**
-* Advance Function
-* @ignore
-*/
-public function setup($tempobj) {}
-/**
-* Advance Function
-* @ignore
-*/
-public function process($tempobj) {}
-/**
-* Advance Function
-* @ignore
-*/
-public function processEvent() {}
-/**
-* Advance Function
-* @ignore
-*/
-public function render() {}
-/**
-* get controller event name trigger by browser
+* get Appgate event name trigger by browser
 * @return string
 */
 public function getEvent() {}
 /**
-* get controller event parameter post by browser
+* get Appgate event parameter post by browser
 * @return string
 */
 public function getEventParameter() {}
@@ -157,29 +127,29 @@ public function getEventParameter() {}
 public function onstart() {}
 /**
 * override this event handler in your application to handle it.
-* trigger when application finish process of default TempFile
+* trigger when application finish process of default FrontFile
 */
 public function onready() {}
 /**
 * override this event handler in your application to handle it.
-* trigger when application initialize TempFile Object
+* trigger when application initialize FrontFile Object
 */
-public function ontempinit($tempobj) {}
+public function onfrontinit($frontobj) {}
 /**
 * override this event handler in your application to handle it.
-* trigger when application start process on TempFile Object
+* trigger when application start process on FrontFile Object
 */
-public function ontempprocess($tempobj) {}
+public function onfrontprocess($frontobj) {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser get (url=index-delete.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_delete() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser get (url=index-view-19.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 * view = event name 
 * 19 = recid of database table or any other value.
 */
@@ -187,26 +157,26 @@ public function page_view() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser post form (url=index.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_submit() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser post form (url=index.html) as new form
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_insert() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser post form (url=index.html) as filled form
 * from database with view_data function
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_update() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
 * trigger when browser get (url=index.html) first time
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_new() {}
 /** Inbuilt Event
@@ -216,8 +186,8 @@ public function page_new() {}
 public function onrun() {}
 /** Inbuilt Event
 * override this event handler in your application to handle it.
-* trigger when application render after run TempFile but before start master
-* file process. You can't manage TempFile output here but you can replace TempFile
+* trigger when application render after run FrontFile but before start master
+* file process. You can't manage FrontFile output here but you can replace FrontFile
 * output in SphpBase::$dynData or change master file or add front place for master filepath
 */
 public function onrender() {}
@@ -240,11 +210,6 @@ public function onwait() {}
 */
 public function setWaitInterval($microsec = 100000) {}
 /**
-* Advance Function
-* @ignore
-*/
-public function run() {}
-/**
 * Set which user can access this application. Default user is GUEST.
 * You can set session variable in login app 
 * SphpBase::sphp_request()->session('logType','ADMIN');
@@ -257,7 +222,7 @@ public function run() {}
 public function getAuthenticate($authenticates) {}
 /**
 * Set default table of Database to Sphp\Page object and this application.
-* This information is important for controls and other database users objects.
+* This information is important for Components and other database users objects.
 * @param string $dbtable
 */
 public function setTableName($dbtable) {}
@@ -326,5 +291,40 @@ public function execInBackground($cmd) {}
 * Exit App Forcefully, Not safe
 */
 public function exitApp() {}
+/**
+* Advance Function
+* @ignore
+*/
+public function _run() {}
+/**
+* Register FrontFile with app
+* @param \Sphp\tools\FrontFile $frontobj
+*/
+public function _registerFront($frontobj) {}
+/**
+* Advance Function
+* @ignore
+*/
+public function _triggerAppEvent() {}        
+/**
+* Advance Function
+* @ignore
+*/
+public function _setup($frontobj) {}
+/**
+* Advance Function
+* @ignore
+*/
+public function _process($frontobj) {}
+/**
+* Advance Function
+* @ignore
+*/
+protected function _processEvent() {}
+/**
+* Advance Function
+* @ignore
+*/
+protected function _render() {}
 }
 }

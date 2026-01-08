@@ -5,33 +5,33 @@ class PermisApp extends \Sphp\tools\BasicApp {
     protected $insertedid = 0;
     protected $defWhere = "";
     /**
-     *  @var \Sphp\tools\TempFile
+     *  @var \Sphp\tools\FrontFile
      */
-    protected $genFormTemp = null;
+    protected $genFormFront = null;
 
     /**
-     *  @var \Sphp\tools\TempFile
+     *  @var \Sphp\tools\FrontFile
      */
-    protected $showallTemp = null;
+    protected $showallFront = null;
         
     
     public function page_event_showallShow($param) {
-        $showall = $this->showallTemp->getComponent('showall');
-        $showall->unsetRenderTag();
+        $showall = $this->showallFront->getComponent('showall');
+        $showall->fu_unsetRenderTag();
         $this->JSServer->addJSONComp($showall,'showall');
         $this->JSServer->addJSONBlock('html','pagebar',$showall->getPageBar());            
     }
     
     public function page_event_showall_show($param) {
-        $showall = $this->showallTemp->getComponent('showall');
-        $showall->unsetRenderTag();
+        $showall = $this->showallFront->getComponent('showall');
+        $showall->fu_unsetRenderTag();
         $this->JSServer->addJSONComp($showall, 'showall');
         $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
     }
     
     public function page_new(){
         // no any permission check, you can overwrite this behaviour in your app
-        $this->setTempFile($this->showallTemp);
+        $this->setFrontFile($this->showallFront);
     }
     
     public function hasPermission($p){
@@ -42,7 +42,7 @@ class PermisApp extends \Sphp\tools\BasicApp {
         if($this->page->hasPermission("add")){
             $this->Client->session("formType", "Add");
             $this->Client->session("formButton", "Save");
-            $this->setTempFile($this->genFormTemp);
+            $this->setFrontFile($this->genFormFront);
         } else {
             $this->page_new();
         }
@@ -53,8 +53,8 @@ class PermisApp extends \Sphp\tools\BasicApp {
         if($this->page->hasPermission("view")){
             $this->Client->session("formType", "Edit");
             $this->Client->session("formButton", "Update");
-            $this->page->viewData($this->genFormTemp->getComponent('form2'));
-            $this->setTempFile($this->genFormTemp);
+            $this->page->viewData($this->genFormFront->getComponent('form2'));
+            $this->setFrontFile($this->genFormFront);
         }else{
             $this->page_new();
         }
@@ -74,14 +74,14 @@ class PermisApp extends \Sphp\tools\BasicApp {
                 $this->insertedid = $this->page->insertData($this->extra);            
                 if (!getCheckErr()) {
                     setMsg('app1', 'Added Successfully');
-                    $this->setTempFile($this->showallTemp);
+                    $this->setFrontFile($this->showallFront);
                 } else {
                     setErr('app1', 'Can not add Data');
-                    $this->setTempFile($this->genFormTemp);
+                    $this->setFrontFile($this->genFormFront);
                 }
             } else {
                 setErr('app1', 'Can not add Data');
-                $this->setTempFile($this->genFormTemp);
+                $this->setFrontFile($this->genFormFront);
             } 
         } else {
             $this->page_new();
@@ -94,14 +94,14 @@ class PermisApp extends \Sphp\tools\BasicApp {
                 $this->page->updateData($this->extra);
                 if (!getCheckErr()) {
                     setMsg('app1', 'Update Successfully');
-                    $this->setTempFile($this->showallTemp);
+                    $this->setFrontFile($this->showallFront);
                 } else {
                     setErr('app1', 'Record can not update');
-                    $this->setTempFile($this->genFormTemp);
+                    $this->setFrontFile($this->genFormFront);
                 }
             } else {
                 setErr('app1', 'Record can not update');
-                $this->setTempFile($this->genFormTemp);
+                $this->setFrontFile($this->genFormFront);
             }
         } else {
             $this->page_new();
@@ -114,14 +114,14 @@ class PermisApp extends \Sphp\tools\BasicApp {
             if (!getCheckErr()) {
                 setMsg("app1",'delete Successfully');
                 $type = "danger";                
-                $showall = $this->showallTemp->getComponent('showall');
-                $showall->unsetRenderTag();
+                $showall = $this->showallFront->getComponent('showall');
+                $showall->fu_unsetRenderTag();
                 $this->JSServer->addJSONComp($showall,'showall');
                 $this->JSServer->addJSONBlock('html','pagebar',$showall->getPageBar());
                 $this->JSServer->addJSONJSBlock('setFormStatus("'.$msg.'", "'.$type.'"); readyFormAsNew("form2");');            
             } else {
                 setErr('app1', 'Record could not be deleted');
-                $this->setTempFile($this->showallTemp);
+                $this->setFrontFile($this->showallFront);
             }
         } else {
             $this->page_new();

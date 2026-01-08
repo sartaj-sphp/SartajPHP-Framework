@@ -6,7 +6,7 @@ $masterFile = $admmasterf;
 SphpBase::page()->Authenticate("GUEST,ADMIN,MEMBER");
 global $msg;
 $msg = "";
-SphpBase::$dynData = new TempFile(SphpBase::page()->apppath . "/forms/admlogin.php");
+SphpBase::$dynData = new FrontFile(SphpBase::page()->apppath . "/forms/admlogin.php");
 $formName = "";
 
 if (SphpBase::page()->isevent) {

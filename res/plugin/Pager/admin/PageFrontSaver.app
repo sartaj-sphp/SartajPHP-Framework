@@ -14,7 +14,7 @@ class PageFrontSaver extends \Sphp\tools\BasicApp {
         $tblName = "pagdet";
         $this->setTableName($tblName);
         $this->getAuthenticate("ADMIN,MEMBER");
-        $this->tmp1 = new TempFile($this->apppath . "/forms/pagefrontsaver.front");
+        $this->tmp1 = new FrontFile($this->apppath . "/forms/pagefrontsaver.front");
     }
 
     public function getGenForm() {
@@ -35,7 +35,7 @@ $genForm->setField("spcmpid"," ","hidden");
 $genForm->setField("pagename"," ","hidden");
 ';
 
-        $tmp2 = new TempFile($this->apppath . "/forms/GenForm.front");
+        $tmp2 = new FrontFile($this->apppath . "/forms/GenForm.front");
         $tmp2->catname->setOptionsFromTable('id,aname', 'id,aname', 'pagcategory', "WHERE spcmpid='$cmpid' ORDER BY aname");
 
         if ($tmp2->pagename->issubmit) {
@@ -69,7 +69,7 @@ $genForm->setField("filepath2","FileName","file","","2","200000");
         $this->page->viewData($tmp2->form2, $this->Client->request("txtid"));
         $tmp2->form2->action = getEventURL('pgup');
         $tmp2->pagename->setPreTag('<input type="hidden" name="pagename2" value="' . $tmp2->pagename->value . '" />');
-        //$tmp2 = new TempFile($this->apppath . "forms/pagefront2.front");
+        //$tmp2 = new FrontFile($this->apppath . "forms/pagefront2.front");
         $this->JSServer->addJSONTemp($tmp2, 'sdpage_editor');
         $this->JSServer->addJSONJSBlock('$("#sdpage_dlg").dialog("open");');
     }
@@ -174,13 +174,13 @@ $genForm->setField("filepath2","FileName","file","","2","200000");
         }
     }
     
-    // tinymce Control support
+    // tinymce Component support
     
     public function page_event_propedit($evtp){
         $sj1 = SphpBase::SphpJsM();
         $sj1::addBootStrap(); 
-       $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/temp/default/master_empty.php");
-       $this->setTempFile(new TempFile(__DIR__ . "/../TinyEditor/forms/plgpropertyedt.front"));
+       $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/master_empty.php");
+       $this->setFrontFile(new FrontFile(__DIR__ . "/../TinyEditor/forms/plgpropertyedt.front"));
        
     }
     

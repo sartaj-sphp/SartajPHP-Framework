@@ -3,17 +3,17 @@
 
 
 
-class IconSelect extends Control{
+class IconSelect extends Sphp\tools\Component{
 private $label = "";
 
-public function oncompcreate($param) {
+protected function oncreate($param) {
     $this->setHTMLID("");
     $this->setHTMLName("");
 }
-public function setLabel($label) {
+public function fu_setLabel($label) {
     $this->label = $label;
 }
-public function onjsrender() {
+protected function onjsrender() {
     addHeaderJSCode("$this->name", " function {$this->name}_setvalue(obj){ "
     . "$('#$this->name').val($(obj).data('cls')); "
     . "$('#{$this->name}spn').removeClass(); "
@@ -21,7 +21,7 @@ public function onjsrender() {
     
     . "}");
 }
-public function onrender(){
+protected function onrender(){
 global $ctrl;
 
     $this->tagName = 'div';

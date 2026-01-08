@@ -27,14 +27,14 @@ in this file. Which master design file work is set in application path:-
 <form id="form1" runat="server" class="form-horizontal">
     <label for="txtname">Name</label><br />
 <span id="spn2" runat="server"></span>
- <input id="txtname" runat="server" type="text" dfield="" funsubmitAJAX="keyup"  funsetForm="form1" funsetMsgName="Name" funsetRequired="" funsetMinLen="4" funsetMaxLen="8" />
+ <input id="txtname" runat="server" type="text" dfield="" fun-submitAJAX="keyup"  fun-setForm="form1" fun-setMsgName="Name" fui-setRequired="" fui-setMinLen="4" fui-setMaxLen="8" />
 <input type="submit" value="Submit" />
 </form>
 <!-- AJAX form -->
 <span id="spn1">Server Response Display here</span>
-<form id="form2" runat="server" class="form-horizontal" funsetAJAX=""  action="##{ SphpBase::sphp_router()->getEventURL('formsub',1) }#">
+<form id="form2" runat="server" class="form-horizontal" fun-setAJAX=""  action="##{ SphpBase::sphp_router()->getEventURL('formsub',1) }#">
     <label for="txtaddress">Address</label>
- <input id="txtaddress" runat="server" type="text" dfield=""  funsetForm="form2" funsetMsgName="Address" funsetRequired="" funsetMinLen="4" funsetMaxLen="8" />
+ <input id="txtaddress" runat="server" type="text" dfield=""  fun-setForm="form2" fun-setMsgName="Address" fui-setRequired="" fui-setMinLen="4" fui-setMaxLen="8" />
 <input type="submit" value="Submit AJAX" />
 </form>
 </div>
@@ -44,7 +44,7 @@ in this file. Which master design file work is set in application path:-
 Temp file ##{ $this->tempobj->filePath }# End Here:-
 <br />
 <p>For Binding Python or Node JS, you may need to install python and node js on your system</p>
-<div id="div1" runat="server" path="libpath/comp/ajax/SocketOutput.php" lfunsetURL="localhost:8001"></div>
+<div id="div1" runat="server" path="libpath/comp/ajax/SocketOutput.php" lfun-setURL="localhost:8001"></div>
 <h2>Integrate, bind Pyhton with SartajPhp App with use of "\Sphp\tools\NativeApp" Class</h2>
 
 <div class="row row-cols-1 gap-2">

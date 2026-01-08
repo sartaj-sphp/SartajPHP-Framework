@@ -3,11 +3,11 @@
 
 
 
-class EditPanel extends Control{
+class EditPanel extends Sphp\tools\Component{
 private $label = "";
 private $lstcomp = "";
 
-public function setLabel($label,$tfield="") {
+public function fu_setLabel($label,$tfield="") {
     $this->label = $label;
     $this->lstcomp = $tfield;
 }
@@ -17,7 +17,7 @@ private function setLabel2($label,$tfield="") {
             $v1 = explode(",", $tfield);
             $tfield = "";
             foreach($v1 as $i => $col){
-            $tfield .= " " . $this->tempobj->getComponent($col)->value;      
+            $tfield .= " " . $this->frontobj->getComponent($col)->value;      
             }
             //$tfield = SphpBase::sphp_request()->request("txtid");
         }
@@ -27,7 +27,7 @@ private function setLabel2($label,$tfield="") {
     }
     $this->label = $label;
 }
-public function onrender(){
+protected function onrender(){
     $this->setLabel2($this->label,$this->lstcomp);
     $this->tagName = 'div';
     $this->setPreTag('<div class="card card-primary">

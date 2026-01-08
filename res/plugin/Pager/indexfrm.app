@@ -9,8 +9,8 @@ class indexfrm extends \Sphp\tools\BasicApp{
      $this->setTableName('pagdet');
      // enable permission system
      $this->page->getAuthenticatePerm();
-     //$this->temp1 = new TempFile($this->mypath . "/forms/imgeditor.front");
-        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/temp/default/master_empty.php");
+     //$this->temp1 = new FrontFile($this->mypath . "/forms/imgeditor.front");
+        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/master_empty.php");
     }
 
   public function page_submit(){
@@ -24,9 +24,9 @@ class indexfrm extends \Sphp\tools\BasicApp{
       //$res = $this->dbEngine->isRecordExist($sql);
       //if($res){
       //$row = mysqli_fetch_assoc($res);
-      $tmp1 = new TempFile("pagres/b". $txtid .".html");
+      $tmp1 = new FrontFile("pagres/b". $txtid .".html");
       if(!getCheckErr()){
-//                $this->setTempFile($tmp1);
+//                $this->setFrontFile($tmp1);
           
          // $this->page->forward(getEventURL("p",$txtid));
       }else{
@@ -40,9 +40,9 @@ class indexfrm extends \Sphp\tools\BasicApp{
       global $cmpid,$masterf;
             $txtid = $evtp;
             $this->setMasterFile($masterf);
-            $tmp2 = new TempFile($this->mypath . "/forms/infradet.front");
+            $tmp2 = new FrontFile($this->mypath . "/forms/infradet.front");
             $tmp2->list->setWhere("WHERE spcmpid='$cmpid' AND  id='$txtid'");
-            $this->setTempFile($tmp2);
+            $this->setFrontFile($tmp2);
           setMsg("app1","Form Submit Successfully, Thanks!");
       
   }
@@ -50,15 +50,15 @@ class indexfrm extends \Sphp\tools\BasicApp{
       global $cmpid,$masterf;
             $txtid = $evtp;
             $this->setMasterFile($masterf);
-            $tmp2 = new TempFile($this->mypath . "/forms/infradet.front");
+            $tmp2 = new FrontFile($this->mypath . "/forms/infradet.front");
             $tmp2->list->setWhere("WHERE spcmpid='$cmpid' AND  id='$txtid'");
-            $this->setTempFile($tmp2);
+            $this->setFrontFile($tmp2);
             setErr("app1","Error in Page");
       
   }
   
   public function page_event_tiny_imgup($evtp){
-      //$tmp1 = new TempFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front");
+      //$tmp1 = new FrontFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front");
     //SphpBase::JSServer()->addJSONTemp($tmp1,'browse_panel');
       
   }

@@ -68,15 +68,15 @@ $blngetFront = true;
 if ($blngetFront){
 switch($formNo){
     case 1:{
-$genFormTemp->run();
-$dynData = $genFormTemp;
+$genFormFront->run();
+$dynData = $genFormFront;
 SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;
     }
     case 2:{
-$showallTemp->run();
-$dynData = $showallTemp;
+$showallFront->run();
+$dynData = $showallFront;
 SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;

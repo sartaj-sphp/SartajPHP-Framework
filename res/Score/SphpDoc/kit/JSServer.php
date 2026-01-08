@@ -57,45 +57,45 @@ public function addJSONBlock($sact, $evtp, $dataar) {}
 */
 public function callJsFunction($jsfun, $dataa) {}
 /**
-* Send Control object inside a HTML Tag
-* @param \Sphp\tools\Control $obj
+* Send Component object inside a HTML Tag
+* @param \Sphp\tools\Component $obj
 * @param string $outid <p>
-* HTML Tag id where to display html of Control
+* HTML Tag id where to display html of Component
 * </p>
 * @param boolean $innerHTML Optional <p>
-* Default = false:- Not send Inner Controls
-* true:- mean send all Inner Controls also
+* Default = false:- Not send Inner Components
+* true:- mean send all Inner Components also
 * </p>
 */
 public function addJSONComp($obj, $outid = "outid", $innerHTML = false) {}
 /**
-* Send only Inner Controls of Object
-* @param \Sphp\tools\Control $obj
+* Send only Inner Components of Object
+* @param \Sphp\tools\Component $obj
 * @param string $outid
 */
 public function addJSONCompChildren($obj, $outid = "outid") {}
 /**
-* Get Control HTML Output
-* @param \Sphp\tools\Control $obj
+* Get Component HTML Output
+* @param \Sphp\tools\Component $obj
 * @return string
 */
 public function getJSONComp($obj) {}
 /**
-* Send TempFile Object to HTML Tag id
-* @param \Sphp\tools\TempFile $tempobj
+* Send FrontFile Object to HTML Tag id
+* @param \Sphp\tools\FrontFile $frontobj
 * @param string $outid <p>
 * HTML Tag ID where to display HTML of temfile object
 * </p>
 */
-public function addJSONTemp($tempobj, $outid = "outid") {}
+public function addJSONFront($frontobj, $outid = "outid") {}
 /**
-* Send TempFile Object with all file links to HTML Tag id
-* @param \Sphp\tools\TempFile $tempobj
+* Send FrontFile Object with all file links to HTML Tag id
+* @param \Sphp\tools\FrontFile $frontobj
 * @param string $outid <p>
 * HTML Tag ID where to display HTML of temfile object
 * </p>
 */
-public function addJSONTempFull($tempobj, $outid = "outid") {}
+public function addJSONFrontFull($frontobj, $outid = "outid") {}
 /**
 * Send Data as inter process communication
 * @param string $aname

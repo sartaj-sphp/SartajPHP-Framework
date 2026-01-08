@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html {
 
-    class CheckBox extends \Sphp\tools\Control {
+    class CheckBox extends \Sphp\tools\Component {
 
         private $formName = '';
         private $msgName = '';
@@ -16,7 +16,7 @@ namespace Sphp\comp\html {
         private $req = false;
         private $label = "";
 
-        public function oninit() {
+        protected function oninit() {
             $Client = \SphpBase::sphp_request();
             $this->tagName = "input";
             $this->setAttribute('type', 'checkbox');
@@ -29,10 +29,13 @@ namespace Sphp\comp\html {
             if ($this->getAttribute("msgname") != "") {
                 $this->msgName = $this->getAttribute("msgname");
                 $this->label = $this->msgName;
+            }else  if ($this->getAttribute("placeholder") != "") {
+                $this->msgName = $this->getAttribute("placeholder");
+                $this->label = $this->msgName;
             }
         }
 
-        public function setLabel($param) {
+        public function fu_setLabel($param) {
             $this->label = $param;
         }
 
@@ -50,17 +53,17 @@ namespace Sphp\comp\html {
             $this->addHelpPropFunList('setRequired', 'Can not submit Empty', '', '');
         }
 
-        public function setForm($val) {
+        public function fi_setForm($val) {
             $this->formName = $val;
         }
 
-        public function setMsgName($val) {
+        public function fu_setMsgName($val) {
             $this->msgName = $val;
             $this->label = $this->msgName;
             $this->setAttribute('placeholder', $val);
         }
 
-        public function setRequired() {
+        public function fi_setRequired() {
             if ($this->issubmit) {
                 if (strlen($this->value) < 1) {
                     $this->setErrMsg($this->getAttribute("msgname") . ' ' . "Can not submit Empty");
@@ -69,7 +72,7 @@ namespace Sphp\comp\html {
             $this->req = true;
         }
 
-        public function onprejsrender() {
+        protected function onprejsrender() {
             if ($this->formName != '' && $this->req) {
                 $jscode = "if(blnSubmit==true && " . $this->getJSValue() . "==false){
     blnSubmit = false ;
@@ -80,7 +83,7 @@ document.getElementById('$this->name').focus();
             }
         }
 
-        public function onrender() {
+        protected function onrender() {
             if ($this->errmsg != "") {
                 $this->setPostTag($this->errmsg);
             }

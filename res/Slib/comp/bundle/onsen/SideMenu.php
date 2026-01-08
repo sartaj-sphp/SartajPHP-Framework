@@ -8,7 +8,7 @@
 include_once(__DIR__ ."/OnsenPage.php");
 OnsenPage::$navigator = true;
 
-class SideMenu extends Control{
+class SideMenu extends \Sphp\tools\Component{
     
 public function oncreate($element){
     $this->setHTMLName("");

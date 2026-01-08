@@ -3,7 +3,7 @@ final class SphpCodeBlock{
     private static $cb = array();
     private static $blnresload = false;
 /**
- * Add Code Block for TempFile. use runcb="" and sphp-cb-blockName on tag
+ * Add Code Block for FrontFile. use runcb="" and sphp-cb-blockName on tag
  * @param string $name Name of code block
  * @param type $callback function($element,$args,$lst1){}
  * @param type $css tag css classes
@@ -131,7 +131,7 @@ SphpCodeBlock::addCodeBlock('parallax',function($element,$args,$lst1){
             $element->setInnerPreTag($r1->render() . '<div class="container py-4">'); 
             $r1->setOuterHTML(''); // remove tag
         }else{
-            $element->setInnerPreTag('<img src="'. SphpBase::sphp_settings()->slib_res_path .'/temp/default/assets/img/cta-bg.jpg"  class="parallax-img" /><div class="container py-4">');
+            $element->setInnerPreTag('<img src="'. SphpBase::sphp_settings()->slib_res_path .'/masters/default/assets/img/cta-bg.jpg"  class="parallax-img" /><div class="container py-4">');
         }
     }
     $element->setInnerPostTag("</div>");
@@ -455,4 +455,4 @@ SphpCodeBlock::addCodeBlock('bggrad',function($element,$args,$lst1){
     $element->appendAttribute("style"," $bg1");
 }); 
 
-include_once(PROJ_PATH . "/temp/sphpcodeblock.php");
+include_once(PROJ_PATH . "/masters/sphpcodeblock.php");

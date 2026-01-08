@@ -7,7 +7,7 @@
 
 
 
-class DateField2 extends Control{
+class DateField2 extends Sphp\tools\Component{
 public $datemin = '';
 public $datemax = '';
 private $appendText = 'dd-mm-yy';
@@ -17,17 +17,16 @@ private $formName = '';
 private $msgName = '';
 private $req = false;
 
-public function __construct($name='',$fieldName='',$tableName='') {
-$this->init($name,$fieldName,$tableName);
+protected function oncreate($element) {
 if($this->value!=''){
 $this->value = $this->dateToMySQLDate($this->value) ;
 }
 $this->unsetEndTag();
 }
 
-     public function setForm($val) { $this->formName = $val;}
-     public function setMsgName($val) { $this->msgName = $val;}
-     public function setRequired() {
+     public function fu_setForm($val) { $this->formName = $val;}
+     public function fu_setMsgName($val) { $this->msgName = $val;}
+     public function fu_setRequired() {
 if($this->issubmit){
 if(strlen($this->value) < 1){
 setErr($this->name,"Can not submit Empty");
@@ -92,13 +91,13 @@ $date1 = date($dformat,strtotime($df));
 }
     }
 
-public function setDateMin($val){$this->datemin = $val;}
-public function setDateMax($val){$this->datemax = $val;}
-public function setAppendText($val){$this->appendText=$val;}
-public function setButtonImage($val){$this->image=$val;}
-public function setNumMonths($val){$this->nomonth=$val;}
+public function fu_setDateMin($val){$this->datemin = $val;}
+public function fu_setDateMax($val){$this->datemax = $val;}
+public function fu_setAppendText($val){$this->appendText=$val;}
+public function fu_setButtonImage($val){$this->image=$val;}
+public function fu_setNumMonths($val){$this->nomonth=$val;}
 
-public function onjsrender(){
+protected function onjsrender(){
 global $libpath;
 global $respath;
 global $jquerypath;
@@ -128,7 +127,7 @@ ctlReq['$this->HTMLID']= Array('$this->msgName','TextField');");
 }
 }
 
-public function onrender(){
+protected function onrender(){
 if($this->value!=''){
 $this->parameterA['value'] = $this->mysqlDateToDate($this->value);
 }

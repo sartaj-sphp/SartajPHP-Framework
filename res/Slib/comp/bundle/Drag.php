@@ -7,12 +7,12 @@
 
 
 
-class Drag extends Control{
-public function oncreate($element){
+class Drag extends Sphp\tools\Component{
+protected function oncreate($element){
 $this->setHTMLName("");
 }
 
-public function onjsrender(){
+protected function onjsrender(){
 global $jquerypath;
 if($this->parameterA['axis']!=''){
 $this->parameterA['axis'] = ", axis: '".$this->parameterA['axis']. "'";

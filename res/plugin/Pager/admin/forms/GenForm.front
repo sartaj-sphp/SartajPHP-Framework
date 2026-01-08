@@ -1,8 +1,8 @@
 <div class="paghead" id="frmerrdet"><?php print traceError(true); ?></div>
 <div class="paghead" id="frmmsgdet"><?php print traceMsg(true); ?></div>
 <div class="paghead" id="frmformhead"><?php print $formHead; ?></div>
-<form id="form2" runat="server" funsetAJAX="">
-<div id="genForm" path="libpath/comp/data/DTable.php" dtable="usert" runat="server" funsetForm="form2" funsetDontUseFormat=""
+<form id="form2" runat="server" fun-setAJAX="">
+<div id="genForm" path="slibpath/comp/data/DTable.php" dtable="usert" runat="server" fun-setForm="form2" fun-setDontUseFormat=""
  oncreate="<?php global $formFields; eval($formFields); ?>"></div>
 <div align="center" class="pagbar"><input type="submit" value="Submit" /></div>
 </form>

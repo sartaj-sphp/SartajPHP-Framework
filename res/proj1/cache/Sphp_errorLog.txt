@@ -19,5 +19,9 @@
                 ENDLOG_DATA
 [2023-02-14: 00:26:45] URL:- /res/proj1/ Fatel Error:- Type:-8 Msg:-Only variables should be passed by reference File:-/home/sartaj/www/res/Slib/comp/html/Title.php on line no. 13 
                 ENDLOG_DATA
-[2023-02-17: 18:55:57] URL:- /res/proj1/ Exception: Call to undefined function getEventURL() File:- /home/sartaj/www/res/Slib/temp/default/menu.php Line:- 8 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+[2023-02-17: 18:55:57] URL:- /res/proj1/ Exception: Call to undefined function getEventURL() File:- /home/sartaj/www/res/Slib/masters/default/menu.php Line:- 8 File:- /home/sartaj/www/res/Score/Sphp/global/startEngine.php On Line:-391 
+                ENDLOG_DATA
+[2026-01-08: 07:34:12] URL:- /res/proj1/ SartajPHP Fatel Error:- Type:-2 Msg:-include_once(D:\www\res\proj1/masters/default/menu.php): Failed to open stream: No such file or directory File:-D:\www\res\Slib\masters\default\menu.php on line no. 2 
+                ENDLOG_DATA
+[2026-01-08: 07:36:30] URL:- /res/proj1/signin.html SartajPHP Fatel Error:- Type:-2 Msg:-include_once(D:\www\res\proj1/masters/sphpcodeblock.php): Failed to open stream: No such file or directory File:-D:\www\res\Slib\comp\sphpcodeblock.php on line no. 458 
                 ENDLOG_DATA

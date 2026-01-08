@@ -27,9 +27,9 @@ print $filelist;
 <div style="clear:both;"></div>
 </div>
 <div id="tiny_imgup">
-<form id="form3" runat="server" action="<?php echo getEventURL('tiny_imgup'); ?>" funsetAJAX="">
+<form id="form3" runat="server" action="<?php echo getEventURL('tiny_imgup'); ?>" fun-setAJAX="">
 Upload Picture <input id="file1" type="file" fuisetFileTypesAllowed="image/pjpeg,image/jpeg,image/gif,image/png" 
-                      fuisetFileSavePath="tiny_editor_imgs/<?php echo $tempobj->file1->getValue(); ?>"  funsetMsgName="Picture File" funsetForm="form3" 
+                      fuisetFileSavePath="tiny_editor_imgs/<?php echo $frontobj->file1->getValue(); ?>"  fun-setMsgName="Picture File" fun-setForm="form3" 
        fuisetFileMaxLen="800000000" runat="server" /> 
 <input type="submit" value="Upload"  style="width: 100px;" />
 </form>

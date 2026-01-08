@@ -433,11 +433,11 @@ function getValue(obj){
         }case 'SELECT':{
             if(a1.length > 1){
                 $.each(a1,function(i,e){
-                    a2[$(e).attr("id")] = $(e).options[$(e).selectedIndex].value;
+                    a2[$(e).attr("id")] = $(e).val();
                 });
                 return a2;
             }else{
-                return a1.options[a1.selectedIndex].value;
+                return a1.val();
             }
             break;
         }default:{

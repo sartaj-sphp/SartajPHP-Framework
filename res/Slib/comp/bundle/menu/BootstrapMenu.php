@@ -11,15 +11,15 @@ private $fixedPos = "";
 private $rootMenu = "root";
 private $blnAjaxLink = false;
 private $bootstrapversion = 5; // set bootstrap version
-public $tempfiledir = "";
+public $frontfiledir = "";
 
 public function __construct($filedir="") {
     if($filedir == "") $filedir = getcwd();
-    $this->tempfiledir = $filedir;
+    $this->frontfiledir = $filedir;
     parent::__construct();
 }
 
-public function onrun() {
+protected function onrun() {
     $this->init();
     $this->genMenus();
 }

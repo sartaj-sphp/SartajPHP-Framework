@@ -8,8 +8,8 @@ namespace Sphp\tools{
 class WebApp extends SphpApp {
 /** @var page */
 public $page = "";
-public $tempform;
-public $maintempform;
+public $frontform;
+public $mainfrontform;
 public $sjsobj;
 public $blnsjsobj = false;
 public $JSServer = null;
@@ -20,20 +20,20 @@ public $debug = null;
 public $phppath = "";
 public $respath = "";
 public $apppath = "";
-public function setup($tempobj) {}
-public function process($tempobj) {}
+public function _setup($frontobj) {}
+public function _process($frontobj) {}
 /**
-* Set Internal Temp File. Internal Temp File Also render Page Components.
-* @param TempFile $obj 
+* Set Internal Front File. Internal Front File Also render Page Components.
+* @param FrontFile $obj 
 */
-public function setTempFile($obj) {}
-public function getTempFile() {}
-public function showTempFile() {}
-public function showNotTempFile() {}
+public function setFrontFile($obj) {}
+public function getFrontFile() {}
+public function showFrontFile() {}
+public function showNotFrontFile() {}
 public function onstart() {}
 public function onready() {}
-public function ontempinit($tempobj) {}
-public function ontempprocess($tempobj) {}
+public function onfrontinit($frontobj) {}
+public function onfrontprocess($frontobj) {}
 public function page_delete() {}
 public function page_view() {}
 public function page_submit() {}
@@ -44,7 +44,7 @@ public function getEvent() {}
 public function getEventParameter() {}
 public function onrun() {}
 public function onrender() {}
-public function run() {}
+public function _run() {}
 public function render() {}
 /**
 * Set MasterFile

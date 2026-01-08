@@ -5,8 +5,8 @@ namespace Sphp\tools{
 *
 * @author Sartaj Singh
 */
-include_once($libpath . "/lib/DIR.php");
-include_once($libpath . "/lib/HtmlMinifier.php");
+include_once(\SphpBase::sphp_settings()->lib_path . "/lib/DIR.php");
+include_once(\SphpBase::sphp_settings()->lib_path . "/lib/HtmlMinifier.php");
 class MobileHomeApp extends ComboApp{
 public function render(){}
 }

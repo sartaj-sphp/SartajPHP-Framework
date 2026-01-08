@@ -2,21 +2,21 @@
 
 namespace Sphp\comp\html{
 
-class DisplayError extends \Sphp\tools\Control {
+class DisplayError extends \Sphp\tools\Component {
     private $innerErr = true;
     private $showall = false;
     // by deafult enable
-    public function setInnerError() {
+    public function fu_setInnerError() {
         $this->innerErr = true;
     }
     // show all errors
-    public function setShowAll() {
+    public function fu_setShowAll() {
         $this->showall = true;
     }
     protected function genhelpPropList() {
         $this->addHelpPropFunList('setInnerError','Display Inner Error','','');
     }
-    public function onrender() {
+    protected function onrender() {
         $this->tagName = "span";
         $stro = "";
         //<strong class="alert-danger">' . $msg . '</strong>

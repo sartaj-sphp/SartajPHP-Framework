@@ -7,7 +7,7 @@
 namespace {
 
 
-class SearchQuery extends \Sphp\tools\Control{
+class SearchQuery extends \Sphp\tools\Component{
 public $sql = '';
 public $strFormat = '';
 public $result = array();
@@ -17,8 +17,7 @@ private $cachesave = false;
 private $cachefile = '';
 private $cachekey = 'id';
 
-public function __construct($name='',$fieldName='',$tableName='') {
-$this->init($name,'','');
+protected function oninit() {
 $this->unsetrenderTag();
 }
 
@@ -28,22 +27,22 @@ $this->unsetrenderTag();
         $this->addHelpPropFunList('setCacheTime','Set Cache Expiry Time 0 mean no cache and -1 mean always data from cache','','$val');
     }
 
-public function setSQL($val){
+public function fu_setSQL($val){
 $this->sql = $val;
 }
-public function setCacheTime($val){
+public function fu_setCacheTime($val){
 $this->cacheTime = intval($val);
 }
-public function setCacheFile($val){
+public function fu_setCacheFile($val){
 $this->cachefile = $val;
 }
-public function setCacheSave(){
+public function fu_setCacheSave(){
 $this->cachesave = true;
 }
-public function setCacheKey($val){
+public function fu_setCacheKey($val){
 $this->cachekey = $val;
 }
-public function getField($dfield){
+public function getRow($dfield){
 if(isset($this->row[$dfield])){
 return  $this->row[$dfield];
 }else{
@@ -55,13 +54,13 @@ return  $this->row[$dfield];
 
 private function genrender(){
 $stro = "";
-//$roote = $this->tempobj->getChildrenWrapper($this);
+//$roote = $this->frontobj->getChildrenWrapper($this);
 foreach($this->result as $key1=>$keyar){
  foreach($keyar as $index=>$this->row){
-$tmpf = new \Sphp\tools\TempFileChild($this->strFormat,true,null,$this->tempobj);
+$tmpf = new \Sphp\tools\FrontFileChild($this->strFormat,true,null,$this->frontobj);
 $tmpf->run();
 $stro .= $tmpf->data;
-//$stro .= $this->tempobj->parseComponentChildren($roote);
+//$stro .= $this->frontobj->parseComponentChildren($roote);
  } }
 
 return $stro;
@@ -69,18 +68,18 @@ return $stro;
 }
 
 
-public function oncreate($element){
+protected function oncreate($element){
 $this->strFormat = $this->element->innertext;
 $this->element->innertext = '';
 }
 
 
-public function onprerender(){
+protected function onprerender(){
 $mysql = \SphpBase::dbEngine();
 $this->result = $mysql->fetchQuery($this->sql,$this->cacheTime,$this->cachefile,$this->cachekey,$this->cachesave);
 }
 
-public function onrender(){
+protected function onrender(){
 $this->innerHTML = $this->genrender();
 }
 

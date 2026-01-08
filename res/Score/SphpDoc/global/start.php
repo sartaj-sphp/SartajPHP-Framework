@@ -9,8 +9,8 @@ define("PROJ_PATH", PHARAPP);
 define("PROJ_PATH", start_path);
 }
 $cacheFileList = array();
-/** addCacheList($url, $sec = 0, $type = "controller")
-* add controller path into cache list.
+/** addCacheList($url, $sec = 0, $type = "Appgate")
+* add Appgate path into cache list.
 * @param String $url <p>
 * add url into cache list
 * </p>
@@ -18,15 +18,15 @@ $cacheFileList = array();
 * time in seconds
 * </p>
 * @param String $type Optional <p>
-* type = controller mean url has controller name only and response to all events basis on this controller.
-* type = ce mean controller-event cache only that event.
-* type = cep mean controller-event-evtp cache only that event with that parameter.
+* type = Appgate mean url has Appgate name only and response to all events basis on this Appgate.
+* type = ce mean Appgate-event cache only that event.
+* type = cep mean Appgate-event-evtp cache only that event with that parameter.
 * type = e event on any application will be cash.
 * </p>
 * @link https://sartajphp.com/api4-fun.html?addCacheList
 * @return void
 */
-function addCacheList($url, $sec = 0, $type = "controller") {}
+function addCacheList($url, $sec = 0, $type = "Appgate") {}
 /** isPharApp()
 * Check if application run as Phar app.
 * @return boolean

@@ -9,24 +9,24 @@ class indexplg extends \Sphp\tools\BasicApp{
      $this->setTableName('pagdet');
      // enable permission system
      $this->page->getAuthenticatePerm();
-     //$this->temp1 = new TempFile($this->mypath . "/forms/imgeditor.front");
-        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/temp/default/master_empty.php");
+     //$this->temp1 = new FrontFile($this->mypath . "/forms/imgeditor.front");
+        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/master_empty.php");
     }
 
   public function page_event_imgedt($evtp){
       SphpJsM::addBootStrap();
-     $tmp1 = new TempFile($this->mypath . "/forms/imgeditor.front");
+     $tmp1 = new FrontFile($this->mypath . "/forms/imgeditor.front");
       if($this->Client->request("insert") == 0){
-          $tmp1->div1->unsetRender();
+          $tmp1->div1->fu_unsetRender();
       }
     //$tmp1->run();
     //$this->JSServer->addJSONReturnBlock($tmp1->data);
-      $this->setTempFile($tmp1);
+      $this->setFrontFile($tmp1);
   }
   
   
   public function page_event_tiny_imgup($evtp){
-      $tmp1 = new TempFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front");
+      $tmp1 = new FrontFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front");
     SphpBase::JSServer()->addJSONTemp($tmp1,'browse_panel');
       
   }
@@ -36,7 +36,7 @@ class indexplg extends \Sphp\tools\BasicApp{
         $pt = pathinfo($file);
         if(file_exists($file)){unlink($file);}
         if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
-        SphpBase::JSServer()->addJSONTemp(new TempFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front"),'browse_panel');
+        SphpBase::JSServer()->addJSONTemp(new FrontFile("{$this->mypath}/TinyEditor/splugins/advimage/file_browser.front"),'browse_panel');
         SphpBase::JSServer()->addJSONBlock('html','picselected','Pic Deleted!'.$file);
 
   }

@@ -28,7 +28,7 @@ $genForm->setField("catid"," ","hidden");
 $genForm->setField("pagename"," ","hidden");
 }
 
-$genFormTemp = new TempFile("{$libpath}/tpl/db/GenForm.php");
+$genFormFront = new FrontFile("{$libpath}/tpl/db/GenForm.php");
 if($details->issubmit){
 $pagename->value = str_replace(" ", "_",  strtolower($pagetitle->value));
 $pagename->value = str_replace("//", "",  $pagename->value);
@@ -50,7 +50,7 @@ if($details->issubmit){
 file_put_contents("pagres/". $pagename->getValue().".html",$details->getValue());
 }
 
-$showallTemp = new TempFile("{$libpath}/tpl/db/Showall.php");
+$showallFront = new FrontFile("{$libpath}/tpl/db/Showall.php");
 $showall->setFieldNames("pagename,pagestatus,catname");
 $showall->setHeaderNames("Name,Ban,Category");
 $showall->setWhere("WHERE spcmpid='". $cmpid ."'  ORDER BY catname");
@@ -65,8 +65,8 @@ $showformhead  = "List Pages";
 
 
 function getProdLimit(){
-global $showallTemp,$showall,$page;
-$showallTemp->run();
+global $showallFront,$showall,$page;
+$showallFront->run();
 $nump = count($showall->result);
  if($nump>=20){
      setErr('Membership', 'You can not add more pages.Please Upgrade you membership!');

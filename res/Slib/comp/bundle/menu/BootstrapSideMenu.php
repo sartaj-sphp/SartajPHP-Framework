@@ -10,15 +10,15 @@ private $fixedPos = "";
 private $rootMenu = "sidebar";
 private $counter1 = 1;
 private $bootstrapversion = 5; // set bootstrap version
-public $tempfiledir = "";
+public $frontfiledir = "";
 public $text = "demo text";
 
 public function __construct($filedir) {
-    $this->tempfiledir = $filedir;
+    $this->frontfiledir = $filedir;
     parent::__construct();
 }
 
-public function onrun() {
+protected function onrun() {
     $this->init();
     $this->genMenus();
 }

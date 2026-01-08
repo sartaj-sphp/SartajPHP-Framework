@@ -78,7 +78,7 @@ function objToString (obj) {
         };
     };
 })(jQuery);
-function compileTemp(targetObj,parentTag) {
+function compileFront(targetObj,parentTag) {
     if(parentTag === 'undefined') parentTag='body';
     var $scope1 = new Proxy(targetObj, {
         get: function(obj, prop) {
@@ -1123,7 +1123,7 @@ $.fn.outerHTML = function() {
   else return $t.clone().wrap('<p>').parent().html(); 
 };
 //ajaxinit
-var tempobj = {
+var frontobj = {
     websocket: null,
     websockethost: location.host,
     onwsopen: function(){console.log("sopen");},
@@ -1131,59 +1131,59 @@ var tempobj = {
     onwsmsg: function(msg){console.log(msg);},
     ar: {},
     getSphpSocket: function(callback){
-        if(tempobj.websocket === null){
+        if(frontobj.websocket === null){
             var protocol = 'ws';
             if (location.protocol === 'https:') protocol = 'wss';
-            tempobj.websocket = new sphp_wsocket(protocol + "://" + tempobj.websockethost + "/sphp.ws",function(msg){
+            frontobj.websocket = new sphp_wsocket(protocol + "://" + frontobj.websockethost + "/sphp.ws",function(msg){
                 if(msg == "sopen"){
-                    tempobj.onwsopen();
-                    callback(tempobj.websocket);
+                    frontobj.onwsopen();
+                    callback(frontobj.websocket);
                 }else if(msg == "sclose"){
-                    tempobj.websocket = null;
-                    tempobj.onwsclose();
+                    frontobj.websocket = null;
+                    frontobj.onwsclose();
                 }else{
-                    tempobj.onwsmsg(msg);
+                    frontobj.onwsmsg(msg);
                 }
             });
 
         }else{
-            callback(tempobj.websocket);
+            callback(frontobj.websocket);
         }
     },
 
     registerEvent: function (evt) {
-        tempobj.ar[evt] = {bind: false,triggered: false,handlers: {}};
+        frontobj.ar[evt] = {bind: false,triggered: false,handlers: {}};
     },
     addHandler: function (evt, name, handler) {
-        if (isset(tempobj.ar[evt])) {
-            tempobj.ar[evt].handlers[name] = handler;
-            tempobj.ar[evt].bind = true;
-            if(tempobj.ar[evt].triggered) handler();
+        if (isset(frontobj.ar[evt])) {
+            frontobj.ar[evt].handlers[name] = handler;
+            frontobj.ar[evt].bind = true;
+            if(frontobj.ar[evt].triggered) handler();
         }
     },
     trigger: function (evt) {
-        if (isset(tempobj.ar[evt])) {
-            tempobj.ar[evt].triggered = true;
-            $.each(tempobj.ar[evt].handlers, function(key,fun){
+        if (isset(frontobj.ar[evt])) {
+            frontobj.ar[evt].triggered = true;
+            $.each(frontobj.ar[evt].handlers, function(key,fun){
                 fun();   
             });
         }
     },
     getHandler: function(evt,name){
-        if (isset(tempobj.ar[evt].handlers[name])) {
-            return tempobj.ar[evt].handlers[name];
+        if (isset(frontobj.ar[evt].handlers[name])) {
+            return frontobj.ar[evt].handlers[name];
         }
     },
 propbagback: {},propbag: null};
 var sjsobj = {};
 
-tempobj["propbag"] = compileTemp(tempobj["propbagback"]);
+frontobj["propbag"] = compileFront(frontobj["propbagback"]);
 function bindJsVarRefresh(){
-    $.each(tempobj["propbagback"], function (k, v) {
-        tempobj["propbag"][k] = v;
+    $.each(frontobj["propbagback"], function (k, v) {
+        frontobj["propbag"][k] = v;
     });
 }
-function TempFile(){
+function FrontFile(){
     var compList = {};
     this.addComponent = function(key){
         if(! Object.prototype.hasOwnProperty.call(compList, key)){

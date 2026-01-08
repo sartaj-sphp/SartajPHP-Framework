@@ -7,7 +7,7 @@
 //namespace Sphp\comp\data;
 namespace{
 
-class Grid extends \Sphp\tools\Control{
+class Grid extends \Sphp\tools\Component{
 public $pageNo = -1;
 public $totalPages = 1;
 public $perPageRows = 10;
@@ -40,7 +40,7 @@ private $cachesave = false;
 private $header = '';
 private $footer = '';
 
-public function __construct($name='',$fieldName='',$tableName='') {
+protected function onit() {
 $page = \SphpBase::page();
 $sphp_router = \SphpBase::sphp_router();
 $ctrl = $sphp_router->ctrl;
@@ -51,7 +51,6 @@ $Client = \SphpBase::sphp_request();
 if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
-$this->init($name,'','');
 $this->blnajax = true;
 $this->eventName = $name ."_show";
 $JSServer->getAJAX();
@@ -64,11 +63,7 @@ if($Client->session($name.'pc') == $ctrl){
 }
 }
 $this->pageNo = $Client->request($name.'page') - 1;
-if($tableName==''){
 $this->dtable = $tblName;
-}else{
-$this->dtable = $tableName;
-    }
 $this->setHTMLName('');
 }
 
@@ -76,16 +71,16 @@ public function handleEvents(){
     extract(getGlobals(), EXTR_REFS);
     $page = \SphpBase::page();
     $JSServer = \SphpBase::JSServer();
-    $genFormTemp = readGlobal("genFormTemp");
+    $genFormFront = readGlobal("genFormFront");
 if(SphpBase::page()->isevent)
 {
-switch(SphpBase::page()->sact){
+switch(SphpBase::page()->getEvent()){
 case $this->name.'_show':{
 $JSServer->addJSONComp($this,'showalledtif');
 break;
 }
 case $this->name.'_newa':{
-$JSServer->addJSONTemp($genFormTemp,'showalledtif');
+$JSServer->addJSONFront($genFormFront,'showalledtif');
 break;
 }
 }
@@ -93,10 +88,10 @@ break;
 
 }
 
-public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventURL($eventName, $evtp='', $Appgate='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
-$this->ctrl=$ControllerName;
+$this->ctrl=$Appgate;
 if($extra!=''){
 $this->extra=$extra.'&'.$this->name.'page=';
 }
@@ -105,7 +100,7 @@ $this->sesID=$blnSesID;
     }
 
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $Appgate="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -128,21 +123,21 @@ $this->sesID=$blnSesID;
         $this->addHelpPropList('dtable','comma list for database tables to query');
     }
 
-    public function setMsgName($val) { $this->msgName = $val;}
-public function setSQL($sql){
+    public function fu_setMsgName($val) { $this->msgName = $val;}
+public function fu_setSQL($sql){
 $this->sql = $sql;
 }
-public function setPageCountSQL($sql){
+public function fu_setPageCountSQL($sql){
 $this->pageCountSQL = $sql;
 }
-public function setPerPageRows($val){
+public function fu_setPerPageRows($val){
 $this->perPageRows = intval($val);
 }
-public function setExtraData($val){
+public function fu_setExtraData($val){
 $this->extraData = $val;
 }
 public function setPageNo($val){
-$this->pageNo = $val - 1;
+$this->pageNo = intval($val) - 1;
 }
 public function getPageNo(){
 return $this->pageNo + 1;
@@ -150,49 +145,49 @@ return $this->pageNo + 1;
 public function setLinkNo($val){
 $this->linkno = $val;
 }
-public function setCacheFile($val){
+public function fu_setCacheFile($val){
 $this->cachefile = $val;
 }
-public function setCacheSave(){
+public function fu_setCacheSave(){
 $this->cachesave = true;
 }
-public function setCacheKey($val){
+public function fu_setCacheKey($val){
 $this->cachekey = $val;
 }
-public function setCacheTime($val){
+public function fu_setCacheTime($val){
 $this->cacheTime = intval($val);
 }
-public function setFieldNames($val){
+public function fu_setFieldNames($val){
 $this->fieldNames = $val;
 }
-public function setHeaderNames($val){
+public function fu_setHeaderNames($val){
 $this->headNames = $val;
 }
-public function setColWidths($val){
+public function fu_setColWidths($val){
 $this->colwidths = $val;
 }
-public function setWhere($val){
+public function fu_setWhere($val){
 $this->where = $val;
 }
 public function setApp($val){
 $this->app = $val;
 }
-public function setEdit(){
+public function fu_setEdit(){
 $this->blnEdit = true;
 }
-public function setDelete(){
+public function fu_setDelete(){
 $this->blnDelete = true;
 }
 public function getPageBar(){
     return $this->getPaging();
 }
-public function setHeader($val){
+public function fu_setHeader($val){
 $this->header = $val;
 }
-public function setFooter($val){
+public function fu_setFooter($val){
 $this->footer = $val;
 }
-public function unsetDialog(){
+public function fu_unsetDialog(){
 $this->blndlg = false;
 }
 
@@ -294,7 +289,7 @@ $stro .= $this->getPaging();
 else if($this->strFormat!=''){
 $stro = $HTMLParser->executePHPCode('<?php foreach($'. $this->name .'->result as $key1=>$keyar){
  foreach($keyar as $index=>$'.$this->name.'->row){
-$tmpf = new TempFile($'.$this->name.'->strFormat,true);
+$tmpf = new FrontFile($'.$this->name.'->strFormat,true);
 $tmpf->run();
 print $tmpf->data;
  } } ?>');
@@ -387,7 +382,7 @@ $strlink .$edt.$del.'
 return $strout;
 }
 
-public function oncreate($element){
+protected function oncreate($element){
 $this->strFormat = $element->innertext;
 $element->innertext = '';
 }
@@ -474,7 +469,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
     
 }
 
-public function onjsrender(){
+protected function onjsrender(){
     $JSServer = \SphpBase::JSServer();
 if(! $JSServer->ajaxrender){
 if($this->blnajax){
@@ -485,7 +480,7 @@ $this->startAJAX();
 
 }
 
-public function onrender(){
+protected function onrender(){
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){

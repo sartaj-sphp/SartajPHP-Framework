@@ -26,7 +26,7 @@ SphpBase::page()->isdelete = true;
 break;
 }
 case 'showall_newa':{
-$JSServer->addJSONTemp($genFormTemp,'showall_editor');
+$JSServer->addJSONFront($genFormFront,'showall_editor');
 break;
 }
 case 'updlist':{
@@ -41,7 +41,7 @@ break;
 if(SphpBase::page()->isview)
 {
 SphpBase::page()->viewData($form2);
-$JSServer->addJSONTemp($genFormTemp,'showall_editor');
+$JSServer->addJSONFront($genFormFront,'showall_editor');
 }
 if(SphpBase::page()->isdelete)
 {
@@ -106,25 +106,25 @@ SphpBase::page()->forward(getEventURL('show', '', '', '', '', true));
 if ($blngetFront){
 switch($formNo){
     case 1:{
-$genFormTemp->run();
-$dynData = $genFormTemp;
+$genFormFront->run();
+$dynData = $genFormFront;
 SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;
     }
     case 2:{
-$showallTemp->run();
-$dynData = $showallTemp;
+$showallFront->run();
+$dynData = $showallFront;
 SphpBase::$dynData = $dynData;
 include_once("$masterFile");
 break;
     }
     case 3:{
-$JSServer->addJSONTemp($genFormTemp,'showall_editor');
+$JSServer->addJSONFront($genFormFront,'showall_editor');
 break;
     }
     case 4:{
-$JSServer->addJSONTemp($showallTemp,'showall_list');
+$JSServer->addJSONFront($showallFront,'showall_list');
 break;
     }
 }

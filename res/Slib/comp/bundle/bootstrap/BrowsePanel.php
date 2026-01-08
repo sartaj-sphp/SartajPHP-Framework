@@ -3,13 +3,13 @@
 
 
 
-class BrowsePanel extends Control{
+class BrowsePanel extends Sphp\tools\Component{
 private $label = "Browse";
 
-public function setLabel($label) {
+public function fu_setLabel($label) {
     $this->label = $label;
 }
-public function onrender(){
+protected function onrender(){
     $this->tagName = 'div';
     $this->setPreTag('<div class="card card-primary">
   <div class="card-header">

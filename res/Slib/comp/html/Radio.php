@@ -1,17 +1,20 @@
 <?php
 /**
  * Description of Radio
- *
+ * Placeholder Show as heading the group of radio buttons and message on validation error.
+ * setOptions Take both JSON and comma separated list of Value and Label pair. 
+ * set checked,disabled radio button with value.
+ *<input id="radbook" funsetForm="form2" placeholder="Choose Book" funsetOptions="Book1,Book2,Book3"
+ type="radio" runat="server" funsetRequired="" checked="Book2" disabled="Book3" />
  * @author SARTAJ
  */
 namespace Sphp\comp\html{
 
-class Radio extends \Sphp\tools\Control{
+class Radio extends \Sphp\tools\Component{
 private $formName = '';
 private $msgName = '';
 private $req = false;
-private $vals = array();
-private $valf = '';
+private $options = array();
 
     protected function genhelpPropList() {
         parent::genhelpPropList();
@@ -20,20 +23,33 @@ private $valf = '';
         $this->addHelpPropFunList('setRequired','Can not submit Empty','','');
     }
 
-public function oninit() {
+protected function oninit() {
 $this->tagName = "input";
 $this->setAttribute('type', 'radio');
 }
 
-public function oncreate($element){
-$this->vals[] = $element->getAttribute('value');
-if($valf==''){
-$valf = $element->getAttribute('value');
-}
-}
-     public function setForm($val) { $this->formName = $val;}
-     public function setMsgName($val) { $this->msgName = $val;}
-     public function setRequired() {
+     public function fi_setForm($val) { $this->formName = $val;}
+     public function fu_setMsgName($val) { $this->msgName = $val;}
+     /**
+      * {"option1":"label1", "option2": "label2"}
+      * or comma separated list
+      * option1,option2
+      * @param string $val
+      */
+     public function fu_setOptions($val) { 
+        $opt1 = array();
+        if($val[0] == '{'){
+            $opt2 = json_decode($val,true);
+            foreach($opt2 as $key=>$val){
+                $opt1[] = [$key,$val];
+            }
+            $this->options = $opt1;
+        }else{
+            $this->options = explode(",",$val);            
+        }
+         
+     }
+     public function fi_setRequired() {
 if($this->issubmit){
 if(strlen($this->value) < 1){
 setErr($this->name,"Can not submit Empty");
@@ -42,43 +58,74 @@ setErr($this->name,"Can not submit Empty");
 $this->req = true;
 }
 
-public function onprejsrender(){
+protected function onprejsrender(){
+    if($this->msgName == "") $this->msgName = $this->getAttribute("placeholder");
 if($this->formName !='' && $this->req){
-$jscode = "if(blnSubmit==true && ". $this->getJSValue()."==false){blnSubmit = false ; alert('Please Select ". $this->msgName . "'); document.getElementById('" . $this->name ."').focus();}";
+$jscode = "var f1 = ". $this->getJSValue() ."; var v1 = f1(); if(blnSubmit==true && v1[0]==-1){blnSubmit = false ; alert('Please Select ". $this->msgName . "'); document.getElementById('" . $this->name ."0').focus();}";
 addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name",$jscode);
 }
 }
 
-public function onrender(){
+protected function onrender(){
 if($this->getAttribute('class')==''){
-    $this->class = "form-control";
-}
-$vt = current($this->vals);
-if($vt == $this->value){
-$this->setAttribute('checked', 'checked');
+    $class = "form-check form-check-inline";
 }else{
-$this->setAttribute('checked', '');
+    $class = $this->element->getAttribute("class");    
 }
-$this->setAttribute('value', $vt);
-next($this->vals);
-            if ($this->styler > 0) {
-                $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
-                $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">
-    ' . $this->msgName . '
-  </label></div>' . $this->getPostTag());
-            }
+$chk = false;
+if($this->getAttribute('checked')!='') $chk = true;
 
+$stro = "";
+if(strlen($this->msgName) > 2) $stro = "<h2 class=\"\">{$this->msgName}</h2>";
+// only when checked
+$blnchkone = true;
+foreach($this->options as $i=>$v){
+    $v0 = "";
+    $label = "";
+    if(is_array($v)){
+        $v0 = $v[0];
+        $label = $v[1];
+    }else{
+        $v0 = $v;
+        $label = $v;        
+    }
+    $checked = "";
+    $disabled = "";
+    if($blnchkone){
+        if($this->value != "" && $v0 == $this->value){
+            $checked = 'checked="checked"';
+            $blnchkone = false;
+        }else if($chk && $this->getAttribute("checked") == $v0){
+            $checked = 'checked="checked"';        
+            $blnchkone = false;
+        }
+    }
+    if($this->getAttribute("disabled") == $v0){
+        $disabled = 'disabled="disabled"';        
+    }
+    $stro .= '<div class="'. $class .'">
+  <input class="form-check-input" type="radio" value="'. $v0 .'" name="'. $this->name .'" id="'. $this->name . $i .'"  '. $checked .' '. $disabled .'>
+  <label class="form-check-label" for="'. $this->name .'">
+    '. $label  .'
+  </label>
+</div>';
+}
+
+// wrap original tag as child of div
+$parentdiv = $this->element->wrapTag('div');
+// over write original tag with stro html
+$parentdiv->setInnerHTML($stro);
+$parentdiv->setAttribute("class","px-2 py-2");
+//$parentdiv->setInnerPreTag("<div class=\"card-body\">");
+//$parentdiv->setInnerPostTag("</div>");
 }
 
 
 // javascript functions
 public function getJSValue(){
-return "document.getElementById('$this->name').checked" ;
+    return " function(){var v1 = []; v1[0] = -1; v1[1]='';  for(var c=0;c<". count($this->options) ."; c++){ if(document.getElementById('$this->name' + c).checked){v1[0] = c;v1[1] = \$('#$this->name' + c).val(); } } return v1;}" ;
 }
 
-public function setJSValue($exp){
-$jsOut = "document.getElementById('$this->name').checked = $exp;" ;
-}
 
 }
 }

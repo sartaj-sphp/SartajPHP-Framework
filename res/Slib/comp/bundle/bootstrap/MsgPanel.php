@@ -3,32 +3,32 @@
 
 
 
-class MsgPanel extends Control{
+class MsgPanel extends Sphp\tools\Component{
 
-    public function oncreate($param) {
-//        $this->unsetRenderTag();
+    protected function oncreate($element) {
+//        $this->fu_unsetRenderTag();
     }
     public function showAlert($type,$msg) {
-        global $JSServer;
+        $JSServer = SphpBase::JSServer();
         $JSServer->addJSONJSBlock("showAlert('$type','$msg');");
     }
     public function sendSuccess($msg) {
-        global $JSServer;
+        $JSServer = SphpBase::JSServer();
             $JSServer->addJSONBlock('html','sphpsuccessmsg',$msg);
             $JSServer->addJSONJSBlock('runanierr("success");');        
     }
     public function sendWarning($msg) {
-        global $JSServer;
+        $JSServer = SphpBase::JSServer();
             $JSServer->addJSONBlock('html','sphpwarningmsg',$msg);
             $JSServer->addJSONJSBlock('runanierr("warning");');        
     }
     public function sendError($errorInner="") {
-        global $JSServer;
+        $JSServer = SphpBase::JSServer();
             $JSServer->addJSONBlock('html','sphpinfomsg',traceMsg(true));
             $JSServer->addJSONBlock('html','sphperrormsg',traceError(true).$errorInner);
             $JSServer->addJSONJSBlock('runanierr("error");runanierr("info");');
     }
-    public function onjsrender() {
+    protected function onjsrender() {
         addHeaderJSFunction("showAlert", 'function showAlert(type,msg){
 ', '    if(type=="warning"){
             $("#sphpwarningmsg").html(msg);
@@ -52,7 +52,7 @@ class MsgPanel extends Control{
     $("#sphp" + type).delay(5000).fadeOut("slow", function () { $(this).css("display","none"); });            
                 };',true);
     }
-public function onrender(){
+protected function onrender(){
 
     $this->setPreTag('<div style="position: fixed; z-index: 2000;width: 500px;">
     <div id="sphpwarning" class="alert alert-warning" style="display: none;">

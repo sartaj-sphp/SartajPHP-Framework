@@ -7,12 +7,12 @@
 
 
 
-class Drop extends Control{
-public function oncreate($element){
+class Drop extends Sphp\tools\Component{
+protected function oncreate($element){
 $this->setHTMLName("");
 }
 
-public function onjsrender(){
+protected function onjsrender(){
 global $jquerypath;
 if($this->parameterA['accept']!=''){
 $this->parameterA['accept'] = ", accept: '".$this->parameterA['accept']. "'";

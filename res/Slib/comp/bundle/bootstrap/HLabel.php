@@ -1,31 +1,31 @@
 <?php
 
-class HLabel extends Control{
+class HLabel extends Sphp\tools\Component{
 private $label = "";
 private $labelfor = "";
 private $lblsize = "col-md-4";
 private $compsize = "col-md-8";
 private $blnReq = false;
 
-public function setLabel($label,$labelfor) {
+public function fu_setLabel($label,$labelfor) {
     $this->label = $label;
     $this->labelfor = $labelfor;
 }
-public function setSize($lblsize,$compsize) {
+public function fu_setSize($lblsize,$compsize) {
     $this->lblsize = $lblsize;
     $this->compsize = $compsize;
 }
-public function setRequired() {
+public function fu_setRequired() {
     $this->blnReq = true;
 }
-public function onprerender(){
+protected function onprerender(){
         $this->class = "controls";
 }
-public function onrender(){
+protected function onrender(){
     $this->tagName = 'div';
     $this->setHTMLID("");
     $this->setHTMLName("");
-//    $this->unsetRenderTag();
+//    $this->fu_unsetRenderTag();
     $req = "";
     if($this->blnReq){
     $req = "<span class='text-danger'>*</span>";        

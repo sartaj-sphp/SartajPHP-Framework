@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html{
 
-class TextArea extends \Sphp\tools\Control {
+class TextArea extends \Sphp\tools\Component {
 
     public $maxLen = '';
     public $minLen = '';
@@ -26,7 +26,7 @@ class TextArea extends \Sphp\tools\Control {
         $this->addHelpPropFunList('setMinLen','Minimum Accept Length','','$val');
     }
 
-    public function oninit() {
+    protected function oninit() {
         $this->tagName = "textarea";
         if ($this->issubmit) {
             $this->value = htmlentities($this->value, ENT_COMPAT, "UTF-8");
@@ -43,16 +43,16 @@ class TextArea extends \Sphp\tools\Control {
         setErr($this->name, $msg);
     }
     
-    public function setForm($val) {
+    public function fi_setForm($val) {
         $this->formName = $val;
     }
 
-    public function setMsgName($val) {
+    public function fu_setMsgName($val) {
         $this->msgName = $val;
         $this->setAttribute('placeholder', $val);
     }
 
-    public function setRequired() {
+    public function fi_setRequired() {
         if ($this->issubmit) {
             if (strlen($this->value) < 1) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Can not submit Empty");
@@ -61,7 +61,7 @@ class TextArea extends \Sphp\tools\Control {
         $this->req = true;
     }
 
-    public function setMaxLen($val) {
+    public function fi_setMaxLen($val) {
         $this->maxLen = $val;
         if ($this->issubmit) {
             if (strlen($this->value) > $val) {
@@ -74,7 +74,7 @@ class TextArea extends \Sphp\tools\Control {
         return $this->maxLen;
     }
 
-    public function setMinLen($val) {
+    public function fi_setMinLen($val) {
         $this->minLen = $val;
         if ($this->issubmit) {
             if (strlen($this->getValue()) < $val) {
@@ -87,7 +87,7 @@ class TextArea extends \Sphp\tools\Control {
         return $this->minLen;
     }
 
-    public function onjsrender() {
+    protected function onjsrender() {
         if ($this->formName != '') {
             if ($this->minLen != '') {
                 addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
@@ -104,7 +104,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextArea');");
         }
     }
 
-    public function onrender() {
+    protected function onrender() {
         if($this->errmsg!=""){
             $this->setPostTag($this->errmsg);
         }

@@ -1,7 +1,7 @@
 <?php
 namespace Sphp\tools{
 /**
-* Description of DHTMLParser
+* Description of HTMLParser
 *
 * @author SARTAJ
 */
@@ -14,9 +14,9 @@ public $curlineno = 0;
 public $codebehind = array();
 public $blncodebehind = false;
 /**
-* @var \Sphp\tools\TempFile
+* @var \Sphp\tools\FrontFile
 */
-public $tempobj;
+public $frontobj;
 public $dhtmldom;
 /** @var Sphp\Settings */
 public $sphp_settings = null;
@@ -25,22 +25,28 @@ public $respath = "";
 public $comppath = "" ;
 public $slibpath = "" ;
 public $debug = null;
-public function getTempobj() {}
-public function setTempobj($tempobj) {}
-public function setCodebehind($codebehind) {}
+public function getFrontobj() {}
+public function _setFrontobj($frontobj) {}
+public function _setCodebehind($codebehind) {}
+public function parseHTMLObj($strData, $obj) {}
 public function parseHTML(){}
 public function parseComponent($compobj,$innerHTML = false){}
 public function createTagComponent($name="mycustomtag1",$tagname="div") {}
 public function getChildrenWrapper($compobj){}
 public function parseComponentChildren($wrapperElement){}
-public function parseHTMLObj($strData, $obj) {}
 public function parseHTMLTag($strData,$callbackfun,$obj){}
 public function setupcomp($element,$parentelement) {}
 public function endupcomp($element,$parentelement) {}    
 public function startrender($element,$parentelement) {}    
 public function endrender($element,$parentelement) {}
-public function executeFun($compobj, $key, $val) {}
 public function resolvePathVar($val){}
+/**
+* Execute PHP code in Limited Container. Use only Template Tags ##{ }# or #{ }#
+* @param string $strPHPCode PHP Template code
+* @param \Sphp\tools\Component $compobj default null, Show debug information if Component
+* run code
+* @return string
+*/
 public function executePHPCode($strPHPCode,$compobj=null) {}
 }
 }

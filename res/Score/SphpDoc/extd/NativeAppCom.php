@@ -9,7 +9,7 @@ namespace Sphp\tools{
 class NativeAppCom {
 /** @var \Sphp\kit\Page page */
 public $page = "";
-/** @var TempFile tempform */
+/** @var FrontFile frontform */
 public $apppath = "";
 public $phppath = "";
 public $respath = "";

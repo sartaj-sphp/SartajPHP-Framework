@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html{
 
-class Select extends \Sphp\tools\Control {
+class Select extends \Sphp\tools\Component {
 
     public $options = '';
     private $separator = " ";
@@ -45,7 +45,7 @@ class Select extends \Sphp\tools\Control {
         $this->addHelpPropFunList('removeOptionsElement','Remove option element','','$index');
     }
 
-    public function oninit() {
+    protected function oninit() {
         $this->tagName = "select";
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
@@ -63,7 +63,7 @@ class Select extends \Sphp\tools\Control {
      * @param type $find find string
      * @param type $rep replace string
      */
-    public function replace($find,$rep){
+    public function fu_replace($find,$rep){
         $this->blnopttxtreplace = true;
         $this->opttxtreplace = array($find,$rep);
     }
@@ -71,32 +71,32 @@ class Select extends \Sphp\tools\Control {
  * Separator for Option Text from multi fields of db with this Character
  * @param string $sepa default = " " 
  */
-    public function setSeparator($sepa){
+    public function fu_setSeparator($sepa){
         $this->separator = $sepa;
     }
     /**
      * DB Table Field use for set as class in option tag
      * @param string $tblfield DB Table field
      */
-    public function setCssField($tblfield){
+    public function fu_setCssField($tblfield){
         $this->cssfield = $tblfield;
     }
     /**
      * Make Select as Type-able and Searchable
      */
-    public function enableSearch(){
+    public function fu_enableSearch(){
         $this->blnsearch = true;
     }
-    public function setForm($val) {
+    public function fi_setForm($val) {
         $this->formName = $val;
     }
 
-    public function setMsgName($val) {
+    public function fu_setMsgName($val) {
         $this->msgName = $val;
         $this->setAttribute('placeholder', $val);
     }
 
-    public function setFirstValue($val) {
+    public function fu_setFirstValue($val) {
         $this->strFirstValue = $val;
     }
 
@@ -119,7 +119,7 @@ class Select extends \Sphp\tools\Control {
         $this->blnuseasoc = false;
     }
 
-    public function setSelectedIndex($val) {
+    public function fu_setSelectedIndex($val) {
         $this->selectedIndex = $val;
     }
 
@@ -140,7 +140,7 @@ class Select extends \Sphp\tools\Control {
 
     }
 
-    public function setNotValue($val) {
+    public function fi_setNotValue($val) {
         $this->notvalue = $val;
         if ($this->issubmit) {
             if ($this->notvalue == $this->getValue()) {
@@ -153,7 +153,7 @@ class Select extends \Sphp\tools\Control {
      * Pass parameter like $val = "vcd,dvd,mp3";<br>
      * @param String $val
      */
-    public function setOptions($val) {
+    public function fu_setOptions($val) {
         $this->unsetOptionsKeyArray();
         $this->options = $val;
         $this->opt = array();
@@ -181,7 +181,7 @@ class Select extends \Sphp\tools\Control {
      * funsetOptionsJSON='{"0":"Parent", "1": "Child"}'
      * @param string $val json string
      */
-    public function setOptionsJSON($val) {
+    public function fu_setOptionsJSON($val) {
         //$val = trim($val);
         $opt2 = json_decode($val,true);
         $opt1 = array();
@@ -236,7 +236,7 @@ class Select extends \Sphp\tools\Control {
         $this->genOptionList();
     }
 
-    public function setOptionsFromTable($valueField, $textField = '', $tableName = '', $logic = '', $sql = '', $cacheTime = '0') {
+    public function fu_setOptionsFromTable($valueField, $textField = '', $tableName = '', $logic = '', $sql = '', $cacheTime = '0') {
         $tblName = \SphpBase::page()->tblName;
         $mysql = \SphpBase::dbEngine();
         $blnMultiTextField = false;
@@ -305,7 +305,7 @@ class Select extends \Sphp\tools\Control {
         $this->setOptionsArray($arr1);
     }
 
-    public function onprejsrender() {
+    protected function onprejsrender() {
         if ($this->formName != '' && $this->notvalue != '') {
             $jscode = "if(blnSubmit==true && " . $this->getJSValue() . "=='" . $this->notvalue . "'){
     blnSubmit = false ;
@@ -325,14 +325,14 @@ document.getElementById('$this->name').focus();
         }
     }
     
-    public function onprerender() {
+    protected function onprerender() {
         if($this->blnsearch){
             addFileLink($this->myrespath . "/jslib/select2.min.css");
             addFileLink($this->myrespath . "/jslib/select2.min.js");
         }
     }
 
-    public function onrender() {
+    protected function onrender() {
          if($this->getVisible()){
         $HTMLParser = new \Sphp\tools\HTMLParser();
         if($this->blnsearch){

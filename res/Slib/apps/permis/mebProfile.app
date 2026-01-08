@@ -8,8 +8,8 @@ class mebProfile extends PermisApp {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("member");
-        $this->genFormTemp = new TempFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
-        $this->showallTemp = new TempFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
+        $this->genFormTemp = new FrontFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
+        $this->showallTemp = new FrontFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
 
         $this->showallTemp->getComponent('showall')->setPerPageRows(50);
 
@@ -29,15 +29,15 @@ class mebProfile extends PermisApp {
         $checkUserEmail = $this->checkUserEmail($email);
         if($checkUserEmail) {
             setErr('app1', 'This Email already exist!!');
-            $this->setTempFile($this->genFormTemp); 
+            $this->setFrontFile($this->genFormTemp); 
        /* } elseif($checkUserName) {
             setErr('app1', 'This username already exist!!');
-            $this->setTempFile($this->genFormTemp); 
+            $this->setFrontFile($this->genFormTemp); 
         * 
         */
         } elseif($profile_id == 'Select Profile') {
             setErr('app1', 'Select Profile');
-            $this->setTempFile($this->genFormTemp);            
+            $this->setFrontFile($this->genFormTemp);            
         } else {            
             $this->extra[]['varification'] = '1';
             $this->extra[]['username'] = $email;

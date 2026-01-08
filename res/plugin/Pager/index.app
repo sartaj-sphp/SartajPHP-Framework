@@ -9,7 +9,7 @@ class index extends \Sphp\tools\BasicApp{
      $this->setTableName('pagdet');
      // enable permission system
      $this->page->getAuthenticatePerm();
-     $this->temp1 = new TempFile($this->mypath . "/forms/infradet.front");
+     $this->temp1 = new FrontFile($this->mypath . "/forms/infradet.front");
     }
 
     public function onready() {
@@ -18,14 +18,14 @@ class index extends \Sphp\tools\BasicApp{
         $this->eventname = SphpBase::page()->getEvent(); 
         if($this->page->isevent){
             if($this->eventname == "home") $cmpid2 = "demo";
-             $this->setTempFile($this->temp1);
+             $this->setFrontFile($this->temp1);
         }else{ // home page
             $cmpid2 = "demo";
             $this->eventname = "home";
-            $this->setTempFile($this->temp1);
+            $this->setFrontFile($this->temp1);
         }
         // don't show breadcromb on home page
-         if($this->eventname == "home") $this->temp1->getComponent("spn4")->unsetRender();
+         if($this->eventname == "home") $this->temp1->getComponent("spn4")->fu_unsetRender();
         $this->getRecord($cmpid2);
         if($this->page->checkAuth("ADMIN,MEMBER")){
             $this->getDialogBox();
@@ -47,6 +47,14 @@ class index extends \Sphp\tools\BasicApp{
             return $this->record[$col];
         }else{
             return "";
+        }
+    }
+    /**
+     * Tiny Editor on Render event handle
+     */
+    public function comp_tinydetails_on_startrender($evtargs){
+        if(file_exists('pagres/a' . $this->getRow('id') . '.html')){
+            $this->temp1->getComponent("tinydetails")->fu_setValue(file_get_contents('pagres/a' . $this->getRow('id') .'.html'));
         }
     }
     private function getDialogBox(){

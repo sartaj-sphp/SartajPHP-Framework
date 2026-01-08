@@ -10,8 +10,8 @@ class sale extends Universe {
         global $mebmasterf;
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->setTableName("member");
-        $this->mainhome = new TempFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
-        $this->showhome = new TempFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
+        $this->mainhome = new FrontFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
+        $this->showhome = new FrontFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
 
         $this->showhome->getComponent('showall')->setPerPageRows(50);
 
@@ -31,13 +31,13 @@ class sale extends Universe {
         $checkUserEmail = $this->checkUserEmail($email);
         if($checkUserEmail) {
             setErr('app1', 'This Email already exist!!');
-            $this->setTempFile($this->mainhome); 
+            $this->setFrontFile($this->mainhome); 
         } elseif($checkUserName) {
             setErr('app1', 'This username already exist!!');
-            $this->setTempFile($this->mainhome); 
+            $this->setFrontFile($this->mainhome); 
         } elseif($profile_id == 'Select Profile') {
             setErr('app1', 'Select Profile');
-            $this->setTempFile($this->mainhome);            
+            $this->setFrontFile($this->mainhome);            
         } else {            
             $this->extra[]['varification'] = '1';
             $this->extra[]['usertype'] = 'MEMBER';

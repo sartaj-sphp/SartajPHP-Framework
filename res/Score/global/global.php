@@ -56,7 +56,7 @@ if(strpos($slibversion,".phar") !== false){
 }
 $libpath = "{$phppath}/Score/$libversion";
 $jquerypath = "{$jslibpath}/jquery";
-$comppath = "{$phppath}/controls";
+$comppath = "{$phppath}/components";
 $slibrespath = "{$respath}/{$slibversion}";
 
 $db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
@@ -68,11 +68,11 @@ $dhost = "localhost:3306";
 
 $jsProtection = false;
 
-$masterf = "{$slibpath}/temp/default/master.php";
-//$mobimasterf = "{$slibpath}/temp/default/mobimaster.php";
-$admmasterf = "{$slibpath}/temp/default_1/admmaster.php";
-$mebmasterf = "{$slibpath}/temp/default/master.php";
-//$softmasterf = "{$slibpath}/temp/default/softmaster.php";
+$masterf = "{$slibpath}/masters/default/master.php";
+//$mobimasterf = "{$slibpath}/masters/default/mobimaster.php";
+$admmasterf = "{$slibpath}/masters/default_1/admmaster.php";
+$mebmasterf = "{$slibpath}/masters/default/master.php";
+//$softmasterf = "{$slibpath}/masters/default/softmaster.php";
 
 if (filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_FLAG_EMPTY_STRING_NULL)) {
     if (isset($_SERVER["HTTPS"]) && ( $_SERVER["HTTPS"] == "on" || $_SERVER["HTTPS"] == 1)){

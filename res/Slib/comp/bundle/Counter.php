@@ -7,7 +7,7 @@
  *  create only one component and then use class counter to run any other counters
  *     <div class="counter-box">
     <div class="icon">
-    <img src="temp/assets/img/icon/project-done.svg" alt>
+    <img src="masters/assets/img/icon/project-done.svg" alt>
     </div>
     <div>
     <span data-count="+" data-to="2500" data-speed="3000" id="ct1" runat="server" path="libpath/comp/bundle/Counter.php">2500</span>
@@ -19,12 +19,12 @@
 
 
 
-class Counter extends Control{
-public function oncreate($element){
+class Counter extends Sphp\tools\Component{
+protected function oncreate($element){
     $this->setHTMLName("");
 }
 
-public function onjsrender(){
+protected function onjsrender(){
     addFileLink($this->myrespath . '/res/jquery.appear.min.js');
     addFileLink($this->myrespath . '/res/counter-up.js');
     $this->element->appendAttribute('class', 'counter');

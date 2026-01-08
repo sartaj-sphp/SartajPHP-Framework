@@ -1,17 +1,17 @@
 <?php
 
-class SearchPanel extends Control{
+class SearchPanel extends Sphp\tools\Component{
 private $label = "";
 private $bs = 5;
 
-public function setLabel($label) {
+public function fu_setLabel($label) {
     $this->label = $label;
 }
-public function setBS($param) {
+public function fu_setBS($param) {
     SphpJsM::setJSLibVersion("bootstrap", $param);
     $this->bs = SphpJsM::getJSLibVersion("bootstrap");
 }
-public function onrender(){
+protected function onrender(){
     $this->tagName = 'div';
     $pre1 = '<div class="card-group dpanel pb-2" id="accordion">
         <div class="card card-primary">

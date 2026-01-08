@@ -5,11 +5,11 @@
  * <header id="slider1" runat="server" 
  *         path="mypath/comp/heroslider/HeroSlider.php" 
  *         funsetStyler="1"
- *         funsetImages='{"temp/images/pic1.jpg":"First caption","temp/images/pic2.jpg":"Second caption"}'
+ *         funsetImages='{"masters/images/pic1.jpg":"First caption","masters/images/pic2.jpg":"Second caption"}'
  *         funsetInterval="5000"
- *         funsetTitle="Canada Regional Day Home Agency"></header>
+ *         funsetTitle="Canada Agency"></header>
  */
-class HeroSlider extends Sphp\tools\Control {
+class HeroSlider extends Sphp\tools\Component {
     private $images = array();
     private $interval = 3000;
     private $title = "Default Title";
@@ -20,15 +20,15 @@ class HeroSlider extends Sphp\tools\Control {
     private $textClass    = "animate__animated animate__fadeInUp";
     private $btnClass     = "btn btn-light btn-lg mt-3";
 
-    public function setTitle($title){
+    public function fu_setTitle($title){
         $this->title = $title;
     }
 
-    public function setImages($images){
+    public function fu_setImages($images){
         $this->images = json_decode($images,true);
     }
 
-    public function setInterval($interval){
+    public function fu_setInterval($interval){
         $this->interval = $interval;
     }
 
@@ -80,7 +80,7 @@ class HeroSlider extends Sphp\tools\Control {
         }
     }
 
-    public function onrender(){
+    protected function onrender(){
         if(SphpBase::sphp_router()->getCurrentRequest() != 'index'){
             $key1 = array_key_first($this->images);
             $this->element->setAttribute('class','hero d-flex align-items-center text-center text-white');
@@ -96,7 +96,7 @@ class HeroSlider extends Sphp\tools\Control {
         } 
 
     }
-    public function normalRender(){
+    private function normalRender(){
         $this->setupjs();
         $this->element->hasAttribute('class') 
             ? $this->element->appendAttribute('class',' heroCarousel carousel slide') 

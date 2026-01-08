@@ -3,19 +3,19 @@
  *  $("#model1").modal("hide");
  *  $("#model1").modal("show");
  */
-class ModalB extends Control{
+class ModalB extends Sphp\tools\Component{
 private $url = "";
 private $btn1 = ""; 
 
-public function  showButton($param) {
+public function  fu_showButton($param) {
     $this->btn1 = $this->getButton($param);
 }
-public function  getURL($url) {
+public function  fu_getURL($url) {
     //$this->name.show();
     $this->url = $url;
 }
 
-public function onrender(){
+protected function onrender(){
     if($this->url != ""){
         addHeaderJSFunctionCode('ready',$this->name, "$('#$this->name').on('shown.bs.modal', function () {getAJAX('$this->url',{},true,function(r){"
             . " }); } );");

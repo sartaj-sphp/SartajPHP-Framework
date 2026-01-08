@@ -8,11 +8,11 @@
 
 namespace Sphp\comp\html {
 
-    class Title extends \Sphp\tools\Control {
+    class Title extends \Sphp\tools\Component {
         private $blnautoseo = false;
         private static $blnrender = false;
         
-        public function autoSEO() {
+        public function fu_autoSEO() {
             $this->blnautoseo = true;
         }
         private function autoSEO1($ar1) {
@@ -38,12 +38,12 @@ namespace Sphp\comp\html {
                 }
             }
         }
-        public function onrender() {
+        protected function onrender() {
             global $cmpname;
             // force render once
             if(! self::$blnrender){
                 self::$blnrender = true;
-            $this->unsetRenderTag();
+            $this->fu_unsetRenderTag();
             $hh1 = $this->getInnerHTML();
             $hh1 = $this->executePHPCode($hh1);
             // 70 characters
@@ -84,12 +84,12 @@ namespace Sphp\comp\html {
             if ($this->element->hasAttribute("img")) {
                 $str1 .= '<meta property="og:image" content="'. $this->element->getAttribute("img") .'" />';
             }else{
-                $str1 .= '<meta property="og:image" content="'. \SphpBase::sphp_settings()->slib_res_path .'/temp/default/imgs/android-icon-192x192.png" />';                
+                $str1 .= '<meta property="og:image" content="'. \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png" />';                
             }
             if ($this->element->hasAttribute("imgsecure")) {
                 $str1 .= '<meta property="og:image:secure_url" content="'. $this->element->getAttribute("imgsecure") .'" />';
             }else{
-                $str1 .= '<meta property="og:image:secure_url" content="'. \SphpBase::sphp_settings()->slib_res_path .'/temp/default/imgs/android-icon-192x192.png" />';                
+                $str1 .= '<meta property="og:image:secure_url" content="'. \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png" />';                
             }
                 $str1 .= '<meta property="og:image:width" content="600" />
 		<meta property="og:image:height" content="600" />';
@@ -105,7 +105,7 @@ namespace Sphp\comp\html {
             }
         // twiter tags
             if ($this->element->hasAttribute("twitter-site")) {
-                $this->element->setDefaultAttribute('twitter-image', \SphpBase::sphp_settings()->slib_res_path .'/temp/default/imgs/android-icon-192x192.png');
+                $this->element->setDefaultAttribute('twitter-image', \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png');
         $str1 .= '<meta name="twitter:card" content="summary_large_image" /><meta property="twitter:site" content="'. $this->element->getAttribute("twitter-site") .'" />
             <meta property=""twitter:title" content="'. \SphpBase::sphp_settings()->title .'" />
             <meta property="twitter:description" content="'. \SphpBase::sphp_settings()->metadescription .'" />
@@ -116,13 +116,13 @@ namespace Sphp\comp\html {
             $this->setInnerHTML('');
             if($this->blnautoseo){
                 // component temp file
-                $dom = $this->tempobj->HTMLParser->dhtmldom;
+                $dom = $this->frontobj->HTMLParser->dhtmldom;
                 $this->autoSEO1($dom->root->getChildren());
             }
             }else{ // render child temp file
             if($this->blnautoseo){
                 // element temp file object because component is same in both file
-                $dom = $this->element->tempobj->HTMLParser->dhtmldom;
+                $dom = $this->element->frontobj->HTMLParser->dhtmldom;
                 $this->autoSEO1($dom->root->getChildren());
             }                
             }
