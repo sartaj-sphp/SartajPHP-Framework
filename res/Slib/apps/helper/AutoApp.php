@@ -10,14 +10,14 @@ include_once("{$libpath}/dev/QueryBuilder.php");
 class AutoApp extends \Sphp\tools\BasicApp {
 
     /**
-     *  @var \Sphp\tools\TempFile
+     *  @var \Sphp\tools\FrontFile
      */
-    protected $genFormTemp = null;
+    protected $genFormFront = null;
 
     /**
-     *  @var \Sphp\tools\TempFile
+     *  @var \Sphp\tools\FrontFile
      */
-    protected $showallTemp = null;
+    protected $showallFront = null;
     public $heading = "heading";
     public $footer = "set footer property of app, for logo image set logoimg";
     public $logoimg = "apps/helper/forms/logo.png";
@@ -37,57 +37,57 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function onstart() {
         $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/forms/logo.png";
-        $this->showallTemp->getComponent('showall')->unsetRenderTag();
-        $this->genFormTemp->getComponent('btnDel')->unsetRender();
-        $this->showallTemp->getComponent('showall')->setPerPageRows(10);
+        $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
+        $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
+        $this->showallFront->getComponent('showall')->setPerPageRows(10);
     }
 
     public function page_event_loadform($evtp) {
-        $this->showallTemp->getComponent('showall')->setRenderTag();
-        //$this->JSServer->addJSONTemp($this->genFormTemp,'showall_editor');
-        $this->JSServer->addJSONTemp($this->showallTemp, 'listFormHolder');
+        $this->showallFront->getComponent('showall')->fu_setRenderTag();
+        //$this->JSServer->addJSONFront($this->genFormFront,'showall_editor');
+        $this->JSServer->addJSONFront($this->showallFront, 'listFormHolder');
 //      $this->JSServer->addJSONBlock('html','listheading',$listheading->innerHTML);
 //      $this->JSServer->addJSONBlock('html','editheading',$editheading->innerHTML);
     }
 
     public function page_new() {
-        $this->showallTemp->getComponent('showall')->setRenderTag();
-        //$tmp = new TempFile('This is not a standalone Application!', true);
+        $this->showallFront->getComponent('showall')->fu_setRenderTag();
+        //$tmp = new FrontFile('This is not a standalone Application!', true);
         //trigger_error('This is not a standalone Application!');
-        $this->setTempFile($this->showallTemp);
+        $this->setFrontFile($this->showallFront);
     }
 
 // user event handling start here
     public function page_event_test($param) {
-        $this->setTempFile($this->showallTemp);
+        $this->setFrontFile($this->showallFront);
     }
 
     public function page_event_showall_show($param) {
-        $showall = $this->showallTemp->getComponent('showall');
+        $showall = $this->showallFront->getComponent('showall');
         $this->JSServer->addJSONComp($showall, 'showall');
         $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
     }
 
     public function page_event_print($param) {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
-        $showall = $this->showallTemp->getComponent('showall');
-        require($this->phppath . '/classes/bundle/reports/html2pdf/Temp2PDF.php');
-        $showsingleTemp = new Sphp\tools\TempFileChild(__DIR__ ."/forms/pdf_temp.temp",false,null,$this->showallTemp);
+        $showall = $this->showallFront->getComponent('showall');
+        require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
+        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/forms/pdf_temp.temp",false,null,$this->showallFront);
         $showall->unsetAddButton();
         $showall->unsetDialog();
         $showall->unsetPageBar();
-//        $showsingleTemp->addMetaData('uni_id',"FF45678");
-        $pdf = new Temp2PDF($showsingleTemp);
+//        $showsingleFront->addMetaData('uni_id',"FF45678");
+        $pdf = new Front2PDF($showsingleFront);
         $pdf->setDefaultFont('Arial');
         $pdf->render('sample.pdf', 'I');
     }
 
     public function page_event_usersrch($param) {
-        $showall = $this->showallTemp->getComponent('showall');
+        $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
             if (!getCheckErr()) {
                 $this->JSServer->addJSONComp($showall, 'showall');
-                //$this->JSServer->addJSONTemp($this->genFormTemp, 'showall_editor');
+                //$this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
                 $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
             } else {
                 setErr('app1', 'Can not Search Data');
@@ -109,10 +109,10 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function page_event_rowclick($param) {
         $this->Client->session("formType", "Edit");
-        $this->page->viewData($this->genFormTemp->getComponent('form2'));
-        $this->genFormTemp->getComponent('btnDel')->setRender();
+        $this->page->viewData($this->genFormFront->getComponent('form2'));
+        $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
-        $this->JSServer->addJSONTemp($this->genFormTemp, 'showall_editor');
+        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
 //        $this->JSServer->addJSONBlock('html','frmstatus',"Form is on Update Mode!");
     }
 
@@ -124,19 +124,19 @@ class AutoApp extends \Sphp\tools\BasicApp {
             unset($_SESSION['curtrec']);
         }
         $this->Client->session("formType", "Add");
-        $this->JSServer->addJSONTemp($this->genFormTemp, 'showall_editor');
+        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
     }
 
 // user event handling end here
     public function page_event_crossclick($param) {
-        $this->page->viewData($this->genFormTemp->getComponent('form2'));
-        $this->genFormTemp->getComponent('btnDel')->setRender();
+        $this->page->viewData($this->genFormFront->getComponent('form2'));
+        $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $extupdate = array();
         $extupdate["up"] = 12;
         $extupdate["previd"] = $this->Client->request("previd");
         $extupdate["prevctrl"] = $this->Client->request("prevctrl");
         $this->Client->session("extupdate", $extupdate);
-        $this->JSServer->addJSONTemp($this->genFormTemp, 'showall_editor');
+        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
     }
 
     public function page_insert() {
@@ -149,7 +149,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
                 //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
                 //$JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 if ($blnsendList) {
-                    $this->JSServer->addJSONComp($this->showallTemp->getComponent('showall'), 'showall');
+                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
                 } else {
                     $this->sendCrossCall();
                 }
@@ -189,7 +189,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
             $this->page->updateData($this->extra, $this->recID, $this->recWhere);
             if (!getCheckErr()) {
                 if ($blnsendList) {
-                    $this->JSServer->addJSONComp($this->showallTemp->getComponent('showall'), 'showall');
+                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
                     //$this->JSServer->addJSONJSBlock(" setFormAsNew('form2');");
                 } else {
                     $this->sendCrossCall();
@@ -212,8 +212,8 @@ class AutoApp extends \Sphp\tools\BasicApp {
         $this->page->deleteRec();
         if (!getCheckErr()) {
             if ($blnsendList) {
-                $this->JSServer->addJSONComp($this->showallTemp->getComponent('showall'), 'showall');
-                $this->JSServer->addJSONTemp($this->genFormTemp, 'showall_editor');
+                $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
+                $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
             } else {
                 $this->sendCrossCall();
             }
@@ -263,24 +263,24 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function page_event_efillstate($param) {
         $this->Client->session('country', $this->Client->request('country'));
-        $this->JSServer->addJSONComp($this->genFormTemp->getComponent('state'), 'edit_state_box');
-        $this->JSServer->addJSONComp($this->genFormTemp->getComponent('city'), 'edit_city_box');
+        $this->JSServer->addJSONComp($this->genFormFront->getComponent('state'), 'edit_state_box');
+        $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
     public function page_event_efillcity($param) {
         $this->Client->session('country', $this->Client->request('country'));
         $this->Client->session('state', $this->Client->request('state'));
-        $this->JSServer->addJSONComp($this->genFormTemp->getComponent('city'), 'edit_city_box');
+        $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
     /// Search
     public function page_event_efillstates($param) {
-        $this->JSServer->addJSONComp($this->showallTemp->getComponent('searchby_state'), 'edit_state_boxs');
-        $this->JSServer->addJSONComp($this->showallTemp->getComponent('searchby_city'), 'edit_city_boxs');
+        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_state'), 'edit_state_boxs');
+        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 
     public function page_event_efillcitys($param) {
-        $this->JSServer->addJSONComp($this->showallTemp->getComponent('searchby_city'), 'edit_city_boxs');
+        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 
 }

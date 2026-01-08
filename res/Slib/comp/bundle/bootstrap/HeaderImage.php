@@ -1,14 +1,14 @@
 <?php
 
-class HeaderImage extends Control {
+class HeaderImage extends \Sphp\tools\Component{
     private static $renderon = true;
         
-    public function onrender() {
+    protected function onrender() {
         if(self::$renderon){
             self::$renderon = false;
         $this->tagName = 'section';
         $this->element->appendAttribute('class', 'hero');
-        if(! $this->element->hasAttribute('src')) $this->src = SphpBase::sphp_settings()->slib_res_path . '/temp/default/assets/img/hero-bg.jpg';
+        if(! $this->element->hasAttribute('src')) $this->src = SphpBase::sphp_settings()->slib_res_path . '/masters/default/assets/img/hero-bg.jpg';
         $this->element->setInnerPreTag('<img src="'. $this->src .'" data-aos="fade-in"  /><div class="container">');
         $this->element->setInnerPostTag('</div>');
         $strcs1 = "";

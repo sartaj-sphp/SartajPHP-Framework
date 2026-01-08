@@ -3,13 +3,13 @@ namespace Sphp\core {
 class Router {
 /** @var string $url_extension extension use in URL default is .html */
 public $url_extension = ".html";
-/** @var string $act Controller Action */
+/** @var string $act Appgate Action */
 public $act = "";
-/** @var string $sact Controller Event */
+/** @var string $sact Appgate Event */
 public $sact = "";
-/** @var string $evtp Controller Event Parameter */
+/** @var string $evtp Appgate Event Parameter */
 public $evtp = "";
-/** @var string $ctrl Current Request Controller */
+/** @var string $ctrl Current Request Appgate */
 public $ctrl = "";
 /** @var string $uri Request URI */
 public $uri = "";
@@ -18,7 +18,7 @@ public $uri = "";
 */
 public function route() {}
 /**
-* Get Current Request Controller
+* Get Current Request Appgate
 * @return string
 */
 public function getCurrentRequest() {}
@@ -36,12 +36,12 @@ public function isRegisterCurrentRequest() {}
 */
 public function registerCurrentRequest($apppath, $s_namespace = "",$permtitle="",$permlist=null) {}
 /**
-* Register Current Request with different Controller
+* Register Current Request with different Appgate
 * @param string $ctrl <p>
-* registerCurrentController('home')
+* registerCurrentAppgate('home')
 * </p>
 */
-public function registerCurrentController($ctrl) {}
+public function registerCurrentAppgate($ctrl) {}
 public function isRootURI() {}
 /**
 * Get Registered Application FilePath details of Current Request
@@ -50,13 +50,13 @@ public function isRootURI() {}
 public function getCurrentAppPath() {}
 /**
 * Get Registered Application FilePath details
-* @param string $ctrl controller
+* @param string $ctrl Appgate
 * @return array
 */
 public function getAppPath($ctrla2) {}
 /**
-* Generate URL for a Controller
-* @param string $ControllerName controller like index
+* Generate URL for a Appgate
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -68,7 +68,7 @@ public function getAppPath($ctrla2) {}
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getAppURL($ControllerName, $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getAppURL($AppgateName, $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
 * Generate URL for Current Application
 * @param string $extra <P> Extra query string in URL 
@@ -89,11 +89,11 @@ public function getthisURL($extra = "", $blnSesID = false,$ext='',$noncache=fals
 * }
 * }
 * $eventName = test
-* $controllerName = index
+* $AppgateName = index
 * Registered Application = apps/index.app
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $ControllerName controller like index
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -105,7 +105,7 @@ public function getthisURL($extra = "", $blnSesID = false,$ext='',$noncache=fals
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getEventURLSecure($eventName, $evtp = "", $ControllerName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getEventURLSecure($eventName, $evtp = "", $AppgateName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
 * Generate URL for a Event of Application
 * @param string $eventName <p> Name of Event
@@ -115,11 +115,11 @@ public function getEventURLSecure($eventName, $evtp = "", $ControllerName = "", 
 * }
 * }
 * $eventName = test
-* $controllerName = index
+* $AppgateName = index
 * Registered Application = apps/index.app
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $ControllerName controller like index
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -131,7 +131,7 @@ public function getEventURLSecure($eventName, $evtp = "", $ControllerName = "", 
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getEventURL($eventName, $evtp = "", $ControllerName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getEventURL($eventName, $evtp = "", $AppgateName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
 * Advance Function, Internal use
 * @param string $evt

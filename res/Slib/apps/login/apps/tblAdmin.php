@@ -10,10 +10,10 @@ $genForm->setField("pass","Password","pass","r","4","20");
 $genForm->setField("dispName","Display Name","text","r","4","50");
 $genForm->setField("atype","Type","select","ADMIN,SUB ADMIN,LOWER ADMIN");
 ';
-$genFormTemp = new TempFile("$libpath/tpl/db/GenForm.php");
+$genFormFront = new FrontFile("$libpath/tpl/db/GenForm.php");
 //$genForm->setTable("usert");
 
-$showallTemp = new TempFile("$libpath/tpl/db/Showall.php");
+$showallFront = new FrontFile("$libpath/tpl/db/Showall.php");
 $showall->setFieldNames("userID,pass,atype,dispName");
 $showall->setColWidths("20%,20%,20%,");
 $showall->setEdit();
@@ -92,15 +92,15 @@ $blngetFront = true;
 if ($blngetFront == true ){
 switch($formNo){
     case 1:{
-$genFormTemp->run();
-$dynData = $genFormTemp;
-include_once("temp/admmaster.php");
+$genFormFront->run();
+$dynData = $genFormFront;
+include_once("masters/admmaster.php");
 break;
     }
     case 2:{
-$showallTemp->run();
-$dynData = $showallTemp;
-include_once("temp/admmaster.php");
+$showallFront->run();
+$dynData = $showallFront;
+include_once("masters/admmaster.php");
 break;
     }
 }

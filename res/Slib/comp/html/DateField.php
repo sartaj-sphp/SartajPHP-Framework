@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html {
 
-    class DateField extends \Sphp\tools\Control {
+    class DateField extends \Sphp\tools\Component {
 
         public $datemin = '';
         public $datemax = '';
@@ -20,7 +20,7 @@ namespace Sphp\comp\html {
         private $msgName = '';
         private $req = false;
 
-        public function oninit() {
+        protected function oninit() {
             \SphpJsM::addjQueryUI();
             if ($this->value != '') {
                 $this->value = $this->dateToMySQLDate($this->value);
@@ -50,16 +50,16 @@ namespace Sphp\comp\html {
             setErr($this->name, $msg);
         }
 
-        public function setForm($val) {
+        public function fi_setForm($val) {
             $this->formName = $val;
         }
 
-        public function setMsgName($val) {
+        public function fu_setMsgName($val) {
             $this->msgName = $val;
             $this->setAttribute('placeholder', $val);
         }
 
-        public function setRequired() {
+        public function fi_setRequired() {
             if ($this->issubmit) {
                 if (strlen($this->value) < 1) {
                     $this->setErrMsg($this->getAttribute("msgname") . ' ' . "Can not submit Empty");
@@ -124,27 +124,27 @@ namespace Sphp\comp\html {
             }
         }
 
-        public function setDateMin($val) {
+        public function fu_setDateMin($val) {
             $this->datemin = $val;
         }
 
-        public function setDateMax($val) {
+        public function fu_setDateMax($val) {
             $this->datemax = $val;
         }
 
-        public function setAppendText($val) {
+        public function fu_setAppendText($val) {
             $this->appendText = $val;
         }
 
-        public function setButtonImage($val) {
+        public function fu_setButtonImage($val) {
             $this->image = $val;
         }
 
-        public function setNumMonths($val) {
+        public function fu_setNumMonths($val) {
             $this->nomonth = $val;
         }
 
-        public function onjsrender() {
+        protected function onjsrender() {
             $sphp_settings = \SphpBase::sphp_settings();
 //addFileLink("$jquerypath/themes/base/jquery.ui.all.css");
 //addFileLink("$jquerypath/ui/jquery.ui.core.min.js");
@@ -181,7 +181,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
             }
         }
 
-        public function onrender() {
+        protected function onrender() {
             if ($this->errmsg != "") {
                 $this->setPostTag($this->errmsg);
             }

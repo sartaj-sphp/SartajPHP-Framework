@@ -1,6 +1,6 @@
 <?php
 
-class Header extends Control {
+class Header extends \Sphp\tools\Component{
     private $menufile = null;
     private $vertimenufile = null;
     private $text = "";
@@ -9,25 +9,25 @@ class Header extends Control {
     private $fixed = false;
     private $vertimenu = false;
 
-    public function setText($val) {
+    public function fu_setText($val) {
         $this->text = $val;
     }
-    public function setFullSize() {
+    public function fu_setFullSize() {
         $this->fullsize = true;
     }
-    public function setVericalMenuTitle($a="") {
+    public function fu_setVericalMenuTitle($a="") {
        
     }
-    public function setIcon($val) {
+    public function fu_setIcon($val) {
         $this->icon = $val;
     }
-    public function setFixed() {
+    public function fu_setFixed() {
         $this->fixed = true;
     }
-    public function setMenuFile($menupath) {
+    public function fu_setMenuFile($menupath) {
         $this->menufile = $menupath;
     }
-    public function setVerticalMenuFile($menupath) {
+    public function fu_setVerticalMenuFile($menupath) {
         if($menupath == ""){
             $this->vertimenu = false;
         }else{
@@ -39,10 +39,10 @@ class Header extends Control {
         $menuo = "";
         if($this->menufile != null){
             include_once($this->menufile);
-            $menu = new MenuUi($this->tempobj->fileDir);
+            $menu = new MenuUi($this->frontobj->fileDir);
             $callback($menu);
-            $menu->run();
-            $menuo = $menu->render();
+            $menu->_run();
+            $menuo = $menu->_render();
         }
         return $menuo;
     }
@@ -50,23 +50,23 @@ class Header extends Control {
         $menuo = "";
         if($this->vertimenufile != null){
             include_once($this->vertimenufile);
-            $menu = new MenuUiSide($this->tempobj->fileDir);
+            $menu = new MenuUiSide($this->frontobj->fileDir);
             $menu->brandicon = $this->icon;
             $menu->text = $this->text;
             $callback($menu);
-            $menu->run();
-            $menuo = $menu->render();
+            $menu->_run();
+            $menuo = $menu->_render();
         }
         return $menuo;
     }
 
-    public function onaftercreate() {
+    protected function onaftercreate() {
         global $cmpname;
         parent::onaftercreate();
         if($this->text == "")  $this->text = $cmpname;
-        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_res_path . "/temp/default/imgs/android-icon-192x192.png";
+        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_res_path . "/masters/default/imgs/android-icon-192x192.png";
     }
-    public function onrender() {
+    protected function onrender() {
         
         //$this->setTagName("header");
 
@@ -166,7 +166,7 @@ class Header extends Control {
                 if( $menusub == ''){
                 $menusub = '<div class="dropdown text-end ">
           <a href="#" class="d-block nav-dlink text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="'. SphpBase::sphp_settings()->slib_res_path . "/temp/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
+            <img src="'. SphpBase::sphp_settings()->slib_res_path . "/masters/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small nav-dlink">
             <li><a class="dropdown-item" href="#">use setSubMenuFile as temp file</a></li>
@@ -226,7 +226,7 @@ class Header extends Control {
             
         }
         
-        $this->unsetRenderTag();
+        $this->fu_unsetRenderTag();
         $cls = $this->getAttribute("class");
         if($this->fixed) $cls .= ' fixed-top';
         

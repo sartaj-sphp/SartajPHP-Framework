@@ -6,12 +6,12 @@
  */
 
 
-class DL extends Control{
-public function oncreate($element){
+class DL extends Sphp\tools\Component{
+protected function oncreate($element){
 $this->setHTMLName("");
 }
 
-public function onjsrender(){
+protected function onjsrender(){
 if($this->parameterA['class'] == ''){
     addHeaderCSS('dl', '
 .dl

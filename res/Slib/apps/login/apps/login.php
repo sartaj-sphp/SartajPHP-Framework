@@ -13,7 +13,7 @@ SphpBase::page()->tblName = "usert";
 //SphpBase::page()->Authenticate();
 //SphpBase::page()->sesSecure();
 // include section if we want use inbuilt in other panels then we include that panel here
-$dynData = new TempFile("apps/auth/forms/login.php");
+$dynData = new FrontFile("apps/auth/forms/login.php");
 
 if(SphpBase::page()->isevent)
 {
@@ -114,7 +114,7 @@ $metakeywords = "sartaj,sartaj singh amritsar,srtaj framework,sartaj php framewo
 $metadescription = "Sartaj PHP Framework Login System.";
 $metaclassification = "Software Company";
 $dynData->run();
-include_once("temp/master.php");
+include_once("masters/master.php");
     break;
 	}
     case 2:{
@@ -123,9 +123,9 @@ $metakeywords = "sartaj,sartaj singh amritsar,srtaj framework,sartaj php framewo
 $metadescription = "Sartaj PHP Framework Login System.";
 $metaclassification = "Software Company";
 $paraRepeated = 0;
-$dynData->TempFile('apps/auth/forms/loginsubmit.frm.php');
+$dynData->FrontFile('apps/auth/forms/loginsubmit.frm.php');
 $dynData->run();
-include_once("temp/master.php");
+include_once("masters/master.php");
     break;
 	}
 }

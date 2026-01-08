@@ -5,7 +5,7 @@
  * @author SARTAJ
  */
 
-class Jstore extends Control{
+class Jstore extends \Sphp\tools\Component{
     private $tables = 'tables: []';
 public function oncreate($element){
     $this->setHTMLName("");

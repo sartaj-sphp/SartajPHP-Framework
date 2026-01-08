@@ -5,8 +5,8 @@
  * @author SARTAJ
  */
 
-class Dialog extends \Sphp\tools\Control{
-public function oncreate($element){
+class Dialog extends \Sphp\tools\Component{
+protected function oncreate($element){
 $this->setHTMLName("");
 $this->setHTMLID($this->name . '_dlg');
 }
@@ -15,7 +15,7 @@ public function sendAJAX($content){
     SphpBase::JSServer()->addJSONHTMLBlock($this->name . "_body",$content);
 }
 
-public function onjsrender(){
+protected function onjsrender(){
 global $jquerypath;
 //work pending
 //addFileLink($this->myrespath . '/fq-ui.extendeddialog.css');

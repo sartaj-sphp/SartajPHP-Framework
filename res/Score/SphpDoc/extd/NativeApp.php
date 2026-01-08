@@ -5,9 +5,6 @@ class NativeApp extends ConsoleApp {
 public $mainConnection = null;
 public $JQuery = null;
 /**
-* Advance function 
-*/
-/**
 * Create Child Process
 * @param string $exepath file path to execute as child process
 * @param array $param pass command line arguments to child process
@@ -52,7 +49,7 @@ public function setGlobalAppManager() {}
 * or sendAll.
 * @param string $rawdata Optional Default=(send JSServer), JSON String
 * @param string $datatype Optional Default=text Data Type
-* @param string $groupctrl Optional Default=this app, controller of app to send data
+* @param string $groupctrl Optional Default=this app, Appgate of app to send data
 */
 public function sendAllProcess($rawdata = null, $datatype = "text",$groupctrl="") {}
 /**
@@ -63,11 +60,11 @@ public function sendAllProcess($rawdata = null, $datatype = "text",$groupctrl=""
 */
 public function sendAllWS($rawdata = null, $datatype = "text") {}
 /**
-* Send Data to All WS Connections related to app process, current controller or $groupctrl.
+* Send Data to All WS Connections related to app process, current Appgate or $groupctrl.
 * It works similar to sendOthers but also send data to current connection.
 * @param string $rawdata Optional Default=(send JSServer), JSON String
 * @param string $datatype Optional Default=text Data Type
-* @param string $groupctrl Optional Default=this app, controller of app to send data
+* @param string $groupctrl Optional Default=this app, Appgate of app to send data
 */
 public function sendAll($rawdata = null, $datatype = "text", $groupctrl = "") {}
 /**
@@ -75,7 +72,7 @@ public function sendAll($rawdata = null, $datatype = "text", $groupctrl = "") {}
 * Send Data to All Others WS Connections and leave current connection id
 * @param string $rawdata Optional Default=(send JSServer), JSON String
 * @param string $datatype Optional Default=text Data Type
-* @param string $groupctrl Optional Default=this app, controller of app to send data
+* @param string $groupctrl Optional Default=this app, Appgate of app to send data
 */
 public function sendOthers($rawdata = null, $datatype = "text", $groupctrl = "") {}
 /**
@@ -93,22 +90,22 @@ public function sendTo($conid = 0, $rawdata = null, $datatype = "text") {}
 * of process not all connections) of $groupctrl app or this app), 
 * 1(All connections of global app), 2(All WS connections)
 * @param string $datatype Optional Default=text Data Type
-* @param string $groupctrl Optional Default=this, controller of app to send data
+* @param string $groupctrl Optional Default=this, Appgate of app to send data
 */
 public function sendOthersRaw($rawdata = null, $sendtype = 0, $datatype = "text", $groupctrl = "") {}
 /**
 * Advance 
 * Send Data to WS Connections.
 * sendtype:-
-* 0 = send data to all processes of this app or other app controller as $groupctrl.
+* 0 = send data to all processes of this app or other app Appgate as $groupctrl.
 * for single process app(global app), data send only to main connection
-* 1 = send data to all connections of WS with global app this or other app controller as $groupctrl.
+* 1 = send data to all connections of WS with global app this or other app Appgate as $groupctrl.
 * 2 = send data to all WS connections of Server
 * 3 = send data to connection id $conid only
 * @param string $rawdata Optional Default=(send JSServer), JSON String
 * @param int $sendtype Optional Default=0 or 1,2,3 
 * @param string $datatype Optional Default=text Data Type
-* @param string $groupctrl Optional controller of app to send data
+* @param string $groupctrl Optional Appgate of app to send data
 * @param int $conid Optional Default=-1=all, this id will leave to send data if $sendtype=0,1 or 2
 */
 public function sendToWS($rawdata = null, $sendtype = 0, $datatype = "text", $groupctrl = "", $conid = -1) {}
@@ -190,8 +187,11 @@ public function onwait() {}
 */
 public function ExitMe() {}
 /**
+* Advance function 
+*/
+/**
 * Advance function, Internal use
 */
-public function run() {}
+public function _run() {}
 }
 }

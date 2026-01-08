@@ -16,7 +16,7 @@
             If you want use only single login as super admin then set as user and pass in comp.php file. 
             Or for multi profile and manage permissions, you can create database tables with 
             <a href="##{getEventURL('install','install','mebhome')}#">this install link.</a>
-            This link also need extra "temp/db.php" file inside your project to install all your project.
+            This link also need extra "masters/db.php" file inside your project to install all your project.
             </p><p>
             For Customize this file create mebmain.front file inside your project folder> "apps/forms/mebmain.front".
             </p>

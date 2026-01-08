@@ -5,7 +5,7 @@
  * @author SARTAJ
  */
 
-class jQmPage extends Control{
+class jQmPage extends Sphp\tools\Component{
     private $mcache = "true";
     public $header = false;
     public $footer = false;
@@ -13,24 +13,24 @@ class jQmPage extends Control{
     public $footerbar = "";
     public $pagename = "";
     
-public function oncreate($element){
+protected function oncreate($element){
 $this->setHTMLName("");
 $this->setHTMLID("");
-$this->tempobj->addMetaData("jQpage",$this);
+$this->frontobj->addMetaData("jQpage",$this);
 $this->pagename = $this->name;
 }
 
-public function setCache($param) {
+public function fu_setCache($param) {
     $this->mcache = $param;
 }
-public function setHeader($param) {
+public function fu_setHeader($param) {
     $this->header = true;
 }
-public function setFooter($param) {
+public function fu_setFooter($param) {
     $this->footer = true;
 }
 
-public function onjsrender(){
+protected function onjsrender(){
     $this->class = "col";
     $this->setPreTag('<div data-dom-cache="'. $this->mcache .'" data-role="page" id="'. $this->name .'page" class="spage">' . $this->headerbar . ''
  . '<div id="'.  $this->name .'" role="main" data-role="content" class="ui-content" >

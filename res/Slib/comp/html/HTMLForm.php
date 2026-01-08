@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html{
 
-class HTMLForm extends \Sphp\tools\Control {
+class HTMLForm extends \Sphp\tools\Component {
 
     public $recID = 'txtid';
     private $onvalidation = '';
@@ -26,32 +26,32 @@ class HTMLForm extends \Sphp\tools\Control {
         $this->addHelpPropFunList('setOnValidation','JS Function call on form validation and return false stop form to submit','','$jscode');
     }
     // call outside to load js lib for need form use via ajax lator
-    public function setupJSLib() {
+    public function fu_setupJSLib() {
         addFileLink($this->myrespath . "/jslib/validation.js", true);
         addFileLink($this->myrespath . "/jslib/jquery.form.js", true);        
     }
-    public function oninit() {
+    protected function oninit() {
         $this->tagName = "form";
         addFileLink($this->myrespath . "/jslib/validation.js", true);
     }
 
-    public function setAjax() {
+    public function fu_setAjax() {
         $this->blnajax = true;
         addFileLink($this->myrespath . "/jslib/jquery.form.js", true);
     }
 
-    public function setSocket($ctrl,$evt="",$evtp="") {
+    public function fu_setSocket($ctrl,$evt="",$evtp="") {
         $this->blnsocket = true;
         $this->socketctrl = $ctrl;
         $this->socketevt = $evt;
         $this->socketevtp = $evtp;
     }
     
-    public function setAjaxTarget($val) {
+    public function fu_setAjaxTarget($val) {
         $this->target = $val;
     }
 
-    public function setRecID($val) {
+    public function fu_setRecID($val) {
         $this->recID = $val;
     }
 
@@ -59,11 +59,11 @@ class HTMLForm extends \Sphp\tools\Control {
         return $this->recID;
     }
 
-    public function setOnValidation($val) {
+    public function fu_setOnValidation($val) {
         $this->onvalidation = $val;
     }
 
-    public function onprejsrender() {
+    protected function onprejsrender() {
         $valdx = "";
         if ($this->blnajax) {
             \SphpBase::JSServer()->getAJAX();
@@ -105,7 +105,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             //addHeaderJSFunctionCode('ready', $this->name, "jql('#" . $this->name . "').ajaxForm(); ");
         }else if($this->blnsocket){
             \SphpBase::JSServer()->getAJAX();
-            $subcode = " tempobj.getSphpSocket(function(wsobj1){
+            $subcode = " frontobj.getSphpSocket(function(wsobj1){
     var formData = jql('#" . $this->name . "').serializeAssoc();
 	delete formData['sphpajax'];
     wsobj1.callProcessApp('{$this->socketctrl}','{$this->socketevt}','{$this->socketevtp}',formData);
@@ -163,7 +163,7 @@ return false;
 }");
     }
 
-    public function onrender() {
+    protected function onrender() {
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
@@ -177,6 +177,7 @@ return false;
         $this->appendHTML($hdn);
         $parenttag = $this->wrapTag("div");
         $parenttag->setAttribute("id","wrp" . $this->name);
+        $parenttag->setAttribute("class", "px-4 py-4");
     }
 
 }

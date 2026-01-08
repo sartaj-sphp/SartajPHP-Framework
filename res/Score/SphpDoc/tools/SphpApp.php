@@ -6,13 +6,13 @@ namespace Sphp\tools{
 * @author Sartaj Singh
 */
 class SphpApp {
-public function registerTemp($tempobj) {}
-public function triggerAppEvent() {}
+public function _registerFront($frontobj) {}
+protected function _triggerAppEvent() {}
 public function startQuickResponse() {}
-public function createTempFile($filepath,$prefix="") {}
-public function fixCompEventHandlers($tempobj) {}
+public function createFrontFile($filepath,$prefix="") {}
+protected function _fixCompEventHandlers($frontobj) {}
 public function setServerSentEvent($eventurl) {}
 public function createWebWorker($jsfunname,$jsfileurl) {}
-public function genSJSCode($eventname, $ajaxname) {}
+protected function _genSJSCode($eventname, $ajaxname) {}
 }
 }

@@ -22,8 +22,8 @@ private $fixedPos = "";
 private $rootMenu = "sidebar";
 private $counter1 = 1;
 
-public function onrun() {
-    if($this->brandicon == "") $this->brandicon =  SphpBase::sphp_settings()->res_path . "/Slib/temp/default/imgs/favicon-96x96.png";
+protected function onrun() {
+    if($this->brandicon == "") $this->brandicon =  SphpBase::sphp_settings()->res_path . "/Slib/masters/default/imgs/favicon-96x96.png";
     $this->init();
     $this->genMenus();
 }

@@ -18,28 +18,34 @@ class AppLoader {
 * @return array
 * @ignore
 */
-public function load() {}
+public function _load() {}
 /**
 * Advance Function, Internal use
 * @return array
 * @ignore
 */
-public function startApp() {}
+public function _startApp() {}
 }
 /**
 * \Sphp\core\Exception
 */
 class Exception extends \Exception {
 /**
-* Set Line Number of Error
-* @param int $line
+* Get Line Number of Error
 */
-public function setLine($line) {}
+public function getLineNumber() {}
+/**
+* Get File Path where Error trigger
+*/
+public function getFilePath() {}
+/**
+* Set Line Number of Error
+*/
+public function setLineNumber($line) {}
 /**
 * Set File Path where Error trigger
-* @param string $filepath
 */
-public function setFile($filepath) {}
+public function setFilePath($file) {}
 }
 class FrontPlace {
 /**
@@ -48,7 +54,7 @@ class FrontPlace {
 * @param string $filepath File Path of Front Place
 * @param string $secname Section Name of master file where to display Front PLace
 * @param string $type <p> Type of file using in File Path.
-* $type = TempFile(*.front) or PHP
+* $type = FrontFile(*.front) or PHP
 * </p>
 */
 /**
@@ -63,7 +69,7 @@ public function render() {}
 /**
 * SphpVersion class
 *
-* This class is parent class of all Controls. You can Develop SartajPHP Application with version control
+* This class is parent class of all Components. You can Develop SartajPHP Application with version control
 * of this class or simple use SphpBase::page() to implement page object in any php module.
 * 
 * @author     Sartaj Singh

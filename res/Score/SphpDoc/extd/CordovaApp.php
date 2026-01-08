@@ -26,10 +26,10 @@ public function setSpecialMetaTag($val) {}
 * Set Distribute multi js css files rather then single
 */
 public function setMultiFiles() {}
-public function setup($tempobj){}
+public function setup($frontobj){}
 public function addPage($pageobj) {}
 public function addDistLib($folderpath) {}
-public function process($tempobj){}
+public function process($frontobj){}
 public function processEvent(){}
 protected function createCordovaPlugin($curdirpath) {}
 protected function sendRenderData() {}

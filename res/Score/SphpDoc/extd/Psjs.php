@@ -11,7 +11,7 @@ public $strlen = -1;
 public $file_arr = array();
 public function parseJavascript() {}
 public function parseJavascriptBlock($start, $find_start, $find_end) {}
-public function fixCompEventHandlers($tempobj) {}
+public function fixCompEventHandlers($frontobj) {}
 public function processSJSEvent() {}
 public function processSJSFunction($jsstate, $jsfunname, $obj_method) {}
 public function sendJs($fun, $jsfun, $funtype = false) {}

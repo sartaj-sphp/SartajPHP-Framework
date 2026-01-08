@@ -3,29 +3,29 @@
 
 
 
-class HLabel_Line extends Control{
+class HLabel_Line extends Sphp\tools\Component{
 private $label = "";
 private $labelfor = "";
 private $compsize = "col-md-12";
 private $blnReq = false;
 private $href = "";
 
-public function setLabel($label,$labelfor) {
+public function fu_setLabel($label,$labelfor) {
     $this->label = $label;
     $this->labelfor = $labelfor;
 }
-public function setSize($compsize,$f="") {
+public function fu_setSize($compsize,$f="") {
     $this->compsize = $compsize;
 }
-public function setHref($val) {
+public function fu_setHref($val) {
     $this->href = $val;
 }
-public function setRequired() {
+public function fu_setRequired() {
     $this->blnReq = true;
 }
-public function onrender(){
+protected function onrender(){
     $this->tagName = 'div';
-    $this->unsetRenderTag();
+    $this->fu_unsetRenderTag();
     $req = "";
     $hlink = "";
     if($this->blnReq){

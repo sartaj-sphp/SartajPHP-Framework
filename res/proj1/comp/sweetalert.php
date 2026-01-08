@@ -1,5 +1,5 @@
 <?php
-class sweetalert extends \Sphp\tools\Control{
+class sweetalert extends \Sphp\tools\Component{
     private $options = '{}';
     private $msg = 'Hi';
     private $type = 'success';
@@ -9,7 +9,7 @@ class sweetalert extends \Sphp\tools\Control{
     }
 
     public function onjsrender(){
-        $this->unsetRender();
+        $this->fu_unsetRender();
         if($this->element->hasAttribute('type')){
             $this->type = $this->getAttribute('type');
         }

@@ -5,15 +5,15 @@ class Seditor extends \Sphp\tools\BasicApp{
     
     
     public function onstart() {
-        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/temp/default/softmaster.php");
+        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/softmaster.php");
         SphpBase::sphp_settings()->disableEditing();
-        $this->tmp1 = new TempFile($this->apppath . "/forms/seditor_form1.front",false,null,$this);
+        $this->tmp1 = new FrontFile($this->apppath . "/forms/seditor_form1.front",false,null,$this);
         
     }
     
     public function page_new() {
         //echo $this->apppath;
-        //$this->setTempFile($this->tmp1);
+        //$this->setFrontFile($this->tmp1);
         echo "nmm";
     }
 
@@ -30,7 +30,7 @@ class Seditor extends \Sphp\tools\BasicApp{
         $dir1 = dirname($tempappname);
         $atype = pathinfo($tempappname,PATHINFO_EXTENSION);
         addHeaderJSFunctionCode("ready", "fileopen2", '    addTabWithoutTree("'. getEventURL("openfile") .'","a2","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
-        $this->setTempFile($this->tmp1);
+        $this->setFrontFile($this->tmp1);
         
         //$this->JSServer->addJSONJSBlock('');
         //$this->JSServer->addJSONReturnBlock($this->Client->session("wproject") . "/" . $tempfname);
@@ -44,7 +44,7 @@ class Seditor extends \Sphp\tools\BasicApp{
             $dir1 = dirname($tempfname);
             $atype = pathinfo($tempfname,PATHINFO_EXTENSION);
             addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventURL("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
-            $this->setTempFile($this->tmp1);
+            $this->setFrontFile($this->tmp1);
             //$this->JSServer->addJSONJSBlock('');
             //$this->JSServer->addJSONReturnBlock($this->Client->session("wproject") . "/" . $tempfname);
         }else{

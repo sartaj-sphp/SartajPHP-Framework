@@ -8,7 +8,7 @@ class SphpPermission {
 * @param array $arrP <p>
 * $arrp = array("perm1" => true,"perm2" => true);
 * perm1 can be like index-view or allview or any word you want to use as
-* permission identification. This permissions can be manage content in temp file or
+* permission identification. This permissions can be manage content in front file or
 * enable disable application features or menus.
 * </p>
 */
@@ -139,13 +139,20 @@ public static function set_page($p) {
 self::$page = $p;
 }
 /**
+* Get getAppOutput
+* @static
+*/
+public static function getAppOutput() {
+self::$dynData->render();
+}    
+/**
 * Get DebugProfiler
 * @static
 * @return \Sphp\core\DebugProfiler
 */
 public static function debug() {
 return self::$debug;
-}
+}    
 /**
 * Get DB Engine
 * @static

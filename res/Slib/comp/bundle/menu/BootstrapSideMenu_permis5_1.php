@@ -22,7 +22,7 @@ private $fixedPos = "";
 private $rootMenu = "sidebar";
 private $counter1 = 1;
 
-public function onrun() {
+protected function onrun() {
     $this->init();
     $this->genMenus();
 }

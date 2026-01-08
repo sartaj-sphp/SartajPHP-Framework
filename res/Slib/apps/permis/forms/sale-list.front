@@ -37,25 +37,25 @@ $pageName = 'User List';
                                     <th>Action</th>
                                 </tr>
                             </thead>                            
-                            <tbody id="showall" runat="server" path="libpath/comp/data/Pagination.php" 
+                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php" 
                                   
-                                   funsetAJAX=""  funsetFieldNames="billno,sid,txtplate,createdate" funsetHeaderNames="Invoice,Customer,Dated" dtable="trans,car_reg" funsetWhere="WHERE tc='S' AND sid=car_reg.id"  >
+                                   fun-setAJAX=""  fun-setFieldNames="billno,sid,txtplate,createdate" fun-setHeaderNames="Invoice,Customer,Dated" dtable="trans,car_reg" fun-setWhere="WHERE tc='S' AND sid=car_reg.id"  >
                                 <tr>
-                                    <td><?php echo $this->tempobj->showall->row['billno']; ?></td>
-                                    <td><?php echo $this->tempobj->showall->row['txtplate']; ?></td>
-                                    <td><?php echo $this->tempobj->showall->row['createdate']; ?></td>                                
+                                    <td><?php echo $this->frontobj->showall->row['billno']; ?></td>
+                                    <td><?php echo $this->frontobj->showall->row['txtplate']; ?></td>
+                                    <td><?php echo $this->frontobj->showall->row['createdate']; ?></td>                                
                                                                  
                                     
-                                    <td><?php $timestamp = $this->tempobj->showall->row['submit_timestamp'];
+                                    <td><?php $timestamp = $this->frontobj->showall->row['submit_timestamp'];
                                         echo date("d-m-Y", $timestamp) ?></td>                                
                                     <td>  
                                         <div id='admProfile_view' runat='server'>
-                                            <a href="<?php echo getEventPath('view', $this->tempobj->showall->row['id']); ?>">
+                                            <a href="<?php echo getEventPath('view', $this->frontobj->showall->row['id']); ?>">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
                                         <div id='admProfile_delete' runat='server'>
-                                            <a href="#" onclick="confirmDel_showall('##{ getEventPath('delete', $this->tempobj->showall->row['id']); }#')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventPath('delete', $this->frontobj->showall->row['id']); }#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
@@ -63,7 +63,7 @@ $pageName = 'User List';
                                 </tr>                                
                             </tbody>                          
                         </table>
-                        <div id="pagebar"><?php echo $this->tempobj->showall->getPageBar(); ?></div>                    	
+                        <div id="pagebar"><?php echo $this->frontobj->showall->getPageBar(); ?></div>                    	
                     </div>
                 </div>
 

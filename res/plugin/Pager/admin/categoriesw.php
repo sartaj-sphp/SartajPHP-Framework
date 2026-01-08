@@ -16,7 +16,7 @@ $genForm->setField("rank","Category Rank","num","","","4");
 $genForm->setField("spcmpid"," ","hidden");
 }
 
-$genFormTemp = new TempFile("{$libpath}/tpl/db/GenForm.php");
+$genFormFront = new FrontFile("{$libpath}/tpl/db/GenForm.php");
 $aparent->setOptionsFromTable('aname','','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
 $aparent->unsetOptionsKeyArray();
 $aparent->setOptions("NONE," . $aparent->getOptions());
@@ -29,7 +29,7 @@ SphpBase::page()->sact = 'show';
 SphpBase::sphp_request()->request('page',SphpBase::sphp_request()->session('pg1'));
 }
 
-$showallTemp = new TempFile("{$libpath}/tpl/db/Showall.php");
+$showallFront = new FrontFile("{$libpath}/tpl/db/Showall.php");
 $showall->setFieldNames("aname,atype,aparent");
 $showall->setHeaderNames("Category Name,Type,Parent");
 $showall->setColWidths("");

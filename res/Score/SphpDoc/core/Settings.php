@@ -136,6 +136,7 @@ public function getJquery_path() {}
 public function getComp_path() {}
 public function getLib_path() {}
 public function getBase_path() {}
+public function getBase_url() {}
 public function getServer_path() {}
 public function getUse_session() {}
 public function getSession_name() {}

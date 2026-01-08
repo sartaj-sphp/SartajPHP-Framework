@@ -4,9 +4,9 @@
  *
  * @author Administrator
  */
-include_once("{$phppath}/controls/bundle/comp/data/Pagination.php");
-include_once("{$phppath}/controls/bundle/comp/data/DTable.php");
-include_once("{$phppath}/controls/bundle/comp/html/HTMLForm.php");
+include_once("{$phppath}/component/bundle/comp/data/Pagination.php");
+include_once("{$phppath}/component/bundle/comp/data/DTable.php");
+include_once("{$phppath}/component/bundle/comp/html/HTMLForm.php");
 
 class Showall {
 private $RenderComp;

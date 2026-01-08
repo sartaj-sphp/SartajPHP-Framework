@@ -8,39 +8,44 @@
 
 
 
-    class ForLoop extends \Sphp\tools\Control {
+    class ForLoop extends \Sphp\tools\Component {
 
-        public $counterMin = 0;
-        public $counterStep = 1;
-        public $counterMax = 0;
+        private $counterMin = 0;
+        private $counterStep = 1;
+        private $counterMax = 0;
         private $childrenroot = null;
+        public $counter = 0;
 
-        public function onaftercreate() {
-            $this->unsetrenderTag();
-            $this->childrenroot = $this->tempobj->getChildrenWrapper($this);
+        protected function onaftercreate() {
+            //$this->fu_unsetrenderTag();
+            $this->childrenroot = $this->frontobj->getChildrenWrapper($this);
         }
 
-        public function setLoopFrom($val) {
+        public function fu_setLoopFrom($val) {
             $this->counterMin = $val;
         }
 
-        public function setLoopTo($val) {
+        public function fu_setLoopTo($val) {
             $this->counterMax = $val;
         }
 
-        public function setStep($val) {
+        public function fu_setStep($val) {
             $this->counterStep = $val;
         }
 
         private function genrender() {
             $stro = '';
-            for($c = $this->counterMin; $c < $this->counterMax; $c += $this->counterStep){
-                $stro .= $this->tempobj->parseComponentChildren($this->childrenroot);
+            for($this->counter = $this->counterMin; $this->counter < $this->counterMax; $this->counter += $this->counterStep){
+                $stro .= $this->frontobj->parseComponentChildren($this->childrenroot);              
             }
             return $stro;
         }
 
-        public function onrender() {
+        protected function onprerender() {
+            //delete all children nodes so stop also children Components Rendering also
+            $this->innerHTML =  "";
+        }        
+        protected function onrender() {
             $this->innerHTML = $this->genrender();
         }
 

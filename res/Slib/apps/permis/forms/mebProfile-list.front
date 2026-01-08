@@ -38,17 +38,17 @@ $pageName = 'User List';
                                     <th>Action</th>
                                 </tr>
                             </thead>                            
-                            <tbody id="showall" runat="server" path="libpath/comp/data/Pagination.php" 
-                                   funsetFieldNames="profile_id, profile_name, fname, lname, email, username, member.submit_timestamp as submit_timestamp,member.parentid, member.status as status"
-                                   funsetAJAX="" dtable='member, profile_permission' >
+                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php" 
+                                   fun-setFieldNames="profile_id, profile_name, fname, lname, email, username, member.submit_timestamp as submit_timestamp,member.parentid, member.status as status"
+                                   fun-setAJAX="" dtable='member, profile_permission' >
                                 <tr>
-                                    <td><?php echo $this->tempobj->showall->row['profile_name'] ; ?></td>
-                                    <td><?php echo $this->tempobj->showall->row['fname'] . " " . $this->tempobj->showall->row['lname']; ?></td>
-                                    <td><?php echo $this->tempobj->showall->row['email']; ?></td>                                
-                                    <td><?php echo $this->tempobj->showall->row['username']; ?></td>                                
+                                    <td><?php echo $this->frontobj->showall->row['profile_name'] ; ?></td>
+                                    <td><?php echo $this->frontobj->showall->row['fname'] . " " . $this->frontobj->showall->row['lname']; ?></td>
+                                    <td><?php echo $this->frontobj->showall->row['email']; ?></td>                                
+                                    <td><?php echo $this->frontobj->showall->row['username']; ?></td>                                
                                     <td>
                                         <?php
-                                        $status = $this->tempobj->showall->row['status'];
+                                        $status = $this->frontobj->showall->row['status'];
                                         if ($status == 1) {
                                             echo "Active";
                                         } else {
@@ -56,16 +56,16 @@ $pageName = 'User List';
                                         }
                                         ?>
                                     </td>
-                                    <td><?php $timestamp = $this->tempobj->showall->row['submit_timestamp'];
+                                    <td><?php $timestamp = $this->frontobj->showall->row['submit_timestamp'];
                                         echo date("d-m-Y", $timestamp) ?></td>                                
                                     <td>  
                                         <div id='admProfile_view' runat='server' class="btn-action">
-                                            <a href="<?php echo getEventURLSecure('view', $this->tempobj->showall->row['id']); ?>">
+                                            <a href="<?php echo getEventURLSecure('view', $this->frontobj->showall->row['id']); ?>">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
                                         <div id='admProfile_delete' runat='server' class="btn-action">
-                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $this->tempobj->showall->row['id']); }#')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $this->frontobj->showall->row['id']); }#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
@@ -73,7 +73,7 @@ $pageName = 'User List';
                                 </tr>                                
                             </tbody>                          
                         </table>
-                        <div id="pagebar"><?php echo $this->tempobj->showall->getPageBar(); ?></div>                    	
+                        <div id="pagebar"><?php echo $this->frontobj->showall->getPageBar(); ?></div>                    	
                     </div>
                 </div>
 

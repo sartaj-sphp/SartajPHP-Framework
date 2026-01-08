@@ -7,12 +7,12 @@
 
 
 
-class Accordion extends Control{
-public function oncreate($element){
+class Accordion extends Sphp\tools\Component{
+protected function oncreate($element){
 $this->setHTMLName("");
 }
 
-public function onjsrender(){
+protected function onjsrender(){
 global $jquerypath;
 /*
 addFileLink($jquerypath.'themes/base/jquery.ui.all.css');

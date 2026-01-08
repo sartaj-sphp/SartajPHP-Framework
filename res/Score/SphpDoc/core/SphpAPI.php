@@ -12,11 +12,11 @@ public $errStatus = false;
 */
 public function init() {}
 /**
-* Register TempFile
-* @param string $key name of tempfile
-* @param \Sphp\tools\TempFile $obj TempFile Object
+* Register FrontFile
+* @param string $key name of frontfile
+* @param \Sphp\tools\FrontFile $obj FrontFile Object
 */
-public function registerTempFile($key, $obj) {}
+public function registerFrontFile($key, $obj) {}
 /**
 * Add Property into property bag. It is good to use, rather then global variables
 * @param string $name Name for identification
@@ -33,27 +33,27 @@ public function getProp($name) {}
 * Advance Function, Internal use
 * Add Component 
 * @param string $comp Name for identification
-* @param \Sphp\tools\Control $obj Control Object
+* @param \Sphp\tools\Component $obj Component Object
 */
 public function addComponent($comp, $obj) {}
 /**
 * Advance Function, Internal use
 * Add Component for Database bound
-* @param string $tempname tempfile name for identification as key
+* @param string $frontname frontfile name for identification as key
 * @param string $comp Name for identification as key
-* @param \Sphp\tools\Control $obj Control Object
+* @param \Sphp\tools\Component $obj Component Object
 */
-public function addComponentDB($tempname, $comp, $obj) {}
+public function addComponentDB($frontname, $comp, $obj) {}
 /**
 * Advance Function, Internal use
 * Get Components List for Database bound
-* @return \Sphp\tools\Control
+* @return \Sphp\tools\Component
 */
 public function getComponentsDB() {}
 /**
 * Get Component if exist in List
 * @param string $comp Component Name for identification
-* @return \Sphp\tools\Control|null
+* @return \Sphp\tools\Component|null
 */
 public function isComponent($comp) {}
 /**
@@ -136,13 +136,13 @@ public function getMenuLinkList($parent = "root") {}
 * @param string $url match for cache like cache "index" or "index-page"
 * @param int $sec Expiry Time in seconds -1 mean never expire
 * @param string $type <p>
-* type = Default controller mean url has controller name only and response to all events basis on this controller
-* type = ce mean controller-event cache only that event
-* type = cep mean controller-event-evtp cache only that event with that parameter
+* type = Default Appgate mean url has Appgate name only and response to all events basis on this Appgate
+* type = ce mean Appgate-event cache only that event
+* type = cep mean Appgate-event-evtp cache only that event with that parameter
 * type = e event on any application will be use cache
 * </p>
 */
-public function addCacheList($url, $sec = 0, $type = "controller") {}
+public function addCacheList($url, $sec = 0, $type = "Appgate") {}
 /**
 * Check if URL register with cache list
 * @param string $url
@@ -156,8 +156,8 @@ public function isRegisterCacheItem($url) {}
 */
 public function getCacheItem($url) {}
 /**
-* Register Application with an controller
-* @param string $ctrl Name of controller assigned to application
+* Register Application with an Appgate
+* @param string $ctrl Name of Appgate assigned to application
 * @param string $apppath <p>
 * Attach application path. 
 * Path end with .php is module application 
@@ -176,7 +176,7 @@ public function registerApp($ctrl, $apppath, $s_namespace = "",$permtitle="",$pe
 */
 public function isRegisterApp($ctrl) {}
 /**
-* Get Application Details that is registered with controller name $ctrl 
+* Get Application Details that is registered with Appgate name $ctrl 
 * @param string $ctrl
 * @return array
 */
@@ -187,7 +187,7 @@ public function getAppPath($ctrl) {}
 */
 public function getRegisteredApps() {}
 /**
-* Get Controller name that has matched apppath with $appfilepath
+* Get Appgate name that has matched apppath with $appfilepath
 * @param string $appfilepath
 * @return string|null
 */
@@ -443,8 +443,8 @@ public function triggerError($msg, $errType, $debug_array) {}
 public function getrenderType($renderonce = false) {}
 /**
 * Add CSS, JS File Link for browser 
-* SphpBase::sphp_api()->addFileLink("temp/default/theme-black.css",true,"","","2.7")
-* SphpBase::sphp_api()->addFileLink("temp/default/theme-black.js",false,"black1","js","2.7")
+* SphpBase::sphp_api()->addFileLink("front/default/theme-black.css",true,"","","2.7")
+* SphpBase::sphp_api()->addFileLink("front/default/theme-black.js",false,"black1","js","2.7")
 * @param string $fileURL URL for file
 * @param boolean $renderonce Optional default false if true then file ignore in AJAX request
 * @param string $filename Optional file identification key. default=filename in fileurl
@@ -456,7 +456,7 @@ public function getrenderType($renderonce = false) {}
 public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array(),$async=0) {}
 /**
 * Update CSS, JS File Link for browser 
-* SphpBase::sphp_api()->updateFileLink("temp/default/theme-black2.js",false,"black1","js","2.8")
+* SphpBase::sphp_api()->updateFileLink("front/default/theme-black2.js",false,"black1","js","2.8")
 * @param string $fileURL URL for file
 * @param boolean $renderonce Optional default false if true then file ignore in AJAX request
 * @param string $filename Optional file identification key. default=filename in fileurl
@@ -468,7 +468,7 @@ public function addFileLink($fileURL, $renderonce = false, $filename = "", $ext 
 public function updateFileLink($fileURL, $renderonce = false, $filename = "", $ext = "", $ver = "0",$assets=array(),$async=0) {}
 /**
 * Remove CSS, JS File Link for browser 
-* SphpBase::sphp_api()->removeFileLink("temp/default/theme-black2.js",false,"black1","js")
+* SphpBase::sphp_api()->removeFileLink("front/default/theme-black2.js",false,"black1","js")
 * @param string $fileURL URL for file
 * @param boolean $renderonce Optional default false if true then file ignore in AJAX request
 * @param string $filename Optional file identification key. default=filename in fileurl
@@ -538,12 +538,12 @@ public function getDistCSSFiles($min = false, $removeonly = false,$combine=true,
 * combine required css files.
 * in Debug mode=2 it create fresh file on every request but in normal mode
 * it checks file exist and create if not exist.
-* @param string $parentfolder Optional Default=temp parent folder to save combo files
+* @param string $parentfolder Optional Default=front parent folder to save combo files
 * @param boolean $addcss Optional Default=false create css css combo file
 * @param boolean $force_overwrite Optional Default=false create fresh combo files
 * 
 */
-public function getCombineFileLinks($parentfolder = "temp",$addcss=false,$force_overwrite=false) {}
+public function getCombineFileLinks($parentfolder = "front",$addcss=false,$force_overwrite=false) {}
 /**
 * Combine All files path into single file as $outputfilepath
 * It willn't incudes addFileLink code for browser. You need to provide browser
@@ -553,11 +553,11 @@ public function getCombineFileLinks($parentfolder = "temp",$addcss=false,$force_
 * in Debug mode=2 it create fresh file on every request but in normal mode
 * it checks file exist and create if not exist.
 * @param array $array_list List of files path
-* @param string $outputfilepath Optional Default=temp/combo2.css Combine file path
+* @param string $outputfilepath Optional Default=front/combo2.css Combine file path
 * @param boolean $force_overwrite Optional Default=false create fresh combo files
 * 
 */
-public function combineFiles($array_list,$outputfilepath = "temp/combo2.css",$force_overwrite=false) {}
+public function combineFiles($array_list,$outputfilepath = "front/combo2.css",$force_overwrite=false) {}
 /**
 * Check JS Function Exist in Header Section
 * @param string $funname Function name as id
@@ -768,9 +768,9 @@ public function getErrMsgInner($name) {}
 * @param string $frontname name is id
 * @param string $basepath DIR path
 * @param string $secname Optional Default=left
-* @param string $type Optional Default=TempFile
+* @param string $type Optional Default=FrontFile
 */
-public function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "TempFile") {}
+public function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "FrontFile") {}
 /**
 * Remove Front Place. 
 * @param string $frontname name is id
@@ -782,23 +782,32 @@ public function removeFrontPlace($frontname, $secname = "left") {}
 * @param string $frontname name is id
 * @param string $basepath DIR path
 * @param string $secname Optional Default=left
-* @param string $type Optional Default=TempFile It recogonise extensions front or php
+* @param string $type Optional Default=FrontFile It recogonise extensions front or php
 */
-public function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "TempFile") {}
+public function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "FrontFile") {}
 /**
 * Get Front Place Object or path
 * @param string $frontname name is id
 * @param string $secname Optional Default=left
-* @return \Sphp\tools\TempFile|string
+* @return \Sphp\tools\FrontFile|string
 */
 public function getFrontPlace($frontname, $secname = "left") {}
 /**
-* Run Front Place. Only Run TempFile not PHP. 
+* Run Front Place. Only Run FrontFile not PHP. 
 * PHP file include only on render time.
 * @param string $frontname name is id
 * @param string $secname Optional Default=left
 */
 public function runFrontPlace($frontname, $secname = "left") {}
+/**
+* Render Front Place Manually. It doesn't support PHP files. 
+* $frontname=dynData is reserved of center content of master.
+* It will return dynData.
+* @param string $frontname name is id
+* @param string $secname Optional Default=left
+* @return string HTML output from FrontFile
+*/
+public function renderFrontPlaceManually($frontname, $secname = "left") {}
 /**
 * Render Front Place. $frontname=dynData is reserved of center content of master.
 * It will render dynData.

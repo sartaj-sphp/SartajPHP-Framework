@@ -11,7 +11,7 @@ class index extends \Sphp\tools\BasicApp{
         //set default DB table to deal with
         //$this->setTableName("tbl1");
 
-        $this->home_front1 = new \Sphp\tools\TempFile($this->mypath . "/forms/index_front1.front");
+        $this->home_front1 = new \Sphp\tools\FrontFile($this->mypath . "/forms/index_front1.front");
         // use global variable in comp.php file
         $this->setMasterFile($masterf);        
     }
@@ -19,17 +19,17 @@ class index extends \Sphp\tools\BasicApp{
     //index.html land here
     public function page_new() {
         // send temp file to browser
-        $this->setTempFile($this->home_front1);
+        $this->setFrontFile($this->home_front1);
     }
 
     public function page_event_page($evtp) {
         // send temp file to browser
-        $this->setTempFile(new TempFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php'));
+        $this->setFrontFile(new FrontFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php'));
     }
 
     public function page_event_captcha($evtp) {
         // pass captcha event to component
-        $temp1 = new TempFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php');
+        $temp1 = new FrontFile(SphpBase::sphp_settings()->slib_path . '/apps/forms/contacts.php');
     }
     //form submit here
     public function page_submit() {
@@ -48,7 +48,7 @@ class index extends \Sphp\tools\BasicApp{
             $this->home_front1->spn2->setInnerHTML("Form Submut with error ");
         }
         // send temp file to browser
-        $this->setTempFile($this->home_front1);
+        $this->setFrontFile($this->home_front1);
     }
 
     //form submit via ajax here

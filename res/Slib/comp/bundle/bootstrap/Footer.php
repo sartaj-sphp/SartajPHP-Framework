@@ -1,6 +1,6 @@
 <?php
 
-class Footer extends Control {
+class Footer extends \Sphp\tools\Component{
     private $menufile = null;
     private $text = "";
     private $icon = "";
@@ -21,16 +21,16 @@ class Footer extends Control {
   </symbol>
 </svg>';
 
-    public function setText($val) {
+    public function fu_setText($val) {
         $this->text = $val;
     }
-    public function setIcon($val) {
+    public function fu_setIcon($val) {
         $this->icon = $val;
     }
-    public function setFullSize() {
+    public function fu_setFullSize() {
         $this->fullsize = true;
     }
-    public function setMenuFile($menupath) {
+    public function fu_setMenuFile($menupath) {
         $this->menufile = $menupath;
     }
     private function getMenu($callback) {
@@ -39,8 +39,8 @@ class Footer extends Control {
             include_once($this->menufile);
             $menu = new FooterMenuUi();
             $callback($menu);
-            $menu->run();
-            $menuo = $menu->render();
+            $menu->_run();
+            $menuo = $menu->_render();
         }
         return $menuo;
     }
@@ -60,10 +60,10 @@ class Footer extends Control {
         return $menuo;
     }
 
-    public function onrender() {
+    protected function onrender() {
         global $cmpname;
         if($this->text == "")  $this->text = $cmpname;
-        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_path . "/temp/default/imgs/android-icon-192x192.png";
+        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_path . "/masters/default/imgs/android-icon-192x192.png";
         
         $this->setTagName("footer");
         if(! $this->fullsize){

@@ -10,30 +10,30 @@ class index extends \Sphp\tools\BasicApp{
     
     public function page_new() {
         if(file_exists(PROJ_PATH . "/forms/index.php")){ 
-            $dynData = new TempFile(PROJ_PATH . "/forms/index.php", false,false, $this);
+            $dynData = new FrontFile(PROJ_PATH . "/forms/index.php", false,false, $this);
         }else{
-            $dynData = new TempFile("{$this->apppath}/forms/index.php", false,false, $this);
+            $dynData = new FrontFile("{$this->apppath}/forms/index.php", false,false, $this);
         }
-        $this->setTempFile($dynData);
+        $this->setFrontFile($dynData);
     }
     public function page_event_captcha($param) {
-        $dynData = new TempFile("{$this->apppath}/forms/contacts.php", false,false, $this);
+        $dynData = new FrontFile("{$this->apppath}/forms/contacts.php", false,false, $this);
     }
     public function page_event_refresh_captcha($param) {
-        $dynData = new TempFile("{$this->apppath}/forms/contacts.php", false,false, $this);
+        $dynData = new FrontFile("{$this->apppath}/forms/contacts.php", false,false, $this);
     }
     public function page_event_info($param) {
-        $dynData = new TempFile("forms/{$this->page->evtp}.php", false,false, $this);
-        $this->setTempFile($dynData);
+        $dynData = new FrontFile("forms/{$this->page->evtp}.php", false,false, $this);
+        $this->setFrontFile($dynData);
     }
     public function page_event_page($param) { 
-        $dynData = new TempFile($this->apppath . "/forms/{$this->page->evtp}.php", false,false, $this);
-        $this->setTempFile($dynData);
+        $dynData = new FrontFile($this->apppath . "/forms/{$this->page->evtp}.php", false,false, $this);
+        $this->setFrontFile($dynData);
     }
     
     public function page_event_subquote($evtp){
         global $mailUser,$cmpemail,$cmpname;
-        $sd = new TempFile("{$this->apppath}/forms/contacts.php", false,false, $this);
+        $sd = new FrontFile("{$this->apppath}/forms/contacts.php", false,false, $this);
         include_once(SphpBase::sphp_settings()->php_path . "/classes/bundle/email/SMTPMail.php");
         if(!getCheckErr()){
             $mail = new SMTPMail();
@@ -45,10 +45,10 @@ class index extends \Sphp\tools\BasicApp{
             $msgn .= "Address:- ".$sd->qadd->getValue()."<br>";
             $msgn .= "Comments:- ".$sd->qcomments->getValue()."<br>";
             if($mail->sendMail('Query',$cmpemail, $cmpname, $msgn)){
-                $sd2 = new TempFile("{$this->apppath}/forms/quote-submit.php");
-                $this->setTempFile($sd2);
+                $sd2 = new FrontFile("{$this->apppath}/forms/quote-submit.php");
+                $this->setFrontFile($sd2);
             }else{
-                $this->setTempFile($sd);                
+                $this->setFrontFile($sd);                
             }
         }        
     }

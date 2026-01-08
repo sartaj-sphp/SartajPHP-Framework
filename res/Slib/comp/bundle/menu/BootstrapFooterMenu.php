@@ -8,7 +8,7 @@ private $rootMenu = "root";
 private $blnAjaxLink = false;
 private $bootstrapversion = 5; // set bootstrap version
 
-public function onrun() {
+protected function onrun() {
 
     $this->genMenus();
 }

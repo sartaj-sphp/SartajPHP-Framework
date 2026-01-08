@@ -19,8 +19,8 @@ $mailUser = "info@domain.com";
 $mailPass = "";
 $mailPort = "26";
 
-//$masterf = "temp/education/master.php";
-//$admmasterf = "temp/html/master.php";
+//$masterf = "masters/education/master.php";
+//$admmasterf = "masters/html/master.php";
 
 function getWelcome(){
 $page = SphpBase::page();

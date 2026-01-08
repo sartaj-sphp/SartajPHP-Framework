@@ -12,7 +12,7 @@ class CatFrontSaver extends \Sphp\tools\BasicApp{
         $tblName = "pagcategory";
         $this->setTableName($tblName);
         $this->getAuthenticate("ADMIN,MEMBER");
-        $this->tmp1 = new TempFile($this->apppath . "/forms/catfrontsaver.front");
+        $this->tmp1 = new FrontFile($this->apppath . "/forms/catfrontsaver.front");
     }
     
     public function getGenForm() {
@@ -27,7 +27,7 @@ $genForm->setField("rank","Category Rank","num","","","4");
 $genForm->setField("spcmpid"," ","hidden");
 ';
 
-$tmp2 = new TempFile($this->apppath . "/forms/GenForm.front");
+$tmp2 = new FrontFile($this->apppath . "/forms/GenForm.front");
 $tmp2->aparent->setOptionsFromTable('aname','','pagcategory',"WHERE spcmpid='$cmpid' ORDER BY aname");
 $tmp2->aparent->unsetOptionsKeyArray();
 $tmp2->aparent->setOptions("NONE," . $tmp2->aparent->getOptions());
@@ -47,7 +47,7 @@ return $tmp2;
         $this->page->viewData($tmp2->form2,$this->Client->request("txtid"));
         $tmp2->aname->setPreTag('<input type="hidden" name="aname2" value="'. $tmp2->aname->value .'" />');
         $tmp2->form2->action = getEventURL('pgup');
-        //$tmp2 = new TempFile($this->apppath . "forms/pagefront2.front");
+        //$tmp2 = new FrontFile($this->apppath . "forms/pagefront2.front");
         $this->JSServer->addJSONTemp($tmp2,'sdpage_editor');
         $this->JSServer->addJSONJSBlock('$("#sdpage_dlg").dialog("open");');
     } 

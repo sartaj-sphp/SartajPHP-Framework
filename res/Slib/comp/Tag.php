@@ -6,9 +6,9 @@
  */
 namespace Sphp\comp{
 
-class Tag extends \Sphp\tools\Control{
+class Tag extends \Sphp\tools\Component{
 
-public function onrender(){
+protected function onrender(){
     if($this->tagName == "div"){
         $this->HTMLName = "";
     }

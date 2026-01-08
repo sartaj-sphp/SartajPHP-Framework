@@ -1,6 +1,6 @@
 <div id="div1" runat="server">
       <div id="browse_panel" class="panel" style="overflow:auto;">
-          <include id="filebrowser" runat="server" funsetTempFile="##{$tempobj->fileDir}#/../TinyEditor/splugins/advimage/file_browser.front"></include>
+          <include id="filebrowser" runat="server" fun-setFrontFile="##{$frontobj->fileDir}#/../TinyEditor/splugins/advimage/file_browser.front"></include>
 </div>
 
 </div>

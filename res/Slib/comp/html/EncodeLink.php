@@ -7,9 +7,9 @@
  */
 
 
-    class EncodeLink extends \Sphp\tools\Control {
+    class EncodeLink extends \Sphp\tools\Component {
 
-        public function onrender() {
+        protected function onrender() {
             SphpBase::JSServer()->getAJAX();
             $kn = "A8969D2B";
             $this->element->appendAttribute('class', $this->name);

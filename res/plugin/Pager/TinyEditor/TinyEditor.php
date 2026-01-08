@@ -17,7 +17,7 @@ private $dir = null;
 private $contentcss = "";
 private $value2 = "";
 
-    public function oninit() {
+    protected function oninit() {
         global $respath;
         $this->tagName = "textarea";
         if ($this->issubmit) {
@@ -71,19 +71,19 @@ public function parseSphpComp($element){
     }
 }
     
-public function setContentCSS($val){
+public function fu_setContentCSS($val){
     $this->contentcss = $val;
 }
-public function setImgListPath($val){
+public function fu_setImgListPath($val){
     $this->imglist = $val;
 }
-public function setTemplateListPath($val){
+public function fu_setTemplatelateListPath($val){
     $this->templatelist = $val;
 }
-public function setMediaListPath($val){
+public function fu_setMediaListPath($val){
     $this->medialist = $val;
 }
-public function onprejsrender(){ 
+protected function onprejsrender(){ 
     global $basepath; 
     SphpBase::JSServer()->getAJAX();
     addFileLink($this->myrespath . '/vendor/tinymce/tinymce/tinymce.min.js');
@@ -163,7 +163,7 @@ addHeaderJSFunctionCode('ready','tinyeditor'.$this->name,'
 
 }
 
-public function convertValue($v) {
+private function convertValue($v) {
     if($this->value2 == ""){
         $v = str_replace(["[!","!]"], ["<",">"], $v);
         $v = html_entity_decode($v, ENT_COMPAT, "UTF-8");
@@ -177,7 +177,7 @@ public function convertValue($v) {
 }
 
 // call by parseHTML function
-public function onparse($event,$element) {
+protected function onparse($event,$element) {
     if($event == "start" && $element->tag == "code"){
     //if($event == "start" && $element->tag == "pre" && $element->hasAttribute("class")){
       //  if(strpos($element->getAttribute("class"),"language-") !== false){
@@ -192,7 +192,7 @@ public function onparse($event,$element) {
     }
         //echo  $element->tag . ' ';
 }
-public function onrender() {
+protected function onrender() {
     $this->value = $this->convertValue($this->value);
     if($this->errmsg!=""){
         $this->setPostTag($this->errmsg);

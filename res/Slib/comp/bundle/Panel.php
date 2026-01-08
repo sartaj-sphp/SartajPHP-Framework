@@ -6,16 +6,14 @@
  */
 
 
-class Panel extends Control{
+class Panel extends Sphp\tools\Component{
 
-public function __construct($name='',$fieldName='',$tableName='') {
-}
-public function oncreate($element){
+protected function oncreate($element){
 $this->setHTMLName("");
 }
 
 
-public function onjsrender(){
+protected function onjsrender(){
 if($this->parameterA['class'] == ''){
     addHeaderCSS('panel', '
 .panelc

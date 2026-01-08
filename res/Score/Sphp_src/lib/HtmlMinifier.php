@@ -1,0 +1,552 @@
+<?php
+/**************************************************************************************************************
+
+    NAME
+        HtmlMinifier.phpclass
+
+    DESCRIPTION
+        Minifier for html sources.
+	This minifier does use the parsing methods provided by the abstract Minifier class, but rather relies
+	on DOM functions.
+	It is able to minify javascript inside "script" tags, as well as inline CSS styles. It also handles
+	the minification of HTML code inside conditional comments, which are preserved (normal comments are
+	preserved).
+
+    AUTHOR
+        Christian Vigh, 12/2016.
+
+    HISTORY
+    [Version : 1.0]	[Date : 2016/12/24]     [Author : CV]
+        Initial version.
+
+    [Version : 1.0.1]   [Date : 2016/12/28]     [Author : CV]
+        . In order to further reduce the size of output html contents, CSS classes are created when multiple 
+	  'style=' attributes are found in the html contents. Style attribute names are sorted before being 
+	  compared to other 'style=' entries.
+
+ **************************************************************************************************************/
+require_once ( dirname ( __FILE__ ) . "/Minifier.php" ) ;
+require_once ( dirname ( __FILE__ ) . "/CssMinifier.php" ) ;
+require_once ( dirname ( __FILE__ ) . "/JavascriptMinifier.php" ) ;
+
+
+/*==============================================================================================================
+
+    HtmlMinifier class -
+        Minifier for Html sources.
+
+  ==============================================================================================================*/
+class	HtmlMinifier	extends  Minifier 
+   {
+	// List of tags that are closed automatically, ie they don't accept any child data
+	static private		$SelfClosingTags	=
+	   [
+		'area',
+		'base',
+		'basefont',
+		'br',
+		'col',
+		'command',
+		'embed',
+		'frame',
+		'hr',
+		'img',
+		'input',
+		'isindex',
+		'keygen',
+		'link',
+		'meta',
+		'param',
+		'source',
+		'track',
+		'wbr'
+	   ] ;
+
+	// List of tags where inner text formatting must be preserved
+	static private		$PreserveSpacesInTags	=
+	   [
+		'code',
+		'pre',
+		'textarea'
+	    ] ;
+
+	static private		$StaticInitialized	=  false ;
+
+	// Style table - where all values specified by the "style=" attribute are collected
+	public			$StyleTable		=  [] ;
+
+	// Elements used for building/replacing substituted style names
+	// "TAG_CLASS" is used to replace substituted "style=" constructs
+	// "TAG_STYLE" is used when creating a CSS class does not bring any improvement in size reduction (typically,
+	// a "style=" attribute whose value has been met only once)
+	// "TAG_LOCAL_STYLE" is put at the end of the <head> part to define the classes that have been built from "style="
+	// similar definitions.
+	// All those tags are enclosed with the TAG_START and TAG_END string to avoid collisions.
+	const			TAG_CLASS		=  '__CLASS__' ;
+	const			TAG_STYLE		=  '__STYLE__' ;
+	const			TAG_LOCAL_STYLE		=  '__LOCAL_STYLE__' ;
+	const			TAG_START		=  "\x00" ;
+	const			TAG_END			=  "\x01" ;
+
+	// Data for generation of style identifiers
+	static private		$IdentifierChars	=  "01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_" ;
+	static private		$IdentifierCharCount ;
+
+	private			$NextStyleIdentifier	=  0 ;
+
+
+	/*--------------------------------------------------------------------------------------------------------------
+
+	   Constructor -
+		Initializes the parent minifier class.
+	 
+	 *-------------------------------------------------------------------------------------------------------------*/
+	public function  __construct ( )
+	   {
+		parent::__construct ( ) ;
+
+		// To speed up searching in the $SelfClosingTags and $PreserveSpacesInTags, the array values will become array keys
+		if  ( ! self::$StaticInitialized )
+		   {
+			self::$SelfClosingTags		=  array_flip ( self::$SelfClosingTags ) ;
+			self::$PreserveSpacesInTags	=  array_flip ( self::$PreserveSpacesInTags ) ;
+
+			self::$IdentifierCharCount	=  strlen ( self::$IdentifierChars ) ;
+
+			self::$StaticInitialized	=  true ;
+		    }
+	    }
+
+
+	/*--------------------------------------------------------------------------------------------------------------
+
+	   MinifyData -
+		Process the input stream.
+	 
+	 *-------------------------------------------------------------------------------------------------------------*/
+	protected function  MinifyData ( )
+	   {
+		return ( $this -> __minify_data ( $this -> Content ) ) ;
+	    }
+
+
+
+	/**************************************************************************************************************
+	 **************************************************************************************************************
+	 **************************************************************************************************************
+	 ******                                                                                                  ******
+	 ******                                                                                                  ******
+	 ******                                        PRIVATE FUNCTIONS                                         ******
+	 ******                                                                                                  ******
+	 ******                                                                                                  ******
+	 **************************************************************************************************************
+	 **************************************************************************************************************
+	 **************************************************************************************************************/
+
+	// __minify_data -
+	//	Minifies HTML data specified by $text.
+	//	Since a DOMDocument is created, the $body_only can be set to true for processing only the body contents.
+	//	This is useful when only a HTML string (not a full page) has to be minified. This is the case for example
+	//	for the html code inside conditional comments.
+	private function  __minify_data ( $text, $body_only = false ) 
+	   {
+		// Create the doument
+		$doc		=  new \DOMDocument ( ) ;
+		$doc -> loadHTML ( $text ) ;
+		$contents	=  '' ;
+
+		// Normalize the document (hope it will repair user bugs...)
+		$doc -> normalizeDocument ( ) ;
+
+		// We need to process the whole document when called from MinifyData() ; however, if called only to minify
+		// a string of html tags, we will have to get rid of the surrounding envelope created by DOMDocument
+		// (doctype/html/head/body) and take care only of the <body> contents
+		if  ( $body_only )
+		   {
+			$newdoc		=  $doc -> getElementsByTagName ( 'body' ) ;
+			$newdoc		=  $newdoc -> item (0) ;
+		    }
+		else
+			$newdoc		=  $doc ;
+
+		// Process document child nodes ; this should start with <!doctype> and <head>...
+		foreach  ( $newdoc -> childNodes  as  $node )
+			$this -> __process_child_nodes ( $node, $contents, 0 ) ;
+
+		// Replace the specific "style=" constructs with short class names built on the fly
+		$contents	=  $this -> __process_styles ( $contents ) ;
+
+		return ( $contents ) ;
+	    }
+
+
+	// __process_child_nodes -
+	//	Processes the specified node and recursively processes its children.
+	//	The minified contents are appended to $contents.
+	//	The $level parameter is currently not used ; it indicates the current nesting level in the DOM tree,
+	//	starting from zero.
+	private function  __process_child_nodes ( $node, &$contents, $level )
+	   {
+		$name			=  strtolower ( $node -> nodeName ) ;
+		$type			=  $node -> nodeType ;
+
+		// Determine node type
+		switch  ( $type )
+		   {
+			// <!DOCTYPE> node
+			case	XML_DOCUMENT_TYPE_NODE :
+				$contents	.=  '<' . $this -> __get_document_node_as_string ( $node ) . '>' ;
+				break ;
+
+			// An HTML node, that may contain children
+			case	XML_ELEMENT_NODE :
+				$self_closing		 =  isset ( self::$SelfClosingTags [ $name ] ) ;
+				$contents		.=  '<' . $this -> __get_element_node_as_string ( $node ) ;
+
+				// The tag is not designed to have children (self-closing)
+				if  ( $self_closing )
+					$contents	.=  '/>' ;
+				// The tag may have children - we have to inspect them
+				else
+				   {
+					$contents	.=  '>' ;
+
+					// The first child of a <style> and <script> tag is not of type XML_TEXT_NODE, but XML_CDATA_SECTION_NODE
+					// It contains the Javascript or CSS code that we also need to minify.
+					// No other kind of child may be present here
+					switch  ( $name )
+					   {
+						case	'script' :
+							$contents	.=  $this -> __get_script_node_as_string ( $node ) ;
+							break ;
+
+						case	'style' :
+							$contents	.=  $this -> __get_style_node_as_string ( $node ) ;
+							break ;
+
+						// <head> node : we may have to insert a <style> tag to replace "style=" attributes
+						case	'head' :
+							foreach  ( $node -> childNodes  as  $child_node )
+								$this -> __process_child_nodes ( $child_node, $contents, $level + 1 ) ;
+
+							$contents	.=  self::TAG_START . self::TAG_LOCAL_STYLE . self::TAG_END ;
+							break ;
+
+						// Default : process tag children
+						default :
+							foreach  ( $node -> childNodes  as  $child_node )
+								$this -> __process_child_nodes ( $child_node, $contents, $level + 1 ) ;
+					    }
+
+					// Don't forget the closing tag
+					$contents	.=  '</' . $node -> nodeName . '>' ;
+				    }
+
+				break ;
+
+			// Text node containing text data belonging to its parent tag
+			case	XML_TEXT_NODE :
+				$contents	.=  $this -> __get_text_data ( $node ) ;
+				break ;
+
+			// Comment node : either remove it or keep it if it is a conditional comment
+			case	XML_COMMENT_NODE :
+				$contents	.=  $this -> __get_comment ( $node ) ;
+				break ;
+
+			// For the distracted developer I am
+			default :
+				warning ( "Unhandled node \"$name\" (type #$type)." ) ;
+		    }
+	    }
+
+
+	// __get_comment -
+	//	Comments fall into two cases :
+	//	- Regular comments, which are removed from the output
+	//	- Conditional comments, that contain HTML code that also needs to be minified. 
+	//	  Conditional comments are always preserved.
+	private function  __get_comment ( $node )
+	   {
+		// Conditional comments in the DOM are returned like this (the leading "<!--" and the trailing "-->" are removed, as well as 
+		// leading and trailing spaces) :
+		//	[if IE]>conditional comment for IE.<![endif]
+		// while their original specification was :
+		//	<!--[if IE]>conditional comment for IE.<![endif]-->
+		static	$comment_re	=  '/^ \s* 
+						(?P<start> \[ [^\]]+ \] >)
+						(?P<contents> .*)
+						(?P<end> \s* <! \s* \[ [^\]]+ \] )
+					     $/imsx' ;
+
+		$comment	=  trim ( $node -> nodeValue ) ;
+		$result		=  '' ;
+
+		// If a conditional comment has been found, minify the HTML code inside it ; otherwise, remove the comment from the output
+		if  ( $comment  &&  $comment [0]  ==  '['  &&  preg_match ( $comment_re, $comment, $match ) )
+		   {
+			$result		=  '<!--' . $match [ 'start' ] . 
+					   $this -> __minify_data ( $match [ 'contents' ], true ) .
+					   $match [ 'end' ] . '-->' ;
+		    }
+
+		return ( $result ) ;
+	    }
+
+
+	// __get_document_node_as_string -
+	//	Returns the HTML string for a <!DOCTYPE> tag.
+	private function  __get_document_node_as_string ( $node )
+	   {
+		$result		=  "!DOCTYPE {$node -> name}" ;
+
+		if  ( $node -> publicId )
+			$result		.=  " PUBLIC \"{$node -> publicId}\"" ;
+
+		if  ( $node -> systemId )
+			$result		.=  " \"{$node -> systemId}\"" ;
+
+		return ( $result ) ;
+	    }
+
+
+	// __get_element_node_as_string -
+	//	Returns an HTML element with its attributes as a string.
+	//	This function does not return the closing tag.
+	private function  __get_element_node_as_string ( $node ) 
+	   {
+		$result			=  $node -> nodeName ;
+
+		// "class=" and "style=" attributes need special care : if many similar "style=" attributes are found, then a CSS class will be
+		// created ; however, at that point, we did not process the whole html contents yet, so we have to :
+		// - Memorize the "style=" attribute
+		// - Replace it with a TAG_STYLE tag, followed by a class id that has been attributed for this particular style entry
+		// - Put a TAG_CLASS with the same id
+		// Later, if it happens that the "style=" entry is used only once and is not worth creating a CSS class, the TAG_STYLE tag
+		// will be replaced by its original value.
+		// On the contrary, the TAG_STYLE tag will be removed and the TAG_CLASS tag will be replaced with the name of the class that
+		// has been created for this "style=" entry
+		$class_attribute	=  false ;
+		$style_id		=  false ;
+
+		foreach  ( $node -> attributes  as  $attribute )
+		   {
+			$attribute_name			=  strtolower ( $attribute -> nodeName ) ;
+			$attribute_value		=  trim ( preg_replace ( '/\s+/', ' ', $attribute -> nodeValue ) ) ;
+
+			if  ( ! $attribute_value )
+				continue ;
+
+			if  ( $attribute_name  ==  'class' )
+				$class_attribute	=  $attribute_value ;
+			else if  ( $attribute_name  ==  'style' )
+			   {
+				$attribute_value	=  preg_replace ( '/(\s*)([:;])(\s*)/', '$2', $attribute_value ) ;
+				$this -> __handle_style_attribute ( $attribute_value, $style_id ) ;
+			    }
+			else
+				$result		       .=  ' ' . $attribute -> nodeName . '=' . $this -> __quote_attribute_value ( $attribute_value ) ;
+		    }
+
+		// A "style=" entry has been found...
+		if  ( $style_id )
+		   {
+			// If a "class=" entry was already present, add the tag that specifies the class corresponding to the "style=" entry 
+			// (which will be removed)
+			if  ( $class_attribute )
+				$class_attribute	.=  self::TAG_START . self::TAG_CLASS . $style_id . self::TAG_END ;
+			// No "class=" entry exists : create it
+			else
+				$class_attribute	 =  self::TAG_START . self::TAG_CLASS . $style_id . self::TAG_END ;
+
+			// Leave a TAG_STYLE tag in case of it was not worth creating a CSS class for it
+			$style_attribute	=  self::TAG_START . self::TAG_STYLE . $style_id . self::TAG_END ;
+
+			$result		.=  " class=\"$class_attribute\"$style_attribute" ;
+		    }
+		// Otherwise, simply leave the potential "class=" attribute as is
+		else if  ( $class_attribute )
+			$result		.=  " class=\"$class_attribute\"" ;
+
+		return ( $result ) ;
+	    }
+
+
+	// process_styles -
+	//	Now that the original "class=" and "style=" attributes have been tagged, replace them with either a class name
+	//	or the original "style=" value (in the case it was used only once)
+	private function  __process_styles ( $contents )
+	   {
+		$style_string		=  '' ;
+		$searches		=  [] ;
+		$replacements		=  [] ;
+
+		// Loop through all the "style=" entries that have been found
+		foreach  ( $this -> StyleTable  as  $value => $definition )
+		   {
+			// The "style=" definition has been found only once in the html contents ; remove any TAG_CLASS references to this
+			// style and put back the original "style=" definition
+			if  ( $definition [ 'count' ]  ==  1 )
+			   {
+				$searches []		=  self::TAG_START . self::TAG_CLASS . $definition [ 'name' ] . self::TAG_END ;
+				$replacements []	=  '' ;
+
+				$searches []		=  self::TAG_START . self::TAG_STYLE . $definition [ 'name' ] . self::TAG_END ;
+				$replacements []	=  " style=\"$value\"" ;
+			    }
+			// Otherwise, add the name of the class created for this "style=" entry and remove the corresponding TAG_STYLE definition
+			else
+			   {
+				$searches []		=  self::TAG_START . self::TAG_CLASS . $definition [ 'name' ] . self::TAG_END ;
+				$replacements []	=  " {$definition [ 'name' ]}" ;
+
+				$searches []		=  self::TAG_START . self::TAG_STYLE . $definition [ 'name' ] . self::TAG_END ;
+				$replacements []	=  '' ;
+
+				$style_string		.=  '.' . $definition [ 'name' ] . '{' . $value . ';}' ;
+			    }
+		    }
+
+		// Add the <style>...</style> construct at the end of <head>, if needed
+		$searches []		=  self::TAG_START . self::TAG_LOCAL_STYLE . self::TAG_END ;
+
+		if  ( $style_string )
+			$replacements []	=  "<style>$style_string</style>" ;
+		else
+			$replacements []	=  '' ;
+
+		$searches []		=  "class=\" " ;
+		$replacements []	=  "class=\"" ;
+
+		$contents	=  str_replace ( $searches, $replacements, $contents ) ;
+
+		return ( $contents ) ;
+	    }
+
+
+	// __handle_style_attribute -
+	//	Memorizes the values of the different "style=" attributes encountered so far, together with their occurrence count.
+	//	The style keywords are sorted before being regenerated.
+	private function  __handle_style_attribute ( $value, &$new_id )
+	   {
+		$style_elements		=  explode ( ';', $value ) ;
+		$new_style_elements	=  [] ;
+
+		foreach  ( $style_elements  as  $element )
+		   {
+			if  ( trim ( $element ) )
+				$new_style_elements []	=  $element ;
+		    }
+
+		ksort ( $new_style_elements ) ;
+		$style_string	=  implode ( ';', $new_style_elements ) ;
+
+		// Existing style : count one more
+		if  ( isset ( $this -> StyleTable [ $style_string ] ) )
+		   {
+			$new_id		=  $this -> StyleTable [ $style_string ] [ 'name' ] ;
+			$this -> StyleTable [ $style_string ] [ 'count' ] ++ ;
+		    }
+		// New "style=" attribute : add a new entry in the style table
+		else
+		   {
+			$new_id					=  $this -> __get_next_style_identifier ( ) ;
+			$this -> StyleTable [ $style_string ]	=  [ 'name' => $new_id, 'count' => 1 ] ;
+		    }
+	    }
+
+
+	// __get_next_style_identifier -
+	//	Given a set of characters ($IdentifierChars) of length $IdentifierCharCount, converts a number
+	//	$NextStyleIdentifier to the base represented by the set of characters.
+	private function  __get_next_style_identifier ( )
+	   {
+		$id			=  '' ;
+		$current_identifier	=  $this -> NextStyleIdentifier ;
+		
+		while  ( $current_identifier  >=  self::$IdentifierCharCount )
+		   {
+			$rem			 =  $current_identifier % self::$IdentifierCharCount ;
+			$id			.=  self::$IdentifierChars [ $rem ] ;
+			$current_identifier	 =  ( integer ) ( $current_identifier / self::$IdentifierCharCount )  ;
+		    }
+
+		$id	.=  self::$IdentifierChars [ $current_identifier ] ;
+		$this -> NextStyleIdentifier ++ ;
+
+		return ( '_' . strrev ( $id ) ) ;
+	    }
+
+
+	// __get_script_node_as_string -
+	//	Minifies the contents of a <script> tag, if any.
+	private function  __get_script_node_as_string ( $node )
+	   {
+		static	$minifier	=  false ;
+
+		$code		=  trim ( $node -> nodeValue ) ;
+		$result		=  '' ;
+
+		if  ( $code )
+		   {
+			if  ( $minifier  ===  false )
+				$minifier	=  new JavascriptMinifier ( ) ;
+
+			$result		=  $minifier -> Minify ( $code ) ;
+		    }
+
+		return ( $result ) ;
+	    }
+
+
+	// __get_stle_node_as_string -
+	//	Minifies the contents of an inline <style> tag.
+	private function  __get_style_node_as_string ( $node )
+	   {
+		static	$minifier	=  false ;
+
+		$code		=  trim ( $node -> nodeValue ) ;
+		$result		=  '' ;
+
+		if  ( $code )
+		   {
+			if  ( $minifier  ===  false )
+				$minifier	=  new CssMinifier ( ) ;
+
+			$result		=  $minifier -> Minify ( $code ) ;
+		    }
+
+		return ( $result ) ;
+	    }
+
+
+	// __get_text_data -
+	//	Removes unnecessary spaces from node values.
+	protected function  __get_text_data ( $node )
+	   {
+		$parent		=  strtolower ( $node -> parentNode -> nodeName ) ;
+
+		if  ( isset  ( self::$PreserveSpacesInTags [ $parent ] ) )
+			$result		=  $node -> nodeValue ;
+		else
+			$result		=  preg_replace ( '/\s+/ms', ' ', $node -> nodeValue ) ;
+
+		$result		=  htmlentities ( $result ) ;
+
+		return ( $result ) ;
+	    }
+
+
+	// __quote_attribute_value -
+	//	Quotes an attribute value, using single-quotes if the attribute value contains double-quote(s).
+	//	Otherwise, use double quotes.
+	private function  __quote_attribute_value ( $value )
+	   {
+		if  ( strpos ( $value, '"' )  !==  false )
+			$quote	=  "'" ;
+		else
+			$quote	=  '"' ;
+
+		return ( $quote . $value . $quote ) ;
+	    }
+    }

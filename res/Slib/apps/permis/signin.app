@@ -2,7 +2,7 @@
 
 global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
 
-$google_oauth_redirect_uri = getEventPath("gauthr");
+$google_oauth_redirect_uri = getEventURL("gauthr");
 $google_oauth_version = 'v3';
 
 class signin extends \Sphp\tools\BasicApp {
@@ -16,14 +16,14 @@ class signin extends \Sphp\tools\BasicApp {
         //$this->getAuthenticate("GUEST,MEMBER,ADMIN");
         //$this->page->getAuthenticatePerm("GUEST,ADMIN,MEMBER"); 
         $this->setTableName("member");
-        $this->signinvar = new TempFile($this->apppath . "/forms/signin.front", false, $this);
+        $this->signinvar = new FrontFile($this->apppath . "/forms/signin.front", false, $this);
         $this->setMasterFile($masterf);
     }
 
     public function page_new() {
         if($this->Client->cookie("algdec") != "dome1") {
             destSession();
-            $this->setTempFile($this->signinvar);
+            $this->setFrontFile($this->signinvar);
         }else{
             $authcookie = json_decode(decryptme($this->Client->cookie("algdec2"),'ab7291df2v4d'),true);
             $this->Client->session('sid',intval($authcookie['sid']));            
@@ -90,12 +90,12 @@ class signin extends \Sphp\tools\BasicApp {
                     getWelcome();
                 } else {
                     setErr('app2', 'Invalid User or Password');
-                    $this->setTempFile($this->signinvar);
+                    $this->setFrontFile($this->signinvar);
                 }
         }
         } else {
                 setErr('app2', 'Invalid Data');
-                $this->setTempFile($this->signinvar);
+                $this->setFrontFile($this->signinvar);
         }
     }
 
@@ -142,14 +142,14 @@ class signin extends \Sphp\tools\BasicApp {
     
     public function getAuthGoogle(){
         global $google_oauth_client_secret;
-        if($google_oauth_client_secret == null || strlen($google_oauth_client_secret) < 4) $this->signinvar->getComponent("divgog")->unsetRender();
+        if($google_oauth_client_secret == null || strlen($google_oauth_client_secret) < 4) $this->signinvar->getComponent("divgog")->fu_unsetRender();
     }
      public function page_event_gauth($param) {
          global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
         // set in your comp.php file 
         //$google_oauth_client_id = 'YOUR_CLIENT_ID';
         //$google_oauth_client_secret = 'YOUR_CLIENT_SECRET';
-        //$google_oauth_redirect_uri = getEventPath("gauthr") ;
+        //$google_oauth_redirect_uri = getEventURL("gauthr") ;
         
         // Define params and redirect to Google Authentication page
     $params = [

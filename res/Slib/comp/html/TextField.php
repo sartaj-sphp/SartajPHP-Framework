@@ -8,7 +8,7 @@
 
 namespace Sphp\comp\html{
 
-class TextField extends \Sphp\tools\Control{
+class TextField extends \Sphp\tools\Component{
 
     public $maxLen = '';
     public $minLen = '';
@@ -23,7 +23,7 @@ class TextField extends \Sphp\tools\Control{
 
     protected function genhelpPropList() {
         parent::genhelpPropList();
-        $this->addHelpPropFunList('setForm','Bind with Form JS Event','','$val');
+        $this->addHelpPropFunList('setForm','Bind with Form JS Submit Event','','$val');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setNumeric','Only Accept Numeric Value','','');
         $this->addHelpPropFunList('setRequired','Can not submit Empty','','');
@@ -33,8 +33,13 @@ class TextField extends \Sphp\tools\Control{
         $this->addHelpPropFunList('setPassword','Mask as Pasword Char','','');
         $this->addHelpPropFunList('setReadOnly','Set as Read Only','','');
     }
-    public function oninit() {
+    protected function oninit() {
         $this->tagName = "input";
+        if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
         if($this->getAttribute("type") == ""){
             $this->setAttribute('type', 'text');
         }
@@ -45,12 +50,12 @@ class TextField extends \Sphp\tools\Control{
 //        $this->unsetEndTag();
     }
 
-    public function setForm($val) {
+    public function fi_setForm($val) {
         $this->formName = $val;
     }
 
     // upper or lower
-    public function setCase($val) {
+    public function fi_setCase($val) {
         if($val == "upper"){
             $this->value = strtoupper($this->value);
         }else{
@@ -58,7 +63,7 @@ class TextField extends \Sphp\tools\Control{
         }
     }
     
-    public function setMsgName($val) {
+    public function fu_setMsgName($val) {
         $this->msgName = $val;
         $this->setAttribute('placeholder', $val);
     }
@@ -69,7 +74,7 @@ class TextField extends \Sphp\tools\Control{
         }
         setErr($this->name, $msg); 
     }
-    public function setNumeric() {
+    public function fi_setNumeric() {
         if ($this->issubmit) {
             if (!is_valid_num($this->value, $this->dataType)) {
                 if ($this->dataType == "INT") {
@@ -83,7 +88,7 @@ class TextField extends \Sphp\tools\Control{
         $this->numeric = true;
     }
 
-    public function setRequired() { 
+    public function fi_setRequired() { 
         if ($this->issubmit) {
             if (strlen($this->value) < 1) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Can not submit Empty"); 
@@ -92,7 +97,7 @@ class TextField extends \Sphp\tools\Control{
         $this->req = true;
     }
 
-    public function setEmail() {
+    public function fi_setEmail() {
         if ($this->issubmit) {
             if (strlen($this->value) > 0 && !is_valid_email($this->value)) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Please Fill correct Email Address");
@@ -101,7 +106,7 @@ class TextField extends \Sphp\tools\Control{
         $this->email = true;
     }
 
-    public function setMaxLen($val) {
+    public function fi_setMaxLen($val) {
         $this->maxLen = $val;
         if ($this->issubmit) {
             if (strlen($this->getValue()) > $val) {
@@ -114,7 +119,7 @@ class TextField extends \Sphp\tools\Control{
         return $this->maxLen;
     }
 
-    public function setMinLen($val) {
+    public function fi_setMinLen($val) {
         $this->minLen = $val;
         if ($this->issubmit) {
             if ($this->getValue() != '' && strlen($this->getValue()) < $val) {
@@ -127,7 +132,7 @@ class TextField extends \Sphp\tools\Control{
         return $this->minLen;
     }
 
-    public function setPassword() {
+    public function fu_setPassword() {
         $this->password = true;
     }
 
@@ -139,7 +144,7 @@ class TextField extends \Sphp\tools\Control{
         return $this->password;
     }
 
-    public function setReadOnly() {
+    public function fu_setReadOnly() {
         $this->readOnly = true;
     }
 
@@ -151,10 +156,10 @@ class TextField extends \Sphp\tools\Control{
         return $this->readOnly;
     }
 
-    public function onjsrender() {
+    protected function onjsrender() {
         if ($this->formName != '') {
             if ($this->msgName == "") {
-                $this->setMsgName($this->getAttribute('placeholder'));
+                $this->fu_setMsgName($this->getAttribute('placeholder'));
             }
             if ($this->minLen != '') {
                 addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
@@ -176,7 +181,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         }
     }
 
-    public function onrender() {
+    protected function onrender() {
         if($this->errmsg!=""){
             $this->setPostTag($this->errmsg);
         }

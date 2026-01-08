@@ -3,7 +3,7 @@
 
 
 
-class Tabs extends Control{
+class Tabs extends Sphp\tools\Component{
     private $activeli = 1;
     private $disabletabs = array();
     private $activeblock = 1;
@@ -17,20 +17,20 @@ class Tabs extends Control{
 </nav>
 ';
     
-    public function oncreate($element) {
+    protected function oncreate($element) {
         $Client = SphpBase::sphp_request();
         if($Client->request($this->name .'li')!="" && $Client->request($this->name .'li')!="null"){
             $this->activeli = $Client->request($this->name . 'li');
         }
     }
     
-    public function disableTabs($param) {
+    public function fu_disableTabs($param) {
         $arr = explode(",",$param);
         foreach ($arr as $key => $value) {
             $this->disabletabs[$value] = $value;            
         }
     }
-    public function onparse($event,$element) {
+    protected function onparse($event,$element) {
         global $ctrl;
 //                $ctrl->debug->println("activeBlock set $event $element->tagName");
         if($event=="start"){
@@ -62,7 +62,7 @@ class Tabs extends Control{
             
         }
     }
-    public function onjsrender2() {
+    protected function onjsrender2() {
         addHeaderJSFunctionCode('ready', 'tab1', ' $(".nav-tabs").on(\'show.bs.tab\', "li.disabled a", function(event) {
 		event.stopImmediatePropagation();
         	return false;
@@ -74,7 +74,7 @@ class Tabs extends Control{
     });');
         addHeaderJSCode('tab1', ' activeTab = "'.$this->activeli.'"; previousTab = "null";');
     }
-    public function onrender(){
+    protected function onrender(){
         $this->class .= " tabblock";
         $tabgroup = "tab";
         $tabgroup2 = "nav-tabs";

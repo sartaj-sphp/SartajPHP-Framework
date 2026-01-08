@@ -1,25 +1,9 @@
 <?php
 namespace{
-class TempFile extends Sphp\tools\TempFile { }
-class Control extends Sphp\tools\Control { }
+class FrontFile extends Sphp\tools\FrontFile { }
 /**
-* Use getAppURL rather then this
-* @deprecated since version 4.8.4
-*/
-function getAppPath($ControllerName,$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
-/**
-* Use getThisURL rather then this
-* @deprecated since version 4.8.4
-*/
-function getThisPath($extra="",$blnSesID=false,$ext='',$noncache=false){}
-/**
-* Use getEventURL rather then this
-* @deprecated since version 4.8.4
-*/
-function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
-/**
-* Generate URL for a Controller
-* @param string $ControllerName controller like index
+* Generate URL for a Appgate
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -31,7 +15,7 @@ function getEventPath($eventName,$evtp="",$ControllerName="",$extra="",$newbaseP
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getAppURL($ControllerName,$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
+function getAppURL($AppgateName,$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Generate URL for Current Application
 * @param string $extra <P> Extra query string in URL 
@@ -52,11 +36,11 @@ function getThisURL($extra="",$blnSesID=false,$ext='',$noncache=false){}
 * }
 * }
 * $eventName = test
-* $controllerName = index
+* $AppgateName = index
 * Registered Application = apps/index.app
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $ControllerName controller like index
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -68,7 +52,7 @@ function getThisURL($extra="",$blnSesID=false,$ext='',$noncache=false){}
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getEventURLSecure($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
+function getEventURLSecure($eventName,$evtp="",$AppgateName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 /**
 * Generate URL for a Event of Application
 * @param string $eventName <p> Name of Event
@@ -78,11 +62,11 @@ function getEventURLSecure($eventName,$evtp="",$ControllerName="",$extra="",$new
 * }
 * }
 * $eventName = test
-* $controllerName = index
+* $AppgateName = index
 * Registered Application = apps/index.app
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $ControllerName controller like index
+* @param string $AppgateName Appgate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -94,11 +78,11 @@ function getEventURLSecure($eventName,$evtp="",$ControllerName="",$extra="",$new
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-function getEventURL($eventName,$evtp="",$ControllerName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
+function getEventURL($eventName,$evtp="",$AppgateName="",$extra="",$newbasePath="",$blnSesID=false,$ext='',$noncache=false){}
 function getCurrentRequest(){}
 function isRegisterCurrentRequest(){}
 function registerCurrentRequest($apppath,$s_namespace="",$permtitle="",$permlist=null){}
-function registerCurrentController($ctrl){}
+function registerCurrentAppgate($ctrl){}
 function registerApp($ctrl,$apppath,$s_namespace="",$permtitle="",$permlist=null){}
 function isRegisterApp($ctrl){}
 function setSession($lType,$uid1){}
@@ -130,12 +114,13 @@ function getMsg($name) {}
 function traceErrorInner($blnDontJS = false) {}
 function setErrInner($name, $msg) {}
 function getErrMsgInner($name) {}
-function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "TempFile") {}
+function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "FrontFile") {}
 function removeFrontPlace($frontname, $secname = "left") {}
-function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "TempFile") {}
+function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "FrontFile") {}
 function getFrontPlace($frontname, $secname = "left") {}
 function runFrontPlace($frontname, $secname = "left") {}
 function renderFrontPlace($frontname, $secname = "left") {}
+function renderFrontPlaceManually($frontname, $secname = "left") {}
 function runFrontSection($secname = "left") {}
 function addrunFrontSection($secname = "left") {}
 function ListNotrenderFrontSection($secname = "left") {}
@@ -156,11 +141,6 @@ function encryptme($string, $key = "BA007231") {}
 function endec($str, $ky = "CD098ABA") {}
 function is_valid_num($val,$datatype){}
 function is_valid_email($email){}
-function executePHPScript($strPHPScript) {}
-function executePHPCode($strPHPCode,$blnGlobal=true) {}
-function executePHP($strPHPCode) {}
-function executePHPGlobal($strPHPCode) {}
-function executePHPFunc($strPHPCode) {}
 function getKeyword(){}
 function genAutoText($para,$paraRepeated=1,$startIndex=1){}
 function stopOutput(){}

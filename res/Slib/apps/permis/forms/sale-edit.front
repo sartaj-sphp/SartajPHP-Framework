@@ -29,7 +29,7 @@ $pageName = $Client->session('formType').' User';
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" id="sid" class="form-control" dfield="sid" funsetForm="form2" runat="server" placeholder="Last Name" />
+                                        <input type="text" id="sid" class="form-control" dfield="sid" fun-setForm="form2" runat="server" placeholder="Last Name" />
                                     </fieldset>
                                 </div>
                                                              

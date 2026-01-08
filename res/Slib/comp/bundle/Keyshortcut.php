@@ -6,14 +6,14 @@
  */
 
 
-class Keyshortcut extends Control{
+class Keyshortcut extends Sphp\tools\Component{
 
-public function oncreate($element){
+protected function oncreate($element){
 $this->unsetrenderTag();
 }
 
 
-public function onjsrender(){
+protected function onjsrender(){
 if($this->parameterA['keys']!=''){
 $this->parameterA['keys'] = strtoupper($this->parameterA['keys']);
 $ky = split(',',$this->parameterA['keys']);

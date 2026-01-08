@@ -5,16 +5,16 @@
  * Socket work with native app to process as outsider from web server environment.
  * @author SARTAJ
  */
-class SocketNative extends \Sphp\tools\Control {
+class SocketNative extends \Sphp\tools\Component {
 
     private $url = '';
 
-    public function setURL($param) {
+    public function fu_setURL($param) {
         $this->url = $param;
     }
 
-    public function onjsrender() {
-        $this->unsetRender();
+    protected function onjsrender() {
+        $this->fu_unsetRender();
         $protocol = "ws";
         //event handler
         addHeaderJSFunction('js_event_' . $this->name . '_msg', 'function js_event_' . $this->name . '_msg(evtp){', '}');

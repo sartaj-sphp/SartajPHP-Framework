@@ -7,7 +7,7 @@
 
 
 
-class FileUploader extends Control{
+class FileUploader extends Sphp\tools\Component{
 public $maxLen = '';
 public $minLen = '';
 private $formName = '';
@@ -17,21 +17,20 @@ private $fileType = '';
 private $fileExtention = '';
 private $fileTypeA = '';
 private $fileSize = '';
-private $fileTempName = '';
+private $fileFrontName = '';
 private $fildName = '';
 private $tablName = '';
 private $fileSavePath = '';
 
-public function __construct($name='',$fieldName='',$tableName='') {
-global $page,$JSServer,$tblName,$mysql;
+protected function oncreate($element) {
 $this->name = $name;
 $this->fildName = $fieldName;
 $this->tablName = $tableName;
 $this->unsetEndTag();
 $this->fileType = $_FILES["$name"]["type"];
 $this->fileSize = $_FILES["$name"]["size"];
-$this->fileTempName = $_FILES["$name"]["tmp_name"];
-if($this->fileTempName!=''){
+$this->fileFrontName = $_FILES["$name"]["tmp_name"];
+if($this->fileFrontName!=''){
 $_REQUEST[$this->name] =  $_FILES["$name"]["name"];
 $ft = pathinfo($_FILES["$name"]["name"]);
 $this->fileExtention = $ft['extension'];
@@ -44,14 +43,21 @@ $file = decrypt($_REQUEST['pfn']);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
-$mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='SphpBase::page()->evtp'");
-$JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
+if($element->dtable == ""){
+$tblName = SphpBase::page()->tblName;
+}else{
+    $tblName = $element->dtable;
 }
+SphpBase::dbEngine()->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='". SphpBase::page()->getEventParameter() ."'");
+SphpBase::JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
+}
+$this->saveFile($this->fileSavePath);
+
 }
 
-     public function setForm($val) { $this->formName = $val;}
-     public function setMsgName($val) { $this->msgName = $val;}
-     public function setRequired() {
+     public function fu_setForm($val) { $this->formName = $val;}
+     public function fu_setMsgName($val) { $this->msgName = $val;}
+     public function fu_setRequired() {
 if($this->issubmit){
 if(strlen($this->value) < 1){
 setErr($this->name.'-req',"Can not submit Empty");
@@ -59,7 +65,7 @@ setErr($this->name.'-req',"Can not submit Empty");
   }
 $this->req = true;
 }
-     public function setFileMaxLen($val)
+     public function fu_setFileMaxLen($val)
      {
          $this->maxLen = $val;
 if($this->issubmit){
@@ -69,7 +75,7 @@ setErr($this->name.'-maxfl',"Maximum File Length should not be exceed then $val 
               }
          }
      public function getFileMaxLen() { return $this->maxLen; }
-     public function setFileMinLen($val)
+     public function fu_setFileMinLen($val)
      {
          $this->minFileLen = $val;
 if($this->issubmit){
@@ -79,16 +85,16 @@ if($this->getValue()!='' && $this->getFileSize() < $val ){
 }
          }
 public function getFileMinLen() { return $this->minLen; }
-     public function setFileType($val){$this->fileType = $val;}
+     public function fu_setFileType($val){$this->fileType = $val;}
      public function getFileType(){return $this->fileType;}
-     public function setFileSize($val){$this->fileSize = $val;}
+     public function fu_setFileSize($val){$this->fileSize = $val;}
      public function getFileSize(){return $this->fileSize;}
-     public function setFileTypesAllowed($val){$this->fileTypeA = $val; $this->findTypeAllowed();}
+     public function fu_setFileTypesAllowed($val){$this->fileTypeA = $val; $this->findTypeAllowed();}
      public function getFileTypesAllowed(){return $this->fileTypeA;}
-     public function getFileTempName(){return $this->fileTempName;}
+     public function getFileFrontName(){return $this->fileFrontName;}
      public function getFilePrevName(){return $_REQUEST['hid'.$this->name];}
      public function getFileExtention(){return $this->fileExtention;}
-     public function setFileSavePath($val){$this->fileSavePath = $val;}
+     public function fu_setFileSavePath($val){$this->fileSavePath = $val;}
 
 private function findTypeAllowed(){
 $blnFound = false;
@@ -124,11 +130,8 @@ if ($_FILES[$this->name]["error"] > 0)
     }
 }
 
-public function oncreate($element){ 
-$this->saveFile($this->fileSavePath);
-}
 
-public function onjsrender(){
+protected function onjsrender(){
 global $JSServer;
 $JSServer->getAJAX();
 addFileLink($this->myrespath."res/jquery.MultiFile.pack.js");
@@ -149,7 +152,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
 
 }
 
-public function onrender(){
+protected function onrender(){
 global $JSClient,$page;
     if($this->value!=''){
     $this->parameterA['value'] = $this->value;

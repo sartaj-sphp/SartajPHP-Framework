@@ -7,7 +7,7 @@ private $fixedPos = "";
 private $rootMenu = "root";
 private $blnAjaxLink = false;
 
-public function onrun() {
+protected function onrun() {
     $this->init();
     $this->genMenus();
 }

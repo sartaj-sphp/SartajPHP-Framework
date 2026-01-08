@@ -20,11 +20,11 @@ $genForm->setField("city","City","text","","4","50");
 $genForm->setField("country","Country","text","","4","50");
 $genForm->setField("expDate","Exp. Date","date");
 ';
-$genFormTemp = new TempFile("$libpath/tpl/db/GenForm.php");
+$genFormFront = new FrontFile("$libpath/tpl/db/GenForm.php");
 //$genForm->setTable("usert");
 $validation->setDataType("BOOLEAN");
 
-$showallTemp = new TempFile("$libpath/tpl/db/Showall.php");
+$showallFront = new FrontFile("$libpath/tpl/db/Showall.php");
 $showall->setFieldNames("userID,pass,sacheme,logDate,createDate,logIP");
 $showall->setColWidths("");
 $showall->setEdit();
@@ -102,15 +102,15 @@ $blngetFront = true;
 if ($blngetFront == true ){
 switch($formNo){
     case 1:{
-$genFormTemp->run();
-$dynData = $genFormTemp;
-include_once("temp/admmaster.php");
+$genFormFront->run();
+$dynData = $genFormFront;
+include_once("masters/admmaster.php");
 break;
     }
     case 2:{
-$showallTemp->run();
-$dynData = $showallTemp;
-include_once("temp/admmaster.php");
+$showallFront->run();
+$dynData = $showallFront;
+include_once("masters/admmaster.php");
 break;
     }
 }

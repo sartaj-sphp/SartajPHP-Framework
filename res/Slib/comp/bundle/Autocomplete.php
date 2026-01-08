@@ -8,14 +8,14 @@
  * use comma separated string of id attributes 
  * <input id="txtmodel" runat="server" extra="maker,type" type="text" dfield="txtmodel" class="form-control" path="libpath/comp/bundle/Autocomplete.php" funsetForm="form2" funsetMsgName="Model" funsetMaxLen="20"  />
  * send data from server
- *         $sltmaker = $this->genFormTemp->getComponent('sltcar_maker')->value;
+ *         $sltmaker = $this->genFormFront->getComponent('sltcar_maker')->value;
         $s1 = $this->Client->request('term');
         $res = $this->dbEngine->executeQueryQuick("SELECT txtmodel FROM cartype WHERE sltcar_maker='$sltmaker' AND txtmodel LIKE '%$s1%'");
         $d1 = array();
         while($row = mysqli_fetch_assoc($res)){
             $d1[] = $row['txtmodel'];
         }
-        $this->genFormTemp->txtmodel->sendData($d1);
+        $this->genFormFront->txtmodel->sendData($d1);
  */
 include_once(SphpBase::sphp_settings()->slib_path . "/comp/html/TextField.php");
 class Autocomplete extends \Sphp\comp\html\TextField {
@@ -25,13 +25,13 @@ class Autocomplete extends \Sphp\comp\html\TextField {
     private $minlen2 = 2;
     public $valuehid = "";
 
-    public function oninit() {
+    protected function oninit() {
         parent::oninit();
         //$this->setHTMLName("");
         $this->url = getEventURL($this->name . '_autocomplete');
     }
 
-    public function setURL($val) {
+    public function fu_setURL($val) {
         $this->url = $val;
     }
 
@@ -44,7 +44,7 @@ class Autocomplete extends \Sphp\comp\html\TextField {
     ');
     }
 
-    public function onjsrender() {
+    protected function onjsrender() {
         parent::onjsrender();
         /*
           addFileLink($jquerypath.'themes/base/jquery.ui.all.css');

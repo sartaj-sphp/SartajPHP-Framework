@@ -24,7 +24,7 @@ public function appendChildren($html) {}
 /**
 *  parse html and Replace children from html text. 
 *  It will not allow  runas=holder type attributes.
-* Use only for html tags, control tags will not work. for controls use tempfile object.
+* Use only for html tags, Component tags will not work. for Components use frontfile object.
 * @param string $html
 */
 public function replaceChildren($html) {}

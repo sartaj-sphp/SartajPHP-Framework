@@ -6,14 +6,14 @@
  */
 
 
-class Desktop extends Control{
+class Desktop extends Sphp\tools\Component{
 
-public function oncreate($element){
+protected function oncreate($element){
 $this->unsetrenderTag();
 }
 
 
-public function onjsrender(){
+protected function onjsrender(){
 addHeaderJSCode($this->name,"
 function setContentWin(frmid){
 $('#{$this->name}').html($('#'+frmid).html());
@@ -22,7 +22,7 @@ return false;
 ");
 }
 
-public function onrender(){
+protected function onrender(){
 $this->preTag = '<div id="'.$this->name.'">&nbsp;</div><div style="display:none;">';
 $this->postTag = '</div>';
 }

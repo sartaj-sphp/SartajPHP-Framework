@@ -1,0 +1,10 @@
+.nav-dlink{
+    color: #FFFFFF;
+}
+.nav-dlink:hover{
+    color: #FFFFFF;
+    font-weight: bolder;
+}
+.scrolled{
+    background-color: #000;
+}

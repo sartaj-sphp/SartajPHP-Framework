@@ -11,10 +11,10 @@ protected $tblName = "";
 protected $masterFile = "";
 /** @var \Sphp\kit\Page $page */
 public $page = "";
-/** @var \Sphp\tools\TempFile $tempform */
-public $tempform;
-/** @var \Sphp\tools\TempFile $maintempform */
-public $maintempform;
+/** @var \Sphp\tools\FrontFile $frontform */
+public $frontform;
+/** @var \Sphp\tools\FrontFile $mainfrontform */
+public $mainfrontform;
 /** @var string $apppath application folder path */
 public $apppath = "";
 /** @var string $phppath res folder path */
@@ -34,40 +34,26 @@ public $dbEngine = null;
 /** @var \Sphp\core\DebugProfiler $debug */
 public $debug = null;
 /**
-* Advance function for change the behavior of app
-* @param \Sphp\tools\TempFile $tempobj
+* Assign Default FrontFile to App for render
+* @param \Sphp\tools\FrontFile $obj 
 */
-public function setup($tempobj) {}
+public function setFrontFile($obj) {}
 /**
-* Advance function for change the behavior of app
-* @param \Sphp\tools\TempFile $tempobj
+* Get Current FrontFile assign to app for render
+* @return \Sphp\tools\FrontFile
 */
-public function process($tempobj) {}
+public function getFrontFile() {}
 /**
-* Advance function for change the behavior of app
+* Rendering Permission to default assigned FrontFile 
 */
-public function processEvent() {}
+public function showFrontFile() {}
 /**
-* Assign Default TempFile to App for render
-* @param \Sphp\tools\TempFile $obj 
+* Disable Rendering Permission to default assigned FrontFile 
 */
-public function setTempFile($obj) {}
-/**
-* Get Current TempFile assign to app for render
-* @return \Sphp\tools\TempFile
-*/
-public function getTempFile() {}
-/**
-* Rendering Permission to default assigned TempFile 
-*/
-public function showTempFile() {}
-/**
-* Disable Rendering Permission to default assigned TempFile 
-*/
-public function showNotTempFile() {}
+public function showNotFrontFile() {}
 /**
 * Set default table of Database to Sphp\Page object and this application.
-* This information is important for controls and other database users objects.
+* This information is important for Components and other database users objects.
 * @param string $dbtable
 */
 public function setTableName($dbtable) {}
@@ -77,94 +63,128 @@ public function setTableName($dbtable) {}
 */
 public function getTableName() {}
 /**
-* get controller event name trigger by browser
+* get Appgate event name trigger by browser
 * @return string
 */
 public function getEvent() {}
 /**
-* get controller event parameter post by browser
+* get Appgate event parameter post by browser
 * @return string
 */
 public function getEventParameter() {}
 /**
+* onstart=1
+* App Life Cycle Event
 * override this event handler in your application to handle it.
 * trigger when application start
 */
 public function onstart() {}
 /**
+* onfrontinit=2
+* Trigger After FrontFile Parse Phase, Component oninit and oncreate 
+* Events and before Components onaftercreate event. Trigger for 
+*  each Front File use with BasicApp
+* Only Trigger if Front File is used with App
 * override this event handler in your application to handle it.
-* trigger when application finish process of default TempFile
+* @param \Sphp\tools\FrontFile $frontobj
+*/
+public function onfrontinit($frontobj) {}
+/** 
+* onfrontprocess=3
+* Trigger after onaftercreate Event of Component and before BasicApp onready and onrun Events 
+* and also before onappevent Event of Component 
+* Only Trigger if Front File is used with App
+* override this event handler in your application to handle it.
+* @param \Sphp\tools\FrontFile $frontobj
+*/
+public function onfrontprocess($frontobj) {}
+/**
+* onready=4
+* App Life Cycle Event
+* override this event handler in your application to handle it.
+* trigger after FrontFile Initialization and ready to Run App.
 */
 public function onready() {}
-/**
+/** 
+* onrun=5
+* App LifeCycle Event
 * override this event handler in your application to handle it.
-* trigger when application initialize TempFile Object
+* trigger when application run after ready event and before trigger any PageEvent
 */
-public function ontempinit($tempobj) {}
-/**
-* override this event handler in your application to handle it.
-* trigger when application start process on TempFile Object
-*/
-public function ontempprocess($tempobj) {}
-/** Inbuilt Event
+public function onrun() {}
+/** 
+* PageEvent Delete
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
 * trigger when browser get (url=index-delete.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_delete() {}
-/** Inbuilt Event
+/** 
+* PageEvent View
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
 * trigger when browser get (url=index-view-19.html)
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 * view = event name 
 * 19 = recid of database table or any other value.
 */
 public function page_view() {}
-/** Inbuilt Event
+/** 
+* PageEvent Submit
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
-* trigger when browser post form (url=index.html)
-* where index is controller of application and application path is in reg.php file 
+* trigger when browser post Filled Form Components (url=index.html)
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_submit() {}
-/** Inbuilt Event
+/** 
+* PageEvent Insert
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
-* trigger when browser post form (url=index.html) as new form
-* where index is controller of application and application path is in reg.php file 
+* trigger when browser post Filled Empty Form Components (url=index.html)
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_insert() {}
-/** Inbuilt Event
+/** 
+* PageEvent Update
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
-* trigger when browser post form (url=index.html) as filled form
+* trigger when browser post Edited Form Components Which Filled with 
+* \SphpBase::page()->viewData() (url=index.html) 
 * from database with view_data function
-* where index is controller of application and application path is in reg.php file 
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_update() {}
-/** Inbuilt Event
+/** 
+* PageEvent New
+* Trigger only when Browser access URL is matched with PageEvent
+* Trigger only one PageEvent per request.
+* Trigger after onrun Event and before on render.
 * override this event handler in your application to handle it.
-* trigger when browser get (url=index.html) first time
-* where index is controller of application and application path is in reg.php file 
+* trigger when browser get URL (url=index.html) first time
+* where index is Appgate of application and application path is in reg.php file 
 */
 public function page_new() {}
-/** Inbuilt Event
+/** 
+* onrender=10
+* App Life Cycle Event
 * override this event handler in your application to handle it.
-* trigger when application run after ready event and before trigger any event handler
-*/
-public function onrun() {}
-/** Inbuilt Event
-* override this event handler in your application to handle it.
-* trigger when application render after run TempFile but before start master
-* file process. You can't manage TempFile output here but you can replace TempFile
+* trigger when application render after run FrontFile but before start master
+* file process. You can't manage FrontFile output here but you can replace FrontFile
 * output in SphpBase::$dynData or change master file or add front place for master filepath
 */
 public function onrender() {}
-/**
-* Advance function for change the behavior of app
-*/
-public function run() {}
-/**
-* Advance function for change the behavior of app
-*/
-public function render() {}
 /**
 * set path of master design file name
 * @param string $masterFile
@@ -186,5 +206,27 @@ public function getAuthenticate($authenticates) {}
 * Every app has unique url and expired with end of session. 
 */
 public function getSesSecurity() {}
+/**
+* Advance function for change the behavior of app
+* @param \Sphp\tools\FrontFile $frontobj
+*/
+public function _setup($frontobj) {}
+/**
+* Advance function for change the behavior of app
+* @param \Sphp\tools\FrontFile $frontobj
+*/
+public function _process($frontobj) {}
+/**
+* Advance function for change the behavior of app
+*/
+protected function _processEvent() {}
+/**
+* Advance function for change the behavior of app
+*/
+public function _run() {}
+/**
+* Advance function for change the behavior of app
+*/
+protected function _render() {}
 }
 }

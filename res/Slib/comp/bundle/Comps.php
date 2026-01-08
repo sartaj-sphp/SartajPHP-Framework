@@ -5,8 +5,8 @@
  * @author SARTAJ
  */
 //
-include_once("{$phppath}/classes/base/CompGroup.php");
-include_once("{$libpath}/comp/html/TextField.php");
+include_once(SphpBase::sphp_settings()->php_path . "/classes/base/CompGroup.php");
+include_once(SphpBase::sphp_settings()->slib_path . "/comp/html/TextField.php");
 
 
 class Comps extends CompGroup{
@@ -14,18 +14,18 @@ class Comps extends CompGroup{
 public function onstart(){
 global $JQuery;
     $this->addComponent(new TextField('df1'));  
-$this->setTempFile(new TempFile($this->mypath."demo.php"));
+$this->setFrontFile(new FrontFile($this->mypath."demo2.front"));
 $JQuery->getJQKit();
 }
-public function oncompcreate($element){
+protected function oncompcreate($element){
 //$this->inhtml = $element->innertext;
 }
 public function page_new(){
 //    print $this->mypath;
 }
 
-public function onrender(){
-$tmp = $this->getTempControl('txa1');
+protected function onjsrender(){
+$tmp = $this->getFrontControl('txa1');
 $tmp->setInnerHTMLApp($this->innerHTML);
 $this->innerHTML = "";
 }

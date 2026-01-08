@@ -6,9 +6,9 @@
  */
 namespace {
 
-include_once("{$slibpath}/comp/ajax/Ajaxsenddata.php");
+include_once(SphpBase::sphp_settings()->slib_path . "/comp/ajax/Ajaxsenddata.php");
 
-class Pagination extends \Sphp\tools\Control{
+class Pagination extends \Sphp\tools\Component{
 public $pageNo = -1;
 public $totalPages = 1;
 public $totalRows = 0;
@@ -51,15 +51,13 @@ public $buttonnext = '';
 public $buttonprev = '';
 public $links = '';
 
-public function __construct($name='',$fieldName='',$tableName='') {
+protected function onit() {
 $page = \SphpBase::page();
 $ctrl = \SphpBase::sphp_router()->ctrl;
-$tblName = \SphpBase::page()->tblName;
 //\SphpBase::debug()->setMsg('tblName ' . $tableName);
 if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
-$this->init($name,'','');
 if(\SphpBase::sphp_request()->request('page') != ""){
 \SphpBase::sphp_request()->session($name.'p', \SphpBase::sphp_request()->request('page'));
 \SphpBase::sphp_request()->session($name.'pc', $ctrl);
@@ -70,17 +68,13 @@ if(\SphpBase::sphp_request()->isSession($name.'pc') && \SphpBase::sphp_request()
 }
 }
 $this->pageNo = intval(\SphpBase::sphp_request()->request('page')) - 1;
-if($tableName==''){
-$this->dtable = $tblName;
-}else{
-$this->dtable = $tableName;
-    }
+$this->dtable = \SphpBase::page()->tblName;
 $this->setHTMLName('');
 }
 
 
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $Appgate="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -104,10 +98,10 @@ $this->setHTMLName('');
     }
 
     
-public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventURL($eventName, $evtp='', $Appgate='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
-$this->ctrl=$ControllerName;
+$this->ctrl=$Appgate;
 if($extra!=''){
 $this->extra=$extra.'&page=';
 }
@@ -121,21 +115,21 @@ $this->sesID=$blnSesID;
             return "";
         }
     }
-public function setMsgName($val) { $this->msgName = $val;}
-public function setPrimaryKey($val){ 
+public function fu_setMsgName($val) { $this->msgName = $val;}
+public function fu_setPrimaryKey($val){ 
     $this->primarykey = $val; 
     if($this->cachekey == "id") $this->cachekey = $this->primarykey;    
 }
-public function setSQL($sql){
+public function fu_setSQL($sql){
 $this->sql = $sql;
 }
-public function setPageCountSQL($sql){
+public function fu_setPageCountSQL($sql){
 $this->pageCountSQL = $sql;
 }
-public function setPerPageRows($val){
+public function fu_setPerPageRows($val){
 $this->perPageRows = intval($val);
 }
-public function setExtraData($val){
+public function fu_setExtraData($val){
 $this->extraData = $val;
 }
 public function setPageNo($val){
@@ -147,34 +141,34 @@ return $this->pageNo + 1;
 public function setLinkNo($val){
 $this->linkno = $val;
 }
-public function setCacheFile($val){
+public function fu_setCacheFile($val){
 $this->cachefile = $val;
 }
-public function setCacheSave(){
+public function fu_setCacheSave(){
 $this->cachesave = true;
 }
-public function setCacheKey($val){
+public function fu_setCacheKey($val){
 $this->cachekey = $val;
 }
-public function setCacheTime($val){
+public function fu_setCacheTime($val){
 $this->cacheTime = intval($val);
 }
-public function setFieldNames($val){
+public function fu_setFieldNames($val){
 $this->fieldNames = $val;
 }
-public function setHeaderNames($val){
+public function fu_setHeaderNames($val){
 $this->headNames = $val;
 }
-public function setColWidths($val){
+public function fu_setColWidths($val){
 $this->colwidths = $val;
 }
-public function setWhere($val){
+public function fu_setWhere($val){
 $this->where = $val;
 }
-public function setApp($val){
+public function fu_setApp($val){
 $this->app = $val;
 }
-public function setAjax(){
+public function fu_setAjax(){
 $this->blnajax = true;
  $this->ajax = new \Sphp\comp\ajax\Ajaxsenddata($this->name."ajax1");
 $this->ajax->oncompcreate(array());
@@ -183,10 +177,10 @@ $this->editeventName = $this->name ."_view";
 $this->deleventName = $this->name ."_delete";
 SphpJsM::addjQueryUI();
 }
-public function setEdit(){
+public function fu_setEdit(){
 $this->blnEdit = true;
 }
-public function setDelete(){
+public function fu_setDelete(){
 $this->blnDelete = true;
 }
 public function getPageBar(){
@@ -198,16 +192,16 @@ return $this->buttonnext;
 public function getButtonPrev(){
 return $this->buttonprev;
 }
-public function setHeader($val){
+public function fu_setHeader($val){
 $this->header = $val;
 }
-public function setFooter($val){
+public function fu_setFooter($val){
 $this->footer = $val;
 }
-public function unsetDialog(){
+public function fu_unsetDialog(){
 $this->blndlg = false;
 }
-public function unsetAddButton(){
+public function fu_unsetAddButton(){
 $this->blnadd = false;
 }
 
@@ -307,17 +301,17 @@ $stro .= "</tbody></table>";
 $stro .= $this->getPaging();
 }
 else if($this->strFormat!=''){
-    //$this->tempobj->HTMLParser->executePHPCode()
+    //$this->frontobj->HTMLParser->executePHPCode()
 $stro = "";
 if($this->roote == null){
-    $this->roote = $this->tempobj->getChildrenWrapper($this);
+    $this->roote = $this->frontobj->getChildrenWrapper($this);
 }
 foreach($this->result as $key1=>$keyar){
  foreach($keyar as $index=>$this->row){
-//$tmpf = new \Sphp\tools\TempFileChild($this->strFormat,true,null,$this->tempobj);
+//$tmpf = new \Sphp\tools\FrontFileChild($this->strFormat,true,null,$this->frontobj);
 //$tmpf->run();
 //$stro .= $tmpf->data;
-$stro .= $this->tempobj->parseComponentChildren($this->roote);
+$stro .= $this->frontobj->parseComponentChildren($this->roote);
  } }
  //echo $stro;
 $this->unsetrenderTag();
@@ -414,7 +408,7 @@ $strlink .$edt.$del.'
 return $strout;
 }
 
-public function oncreate($element){
+protected function oncreate($element){
 //$this->strFormat = $element->innertext;
     if($element->innertext != ""){
         $this->strFormat = "datajfjfh";
@@ -532,7 +526,7 @@ $ptag .= '<button id="btnadd'. $this->name .'" class="btn btn-primary" >Add</but
 }
 
 
-public function onjsrender(){
+protected function onjsrender(){
 $JSServer = SphpBase::JSServer();
 $opendlg = "";
 if(!$JSServer->ajaxrender){
@@ -587,7 +581,7 @@ window.location = link ;
 }
 }
 
-public function onprerender(){
+protected function onprerender(){
 // set default values
 $commaPos = strpos($this->dtable, ",");
 $spacePos = strpos($this->dtable, " ");
@@ -618,7 +612,7 @@ $this->element->replaceChildren($this->header. $this->executeSQL() . $this->foot
 //$this->unsetrender();
 }
 
-    public function onholder($obj) {
+    protected function onholder($obj) {
         switch($obj->tagName){
             case 'img':{
                 if($this->row[$obj->getAttribute("dfield")] != ''){

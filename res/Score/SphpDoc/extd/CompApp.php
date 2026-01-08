@@ -6,15 +6,15 @@ namespace Sphp\tools {
 * @author Sartaj Singh
 */
 class CompApp extends SphpApp {
-public $parentTempObj = null;
-public $parentControl = null;
+public $parentFrontObj = null;
+public $parentComponent = null;
 public $parentapp = null;
 /** @var \Sphp\kit\Page page */
 public $page = "";
-/** @var TempFile tempform */
-public $tempform;
-/** @var TempFile maintempform */
-public $maintempform;
+/** @var FrontFile frontform */
+public $frontform;
+/** @var FrontFile mainfrontform */
+public $mainfrontform;
 public $apppath = "";
 public $mypath = "";
 public $myrespath = "";
@@ -31,28 +31,28 @@ public $dbEngine = null;
 public $debug = null;
 /**
 * 
-* @param string $filepath temp file path
-* @param boolean $noprefix false mean add prefix as parent component name to all controls
-* @return \Sphp\tools\TempFile
+* @param string $filepath front file path
+* @param boolean $noprefix false mean add prefix as parent-component name to all Components
+* @return \Sphp\tools\FrontFile
 */
-public function createTempFile($filepath,$noprefix=false) {}
-public function setup($tempobj) {}
-public function process($tempobj) {}
+public function createFrontFile($filepath,$noprefix=false) {}
+public function setup($frontobj) {}
+public function process($frontobj) {}
 public function processEvent() {}
 /**
-* Set Internal Temp File. Internal Temp File Also render Page Components.
-* @param TempFile $obj 
+* Set Internal Front File. Internal Front File Also render Page Components.
+* @param FrontFile $obj 
 */
-public function setTempFile($obj) {}
-public function getTempFile() {}
-public function showTempFile() {}
-public function showNotTempFile() {}
+public function setFrontFile($obj) {}
+public function getFrontFile() {}
+public function showFrontFile() {}
+public function showNotFrontFile() {}
 public function setTableName($dbtable) {}
 public function getTableName(){}
 public function onstart() {}
 public function onready() {}
-public function ontempinit($tempobj) {}
-public function ontempprocess($tempobj) {}
+public function onfrontinit($frontobj) {}
+public function onfrontprocess($frontobj) {}
 public function page_delete() {}
 public function page_view() {}
 public function page_submit() {}

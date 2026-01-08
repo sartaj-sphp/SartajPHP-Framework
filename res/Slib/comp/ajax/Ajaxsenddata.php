@@ -6,7 +6,7 @@ namespace Sphp\comp\ajax{
  *
  * @author SARTAJ
  */
-class Ajaxsenddata extends \Sphp\tools\Control {
+class Ajaxsenddata extends \Sphp\tools\Component {
 
     private $url = '';
     private $data = '';
@@ -18,36 +18,35 @@ class Ajaxsenddata extends \Sphp\tools\Control {
     private $mime = '';
     private $onrecieve = '';
 
-    public function __construct($name = '', $fieldName = '', $tableName = '') {
-        $this->init($name, $fieldName, $tableName);
+    protected function oncreate($element) {
         $this->setHTMLName("");
     }
 
-    public function setURL($val) {
+    public function fu_setURL($val) {
         $this->url = $val;
     }
 
-    public function setData($val) {
+    public function fu_setData($val) {
         $this->data = $val;
     }
 
-    public function setDataFromComps($val) {
+    public function fu_setDataFromComps($val) {
         $this->compa = explode(',', $val);
     }
 
-    public function setOutID($val) {
+    public function fu_setOutID($val) {
         $this->outid = $val;
     }
 
-    public function setOnReceive($val) {
+    public function fu_setOnReceive($val) {
         $this->onrecieve = $val;
     }
 
-    public function setMethodPost() {
+    public function fu_setMethodPost() {
         $this->method = 'POST';
     }
 
-    public function setMIME($val) {
+    public function fu_setMIME($val) {
         $this->mime = $val;
     }
 
@@ -71,7 +70,7 @@ class Ajaxsenddata extends \Sphp\tools\Control {
         \SphpBase::JSServer()->echoJSON();
     }
 
-    public function onjsrender() {
+    protected function onjsrender() {
         $ajax = new \Sphp\kit\Ajax();
         \SphpBase::JSServer()->getAjax();
         $valobj = null;
@@ -112,7 +111,7 @@ $this->onrecieve
         addFooterJSCode($this->name, $code);
     }
 
-    public function onrender() {
+    protected function onrender() {
         if ($this->innerHTML == '') {
             $this->innerHTML = '<img src="' . $this->myrespath . '/res/ajax-loader.gif" />';
         }
