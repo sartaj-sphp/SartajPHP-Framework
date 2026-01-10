@@ -14,14 +14,16 @@ final class SphpCodeBlock{
  * @param type $innerposttag tag end inner html
  * @return array
  */
-public static function addCodeBlock($name,$callback=null,$css="",$pclass="",$pretag="",$posttag="",$innerpretag="",$innerposttag=""){
-    // may be future version support js also
-    $a1 = array("class"=>$css,"pclass"=>$pclass,"pretag"=>$pretag,"posttag"=>$posttag,"innerpretag"=>$innerpretag,"innerposttag"=>$innerposttag,"callback"=>$callback);
+public static function addCodeBlock($name,$callback=null,$para=[]){
+    $defpara = SphpCodeBlock::genCodeBlock();
+    $defpara["callback"] = $callback;
+    $a1 = array_merge($defpara,$para);
     SphpCodeBlock::$cb[$name] = $a1;
 }
-private static function genCodeBlock($callback=null,$css="",$pclass="",$pretag="",$posttag="",$innerpretag="",$innerposttag=""){
+private static function genCodeBlock($callback=null,$css="",$pclass="",$pretag="",$posttag="",$innerpretag="",$innerposttag="",$documentation=""){
     // may be future version support js also
-    $a1 = array("class"=>$css,"pclass"=>$pclass,"pretag"=>$pretag,"posttag"=>$posttag,"innerpretag"=>$innerpretag,"innerposttag"=>$innerposttag,"callback"=>$callback);
+    $a1 = array("class"=>$css,"pclass"=>$pclass,"pretag"=>$pretag,"posttag"=>$posttag,
+        "innerpretag"=>$innerpretag,"innerposttag"=>$innerposttag,"callback"=>$callback,"documentation"=> $documentation);
     return $a1;
 }
 public static function getCodeBlocks(){
@@ -39,18 +41,19 @@ public static function getCodeBlock($name){
 // start css blocks of temp file
 SphpCodeBlock::addCodeBlock('btn-count',function($element,$args,$lst1){
         if(! isset($lst1['color'])){
-            $element->appendAttribute('class',' btn-primary');
+            $element->appendAttribute('class',' btn-primary'); 
         }
-    },'btn position-relative','','','','',
+    },array('class'=> 'btn position-relative','innerposttag'=>
  '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+@arg0 <span class="visually-hidden">unread messages</span></span>'
-); 
+,"documentation" => 'Create Unread Counter Button of Bootstrap. Use Color CB for set Colors')); 
+    
 SphpCodeBlock::addCodeBlock('btn-marker',function($element,$args,$lst1){
         if(! isset($lst1['color'])){
             $element->appendAttribute('class',' btn-primary');
         }
-    },'btn position-relative','','','','',
+    },array('class'=> 'btn position-relative','innerposttag'=>
  '<svg width="1em" height="1em" viewBox="0 0 16 16" class="position-absolute top-100 start-50 translate-middle mt-1 bi bi-caret-down-fill" fill="#212529" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>'
-); 
+)); 
 
 // 2 args= width or style,color
 SphpCodeBlock::addCodeBlock('border',function($element,$args,$lst1){
@@ -71,7 +74,8 @@ SphpCodeBlock::addCodeBlock('border',function($element,$args,$lst1){
     $element->appendAttribute('class',' border-primary');
   }
   
-});
+},array("documentation"=> 'Take 2 args= width or style,color, arg0=border=width list:- 0 to 5, top-0, top,end,bootom,start '
+    . 'arg1=color=primary= bootstrap border color name or your custom css class like border-babypink then pass color as babypink'));
 
 SphpCodeBlock::addCodeBlock('align',function($element,$args,$lst1){
     //align='' left,center,right
@@ -81,7 +85,7 @@ SphpCodeBlock::addCodeBlock('align',function($element,$args,$lst1){
     $element->appendAttribute('class',' d-flex justify-content-center');      
   }
   
-});
+},array('documentation' => ' Take only one arg0=left,center or right'));
 
 SphpCodeBlock::addCodeBlock('rounded',function($element,$args,$lst1){
     //rounded='' list:- 0 to 3, top,end,bootom,start,circle,pill
@@ -91,7 +95,7 @@ SphpCodeBlock::addCodeBlock('rounded',function($element,$args,$lst1){
     $element->appendAttribute('class',' rounded');      
   }
   
-});
+},array('documentation' => 'Take one arg0=rounded= values:- 0 to 3, top,end,bootom,start,circle,pill'));
 
 SphpCodeBlock::addCodeBlock('color',function($element,$args,$lst1){
  // color:- primary,secondary,success,danger,warning,info,light,dark,white,body,transparent
@@ -111,7 +115,8 @@ SphpCodeBlock::addCodeBlock('color',function($element,$args,$lst1){
       // enable =1 bg color gradient
     $element->appendAttribute('class',' bg-gradient'); 
   }
-});
+},array('documentation' => 'Take 3 Args, arg0=text color, arg1=bg color, arg2=1 mean enable gradiant, '
+    . 'Values:- primary,secondary,success,danger,warning,info,light,dark,white,body,transparent'));
 
 SphpCodeBlock::addCodeBlock('parallax',function($element,$args,$lst1){
     $element->appendAttribute("class"," cbv parallax"); 
@@ -136,7 +141,7 @@ SphpCodeBlock::addCodeBlock('parallax',function($element,$args,$lst1){
     }
     $element->setInnerPostTag("</div>");
     
-}); 
+},array('documentation' => 'Create Parallax Effect on Image, arg0=image url')); 
 
 SphpCodeBlock::addCodeBlock('teamlist',function($element,$args,$lst1){
     $r1 = array();
@@ -205,7 +210,17 @@ SphpCodeBlock::addCodeBlock('teamlist',function($element,$args,$lst1){
     //$element->setPreTag($pre);
     $element->setInnerPreTag($pre . '<div class="container"><div class="row gy-5">');
     $element->setInnerPostTag('</div></div>');
-}); 
+},array('documentation' => 'Create Team List, also need special children custom tags, arg0=heading in h2 arg1=paragraph. Example:- <div runcb="true" sphp-cb-teamlist="Our Services,|personal use, we tailor solutions" >
+    
+    <member>
+       <pic src="img/fixping.png"  />
+       <name>Fix Ping</name>
+       <post>Team Leader</post>
+       <detail>Fix Ping is good Team Leader</detail>
+    </member>    
+    
+</div>
+')); 
 
 SphpCodeBlock::addCodeBlock('position',function($element,$args,$lst1){
     $align = "left";
@@ -225,7 +240,7 @@ SphpCodeBlock::addCodeBlock('position',function($element,$args,$lst1){
             $element->appendAttribute('class',' top-0 start-0');
         }
     }
-},'position-absolute','position-relative'); 
+},array('class'=>'position-absolute','pclass'=>'position-relative')); 
 
 SphpCodeBlock::addCodeBlock('shadow',function($element,$args,$lst1){
     if(isset($args[0])){
@@ -311,7 +326,7 @@ SphpCodeBlock::addCodeBlock('card',function($element,$args,$lst1){
     }
     $element->appendPostTag($str1 . $str3);
     if($element->title != "") $element->appendInnerPreTag('<h5 class="card-title">'. $element->title .'</h5>');
-},'card-body'); 
+},array('class'=>'card-body')); 
 
 SphpCodeBlock::addCodeBlock('label',function($element,$args,$lst1){
     if(isset($args[0])){
