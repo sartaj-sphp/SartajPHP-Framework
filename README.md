@@ -141,4 +141,4 @@ If you discover a security vulnerability within SartajPHP PHP Framework, please 
 [2]: https://github.com/sartaj-singh/SartajPHP-Framework
 [3]: https://www.youtube.com/channel/UCKENEpj-PZvpS2lC4cqh-7g
 [4]: https://www.facebook.com/DevelopmentFramework/
-[5]: https://www.sartajphp.com/api4.7/
+[5]: https://www.sartajphp.com/api/
