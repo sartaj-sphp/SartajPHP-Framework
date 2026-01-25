@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-6 col-xs-12">
             <p>
             If you want use only single login as super admin then set as user and pass in comp.php file. 
             Or for multi profile and manage permissions, you can create database tables with 

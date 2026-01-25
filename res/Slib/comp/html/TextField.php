@@ -20,6 +20,7 @@ class TextField extends \Sphp\tools\Component{
     private $numeric = false;
     private $email = false;
     private $req = false;
+    private $match = "";
 
     protected function genhelpPropList() {
         parent::genhelpPropList();
@@ -88,6 +89,15 @@ class TextField extends \Sphp\tools\Component{
         $this->numeric = true;
     }
 
+    public function fi_setMatch($compid) { 
+        if ($this->issubmit) {
+            if ($this->value != $this->frontobj->getComponent($compid)->value) {
+                $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Value is not Match"); 
+            }
+        }
+        $this->match = $compid;
+    }
+    
     public function fi_setRequired() { 
         if ($this->issubmit) {
             if (strlen($this->value) < 1) {
@@ -176,6 +186,13 @@ ctlEmail['$this->name']= Array('$this->msgName','TextField');");
             if ($this->req) {
                 addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
+            }
+            if ($this->match != "") {
+                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}match", '
+ if($("#'. $this->name .'").val() != $("#'. $this->match .'").val()){
+   displayValidationError(document.getElementById("'. $this->name .'"),"Value isn\'t match with " + $("#'. $this->match .'").attr("placeholder"));
+   blnSubmit = false ;
+}');
             }
 
         }

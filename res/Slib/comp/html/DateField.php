@@ -25,6 +25,12 @@ namespace Sphp\comp\html {
             if ($this->value != '') {
                 $this->value = $this->dateToMySQLDate($this->value);
             }
+            if(!$this->element->hasAttribute("name")){
+                $this->HTMLName = $this->name;
+            }else{
+                $this->HTMLName = $this->getAttribute("name");            
+            }
+            
             if ($this->getAttribute("msgname") != "") {
                 $this->msgName = $this->getAttribute("msgname");
             }

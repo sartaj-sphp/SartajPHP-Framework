@@ -1,11 +1,8 @@
-<?php
-$pageName = \SphpBase::sphp_request()->session('appName');
-?>
 <section class="content-header sty-one">
-    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <h1 class="text-black">##{$pageName}#</h1>
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>        
-        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+        <li><i class="fa fa-angle-right"></i>##{$pageName}#</li>
     </ol>
 </section>
 
@@ -14,10 +11,10 @@ $pageName = \SphpBase::sphp_request()->session('appName');
         <div class="col-lg-12">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class=""><?php echo $pageName; ?> List &nbsp;&nbsp;</h5>
+                    <h5 class="">##{$pageName}# List &nbsp;&nbsp;</h5>
                     <div id='admProfilePermission_add' runat='server'>
                         <span style="float:right; margin-top: -20px;">
-                            <a class="btn btn-warning removepd" href="<?php echo getEventPath('addnew'); ?>"><i class="fa fa-plus"></i> Add</a>                        
+                            <a class="btn btn-warning removepd" href="##{ getEventURL('addnew'); }#"><i class="fa fa-plus"></i> Add</a>                        
                         </span>
                     </div>
                 </div>
@@ -39,16 +36,16 @@ $pageName = \SphpBase::sphp_request()->session('appName');
                                    fun-setFieldNames="profile_name,permission_id"
                                    fun-setAJAX="" >
                                 <tr>
-                                    <td><?php echo $this->frontobj->showall->row['profile_name']; ?></td>
-                                    <td><?php echo $this->frontobj->showall->row['permission_id']; ?></td>
+                                    <td runas="holder" dfield="profile_name" sphp-comp="showall"></td>
+                                    <td>##{$showall->getRow('permission_id')}#</td>
                                     <td>  
                                         <div id='admPreference_view' class="btn-action" runat='server'>
-                                            <a href="<?php echo getEventURLSecure('view', $this->frontobj->showall->row['id']); ?>">
+                                            <a href="##{ getEventURLSecure('view', $showall->getRow('id'))}#">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
                                         <div id='admPreference_delete' class="btn-action" runat='server'>
-                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $this->frontobj->showall->row['id']);}#')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $showall->getRow('id'))}#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
@@ -56,7 +53,7 @@ $pageName = \SphpBase::sphp_request()->session('appName');
                                 </tr>                                
                             </tbody> 
                         </table> 
-                        <div id="pagebar"><?php echo $this->frontobj->showall->getPageBar(); ?></div>
+                        <div id="pagebar" runas="holder" sphp-comp="showall" sphp-comp-prop="page_links"></div>
                     </div>	
                 </div>
 

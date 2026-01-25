@@ -15,6 +15,18 @@ namespace Sphp\comp\html {
         public function fu_autoSEO() {
             $this->blnautoseo = true;
         }
+        public function fu_setMetaKeywords($v) {
+            $this->setAttribute("metakeywords", $v);
+        }
+        public function fu_setMetaDescription($v) {
+            $this->setAttribute("metadescription", $v);
+        }
+        public function fu_setMetaClassification($v) {
+            $this->setAttribute("metaclassification", $v);
+        }
+        public function fu_setKeywords($v) {
+            $this->setAttribute("keywords", $v);
+        }
         private function autoSEO1($ar1) {
             foreach ($ar1 as $t1){
             if($t1->myclass == "Sphp\\tools\\NodeTag"){
@@ -77,19 +89,14 @@ namespace Sphp\comp\html {
             // create social media og meta tags for sharing webpage
             $str1 = '<link rel="canonical" href="'. getThisURL() .'" /><meta property="og:locale" content="en_US" />
 		<meta property="og:site_name" content="'. $cmpname .'" />
-		<meta property="og:type" content="article" />
+		<meta property="og:type" content="website" />
 		<meta property="og:title" content="'. \SphpBase::sphp_settings()->title .'" />
-		<meta property="og:description" content="'. \SphpBase::sphp_settings()->metakeywords .'" />
+		<meta property="og:description" content="'. \SphpBase::sphp_settings()->metadescription .'" />
 		<meta property="og:url" content="'. getThisURL() .'" />';
             if ($this->element->hasAttribute("img")) {
                 $str1 .= '<meta property="og:image" content="'. $this->element->getAttribute("img") .'" />';
             }else{
                 $str1 .= '<meta property="og:image" content="'. \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png" />';                
-            }
-            if ($this->element->hasAttribute("imgsecure")) {
-                $str1 .= '<meta property="og:image:secure_url" content="'. $this->element->getAttribute("imgsecure") .'" />';
-            }else{
-                $str1 .= '<meta property="og:image:secure_url" content="'. \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png" />';                
             }
                 $str1 .= '<meta property="og:image:width" content="600" />
 		<meta property="og:image:height" content="600" />';

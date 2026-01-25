@@ -14,7 +14,7 @@ class FooterMenuUi extends BootstrapFooterMenu{
             $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }else{            
-            $this->sphp_api->addMenuLink("Dashboard",getAppPath('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
             $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }

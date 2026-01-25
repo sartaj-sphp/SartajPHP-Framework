@@ -1,11 +1,11 @@
-<?php
+#{
 $pageName = 'User List';
-?>
+}#
 <section class="content-header sty-one">
-    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <h1 class="text-black">##{ $pageName; }#</h1>
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>        
-        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+        <li><i class="fa fa-angle-right"></i>##{ $pageName; }#</li>
     </ol>
 </section>
 
@@ -14,10 +14,10 @@ $pageName = 'User List';
         <div class="col-lg-12">
             <div class="card ">
                 <div class="card-header bg-blue">
-                    <h5 class="text-white m-b-0"><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                    <h5 class="text-white m-b-0">##{ $pageName; }# Detail &nbsp;&nbsp;</h5>
                     <div id='admProfile_add' runat='server'>
                         <span style="float:right; margin-top: -20px;">
-                            <a class="btn btn-warning removepd" href="<?php echo getEventPath('addnew'); ?>"><i class="fa fa-plus"></i> Add</a>                        
+                            <a class="btn btn-warning removepd" href="##{ getEventURL('addnew'); }#"><i class="fa fa-plus"></i> Add</a>                        
                         </span>
                     </div>
                 </div>
@@ -41,21 +41,21 @@ $pageName = 'User List';
                                   
                                    fun-setAJAX=""  fun-setFieldNames="billno,sid,txtplate,createdate" fun-setHeaderNames="Invoice,Customer,Dated" dtable="trans,car_reg" fun-setWhere="WHERE tc='S' AND sid=car_reg.id"  >
                                 <tr>
-                                    <td><?php echo $this->frontobj->showall->row['billno']; ?></td>
-                                    <td><?php echo $this->frontobj->showall->row['txtplate']; ?></td>
-                                    <td><?php echo $this->frontobj->showall->row['createdate']; ?></td>                                
+                                    <td>##{ $frontobj->showall->row['billno']; }#</td>
+                                    <td>##{ $frontobj->showall->row['txtplate']; }#</td>
+                                    <td>##{ $frontobj->showall->row['createdate']; }#</td>                                
                                                                  
                                     
-                                    <td><?php $timestamp = $this->frontobj->showall->row['submit_timestamp'];
-                                        echo date("d-m-Y", $timestamp) ?></td>                                
+                                    <td>#{ $timestamp = $frontobj->showall->row['submit_timestamp'];
+                                        echo date("d-m-Y", $timestamp) }#</td>                                
                                     <td>  
                                         <div id='admProfile_view' runat='server'>
-                                            <a href="<?php echo getEventPath('view', $this->frontobj->showall->row['id']); ?>">
+                                            <a href="##{ getEventURL('view', $frontobj->showall->row['id']); }#">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
                                         <div id='admProfile_delete' runat='server'>
-                                            <a href="#" onclick="confirmDel_showall('##{ getEventPath('delete', $this->frontobj->showall->row['id']); }#')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventURL('delete', $frontobj->showall->row['id']); }#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
@@ -63,7 +63,7 @@ $pageName = 'User List';
                                 </tr>                                
                             </tbody>                          
                         </table>
-                        <div id="pagebar"><?php echo $this->frontobj->showall->getPageBar(); ?></div>                    	
+                        <div id="pagebar">##{ $frontobj->showall->getPageBar(); }#</div>                    	
                     </div>
                 </div>
 

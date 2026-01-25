@@ -8,9 +8,9 @@ class FooterMenuUi extends BootstrapFooterMenu{
         $this->sphp_api->addMenu("Home2", "","fa fa-home","footer");
         $this->sphp_api->addMenu("Home", "","fa fa-home","footer");
         
-        $this->sphp_api->addMenuLink("Home", getAppPath("index"),"fa fa-home","Home2");
-        $this->sphp_api->addMenuLink("Admin Login", getAppPath("admin"),"fa fa-home","Home2");
-        //$this->sphp_api->addMenuLink("User Login", getAppPath("signin"),"fa fa-home","Home2");
+        $this->sphp_api->addMenuLink("Home", getAppURL("index"),"fa fa-home","Home2");
+        $this->sphp_api->addMenuLink("Admin Login", getAppURL("admin"),"fa fa-home","Home2");
+        //$this->sphp_api->addMenuLink("User Login", getAppURL("signin"),"fa fa-home","Home2");
         $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index'),"fa fa-fw fa-clock-o","Home2");
          
         

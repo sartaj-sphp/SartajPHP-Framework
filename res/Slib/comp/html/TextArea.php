@@ -34,6 +34,12 @@ class TextArea extends \Sphp\tools\Component {
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
         }        
+        if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
+
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';

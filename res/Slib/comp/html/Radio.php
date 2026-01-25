@@ -25,6 +25,12 @@ private $options = array();
 
 protected function oninit() {
 $this->tagName = "input";
+        if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
+
 $this->setAttribute('type', 'radio');
 }
 

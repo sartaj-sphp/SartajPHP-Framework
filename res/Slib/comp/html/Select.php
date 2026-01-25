@@ -47,6 +47,12 @@ class Select extends \Sphp\tools\Component {
 
     protected function oninit() {
         $this->tagName = "select";
+        if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
+
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
         }        

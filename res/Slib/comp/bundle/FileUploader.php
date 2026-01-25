@@ -23,9 +23,11 @@ private $tablName = '';
 private $fileSavePath = '';
 
 protected function oncreate($element) {
-$this->name = $name;
-$this->fildName = $fieldName;
-$this->tablName = $tableName;
+        if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
 $this->unsetEndTag();
 $this->fileType = $_FILES["$name"]["type"];
 $this->fileSize = $_FILES["$name"]["size"];
@@ -36,8 +38,7 @@ $ft = pathinfo($_FILES["$name"]["name"]);
 $this->fileExtention = $ft['extension'];
 }
 $this->tagName = "input";
-$this->parameterA['type'] = 'file';
-$this->init($this->name,$this->fildName,$this->tablName);
+$this->setAttribute('type', 'file');
 if(SphpBase::page()->sact== $name.'del'){
 $file = decrypt($_REQUEST['pfn']);
 $pt = pathinfo($file);

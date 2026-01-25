@@ -32,7 +32,7 @@
         public function fu_setStep($val) {
             $this->counterStep = $val;
         }
-
+        
         private function genrender() {
             $stro = '';
             for($this->counter = $this->counterMin; $this->counter < $this->counterMax; $this->counter += $this->counterStep){

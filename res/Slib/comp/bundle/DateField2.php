@@ -18,6 +18,12 @@ private $msgName = '';
 private $req = false;
 
 protected function oncreate($element) {
+            if(!$this->element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
+
 if($this->value!=''){
 $this->value = $this->dateToMySQLDate($this->value) ;
 }

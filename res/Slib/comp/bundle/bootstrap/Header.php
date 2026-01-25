@@ -42,7 +42,7 @@ class Header extends \Sphp\tools\Component{
             $menu = new MenuUi($this->frontobj->fileDir);
             $callback($menu);
             $menu->_run();
-            $menuo = $menu->_render();
+            $menuo = $menu->getOutput();
         }
         return $menuo;
     }
@@ -55,7 +55,7 @@ class Header extends \Sphp\tools\Component{
             $menu->text = $this->text;
             $callback($menu);
             $menu->_run();
-            $menuo = $menu->_render();
+            $menuo = $menu->getOutput();
         }
         return $menuo;
     }

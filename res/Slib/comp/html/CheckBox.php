@@ -19,6 +19,12 @@ namespace Sphp\comp\html {
         protected function oninit() {
             $Client = \SphpBase::sphp_request();
             $this->tagName = "input";
+            if(!$this->element->hasAttribute("name")){
+                $this->HTMLName = $this->name;
+            }else{
+                $this->HTMLName = $this->getAttribute("name");            
+            }
+
             $this->setAttribute('type', 'checkbox');
             if ($this->issubmit) {
                 $this->setAttribute('checked', 'checked');

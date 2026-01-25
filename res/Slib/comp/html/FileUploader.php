@@ -34,6 +34,11 @@ $tblName = \SphpBase::page()->tblName;
 $JSServer = \SphpBase::JSServer();
 $Client = \SphpBase::sphp_request();
 $mysql = \SphpBase::dbEngine();
+        if(!$element->hasAttribute("name")){
+            $this->HTMLName = $this->name;
+        }else{
+            $this->HTMLName = $this->getAttribute("name");            
+        }
 
 $this->unsetEndTag();
 if(\SphpBase::sphp_request()->isFile("$this->name")){

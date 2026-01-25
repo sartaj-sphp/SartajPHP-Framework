@@ -1,11 +1,8 @@
-<?php
-$pageName = 'User List';
-?>
 <section class="content-header sty-one">
-    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <h1 class="text-black">##{$pageName}#</h1>
     <ol class="breadcrumb">
-        <li><a href="##{getAppUrl('mebhome')}#">Home</a></li>        
-        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+        <li><a href="##{getAppURL('mebhome')}#">Home</a></li>        
+        <li><i class="fa fa-angle-right"></i>##{$pageName}#</li>
     </ol>
 </section>
 
@@ -14,10 +11,10 @@ $pageName = 'User List';
         <div class="col-lg-12">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class=""><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                    <h5 class="">##{$pageName}# Detail &nbsp;&nbsp;</h5>
                     <div id='admProfile_add' runat='server'>
                         <span style="float:right; margin-top: -20px;">
-                            <a class="btn btn-warning removepd" href="<?php echo getEventPath('addnew'); ?>"><i class="fa fa-plus"></i> Add</a>                        
+                            <a class="btn btn-warning removepd" href="##{ getEventURL('addnew')}#"><i class="fa fa-plus"></i> Add</a>                        
                         </span>
                     </div>
                 </div>
@@ -38,34 +35,24 @@ $pageName = 'User List';
                                     <th>Action</th>
                                 </tr>
                             </thead>                            
-                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php" 
+                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php"  
                                    fun-setFieldNames="profile_id, profile_name, fname, lname, email, username, member.submit_timestamp as submit_timestamp,member.parentid, member.status as status"
                                    fun-setAJAX="" dtable='member, profile_permission' >
                                 <tr>
-                                    <td><?php echo $this->frontobj->showall->row['profile_name'] ; ?></td>
-                                    <td><?php echo $this->frontobj->showall->row['fname'] . " " . $this->frontobj->showall->row['lname']; ?></td>
-                                    <td><?php echo $this->frontobj->showall->row['email']; ?></td>                                
-                                    <td><?php echo $this->frontobj->showall->row['username']; ?></td>                                
-                                    <td>
-                                        <?php
-                                        $status = $this->frontobj->showall->row['status'];
-                                        if ($status == 1) {
-                                            echo "Active";
-                                        } else {
-                                            echo "Inactive";
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php $timestamp = $this->frontobj->showall->row['submit_timestamp'];
-                                        echo date("d-m-Y", $timestamp) ?></td>                                
+                                    <td runas="holder" data-comp="showall" dfield="profile_name"></td>
+                                    <td>##{$a = $showall->getRow('fname') . " " . $showall->getRow('lname'); $a}#</td>
+                                    <td>##{ $showall->getRow('email') }#</td>                                
+                                    <td>##{ $showall->getRow('username') }#</td>                                
+                                    <td>##{($showall->getRow('status') == 1) ? "Active": "Inactive" }#</td>
+                                    <td>##{date("d-m-Y",$showall->getRow('submit_timestamp'))}#</td>                                
                                     <td>  
                                         <div id='admProfile_view' runat='server' class="btn-action">
-                                            <a href="<?php echo getEventURLSecure('view', $this->frontobj->showall->row['id']); ?>">
+                                            <a href="##{ getEventURLSecure('view', $showall->getRow('id')) }#">
                                                 <i class="fa fa-edit fa-2x"></i>
                                             </a>
                                         </div>
                                         <div id='admProfile_delete' runat='server' class="btn-action">
-                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $this->frontobj->showall->row['id']); }#')">
+                                            <a href="#" onclick="confirmDel_showall('##{ getEventURLSecure('delete', $showall->getRow('id'))}#')">
                                                 <i class="fa fa-trash fa-2x"></i>
                                             </a>
                                         </div>
@@ -73,7 +60,7 @@ $pageName = 'User List';
                                 </tr>                                
                             </tbody>                          
                         </table>
-                        <div id="pagebar"><?php echo $this->frontobj->showall->getPageBar(); ?></div>                    	
+                        <div id="pagebar">##{$showall->getPageBar()}#</div>                    	
                     </div>
                 </div>
 

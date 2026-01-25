@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ ."/PermisApp.php");
+include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisApp.php");
 
 class mebProfilePermission extends PermisApp {
 
@@ -8,20 +8,20 @@ class mebProfilePermission extends PermisApp {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("profile_permission");
-        $this->Client->session("appName", "Profile Permission");
-        $this->genFormTemp = new FrontFile($this->apppath . "/forms/mebProfilePermission-edit.front", false, $this);
-        $this->showallTemp = new FrontFile($this->apppath . "/forms/mebProfilePermission-list.front", false, $this);
+        //$this->Client->session("appName", "Profile Permission");
+        $this->genFormFront = new FrontFile($this->mypath . "/forms/mebProfilePermission-edit.front");
+        $this->showallFront = new FrontFile($this->mypath . "/forms/mebProfilePermission-list.front");
          
-        $this->defWhere = " WHERE profile_permission.parentid = '".$_SESSION['parentid']."' ORDER BY profile_permission.id ASC ";
-        $this->showallTemp->getComponent('showall')->setWhere($this->defWhere);
-        SphpBase::sphp_api()->addProp('page_title',"Manage Profiles");
-
+        $this->defWhere = " WHERE profile_permission.parentid = '". $this->Client->session('parentid') ."' ORDER BY profile_permission.id ASC ";
+        $this->showallFront->getComponent('showall')->fu_setWhere($this->defWhere);
+        
+        $this->genFormFront->addMetaData('pageName','Profile Form');
+        $this->showallFront->addMetaData('pageName','Manage Profiles');
         $this->setMasterFile($mebmasterf);
-        parent::onstart();
     }
     
     public function page_new(){
-        $this->setFrontFile($this->showallTemp);
+        $this->setFrontFile($this->showallFront);
     }       
     
     public function page_insert() {

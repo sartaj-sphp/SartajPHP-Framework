@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ ."/PermisApp.php");
+include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisApp.php");
 
 class mebProfile extends PermisApp {
 
@@ -8,18 +8,19 @@ class mebProfile extends PermisApp {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("member");
-        $this->genFormTemp = new FrontFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
-        $this->showallTemp = new FrontFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
+        $this->genFormFront = new FrontFile($this->mypath . "/forms/mebProfile-edit.front");
+        $this->showallFront = new FrontFile($this->mypath . "/forms/mebProfile-list.front");
 
-        $this->showallTemp->getComponent('showall')->setPerPageRows(50);
+        $this->showallFront->getComponent('showall')->fu_setPerPageRows(50);
 
-        $this->defWhere = " WHERE member.parentid = '".$_SESSION['parentid']."' AND usertype = 'MEMBER' AND profile_permission.id = member.profile_id AND member.id != '".$_SESSION['sid']."' ORDER BY member.id DESC ";
-        $this->showallTemp->getComponent('showall')->setWhere($this->defWhere);
-        SphpBase::sphp_api()->addProp('page_title',"Manage Users");
+        $this->defWhere = " WHERE member.parentid = '". $this->Client->session('parentid') ."' AND usertype = 'MEMBER' AND profile_permission.id = member.profile_id AND member.id != '". $this->Client->session('sid') ."' ORDER BY member.id DESC ";
+        $this->showallFront->getComponent('showall')->fu_setWhere($this->defWhere);
+        // set Form Title
+        $this->genFormFront->addMetaData('pageName','User Form');
+        $this->showallFront->addMetaData('pageName','Manage Users');
         $this->setMasterFile($mebmasterf);
         
     }
-    
     
     public function page_insert() {
         $profile_id = $this->Client->request('profile_id');
@@ -28,16 +29,16 @@ class mebProfile extends PermisApp {
         //$checkUserName = $this->checkUserName($username);
         $checkUserEmail = $this->checkUserEmail($email);
         if($checkUserEmail) {
-            setErr('app1', 'This Email already exist!!');
-            $this->setFrontFile($this->genFormTemp); 
+            setErr('App', 'This Email already exist!!');
+            $this->setFrontFile($this->genFormFront); 
        /* } elseif($checkUserName) {
-            setErr('app1', 'This username already exist!!');
-            $this->setFrontFile($this->genFormTemp); 
+            setErr('App', 'This username already exist!!');
+            $this->setFrontFile($this->genFormFront); 
         * 
         */
         } elseif($profile_id == 'Select Profile') {
-            setErr('app1', 'Select Profile');
-            $this->setFrontFile($this->genFormTemp);            
+            setErr('App', 'Select Profile');
+            $this->setFrontFile($this->genFormFront);            
         } else {            
             $this->extra[]['varification'] = '1';
             $this->extra[]['username'] = $email;

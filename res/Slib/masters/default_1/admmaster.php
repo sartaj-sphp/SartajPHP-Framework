@@ -1,8 +1,8 @@
 <?php 
-$menupath = "{$slibpath}/masters/default/main_menu.php";
+$menupath = "{$slibpath}/masters/default/menu_header.php";
 include_once($menupath);
 $menu = new MenuUi(__DIR__);
-$menu->run();
+$menu->_run();
 
 ?><!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@ $menu->run();
             </div></div>
 
         <div class="row"><div class="col">
- <?php print $menu->render(); ?>
+ <?php print $menu->_render(); ?>
       </div>
         </div><div class="row">
     <div class="col">

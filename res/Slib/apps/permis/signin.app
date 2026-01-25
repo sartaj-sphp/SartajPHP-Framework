@@ -1,8 +1,9 @@
 <?php
-
+// read if settings in comp.php file
 global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
 
-$google_oauth_redirect_uri = getEventURL("gauthr");
+// set redirect URL for google to Event "gauthr" of this App (Current Registered App) 
+$google_oauth_redirect_uri = getEventURL("gauthr"); 
 $google_oauth_version = 'v3';
 
 class signin extends \Sphp\tools\BasicApp {
@@ -17,14 +18,18 @@ class signin extends \Sphp\tools\BasicApp {
         //$this->page->getAuthenticatePerm("GUEST,ADMIN,MEMBER"); 
         $this->setTableName("member");
         $this->signinvar = new FrontFile($this->apppath . "/forms/signin.front", false, $this);
-        $this->setMasterFile($masterf);
+        // comp.php setting about default master file for Guest User
+        $this->setMasterFile($masterf); 
     }
 
     public function page_new() {
         if($this->Client->cookie("algdec") != "dome1") {
+            // delete all authentication related session variables
             destSession();
+            // send login form to browser
             $this->setFrontFile($this->signinvar);
         }else{
+            // restore login from cookie if exist and valid
             $authcookie = json_decode(decryptme($this->Client->cookie("algdec2"),'ab7291df2v4d'),true);
             $this->Client->session('sid',intval($authcookie['sid']));            
             $this->Client->session('parentid',intval($authcookie['parentid'])); 
@@ -38,10 +43,19 @@ class signin extends \Sphp\tools\BasicApp {
             }else{
                 setSession('MEMBER', intval($authcookie['sid']));                
             }
+            // call function in comp.php project settings file
             getWelcome();
         }
     }
 
+    /**
+     * Handler of PageEvent Submit
+     * login or signin form submission handle here
+     *  comp.php settings
+     * @global string $cmpid
+     * @global string $admuser
+     * @global string $admpass
+     */
     public function page_submit() {
         global $cmpid,$admuser,$admpass;
         if(! getCheckErr()){
@@ -85,8 +99,8 @@ class signin extends \Sphp\tools\BasicApp {
         } else {
             $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpid FROM member,profile_permission WHERE username = '$uname' AND password = '$pword' AND member.status = '1' AND profile_id=profile_permission.id ");
             if ($this->dbEngine->is_rows($result)) {
-                $rows = $this->dbEngine->row_fetch_assoc($result);
-                $this->setAuthUser($rows);
+                $row = $this->dbEngine->row_fetch_assoc($result);
+                $this->setAuthUser($row);
                     getWelcome();
                 } else {
                     setErr('app2', 'Invalid User or Password');
@@ -99,28 +113,28 @@ class signin extends \Sphp\tools\BasicApp {
         }
     }
 
-    private function setAuthUser($rows) {
+    private function setAuthUser($row) {
         $authcookie = array();
         if (!getCheckErr()) {
-            $this->Client->session('sid', $rows['id']);
+            $this->Client->session('sid', $row['id']);
 
-            if ($rows['parentid'] == 0) {
-                $this->Client->session('parentid', $rows['id']);
+            if ($row['parentid'] == 0) {
+                $this->Client->session('parentid', $row['id']);
             } else {
-                $this->Client->session('parentid', $rows['parentid']);
+                $this->Client->session('parentid', $row['parentid']);
             }
 
-            $this->Client->session('admin-name', $rows['fname'] . " " . $rows['lname']);
-            $this->Client->session('email', $rows['email']);
-            $this->Client->session('usertype', $rows['usertype']);
-            $this->Client->session('profile_id', $rows['profile_id']);
-            $this->Client->session('lstpermis', $rows['permission_id']);
-            $this->Client->session('compid', $rows['spcmpid']);
+            $this->Client->session('admin-name', $row['fname'] . " " . $row['lname']);
+            $this->Client->session('email', $row['email']);
+            $this->Client->session('usertype', $row['usertype']);
+            $this->Client->session('profile_id', $row['profile_id']);
+            $this->Client->session('lstpermis', $row['permission_id']);
+            $this->Client->session('compid', $row['spcmpid']);
 
             //This is for permission management---------------------
             //This is for permission management---------------------
 
-            //$usertype = $rows['usertype'];
+            //$usertype = $row['usertype'];
             $authcookie['sid'] = $this->Client->session('sid');            
             $authcookie['parentid'] = $this->Client->session('parentid'); 
             $authcookie['admin-name'] = $this->Client->session('admin-name');            
@@ -136,7 +150,7 @@ class signin extends \Sphp\tools\BasicApp {
                 $this->Client->cookie("algdec2", encrypt(json_encode($authcookie)),false, $date_of_expiry );
             }
 
-            setSession('MEMBER', $rows['id']);
+            setSession('MEMBER', $row['id']);
         }  
     }
     

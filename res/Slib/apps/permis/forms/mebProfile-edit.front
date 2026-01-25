@@ -1,11 +1,8 @@
-<?php
-$pageName = \SphpBase::sphp_request()->session('formType').' User';
-?>
 <section class="content-header sty-one">
-    <h1 class="text-black"><?php echo $pageName; ?></h1>
+    <h1 class="text-black">##{$pageName}#</h1>
     <ol class="breadcrumb">
-        <li><a href="##{getAppUrl('mebhome')}#">Home</a></li>        
-        <li><i class="fa fa-angle-right"></i><?php echo $pageName; ?></li>
+        <li><a href="##{getAppURL('mebhome')}#">Home</a></li>        
+        <li><i class="fa fa-angle-right"></i>##{$pageName}#</li>
     </ol>
 </section>
 
@@ -14,60 +11,59 @@ $pageName = \SphpBase::sphp_request()->session('formType').' User';
         <div class="col-lg-12">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class=""><?php echo $pageName; ?> Detail &nbsp;&nbsp;</h5>
+                    <h5 class="">##{ $pageName; }# Detail &nbsp;&nbsp;</h5>
                     <span style="float:right; margin-top: -20px;">
-                        <a class="btn btn-primary removepd" href="<?php echo getAppPath(getCurrentRequest()); ?>" > <i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-primary removepd" href="##{ getThisURL(); }#" > <i class="fa fa-arrow-left"></i> Back</a>
                     </span>                    
                 </div>
                 <div class="card-body" style="padding-top:10px;">								
                     <div class=" " id="frmstatus"></div>
-                    <span style="text-align: center; font-weight: bold; color: red;">##{ traceError(true) }#</span>
+                    <span style="text-align: center; font-weight: bold; color: red;">##{ raw:traceError(true) }#</span>
                     <form id="form2" runat="server" class="form-horizontal" >
                         <div class="form-body">
                             <div class="row"> 
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label>Profile</label>
-                                        <select id="profile_id" dfield="profile_id" runat="server" fun-setForm="form2" fun-setMsgName="Profile" 
+                                        <select id="profile_id" dfield="profile_id" runat="server" fui-setForm="form2" fun-setMsgName="Profile" 
                                             fun-setOptionsFromTable="id,|profile_name,|profile_permission" 
-                                            fun-setFirstValue="Select Profile" 
-                                        ></select>
+                                            fun-setFirstValue="Select Profile"></select>
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" id="fname" class="form-control" dfield="fname" fun-setForm="form2" runat="server" placeholder="First Name" />
+                                        <input type="text" id="fname" class="form-control" dfield="fname" fui-setForm="form2" runat="server" placeholder="First Name" />
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" id="lname" class="form-control" dfield="lname" fun-setForm="form2" runat="server" placeholder="Last Name" />
+                                        <input type="text" id="lname" class="form-control" dfield="lname" fui-setForm="form2" runat="server" placeholder="Last Name" />
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label>Email</label>
-                                        <input type="text" id="email" fun-setDontUpdate="" class="form-control" dfield="email" fun-setForm="form2" runat="server" placeholder="Email" />
+                                        <input type="text" id="email" fui-setDontUpdate="" class="form-control" dfield="email" fui-setForm="form2" runat="server" placeholder="Email" />
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12" id="userdiv" runat="server" fun-setAuth="ADMIN">
                                     <fieldset class="form-group">
                                         <label>Username</label>
-                                        <input type="text" id="username" fun-setDontUpdate=""  class="form-control" dfield="username" fun-setForm="form2" runat="server" placeholder="Username" />
+                                        <input type="text" id="username" fui-setDontUpdate=""  class="form-control" dfield="username" fui-setForm="form2" runat="server" placeholder="Username" />
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12" runat="server" id="col1" lfunsetAuth="ADMIN">
                                     <fieldset class="form-group">
                                         <label>Password</label>
-                                        <input type="text" id="password" class="form-control" dfield="password" fun-setForm="form2" runat="server" placeholder="Password" />
+                                        <input type="text" id="password" class="form-control" dfield="password" fui-setForm="form2" runat="server" placeholder="Password" />
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-12"  runat="server" id="col2" lfunsetAuth="ADMIN">
                                     <fieldset class="form-group">
                                         <label>Status</label>
-                                        <select class="form-control" id="status" runat="server" dfield="status" fun-setForm="form2" fun-setOptionsJSON='[[1,"Active"], [0, "Inactive"]]' ></select>
+                                        <select class="form-control" id="status" runat="server" dfield="status" fui-setForm="form2" fun-setOptionsJSON='[[1,"Active"], [0, "Inactive"]]' ></select>
                                     </fieldset>
                                 </div>                                
                             </div>		
@@ -78,7 +74,7 @@ $pageName = \SphpBase::sphp_request()->session('formType').' User';
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-9">
-                                            <button type="submit" class="btn btn-success">##{\SphpBase::sphp_request()->session('formButton');}#</button>                            
+                                            <button type="submit" class="btn btn-success">##{$formButton}#</button>                            
                                         </div>
                                     </div>
                                 </div>

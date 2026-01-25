@@ -15,15 +15,19 @@ private $frontobj2 = null;
     }
 
    
-public function fu_setFrontFile($filepath){
+public function fi_setFrontFile($filepath){
     $filepath = $this->frontobj->HTMLParser->resolvePathVar($filepath);
-    $this->frontobj2 = new \Sphp\tools\FrontFile($filepath,false,null, $this->frontobj->parentapp);
+    $this->frontobj2 = new \Sphp\tools\FrontFileChild($filepath,false,null, $this->frontobj);
+    // apend children components
+    foreach($this->frontobj2->getComponents() as $i=>$comp){
+        $this->_addChild($comp);
+    }
 }
 protected function onrender() {
-    $this->unsetrenderTag();
+    //$this->fu_unsetrenderTag();
+    $this->tagName = "div";
     $strOut = "";
-    $this->frontobj2->run();
-    $strOut .= $this->frontobj2->getOutput();
+    $strOut .= $this->frontobj2->ProcessMe();
     $this->setInnerHTML($strOut);
 }
     

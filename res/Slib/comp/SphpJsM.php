@@ -6,7 +6,7 @@ final class SphpJsM {
     public function __construct() {
         $this->init();
     }
-
+    
     public function init() {
         global $jslibpath;
 // load js lib and jquery ready function

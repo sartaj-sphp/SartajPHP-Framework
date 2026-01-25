@@ -6,7 +6,6 @@
  */
 namespace {
 
-include_once(SphpBase::sphp_settings()->slib_path . "/comp/ajax/Ajaxsenddata.php");
 
 class Pagination extends \Sphp\tools\Component{
 public $pageNo = -1;
@@ -38,7 +37,6 @@ private $sesID=false;
 private $blnajax = false;
 private $blndlg = true;
 private $blnadd = true;
-private $ajax = null;
 public $cacheTime = 0;
 private $cachefile = '';
 private $primarykey = "id";
@@ -49,10 +47,9 @@ private $footer = '';
 private $roote = null;
 public $buttonnext = '';
 public $buttonprev = '';
-public $links = '';
+public $page_links = '';
 
 protected function onit() {
-$page = \SphpBase::page();
 $ctrl = \SphpBase::sphp_router()->ctrl;
 //\SphpBase::debug()->setMsg('tblName ' . $tableName);
 if(SphpBase::page()->isSesSecure){
@@ -68,8 +65,7 @@ if(\SphpBase::sphp_request()->isSession($name.'pc') && \SphpBase::sphp_request()
 }
 }
 $this->pageNo = intval(\SphpBase::sphp_request()->request('page')) - 1;
-$this->dtable = \SphpBase::page()->tblName;
-$this->setHTMLName('');
+$this->dtable = \SphpBase::page()->tblName; echo ' gh del ' . \SphpBase::page()->tblName;
 }
 
 
@@ -170,8 +166,6 @@ $this->app = $val;
 }
 public function fu_setAjax(){
 $this->blnajax = true;
- $this->ajax = new \Sphp\comp\ajax\Ajaxsenddata($this->name."ajax1");
-$this->ajax->oncompcreate(array());
 $this->eventName = $this->name ."_show";
 $this->editeventName = $this->name ."_view";
 $this->deleventName = $this->name ."_delete";
@@ -184,7 +178,7 @@ public function fu_setDelete(){
 $this->blnDelete = true;
 }
 public function getPageBar(){
-return $this->links;
+return $this->page_links;
 }
 public function getButtonNext(){
 return $this->buttonnext;
@@ -204,7 +198,6 @@ $this->blndlg = false;
 public function fu_unsetAddButton(){
 $this->blnadd = false;
 }
-
 public function executeSQL(){
 $mysql = \SphpBase::dbEngine();
 $respath = \SphpBase::sphp_settings()->res_path;
@@ -314,7 +307,7 @@ foreach($this->result as $key1=>$keyar){
 $stro .= $this->frontobj->parseComponentChildren($this->roote);
  } }
  //echo $stro;
-$this->unsetrenderTag();
+$this->fu_unsetrenderTag();
 $strom = $this->getPaging();
 }
 }
@@ -396,7 +389,7 @@ $strout = '';
 $strlink = $strlinkP . $strlinkN ;
 $this->buttonnext = $strlinkN;
 $this->buttonprev = $strlinkP;
-$this->links = $lynx;
+$this->page_links = $lynx;
 if($strlink!=''){
 $strout = '<div class="pagbar"><div class="pagnums">&nbsp; '.$lynx.'</div>
 <div class="pagprevnext">'.
@@ -583,6 +576,7 @@ window.location = link ;
 
 protected function onprerender(){
 // set default values
+ if($this->dtable == "") $this->dtable = \SphpBase::page()->tblName;
 $commaPos = strpos($this->dtable, ",");
 $spacePos = strpos($this->dtable, " ");
 if($spacePos !== false && ($commaPos === false || $spacePos < $commaPos)){

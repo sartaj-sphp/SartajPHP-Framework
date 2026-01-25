@@ -1,8 +1,8 @@
 <?php
-include_once(__DIR__ ."/PermisApp.php");
+include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisApp.php");
 class mebhome extends PermisApp {
 
-    public $genFormTemp = null;
+    public $genFormFront = null;
     
     public function onstart() {
         global $mebmasterf;
@@ -11,17 +11,17 @@ class mebhome extends PermisApp {
         $this->page->getAuthenticatePerm();
         //$this->setTableName("omer_employee"); 
         if($this->page->getAuthenticateType() == "ADMIN" && file_exists("apps/forms/admmebmain.front")){
-            $this->genFormTemp = new FrontFile("apps/forms/admmebmain.front", false,null, $this); 
+            $this->genFormFront = new FrontFile("apps/forms/admmebmain.front", false,null, $this); 
         }else if(file_exists("apps/forms/mebmain.front")){
-            $this->genFormTemp = new FrontFile("apps/forms/mebmain.front", false,null, $this); 
+            $this->genFormFront = new FrontFile("apps/forms/mebmain.front", false,null, $this); 
         }else{
-            $this->genFormTemp = new FrontFile($this->apppath . "/forms/main.front", false,null, $this);  
+            $this->genFormFront = new FrontFile($this->mypath . "/forms/main.front", false,null, $this);  
         }
         $this->setMasterFile($mebmasterf);
     }
     
     public function page_new() {  
-        $this->setFrontFile($this->genFormTemp);
+        $this->setFrontFile($this->genFormFront);
     }
     
     public function page_event_install($evtp) {

@@ -1,6 +1,6 @@
 <div class="row d-flex justify-content-center"><div class="col-sm-12 col-lg-8 py-5 ">
 <h3 class="login-box-msg">Login</h3>
-<span style="text-align: center; font-weight: bold;">##{ traceError(true) }#</span>
+<span style="text-align: center; font-weight: bold;">##{raw:traceError(true)}#</span>
 <form id="formsignin" runat="server" method="post" class="py-4" runcb="true" sphp-cb-card="">
         <input type="text" runat="server" id="uname" fui-setForm="formsignin" placeholder="Email" fui-setRequired="" fui-setMinLen="4" fui-setStyler="2">
         <input type="password" runat="server" id="pword" fui-setForm="formsignin" placeholder="Password" fui-setRequired="" fui-setMinLen="4" fui-setStyler="2">
@@ -26,7 +26,7 @@
 <div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentapp->getAuthGoogle(); }#" >
         <div class="col-sm-4"> 
             <h1>OR</h1>
-    <a href="##{getEventPath('gauth')}#" class="btn btn-primary google-login-btn">
+    <a href="##{getEventURL('gauth')}#" class="btn btn-primary google-login-btn">
                 <span class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->

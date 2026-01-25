@@ -40,7 +40,7 @@ class Footer extends \Sphp\tools\Component{
             $menu = new FooterMenuUi();
             $callback($menu);
             $menu->_run();
-            $menuo = $menu->_render();
+            $menuo = $menu->getOutput();
         }
         return $menuo;
     }

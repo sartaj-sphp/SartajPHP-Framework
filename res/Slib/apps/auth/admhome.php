@@ -26,7 +26,7 @@ switch ($formName) {
             SphpBase::sphp_settings()->metaclassification = "";
             SphpBase::sphp_settings()->keywords = "admin home,page";
             SphpBase::$dynData = new FrontFile("{$apppath}/forms/admhome.php");
-            SphpBase::$dynData->run();
+            SphpBase::$dynData->_run();
             include_once("$masterFile");
             break;
         }
