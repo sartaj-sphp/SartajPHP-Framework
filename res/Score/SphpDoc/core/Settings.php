@@ -138,6 +138,8 @@ public function getLib_path() {}
 public function getBase_path() {}
 public function getBase_url() {}
 public function getServer_path() {}
+public function getProj_path() {}
+public function getStart_path() {}
 public function getUse_session() {}
 public function getSession_name() {}
 public function getSession_path() {}

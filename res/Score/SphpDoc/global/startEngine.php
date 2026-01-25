@@ -40,7 +40,6 @@ public function getAuthenticate($perm = "") {}
 class SphpBase {
 public static $dynData = null;
 public static $stmycache = null;
-public static $cacheFileList = null;
 /**
 * Get Engine
 * @static
@@ -192,9 +191,8 @@ self::$sphp_settings = new \Sphp\Settings();
 * @ignore
 */
 public static function init() {
-global $stmycache, $cacheFileList;
+global $stmycache;
 self::$stmycache = $stmycache;
-self::$cacheFileList = $cacheFileList;
 self::$sphp_request = new \Sphp\core\Request();
 }
 /**

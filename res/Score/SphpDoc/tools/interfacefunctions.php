@@ -114,9 +114,9 @@ function getMsg($name) {}
 function traceErrorInner($blnDontJS = false) {}
 function setErrInner($name, $msg) {}
 function getErrMsgInner($name) {}
-function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "FrontFile") {}
+function setFrontPlacePath($frontname, $basepath, $secname = "left") {}
 function removeFrontPlace($frontname, $secname = "left") {}
-function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "FrontFile") {}
+function addFrontPlace($frontname, $filepath = "", $secname = "left") {}
 function getFrontPlace($frontname, $secname = "left") {}
 function runFrontPlace($frontname, $secname = "left") {}
 function renderFrontPlace($frontname, $secname = "left") {}
@@ -127,15 +127,8 @@ function ListNotrenderFrontSection($secname = "left") {}
 function renderFrontSection($secname = "left") {}
 /**
 * 
-* @param string $string
-* @param string $key
-* @return string
-*/
-function encryptme($string, $key = "BA007231") {}
-/**
-* 
 * @param string $str
-* @param string $ky
+* @param string $ky secure key in hexa decimal
 * @return string
 */
 function endec($str, $ky = "CD098ABA") {}

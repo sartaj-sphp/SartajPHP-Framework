@@ -150,7 +150,7 @@ Helper attributes **do not create runtime behavior by themselves**.
 | `version`  | No       | Component Version        | Version identifier used for cache control and compatibility handling.                                     |
 | `dtable`   | No       | Database Table Binding   | Binds the Component to a database table name for data-driven operations.                                  |
 | `dfield`   | No       | Database Field Binding   | Binds the Component to a specific database field within `dtable`.                                         |
-| `fun-*`    | No       | Fusion Method Binding    | Calls Component methods during **parse or execution phase** with deferred values.                         |
+| `fun-*`    | No       | Fusion Method Binding    | Calls Component methods during **fi_* on parse an fu_* on execution phase** .                             |
 | `fui-*`    | No       | Fusion UI Initialization | Calls Component methods during **parse phase only** for static or initial setup.                          |
 | `fur-*`    | No       | Fusion Render Execution  | Calls Component methods during **render phase only** with dynamic values.                                 |
 
@@ -698,13 +698,13 @@ Fusion attributes are valid **only on Component Runtime Tags**.
 
 | Prefix | Execution Phase | Purpose               |
 | ------ | --------------- | --------------------- |
-| `fun-*` | init / render   | Deferred execution    |
+| `fun-*` | init / render   | Any Fusion execution  |
 | `fui-*` | init only       | Immediate execution   |
 | `fur-*` | render only     | Render-time execution |
 
 Fusion attributes are ignored on non-Component tags.
 Fusion attributes (fun-*, fui-*, fur-*) are the only bridge between FrontFiles and Components.
-They map exclusively to fu_* methods and define both what is callable and when it executes.
+They map exclusively to fi_* and fu_* Fusion methods and define both what is callable and when it executes.
 Fusion attributes:
 
 * Apply **only to Components**

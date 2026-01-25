@@ -55,6 +55,7 @@ Each request is resolved directly into an executable PageEvent.
   /default
     admmenu.php
     menu.php
+    master.php
   db.php
   sphpcodeblock.php
 
@@ -77,12 +78,13 @@ start.php
 | `/apps/`                       | Folder   | Holds **BasicApp** applications. This is the primary location for browser-based web projects. |
 | `/apps/fronts/`                | Folder   | Stores **Front Files** (`*.front`) used for UI design and component layout.                   |
 | `/apps/*.app`                  | App File | Defines BasicApp logic, Appgate, and PageEvents.                                              |
-| `/apps/regapp.php`             | PHP File | Registers all BasicApps with Appgate.                                                         |
+| `/apps/regapp.php`             | PHP File | Registers all BasicApps and other App Types with Appgate.                                     |
 | `/appsn/`                      | Folder   | Optional. Holds **NativeApp** and **ConsoleApp** projects (CLI, services, long-running apps). |
 | `/cache/`                      | Folder   | Stores cache, compiled data, and error logs. **Must be writable**.                            |
 | `/plugin/`                     | Folder   | Stores plugin configuration and project-level plugin data.                                    |
 | `/masters/`                    | Folder   | Stores **design and UI-related files** shared across Apps.                                    |
 | `/masters/default/`            | Folder   | Default master assets used by the project.                                                    |
+| `/masters/default/master.php`  | PHP File | Defines master design of HTML Output like head,body tags and JS,CSS Lib + App Dynamic Output  |
 | `/masters/default/menu.php`    | PHP File | Defines menu structure for **guest (unauthorized) users**.                                    |
 | `/masters/default/admmenu.php` | PHP File | Defines menu structure for **authorized / admin users**.                                      |
 | `/masters/db.php`              | PHP File | Contains SQL queries to **create tables and insert default data during installation**.        |
@@ -188,11 +190,6 @@ The `res` folder contains **shared framework-managed resources**.
 > * Portability
 > * Cache control
 > * Upgrade safety
-
-Below is a **clean, additive section** you can insert into **Chapter 1 (Introduction)** without breaking structure or tone.
-It is written in **RAG-friendly**, reference-style language and aligns with existing terminology.
-
-You can place this as **Section 1.5** near the end of Chapter 1.
 
 ---
 
@@ -372,12 +369,11 @@ addCacheList("index", 3600);
 
 ---
 
-## 1.8 `comp.php` – Project Configuration File
+## 1.8 `comp.php` (Company Details File) – Project Configuration File
 
 Defines **project identity, database, authentication, mail, and master layout settings**.
 
 ```php
-<?php
 $cmpid   = "demo";
 $cmpname = "SartajPHP Demo";
 
@@ -404,15 +400,24 @@ $mailUser   = "info@domain.com";
 $mailPass   = "";
 $mailPort   = "26";
 
-/* Master Files */
+/* Master Files, choose these or create your own global variable for your project */
+/* GUEST master file or use for All login type Role */
 $masterf     = $slibpath . "/masters/default/master.php";
+/* ADMIN master file use when you want hide Admin login */
 $admmasterf  = $slibpath . "/masters/default/master.php";
+/* MEMBER Role master file or use for All Profiles in Permissions as security rather then Role */
 $mebmasterf  = $slibpath . "/masters/default/master.php";
 ```
 
 ### Welcome Redirect Logic
 
 ```php
+/** This function getWelcome helps to find home page of authorised user and 
+ *  call by SphpBase::page()->Authenticate("GUEST") and 
+ * SphpBase::page()->getAuthenticatePerm("GUEST") functions when they failed to find 
+ * Authorised user. Secure Applications use this function to redirect user on correct home 
+ * Page like GUEST user will be forward to Webiste home page (index.app) 
+ */
 function getWelcome(){
     $page = SphpBase::page();
 
@@ -449,9 +454,9 @@ Executed **before any App is loaded**.
 class SphpPreRun extends Sphp\core\SphpPreRunP {
 
     public function onstart() {
-
+        /* Create Property rather then use Global variables */
         SphpBase::sphp_api()->addProp('header_bg_height','200');
-
+        /* Create Security Policy and Give permissions to third party URL */
         $policy = SphpBase::sphp_response()->getSecurityPolicy(
             "https://*.googletagmanager.com
              https://*.domain.com
@@ -462,7 +467,7 @@ class SphpPreRun extends Sphp\core\SphpPreRunP {
              https://*.openstreetmap.org
              https://cdn.leafletjs.com"
         );
-
+        /* Set custom security policy */
         SphpBase::sphp_response()->addSecurityHeaders($policy);
 
         // Optional CORS headers
@@ -581,45 +586,135 @@ $mysql->createTable($sql);
 
 ## 1.13 `menu.php` & `admmenu.php` – UI Menu Definitions
 
-Menus are **renderer-driven** and permission-aware.
+Menus are **renderer-driven** and permission-aware. Here is example of `menu.php` 
+and `master.php` files which handle all Roles (GUEST,MEMBER and ADMIN) type. 
 
-### Admin Menu Example
+### Menu `menu.php` file Example
 
 ```php
-$this->sphp_api->addMenu("Tools", "", "", "root", false, "ADMIN");
+/* use bootstrap menu generater file provide by SartajPHP Framework */
+include_once(SphpBase::sphp_settings()->slib_path . "/comp/bundle/menu/BootstrapMenu.php"); 
+/* Create Class name as same as file name */
+class menu extends BootstrapMenu{
+    public function onstart() {
+        //$this->setNavBarCss("navbar sticky-top navbar-expand-md bg-dark navbar-dark");
+        $this->sphp_api->addMenu("Home", "","fa fa-home","root");
+        $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
+        $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index2'),"fa fa-fw fa-clock-o","Home");
+        if(SphpBase::page()->getAuthenticateType() == "GUEST"){
+            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+        }else{
+            // set menu permissions or login type, as comma separated value
+            // not work if app is not using permission system like extend as PermisApp
+            $this->sphp_api->addMenu("User",'',"fa fa-home","root",false,"ADMIN,MEMBER");
+            $this->sphp_api->addMenuLink("Users",getAppURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
+            $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
+           // $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
 
-$this->sphp_api->addMenuLink(
-    "DB Install",
-    getEventURL('install','','mebhome'),
-    "",
-    "Tools"
-);
-
-$this->sphp_api->addMenuLink(
-    "Plugin Install",
-    getAppURL('installer'),
-    "fa fa-users",
-    "Tools"
-);
-
-$this->sphp_api->addMenuLink(
-    "Dashboard",
-    getAppURL('mebhome'),
-    "fa fa-home",
-    "Home"
-);
-
-$this->sphp_api->addMenuLink(
-    "Logout",
-    getEventURL("logout","","signin"),
-    "",
-    "Home"
-);
+            $this->sphp_api->addMenu("Tools",'',"","root",false,"ADMIN");
+            $this->sphp_api->addMenuLink("Plugin Install",getAppURL('installer'),"fa fa-users","Tools");
+            $this->sphp_api->addMenuLink("DB Install",getEventURL('install','install','mebhome'),"fa fa-users","Tools");
+            
+            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
+            include_once(PROJ_PATH . "/plugin/cmenu.php"); 
+            include_once(PROJ_PATH . "/plugin/cmebmenu.php"); 
+            include_once(PROJ_PATH . "/plugin/cadmmenu.php"); 
+        }
+    }
+    
+    public function getHeaderSubMenu() {
+        return '<div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="'. SphpBase::sphp_settings()->slib_res_path . "/masters/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">getHeaderSubMenu from menu file</a></li>
+            <li><a class="dropdown-item" href="#">for override this</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>';
+    }
+}
 ```
 
 ---
 
-## 1.14 Menu & Cache API Reference (Developer Notes)
+## 1.14 Master File `master.php` Example
+
+This Master File use `menu.php` File and generate Final HTML output for Browser.
+master file is always a PHP file but we can also add Front Files as 
+intermediate file to help master file to use Component Power.
+Fremaework methods getHeaderHTML and getFooterHTML gives framework output of JS and CSS inside 
+master file layout. we can also include bootstrap as master design level rather then 
+App base. So bootstrap and jQuery will be available in whole project. renderFrontPlace function 
+render Front Place. Method getAppOutput of SphpBase use to get Application output. 
+
+```php
+<?php
+/* Add menu.php file as Front Place in section "left" */
+addFrontPlace("menu", __DIR__ . "/menu.php", "left");
+/* Run Front Place in section "left" before SartajPHP header HTML Output */
+runFrontPlace("menu", "left");
+?>
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php
+        /* Add SartajPHP Managed Bootstrap CSS Library */ 
+        SphpBase::SphpJsM()::addBootStrap();
+        /* Print All SartajPHP Header generated Required */
+        echo SphpBase::sphp_api()->getHeaderHTML();
+    ?>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col panel">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="heading" style="font-size:36px;"><?php echo $cmpname; ?></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php 
+                            /* Print Front Place "menu" Output */ 
+                            renderFrontPlace("menu", "left"); 
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <?php 
+                            /* Print SartajPHP App generated Output with Front File Output */ 
+                            SphpBase::getAppOutput(); 
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+        /* Print All SartajPHP Footer generated Required */ 
+        echo SphpBase::sphp_api()->getFooterHTML();
+        /* Print all errors related output for debug purposes */ 
+        echo SphpBase::sphp_api()->traceError(true) . SphpBase::sphp_api()->traceErrorInner(true); 
+    ?>
+</body>
+
+</html>
+```
+
+---
+
+## 1.15 Menu & Cache API Reference (Developer Notes)
 
 ### Menu APIs
 

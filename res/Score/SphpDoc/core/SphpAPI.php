@@ -30,33 +30,6 @@ public function addProp($name, $obj) {}
 */
 public function getProp($name) {}
 /**
-* Advance Function, Internal use
-* Add Component 
-* @param string $comp Name for identification
-* @param \Sphp\tools\Component $obj Component Object
-*/
-public function addComponent($comp, $obj) {}
-/**
-* Advance Function, Internal use
-* Add Component for Database bound
-* @param string $frontname frontfile name for identification as key
-* @param string $comp Name for identification as key
-* @param \Sphp\tools\Component $obj Component Object
-*/
-public function addComponentDB($frontname, $comp, $obj) {}
-/**
-* Advance Function, Internal use
-* Get Components List for Database bound
-* @return \Sphp\tools\Component
-*/
-public function getComponentsDB() {}
-/**
-* Get Component if exist in List
-* @param string $comp Component Name for identification
-* @return \Sphp\tools\Component|null
-*/
-public function isComponent($comp) {}
-/**
 * Add menu in menu list <p>
 * SphpBase::sphp_api()->addMenu("Live Chat",getEventURL("page","chat","index"),"fa fa-commenting","root",false,"index-chat-view");
 * SphpBase::sphp_api()->addMenu("Debug", "","fa fa-home","root");
@@ -129,32 +102,38 @@ public function getMenuList($parent = "root") {}
 */
 public function getMenuLinkList($parent = "root") {}
 /**
-* Cache a request URL if it doesn't need processing.
-* SphpBase::sphp_api()->addCacheList("index",100)
-* Cache index application with all events and refersh interval is 100 seconds. Cache will update the index app with
-* interval of 100 seconds.
-* @param string $url match for cache like cache "index" or "index-page"
-* @param int $sec Expiry Time in seconds -1 mean never expire
-* @param string $type <p>
-* type = Default Appgate mean url has Appgate name only and response to all events basis on this Appgate
-* type = ce mean Appgate-event cache only that event
-* type = cep mean Appgate-event-evtp cache only that event with that parameter
-* type = e event on any application will be use cache
-* </p>
+* Save Data in Cache
+* @param string $filename give unique file name to identify 
+* @param array|object $data Data to save in Cache
+* @return boolean on error return false
 */
-public function addCacheList($url, $sec = 0, $type = "Appgate") {}
+public function saveToCache($filename,$data) {}
 /**
-* Check if URL register with cache list
-* @param string $url
-* @return boolean
+* Clear Data from Cache if exist. If $filename is * then it will clear all files from cache.
+* @param string $filename unique file name as identification
+* @return bool true if clear
 */
-public function isRegisterCacheItem($url) {}
+public function clearCache($filename) {}
 /**
-* Read Cache Item from Cache List
-* @param string $url
-* @return array
+* Read Data from Cache if exist. It will not check isCacheExpired.
+* @param string $filename unique file name as identification
+* @return array|object on error return empty array
 */
-public function getCacheItem($url) {}
+public function getFromCache($filename) {}
+/**
+* Read Data from Cache if exist and not expired, also check expiry
+* @param string $filename unique file name as identification
+* @param int $ttl time in seconds, -1 mean never expired
+* @return null|object on error or expired cache it will return null
+*/
+public function readFromCache($filename,$ttl) {}
+/**
+*  Check Cache is Expired
+* @param string $filename unique file name as ID
+* @param int $ttl time in seconds, -1 mean never expired
+* @return bool return true when expired
+*/
+public function isCacheExpired($filename, $ttl) {}
 /**
 * Register Application with an Appgate
 * @param string $ctrl Name of Appgate assigned to application
@@ -717,7 +696,7 @@ public function unsetCheckErr() {}
 /**
 * 
 * @param string $name name as id of error
-* @return string
+* @return array
 */
 public function getErrMsg($name) {}
 /**
@@ -736,7 +715,7 @@ public function setMsg($name, $msg) {}
 /**
 * 
 * @param string $name name as id of message
-* @return string
+* @return array list of Messages under Name
 */
 public function getMsg($name) {}
 /**
@@ -759,18 +738,17 @@ public function setErrInner($name, $msg) {}
 /**
 * Read Inner Error Message
 * @param string $name id for message
-* @return string
+* @return array
 */
 public function getErrMsgInner($name) {}
 /**
 * Set Front Place ignore if addFrontPlace don't initialize front place. 
 * It only reserve place. But not render in master without addFrontPlace.
 * @param string $frontname name is id
-* @param string $basepath DIR path
+* @param string $filepath file path full FrontFile or Php file
 * @param string $secname Optional Default=left
-* @param string $type Optional Default=FrontFile
 */
-public function setFrontPlacePath($frontname, $basepath, $secname = "left", $type = "FrontFile") {}
+public function setFrontPlacePath($frontname, $filepath, $secname = "left") {}
 /**
 * Remove Front Place. 
 * @param string $frontname name is id
@@ -780,11 +758,10 @@ public function removeFrontPlace($frontname, $secname = "left") {}
 /**
 * Add and initialize front place. 
 * @param string $frontname name is id
-* @param string $basepath DIR path
+* @param string $filepath File path of FrontFile or Php file, leave if you want to use from setFrontPlacePath
 * @param string $secname Optional Default=left
-* @param string $type Optional Default=FrontFile It recogonise extensions front or php
 */
-public function addFrontPlace($frontname, $filepath = "", $secname = "left", $type = "FrontFile") {}
+public function addFrontPlace($frontname, $filepath = "", $secname = "left") {}
 /**
 * Get Front Place Object or path
 * @param string $frontname name is id
@@ -837,24 +814,10 @@ public function listNotRenderFrontSection($secname = "left") {}
 */
 public function renderFrontSection($secname = "left") {}
 /**
-* Encrypt String 
-* @param string $strdata
-* @param string $key Optional Default=sbrtyu837
-* @return string
-*/
-public function encrypt($strdata, $key = "sartajphp211") {}
-/**
-* Decrypt String 
-* @param string $strdata
-* @param string $key Optional Default=sbrtyu837
-* @return string
-*/
-public function decrypt($strdata, $key = "sartajphp211") {}
-/**
 * Encrypt/Decrypt String. Use Hexadecimal key. Output Length is not big.
 * Data recover is near to impossible if you lost key.  
 * @param string $str
-* @param string $ky Optional Default=CD098AB
+* @param string $ky Optional secure key in hexadecimal
 * @return string
 */
 public function endec($str, $ky="CD098ABA") {}

@@ -28,6 +28,7 @@ public $debug = null;
 public function getFrontobj() {}
 public function _setFrontobj($frontobj) {}
 public function _setCodebehind($codebehind) {}
+public function getSevalVar($name){}
 public function parseHTMLObj($strData, $obj) {}
 public function parseHTML(){}
 public function parseComponent($compobj,$innerHTML = false){}

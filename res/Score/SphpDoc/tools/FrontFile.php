@@ -11,7 +11,8 @@ public $filePath = "";
 public $fileDir = "";
 public $mypath = "";
 public $myrespath = "";
-public $compList = array();
+protected $compList = array();
+protected $extraCompList = array();
 public $name = "";
 public $webapp = null;
 /**
@@ -79,6 +80,15 @@ public function _setAppname($appname) {}
 */
 public function _setComponent($key, $obj) {}
 /**
+* Advance Function
+* Add component object in FrontFile as Reference. This reference Components are created 
+* in other Front File so you can just use as reference in App or in this Front File. This used in parent child 
+* Front Files. Front File can't process these Components.
+* @param string $key component name or id in HTML code
+* @param \Sphp\tools\Component $obj
+*/
+public function _setComponentRef($key, $obj) {}
+/**
 * Add FrontFile as JS Variable to store the JS Objects of components.
 * name of frontfile is used as variable name in JS
 */
@@ -119,6 +129,12 @@ public function render() {}
 * @return string HTML Output
 */
 public function getOutput() {}
+/**
+* Advance Function
+* get FrontFile Front-End code
+* @return string HTML Output
+*/
+public function ProcessMe() {}
 /**
 * Advance Function
 * Process FrontFile
@@ -165,10 +181,12 @@ public function getSjspath() {}
 */
 public function getAppname() {}
 /**
-* Disable PHP execution set $intPHPLevel=0, Default it is on 3.
+* Disable PHP execution set $intPHPLevel=0, Default it is enable.
+* PHP can only executed by a Custom Evaluator not by EVAL. So
+* It can execute only few PHP syntax.PHP tags are not allowed.
+* Only use Expression Tags for output ##{} and silent #{}# 
 * Enable php execution in front file. 0= no php execution, 
-* 1 = Limited Allowed, 
-* 2 = Full, 3 = Full + pass global variables
+* 1 = Allowed 
 */
 public function disablePHP($level=0) {}
 /**
@@ -214,11 +232,18 @@ public function getBlncodebehind() {}
 */
 public function executePHPCode($strPHPCode,$compobj=null) {}
 /**
-* Add Meta Data attached to FrontFile
+* Add Meta Data attached to FrontFile. Only available after Parse Phase. 
 * @param string $key
 * @param string|array $value
 */
 public function addMetaData($key, $value) {}
+/**
+* Alias of addMetaData
+* Add Meta Data attached to FrontFile. Only available after Parse Phase. 
+* @param string $key
+* @param string|array $value
+*/
+public function addProp($key, $value) {}
 /**
 * Read Meta Data attached with FrontFile
 * @param string $key
@@ -249,6 +274,16 @@ public function getComponent($key) {}
 */
 public function getComponentSafe($key) {}
 /**
+* Get Children Components Only
+* @return array
+*/
+public function getComponents() {}
+/**
+* Get All Children + References Components
+* @return array
+*/
+public function getAllComponents() {}
+/**
 * Generate HTML for Component Object
 * $frontobj = new Sphp\tools\FrontFile("apps/forms/front1.front");
 * $div1 = $frontobj->getComponent('div1');
@@ -276,7 +311,18 @@ public function getChildrenWrapper($compobj) {}
 */
 public function parseComponentChildren($obj) {}
 }
+/**
+* Child Front File Share Components and meta data with parent as reference not a copy. So changes in child
+*  effect in parent also.
+*/
 class FrontFileChild extends FrontFile {
+/**
+* Advance Function
+* Add component object in FrontFile
+* @param string $key component name or id in HTML code
+* @param \Sphp\tools\Component $obj
+*/
+public function _setComponent($key, $obj) {}
 }
 class FrontFileComp extends FrontFile {
 }

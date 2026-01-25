@@ -7,7 +7,6 @@
 * 
 * @author     Sartaj Singh
 * @copyright  2007
-* @version    4.4.4
 */
 namespace Sphp\kit{
 class Page {
@@ -30,6 +29,7 @@ public $appobj = null;
 public $tblName = "";
 public $auth = "";
 public $masterfilepath = "";
+/** App use Session Security */
 public $isSesSecure = false;
 /**
 * Advance No Use
@@ -187,6 +187,43 @@ public function sesSecure() {}
 */
 public function forward($loc) {}
 /**
+* Return True if page_insert event triggered
+* @return bool
+*/
+public function isInsertMode(){}
+/**
+* Return True if page_update event triggered
+* @return bool
+*/
+public function isUpdateMode(){}
+/**
+* Return True if page_view event triggered
+* @return bool
+*/
+public function isViewMode(){}
+/**
+* Return True if page_delete event triggered
+* @return bool
+*/
+public function isDeleteMode(){}
+/**
+* Return True if page_submit event triggered
+* @return bool
+*/
+public function isSubmitMode(){}
+/**
+* Return True if page_new event triggered
+* @return bool
+*/
+public function isNewMode(){}
+/**
+* User Event is a type of PageEvent as a custom Event build from url which 
+* doesn't match with any inbuilt Event.
+* Return True if page_event_* User event triggered
+* @return bool
+*/
+public function isUserEventMode(){}
+/**
 * Set default Database Engine for execute query and managing connections 
 * Default is MySQL
 * @param \MySQL $objdbengine
@@ -196,7 +233,7 @@ public function setDBEngine($objdbengine) {}
 * This Function delete the record of database table with generate and execute delete query.
 * DELETE FROM $tblName WHERE id='$evtp'
 * $tblName = default table of application
-* $evtp = getEventParameter()
+* $evtp = \SphpBase::page()->getEventParameter()
 * @param string $recid If empty then use event parameter as record id.<br>
 *
 */
@@ -211,7 +248,7 @@ public function deleteRec($recid="") {}
 * insertData($extra)
 * @param array $extra extra fields to insert with query.
 */
-public function insertData($extra = array()) {}
+public function insertData($form1,$extra = array()) {}
 /**
 * When Components use Database Binding. Then This Function Fill the values from database table to a
 * Component value.<br>
@@ -220,7 +257,7 @@ public function insertData($extra = array()) {}
 * SphpBase::page()->viewData(,,"WHERE id='1'");<br>
 * SphpBase::page()->viewData('','aname,pass,lst',"WHERE lastname='devel'");<br>
 * @param type $form <p> Form Component
-* Read value from database and fill all Components of FrontFile object which is bind with field of table.
+* Read value from database and fill all Children Components of Form object which is bind with field of table.
 * </p>
 * @param string $recID <p>
 *  Every table should have unique,auto increment and primary filed and default it has name id. 
@@ -234,21 +271,25 @@ public function insertData($extra = array()) {}
 */
 public function viewData($form , $recID = "", $fldList = "", $where = "") {}
 /**
-* When Components use Database Binding. Then This Function Update the values to database<br> table from a
-* Component value. This update old record in table.<br>
+* When Components use Database Binding. Then This Function Update the values to database table from a
+* Component value. This update old record in table. This will only update Children of Form Component only.
+* It will not update all bound components to Database. So Form Component is required to pass.
 * $extra = array()
 * $extra['table']['dateupdate'] = date('Y-m-d)
 *  OR
 * $extra[]['dateupdate'] = date('Y-m-d)
 * updateData($extra)
-* @param array $extra extra fields to insert with query.
-* @param string $recID <p>
-*  Every table should have unique,auto increment and primary filed and default it has name id. 
-* id = record id in table, pass this record id to $recID or if it is empty then it uses SphpBase::page()->getEventParameter()
-* </p>
-* @param string $where WHERE Logic in SQL
+* @param \Sphp\tools\Component $form1 Form Component or container uses for getAllChildren.
+* @param array $extra is extra fields to insert with query.
+* @param string $recID Optional if empty then use $form1->getRecID()
+*  Every table should have unique,auto increment and primary filed and SartajPHP use default name "id". 
+* id = record id in table, pass this record id to $recID or if it is empty then it uses 
+* Form Component recID = $form1->getRecID()
+* 
+* @param string $where WHERE Logic in SQL You can over write WHERE id=1 login to use other 
+* field to update record.
 */
-public function updateData($extra = array(), $recID = '', $where = '') {}
+public function updateData($form1,$extra = array(), $recID = '', $where = '') {}
 }
 class DbEngine{
 /**
@@ -264,20 +305,6 @@ public function cleanQuery($string) {}
 * @return string
 */
 public function clearQuery($string) {}
-/**
-* Serialize to a filepath
-* @param array|object $data
-* @param string $filename filepath 
-* @return boolean on error return false
-*/
-public function saveToCache($data, $filename) {}
-/**
-* Unserialize from file if exist.
-* @param string $filename filepath
-* @return array|object on error return empty array
-*/
-public function getFromCache($filename) {}
-public function isCacheExpired($filename, $ttl) {}
 public function fetchQuery($sql = "", $ttl = 0, $filename = "", $key = "id", $issave = false) {}
 public function insertCache($filename, $key, $data = array(), $tbls = "", $sql = "") {}
 public function clearCache($filename) {}

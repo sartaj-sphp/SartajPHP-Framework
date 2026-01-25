@@ -54,14 +54,21 @@ Expression tags may call methods **only** on the following objects:
 * `$parentapp`
 * `$metadata`
 * `$sphp_settings` (`Sphp\Settings`)
+* `$sphp_router` (`Sphp\core\Router`)
+* `$sphp_request` (`Sphp\core\Request`)
+* `$debug` (`Sphp\core\DebugProfiler`)
 
 Example:
-
+addMetaData in App can access as variable in Expression Tag of Front File.
+```php
+// in App
+$this->frtMain->addMetaData("title","My Page Title");
+```
 ```html
-##{$metadata->get('title')}#
+##{$title}#
 ```
 
-> Components are **never directly accessible** from expression tags.
+> Components are **directly accessible** from expression tags with id as variable.
 
 ---
 
@@ -71,11 +78,14 @@ Expression tags execute at **different priorities** depending on **where they ar
 
 ### Priority Levels (Highest → Lowest)
 
-| Priority        | Location                                        |
-| --------------- | ----------------------------------------------- |
-| **1 (Highest)** | Expression tags inside **Fusion attributes**    |
-| **2**           | Expression tags inside **Component attributes** |
-| **3 (Lowest)**  | Expression tags in normal HTML/text             |
+| Priority                            | Location                                               |
+| ----------------------------------- | ------------------------------------------------------ |
+| **1 (fui-*)**                       | Expression tags inside **Fusion attributes fui-**      |
+| **2 (<code on-init="true">)**       | Expression tags inside <code> Tag bind event init      |
+| **3 (fur-*)**                       | Expression tags inside **Fusion attributes fur-**      |
+| **4 (<code on-endrender="true">)**  | Expression tags inside <code> Tag bind event endrender |
+| **5**                               | Expression tags inside **Component attributes**        |
+| **6 (Lowest)**                      | Expression tags in normal HTML/text                    |
 
 ---
 
@@ -94,8 +104,8 @@ Execution timing depends on the prefix:
 
 | Prefix | Execution Phase                          |
 | ------ | ---------------------------------------- |
-| `fun-` | Natural initialization / Rendering       |
-| `fui-` | Immediate (before rendering begins)      |
+| `fun-` | Call Any init / Rendering                |
+| `fui-` | Immediate (init, before rendering begins)|
 | `fur-` | Render-time (during component rendering) |
 
 > Expression tags inside Fusion attributes execute **at the moment the Fusion method is invoked**, not globally.

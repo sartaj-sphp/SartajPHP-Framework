@@ -113,7 +113,7 @@ class index extends BasicApp {
 
 ---
 
-## 9.4 Reference Rules (AI-SAFE)
+## 9.4 Reference Rules
 
 * Always generate App + FrontFile together
 * Never invent lifecycle methods

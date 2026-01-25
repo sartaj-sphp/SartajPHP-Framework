@@ -19,7 +19,7 @@ A typical browser request is processed by SartajPHP in the following sequence:
 14. Output buffering starts
 15. App file is loaded and App object is created
 16. App is executed
-17. App output is rendered
+17. App output is rendered through Master file
 18. Output is passed to Cache Engine
 19. Final output is sent to browser
 
@@ -36,7 +36,7 @@ In a **BasicApp**, after the SartajPHP engine loads and creates the App object, 
 3. SartajPHP Engine triggers the App run event
 4. App triggers the resolved **PageEvent**
 5. FrontFile is executed
-6. Combine MasterFile + FrontFile Output
+6. Execute MasterFile and print FrontFile Output in proper place
 7. SartajPHP Engine triggers the App render event
 
 During this process, the App handles multiple categories of events:
@@ -252,8 +252,8 @@ FrontFile Parsed
       │        │   └─ NodeTag Bound to Component (Component::$element)
       │        │
       │        ├─ Fusion Attributes Executed (PARSE PHASE)
-      │        │   ├─ fun-* → Call Component method with static value
-      │        │   └─ fui-* → Call Component method with static or dynamic value
+      │        │   ├─ fun-* → Call Component method with fi_* prefix
+      │        │   └─ fui-* → Call Component method with fi_* prefix
       │        │
       │        ├─ Component Creation Lifecycle
       │        │   ├─ Component Internal Event: oninit
@@ -276,8 +276,8 @@ App Triggers PageEvent (page*)
    ↓
 FrontFile Executed
    ├─ Fusion Attributes Executed (EXECUTION PHASE)
-   │   ├─ fun-* → Call Component method with dynamic value
-   │   └─ fur-* → Call Component method with static or dynamic value
+   │   ├─ fun-* → Call Component method with fu_* prefix
+   │   └─ fur-* → Call Component method with fu_* prefix
    │
    ├─ Runtime Attributes Processed
    │   ├─ runas="holder" → onholder Event Triggered (Component or App)

@@ -81,7 +81,11 @@ public function getAppURL($AppgateName, $extra = "", $newbasePath = "", $blnSesI
 */
 public function getthisURL($extra = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
-* Generate Secure Event URL for a Event of Application
+* Generate Secure Event URL for a Event Parameter of Application. 
+* If you try tamper the URL Event Parameter then it gives empty event parameter value. If you need 
+* to pass other value also secure then you need to manually secure with function
+* val2Secure function and restore back with secure2Val function. By default event parameter
+* automatically convert by SartajPHP.
 * @param string $eventName <p> Name of Event
 * class index extends Sphp\tools\BasicApp{
 * public function page_event_test($evtp){

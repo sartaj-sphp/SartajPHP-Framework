@@ -8,7 +8,7 @@ class SEvalParser {
 /**
 * Parse a PHP-like expression into AST
 */
-public function parse(string $expression): array {}
+public function parse($expression) {}
 /**
 * Tokenize expression using PHP tokenizer
 */

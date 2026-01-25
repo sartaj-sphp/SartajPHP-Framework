@@ -45,7 +45,7 @@ During this phase:
 #### Executed here:
 
 * `fui-*`
-* `fun-*` with **static values**
+* `fun-*` with **fi_ methods Call**
 * `fi_*` Fusion methods (forced)
 
 Think of this phase as:
@@ -65,7 +65,7 @@ This phase:
 #### Executed here:
 
 * `fur-*`
-* `fun-*` with **dynamic values (`##{}`)**
+* `fun-*` with **fu_ Function Call**
 
 This phase **prepares rendering**, but rendering itself happens *inside* this phase.
 
@@ -170,8 +170,8 @@ Use this **if you are not sure**.
 
 Behavior:
 
-* Static value → parse phase
-* Dynamic value → execute phase
+* fi_ Call → parse phase
+* fu_ Call → execute phase
 
 This prefix **auto-decides timing**.
 
@@ -305,10 +305,10 @@ All **client-side HTML output** is finalized here.
 
 ## 6.9 Final Rule of Thumb (Very Important)
 
-> *Static → Parse Phase*
-> *Dynamic → Execute Phase*
+> *fi_ → Parse Phase*
+> *fu_ → Execute Phase*
 > *Server logic → `fui-` + `fi_`*
-> *Render logic → `fur-`*
+> *Render logic → `fur-` + `fu_`*
 
 If unsure:
 
@@ -339,7 +339,7 @@ If unsure:
 | Calling Component method, unsure timing         | `fun-`             |
 | Server-side setup (upload, validation, binding) | `fui-`             |
 | Render-dependent value                          | `fur-`             |
-| Multi-render Components                         | `fur-`             |
+| Multi-render Component Value                    | `fur-`             |
 | Override default expression timing              | `fui-` or `fur-`   |
 
 ---
@@ -348,7 +348,7 @@ If unsure:
 
 | Component Method Prefix | Allowed FrontFile Prefix | Phase                |
 | ----------------------- | ------------------------ | -------------------- |
-| `fi_`                   | `fui-` only              | Parse                |
+| `fi_`                   | `fui-`, `fun-`           | Parse                |
 | `fu_`                   | `fun-`, `fur-`, `fui-`   | Auto / Forced        |
 | `_`                     | `fun-`, `fur-`, `fui-`   | Set attribute        |
 
@@ -393,7 +393,7 @@ Unless Fusion attributes pull them EARLIER
 ↓
 fui-*  → Parse Phase
 fur-*  → Render Phase
-fun-*  → Auto (static = parse, dynamic = render)
+fun-*  → Auto (fi_ = parse, fu_ = render)
 ```
 
 ---
@@ -408,12 +408,12 @@ fun-*  → Auto (static = parse, dynamic = render)
 ```
 Parse Phase
  ├─ fui-*
- ├─ fun-(static)
+ ├─ fun-(fi_ Call)
  └─ Component initialization
 
 Execute Phase
  ├─ fur-*
- ├─ fun-(dynamic)
+ ├─ fun-(fu_ call)
  ├─ runtime attributes
  └─ rendering
 
@@ -503,11 +503,9 @@ Fusion attributes are the **timing controller**.
 
 ### ✅ One Rule That Works in ALL Situations
 
-> **Use `fui-` only for `fi_` methods
-> Use `fur-` for ALL `fu_` methods
-> Avoid `fun-` unless you fully understand timing**
-
-This removes **all ambiguity**.
+> **Use `fui-` for ALL `fi_` Fusion methods
+> Use `fur-` for ALL `fu_` Fusion methods
+> Use `fun-` for ANY Fusion Method**
 
 ---
 
@@ -557,30 +555,24 @@ fu_  →  fur-
 
 ---
 
-### 3️⃣ Why `fun-` Is Optional (and Risky)
+### 3️⃣ Why `fun-` Is Optional
 
 `fun-` auto-decides:
 
-| Value Type        | Execution |
-| ----------------- | --------- |
-| Static            | Parse     |
-| Dynamic (`##{}#`) | Execute   |
+| Fusion Method        | Execution |
+| -------------------- | --------- |
+| fi_*                 | Parse     |
+| fu_*                 | Execute   |
 
-This **can cause confusion** when:
+This **is not readable** when:
 
 * Components are nested
-* Parent/child render order matters
-* Multi-render Components exist
+* Parent/child render order should readable and identified
 
 ✔ Safe rule:
 
-> **Use `fun-` only if you do not care when it runs**
-
-Otherwise:
-
-```
-Use fur-
-```
+> **Use `fun-` only if you do not know about type of Fusion Method**
+> **You want to make sure Fusion Method call only once in multiple render**
 
 ✔ Correct and Work RefComp can change Value:
 
@@ -589,7 +581,7 @@ Use fur-
 <input id="txt1" runat="server" type="text" fur-setValue="This is Reference Component Tag">
 ```
 
-❌ Wrong, RefComp can't change value, Display "This is Original Component Tag" in all textbox:
+❌ Wrong, RefComp can't change value, Output "This is Original Component Tag" in all textbox:
 
 ```html
 <input id="txt1" runat="server" type="text" fun-setValue="This is Original Component Tag">
@@ -609,54 +601,80 @@ Why?
 * Children render before parent render and after parent pre-render (onprerender)
 * Parent can render its children more then one
 * `fur-` is also work with RefComp (Share Multiple NodeTag with Component Object)
-* `fur-` guarantees execution at render time
+* `fur-` guarantees execution at each render
 
-✔ Correct always Work, No Matter Original Component is outside or inside Parent OR Static or Dynamic Value:
-
-```html
-<input id="txta" type="text" runat="server" fun-setValue="Enter Name" />
-
-<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
-    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fur-_name="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fur-setValue="##{'Enter Name' . $frontobj->getComponent('div1')->counter}#" />
-    <br />
-</div>
-```
-
-✔ Correct Work `fun-` (fun-setValue), If Original Component use Dynamic Value:
-
-```html
-<input id="txta" type="text" runat="server" fun-setValue="##{'Enter Name'}#" />
-
-<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
-    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fur-_name="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fun-setValue="##{'Enter Name' . $frontobj->getComponent('div1')->counter}#" />
-    <br />
-</div>
-```
-
-✔ Correct Work `fun-` (fun-setValue), If Original Component inside Parent Component:
-
-```html
-<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
-    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fur-_name="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fun-setValue="##{'Enter Name' . $frontobj->getComponent('div1')->counter}#" />
-    <br />
-</div>
-```
-
-❌ Wrong Original Component is outside from Parent Component, `fun-` can't over-write Static value on render:
+✔ Correct always Work, `fun-` set value and in loop `fur` over write it:
 
 ```html
 <input id="txta" type="text" runat="server" fun-setValue="Enter Name" />
 
 <div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
-    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fur-_name="##{'txt' . $frontobj->getComponent('div1')->counter}#" 
-        fun-setValue="##{'Enter Name' . $frontobj->getComponent('div1')->counter}#" />
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div1->counter}#" 
+        fur-_name="##{'txt' . $div1->counter}#" 
+        fur-setValue="##{'Enter Name' . $div->counter}#" />
+    <br />
+</div>
+```
+
+✔ Correct always Work, `fur-` set value and in loop `fur` over write it:
+
+```html
+<input id="txta" type="text" runat="server" fur-setValue="Enter Name" />
+
+<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div->counter}#" 
+        fur-_name="##{'txt' . $div->counter}#" 
+        fur-setValue="##{'Enter Name' . $div->counter}#" />
+    <br />
+</div>
+```
+
+❌  Wrong `fun-` (fun-setValue) will be call Method Once, So not Call on Reference Component Tag:
+
+```html
+<input id="txta" type="text" runat="server" fun-setValue="Enter Name" />
+
+<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div->counter}#" 
+        fur-_name="##{'txt' . $div->counter}#" 
+        fun-setValue="##{'Enter Name' . $div->counter}#" />
+    <br />
+</div>
+```
+
+❌  Wrong `fun-` will be call Fusion Method Once, So value will not update after first loop:
+
+```html
+<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div->counter}#" 
+        fur-_name="##{'txt' . $div->counter}#" 
+        fun-setValue="##{'Enter Name' . $div->counter}#" />
+    <br />
+</div>
+```
+
+❌ Wrong `fun-` can call `fi_` type methods but `fur-` can not call `fi_` method:
+
+```html
+<input id="txta" type="text" runat="server" fun-setDefaultValue="Enter Name" />
+
+<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="2">
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div->counter}#" 
+        fur-_name="##{'txt' . $div->counter}#" 
+        fur-setDefaultValue="##{'Enter Name' . $div->counter}#" />
+    <br />
+</div>
+```
+
+❌ Wrong `fun-` and `fui-` can call `fi_` type methods but only in parse phase:
+
+```html
+<input id="txta" type="text" runat="server" fun-setDefaultValue="Enter Name" />
+
+<div id="div1" runat="server" path="slibpath/comp/bundle/ForLoop.php" fun-setLoopTo="4">
+    <input id="txta" type="text" runat="server" fur-_id="##{'txt' . $div->counter}#" 
+        fur-_name="##{'txt' . $div->counter}#" 
+        fui-setDefaultValue="##{'Enter Name' . $div->counter}#" />
     <br />
 </div>
 ```

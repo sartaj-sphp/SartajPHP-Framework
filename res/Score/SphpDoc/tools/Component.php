@@ -231,6 +231,12 @@ public function getValue() {}
 * @return string
 */
 public function getSqlSafeValue() {}
+/**
+*  Set Value From Database Row, only if dfield set. This function don't know table name,
+*  So it is not safe like page_view. It will give error if field not exist in row.
+* @param array $row Associative array from DB table
+*/
+public function setFromDatabase($row){}
 public function getDefaultValue() {}
 /**
 * Set HTML Tag Name
@@ -327,9 +333,20 @@ public function getrender() {}
 public function getrenderTag() {}
 public function setDataType($val) {}
 public function getDataType() {}
+/**
+*  Bind Component with Database
+* @param string $table Optional DB Table name
+* @param string $field Optional DB Table Field name
+*/
+public function bindToTable($table="",$field="") {}
 public function setDataBound() {}
 public function unsetDataBound() {}
 public function getDataBound() {}
+/**
+*  Check if Control is bind with Database
+* @return boolean
+*/
+public function hasDatabaseBinding() {}
 public function getDontFill() {}
 public function getDontSubmit() {}
 public function getDontInsert() {}
@@ -355,10 +372,17 @@ public function getFrontobj() {}
 */
 public function _setFrontobj($frontobj) {}
 /**
-* Get All Children Components. Only Component Tags are included as child and ignored normal HTML tags
+* Get Children Components Only First Level. Only Component Tags are included as child and 
+* ignored normal HTML tags.
 * @return array
 */
 public function getChildren() {}
+/**
+* Get All Children Components All Levels. Only Component Tags are included as child and 
+* ignored normal HTML tags.
+* @return array
+*/
+public function getAllChildren() {}
 /**
 * Add Child Component
 * @param \Sphp\tools\Component $child
@@ -459,6 +483,21 @@ protected function bindJSEvent($selector, $eventName, $handlerFunName = "", $ren
 * @param boolean $renderonce Optional default=false, true=ignore on ajax request
 */
 protected function bindJSObjEvent($selector, $obj, $eventName, $handlerFunName = "", $renderonce = false) {}
+/**
+*  Create Front File Object and Share All Components with Parent File and also add all components 
+* as children of parent Components.
+* @param string $filepath File Path of Front File or String
+* @param bool $blnStringData Optional True mean use string rather then filepath
+* @return \Sphp\tools\FrontFile
+*/
+protected function createFrontObjectShare($filepath,$blnStringData = false){}
+/**
+*  Create Front File Object in Private Space. Nothing Share with Parent Front File.
+* @param string $filepath File Path of Front File or String
+* @param bool $blnStringData Optional True mean use string rather then filepath
+* @return \Sphp\tools\FrontFile
+*/
+protected function createFrontObjectPrivate($filepath,$blnStringData = false){}
 /**
 * Prase HTML string and trigger onprase event for each node
 * @param string $html
@@ -569,14 +608,16 @@ protected function onjsrender() {}
 protected function onrender() {}
 /**
 * override this Life-Cycle event handler in your Component to handle it.
-* trigger when Component RenderLast After all output is generated. Use by Complex components.
+* trigger when Component Rendering Complete After all output is generated. 
+* Use by Complex components. Use for Cleanup temporary resources and 
+* Finalize output or control children components.
 *  This will not work if Front File not Render or disable Component rendering. 
 */
-protected function renderLast() {}
+protected function onpostrender() {}
 /**
 * override this event handler in your Component to handle it.
 * trigger on Children Component Events. Use for interaction between parent 
-*  child. So it is not Life-Cycle event.
+*  child. So it is not Life-Cycle event. It will trigger by only first level of children.
 * @param string $event Name of Event value may be oncreate,onprerender or onrender
 * @param \Sphp\tools\Component $obj Child Component
 */
@@ -602,7 +643,6 @@ protected function onparse($event, $domelement) {}
 /**
 * Advance Function, Internal use
 */
-public function setClassPath() {}
 /**
 * Advance Function, Internal use
 */
@@ -636,6 +676,10 @@ public function helpPropList() {}
 */
 protected function genhelpPropList() {}
 }
+/**
+* Component use it own Application to process events and Front File to design own 
+* Complex design for example:- Tiny Editor Component, Web Page Editor
+*/
 class ComponentGroup extends Component {
 final public function onaftercreate() {}
 final public function onrender() {}
@@ -648,7 +692,8 @@ public $name = "def";
 protected function onstart() {}
 protected function onrun() {}
 public function _run() {}
-public function _render() {}
+public function getOutput() {}
+public function render() {}
 }
 class RenderComp {
 public function render($obj) {}
