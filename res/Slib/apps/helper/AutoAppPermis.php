@@ -12,7 +12,7 @@ class AutoAppPermis extends PermisApp {
 
     public $heading = "heading";
     public $footer = "set footer property of app, for logo image set logoimg";
-    public $logoimg = "apps/helper/forms/logo.png";
+    public $logoimg = "apps/helper/fronts/logo.png";
     public $phone = "6AA-AAA-AAAA";    
     public $mobile = "AAA-AAA-AAAA";    
     public $address = "address";    
@@ -25,11 +25,11 @@ class AutoAppPermis extends PermisApp {
     public $recID = "";
     public $recWhere = "";
     public $printstyle = "test";
-    public $printstylefile = __DIR__ ."/forms/style.css";
+    public $printstylefile = __DIR__ ."/fronts/style.css";
 
 
     public function onstart() {
-        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/forms/logo.png";
+        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
         $this->showallFront->getComponent('showall')->setPerPageRows(10);
@@ -66,7 +66,7 @@ class AutoAppPermis extends PermisApp {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
         require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
-        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/forms/pdf_temp.temp",false,null,$this->showallFront);
+        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
         $showall->unsetAddButton();
         $showall->unsetDialog();
         $showall->unsetPageBar();

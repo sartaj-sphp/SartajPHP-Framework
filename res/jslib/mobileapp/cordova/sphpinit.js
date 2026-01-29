@@ -2,9 +2,9 @@
 const { exec } = require("child_process");
 
 module.exports = function(context) {
-    //callShell('cordova plugin add ./temp/cordova/plugins/com.sartajphp.scordova');
+    //callShell('cordova plugin add ./masters/cordova/plugins/com.sartajphp.scordova');
     // auto version will update automatically
-    callShell('cordova plugin add ./temp/cordova/plugins/com.sartajphp.scordova --link');
+    callShell('cordova plugin add ./masters/cordova/plugins/com.sartajphp.scordova --link');
     //callShell('cordova plugin update com.sartajphp.scordova');
 };
 

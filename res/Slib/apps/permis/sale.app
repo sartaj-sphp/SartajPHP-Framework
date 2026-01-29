@@ -1,5 +1,5 @@
 <?php
-include_once("{$phppath}/plugin/permis/apps/Universe.php");
+include_once(SphpBase::sphp_settings()->php_path . "/plugin/permis/apps/Universe.php");
 
 class sale extends Universe {
 
@@ -10,8 +10,8 @@ class sale extends Universe {
         global $mebmasterf;
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->setTableName("member");
-        $this->mainhome = new FrontFile($this->apppath . "/forms/mebProfile-edit.front", false, $this);
-        $this->showhome = new FrontFile($this->apppath . "/forms/mebProfile-list.front", false, $this);
+        $this->mainhome = new FrontFile($this->apppath . "/fronts/mebProfile-edit.front", false, $this);
+        $this->showhome = new FrontFile($this->apppath . "/fronts/mebProfile-list.front", false, $this);
 
         $this->showhome->getComponent('showall')->setPerPageRows(50);
 

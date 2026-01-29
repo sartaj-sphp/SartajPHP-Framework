@@ -20,7 +20,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
     protected $showallFront = null;
     public $heading = "heading";
     public $footer = "set footer property of app, for logo image set logoimg";
-    public $logoimg = "apps/helper/forms/logo.png";
+    public $logoimg = "apps/helper/fronts/logo.png";
      public $phone = "6AA-AAA-AAAA";    
     public $mobile = "AAA-AAA-AAAA";    
     public $address = "address";    
@@ -28,18 +28,20 @@ class AutoApp extends \Sphp\tools\BasicApp {
     public $country = "Canada";    
 
     protected $insertedid = -1;
+    protected $formid = "form2";
 
     public $extra = array();
     public $recID = "";
     public $recWhere = "";
     public $printstyle = "test";
-    public $printstylefile = __DIR__ ."/forms/style.css";
+    public $printstylefile = __DIR__ ."/fronts/style.css";
 
     public function onstart() {
-        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/forms/logo.png";
+        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
-        $this->showallFront->getComponent('showall')->setPerPageRows(10);
+        $this->showallFront->getComponent('showall')->fu_setPerPageRows(10);
+        SphpBase::sphp_api()->addProp('page_title',$this->heading);
     }
 
     public function page_event_loadform($evtp) {
@@ -72,7 +74,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
         require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
-        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/forms/pdf_temp.temp",false,null,$this->showallFront);
+        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
         $showall->unsetAddButton();
         $showall->unsetDialog();
         $showall->unsetPageBar();
@@ -109,7 +111,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function page_event_rowclick($param) {
         $this->Client->session("formType", "Edit");
-        $this->page->viewData($this->genFormFront->getComponent('form2'));
+        $this->page->viewData($this->genFormFront->getComponent($this->formid));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
@@ -129,7 +131,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
 // user event handling end here
     public function page_event_crossclick($param) {
-        $this->page->viewData($this->genFormFront->getComponent('form2'));
+        $this->page->viewData($this->genFormFront->getComponent($this->formid));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $extupdate = array();
         $extupdate["up"] = 12;
@@ -144,7 +146,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
         $this->extra[]['spcmpid'] = $cmpid;
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
-            $this->insertedid = $this->page->insertData($this->extra);
+            $this->insertedid = $this->page->insertData($this->genFormFront->getComponent($this->formid),$this->extra);
             if (!getCheckErr()) {
                 //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
                 //$JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
@@ -186,7 +188,7 @@ class AutoApp extends \Sphp\tools\BasicApp {
     public function page_update() {
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
-            $this->page->updateData($this->extra, $this->recID, $this->recWhere);
+            $this->page->updateData($this->genFormFront->getComponent($this->formid),$this->extra, $this->recID, $this->recWhere);
             if (!getCheckErr()) {
                 if ($blnsendList) {
                     $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
@@ -209,8 +211,8 @@ class AutoApp extends \Sphp\tools\BasicApp {
 
     public function page_delete() {
         $blnsendList = $this->checkCrossCall();
-        $this->page->deleteRec();
         if (!getCheckErr()) {
+            $this->page->deleteRec();
             if ($blnsendList) {
                 $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
                 $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');

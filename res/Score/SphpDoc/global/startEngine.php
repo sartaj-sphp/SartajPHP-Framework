@@ -240,6 +240,42 @@ self::$page()->init();
 self::$engine->engine_start_time = microtime(true);
 }
 }
+final class SphpCodeBlock{
+/**
+* Add Code Block for FrontFile. use runcb="true" and sphp-cb-blockName on tag
+* @param string $name Name of code block
+* @param function $callback function($element,$args,$lstOther_CB){} 
+* $element=NodeTag object, $args=list of arguments, $lstOther_CB=List of other Code Blocks
+* apply on this element 
+* @param array $para add css,html for simple code block
+* Values can pass as associative array:-
+*  class = CSS class Attribute
+*  pclass = parent tag css classes
+*  pretag = pre tag html
+*  posttag = post tag html
+*  innerpretag = tag start inner html
+*  innerposttag = tag end inner html
+*  documentation = Help details about code block, also display in VS Code and other editors.
+*/
+public static function addCodeBlock($name,$callback=null,$para=[]){
+$defpara = SphpCodeBlock::genCodeBlock();
+$defpara["callback"] = $callback;
+$a1 = array_merge($defpara,$para);
+SphpCodeBlock::$cb[$name] = $a1;
+}
+return $a1;
+}
+public static function getCodeBlocks(){
+if(! SphpCodeBlock::$blnresload){
+SphpCodeBlock::$blnresload = true;
+addFileLink(SphpBase::sphp_settings()->comp_uikit_res_path . "/assets/sphpcodeblocks.css", true);
+}
+return SphpCodeBlock::$cb;
+}
+public static function getCodeBlock($name){
+return SphpCodeBlock::$cb[$name];
+}
+}
 if (!$blnPreLibCache) {
 if ($blnPreLibLoad) {
 include_once("{$libpath}/libsphp1.php");

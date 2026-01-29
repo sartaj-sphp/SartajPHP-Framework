@@ -1,0 +1,10 @@
+<div class="container px-4 py-4">
+<div class="card"><div class="card-header">Query Communication Result</div>
+    <div class="card-body px-4 py-4">
+        <span class="alert alert-info px-3 py-3">
+        "Thank you for your interest in contacting ##{globalRead('cmpname')}#. We will reach you as soon as possible."
+        </span>        
+    </div>
+</div>
+</div>
+

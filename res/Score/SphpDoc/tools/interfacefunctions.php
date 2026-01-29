@@ -125,6 +125,7 @@ function runFrontSection($secname = "left") {}
 function addrunFrontSection($secname = "left") {}
 function ListNotrenderFrontSection($secname = "left") {}
 function renderFrontSection($secname = "left") {}
+function getMyResPath($filepath){}
 /**
 * 
 * @param string $str

@@ -343,7 +343,7 @@ public function setDataBound() {}
 public function unsetDataBound() {}
 public function getDataBound() {}
 /**
-*  Check if Control is bind with Database
+*  Check if Component is bind with Database
 * @return boolean
 */
 public function hasDatabaseBinding() {}

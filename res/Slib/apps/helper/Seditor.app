@@ -7,7 +7,7 @@ class Seditor extends \Sphp\tools\BasicApp{
     public function onstart() {
         $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/softmaster.php");
         SphpBase::sphp_settings()->disableEditing();
-        $this->tmp1 = new FrontFile($this->apppath . "/forms/seditor_form1.front",false,null,$this);
+        $this->tmp1 = new FrontFile($this->apppath . "/fronts/seditor_form1.front",false,null,$this);
         
     }
     

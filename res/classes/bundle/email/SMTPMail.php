@@ -86,8 +86,20 @@ $this->mail->AltBody  =  $Msg;
 if(!$this->mail->Send())
 {
 $ret = false;
-$errMsg = "Mailer Error: " . $this->mail->ErrorInfo;
-print "$errMsg<br>";
+setErr("mailer","Mailer Error: " . $this->mail->ErrorInfo);
+}
+return $ret;
+}
+
+public function sendMailRaw($subject,$toEmail,$toName,$Msg){
+$ret = true;
+$this->mail->Subject  =  $subject;
+$this->mail->AddAddress($toEmail,$toName);
+$this->mail->Body     =  $Msg;
+//$this->mail->AltBody  =  $Msg;
+if(!$this->mail->Send()){
+$ret = false;
+setErr("mailer","Mailer Error: " . $this->mail->ErrorInfo);
 }
 return $ret;
 }

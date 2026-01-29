@@ -156,11 +156,11 @@ The `res` folder contains **shared framework-managed resources**.
 
   /Slib
     /apps        # Shared Apps and libraries
-    /comp        # Inbuilt Components
-    /masters     # Default MasterFiles
+    /comp        # Inbuilt Server Components
 
   /classes       # Shared PHP libraries
-  /components    # Third-party Components
+  /components    # UI Components
+    /uikitdef    # Inbuilt UI Components and Default MasterFiles
   /jslib         # Shared JavaScript libraries
   /plugin        # Plugin resources
   /sample        # Sample project templates
@@ -175,7 +175,7 @@ The `res` folder contains **shared framework-managed resources**.
 | `/Score`      | Core runtime, global configuration, and documentation. |
 | `/Slib`       | Shared Apps, FrontFiles, Components, and MasterFiles.  |
 | `/classes`    | Shared or third-party PHP libraries.                   |
-| `/components` | External or custom components available to FrontFiles. |
+| `/components` | UI Kit and other components for Front Files.           |
 | `/jslib`      | Framework-managed JavaScript libraries.                |
 | `/plugin`     | Plugin resources, Apps, FrontFiles, and assets.        |
 | `/sample`     | Sample project templates for new projects.             |
@@ -208,13 +208,15 @@ All core framework paths and URLs are accessible via:
 SphpBase::sphp_settings()->*
 ```
 
-| Resource Area | Property Name   | Type        | Description                                                      |
-| ------------- | --------------- | ----------- | ---------------------------------------------------------------- |
-| `res/Slib`    | `slib_path`     | Server Path | Filesystem path to shared Slib resources                         |
-| `res/Slib`    | `slib_res_path` | Browser URL | Public URL to Slib resources                                     |
-| `res` folder  | `php_path`      | Server Path | Filesystem path to global `res` directory                        |
-| `res` folder  | `res_path`      | Browser URL | Public URL of the global `res` directory                         |
-| `res/Score`   | `lib_path`      | Server Path | Core runtime and framework internal libraries (server-side only) |
+| Resource Area         | Property Name        | Type        | Description                                                      |
+| --------------------- | -------------------- | ----------- | ---------------------------------------------------------------- |
+| `res/Slib`            | `slib_path`          | Server Path | Filesystem path to shared Slib resources                         |
+| `res/Slib`            | `slib_res_path`      | Browser URL | Public URL to Slib resources                                     |
+| `components/uikitdef` | `comp_uikit_path`    | UI Kit Path | Filesystem path to UI Kit Components                             |
+| `components/uikitdef` | `comp_uikit_res_path`| Browser URL | Public URL to UI Kit Components resources                        |
+| `res` folder          | `php_path`           | Server Path | Filesystem path to global `res` directory                        |
+| `res` folder          | `res_path`           | Browser URL | Public URL of the global `res` directory                         |
+| `res/Score`           | `lib_path`           | Server Path | Core runtime and framework internal libraries (server-side only) |
 
 > `Score` resources are **never exposed to browser URLs** and are strictly server-side.
 
@@ -388,6 +390,8 @@ $debugmode = 2;
 /* Admin Credentials */
 $admuser = 'admin';
 $admpass = '1234';
+// Component UI Kit uikitdef/bootstrap folder
+$ComponentUI = "/uikitdef/bootstrap"; // Bootstrap
 
 /* Base Path Adjustment for Sub Folder*/
 if ($basepath != "") {
@@ -402,11 +406,9 @@ $mailPort   = "26";
 
 /* Master Files, choose these or create your own global variable for your project */
 /* GUEST master file or use for All login type Role */
-$masterf     = $slibpath . "/masters/default/master.php";
-/* ADMIN master file use when you want hide Admin login */
-$admmasterf  = $slibpath . "/masters/default/master.php";
+$masterf = "{$comppath}{$ComponentUI}/masters/default/master.php";
 /* MEMBER Role master file or use for All Profiles in Permissions as security rather then Role */
-$mebmasterf  = $slibpath . "/masters/default/master.php";
+$mebmasterf  = $masterf;
 ```
 
 ### Welcome Redirect Logic

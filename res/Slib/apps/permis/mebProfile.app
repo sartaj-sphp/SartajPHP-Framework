@@ -8,8 +8,8 @@ class mebProfile extends PermisApp {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("member");
-        $this->genFormFront = new FrontFile($this->mypath . "/forms/mebProfile-edit.front");
-        $this->showallFront = new FrontFile($this->mypath . "/forms/mebProfile-list.front");
+        $this->genFormFront = new FrontFile($this->mypath . "/fronts/mebProfile-edit.front");
+        $this->showallFront = new FrontFile($this->mypath . "/fronts/mebProfile-list.front");
 
         $this->showallFront->getComponent('showall')->fu_setPerPageRows(50);
 

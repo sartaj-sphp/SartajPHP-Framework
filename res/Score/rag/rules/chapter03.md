@@ -66,22 +66,24 @@ Calling `showFrontFile()` re-enables the selected FrontFile.
 
 Reserved path keywords are **not PHP variables**. They are resolved **only inside value of Runtime Tag attributes** and only inside FrontFile.
 
-| Keyword      | Resolves To                               | App Equivalent                                      |
-| ------------ | ----------------------------------------- | --------------------------------------------------- |
-| `mypath`     | Filesystem path of current FrontFile      | $this->frtMain->mypath                              |
-| `myrespath`  | Public URL of current FrontFile           | $this->frtMain->myrespath                           |
-| `slibpath`   | Filesystem path of `res\Slib` Folder      | SphpBase::sphp_settings()->slib_path                |
-| `slibrespath`| Public URL of `res\Slib` resources        | SphpBase::sphp_settings()->slib_res_path            |
-| `phppath`    | Filesystem path of global `res` directory | SphpBase::sphp_settings()->php_path                 |
-| `respath`    | Public URL of global `res` directory      | SphpBase::sphp_settings()->res_path                 |
-| `components` | Filesystem path of `res/components`       | SphpBase::sphp_settings()->php_path . "/components" |
+| Keyword       | Resolves To                               | App Equivalent                                      |
+| ------------- | ----------------------------------------- | --------------------------------------------------- |
+| `mypath`      | Filesystem path of current FrontFile      | $this->frtMain->mypath                              |
+| `myrespath`   | Public URL of current FrontFile           | $this->frtMain->myrespath                           |
+| `slibpath`    | Filesystem path of `res\Slib` Folder      | SphpBase::sphp_settings()->slib_path                |
+| `slibrespath` | Public URL of `res\Slib` resources        | SphpBase::sphp_settings()->slib_res_path            |
+| `phppath`     | Filesystem path of global `res` directory | SphpBase::sphp_settings()->php_path                 |
+| `respath`     | Public URL of global `res` directory      | SphpBase::sphp_settings()->res_path                 |
+| `components`  | Filesystem path of `res/components`       | SphpBase::sphp_settings()->php_path . "/components" |
+| `uikit`       | Filesystem path `res/components/uikitdef` | SphpBase::sphp_settings()->comp_uikit_path          |
+| `uikitrespath`| Public URL of `res/components/uikitdef`   | SphpBase::sphp_settings()->comp_uikit_res_path      |
 
 These keywords **do not exist in PHP scope** and cannot be accessed from App code.
 
 **Example – use Reserved keywords in Component Runtime Tag**
 
 ```html
-<div id="paglist" runat="server" path="slibpath/comp/data/Pagination.php" dtable="princategory"  fun-setFieldNames="aname,atype,price,des" >
+<div id="paglist" runat="server" path="uikit/data/Pagination.php" dtable="princategory"  fun-setFieldNames="aname,atype,price,des" >
 
 </div>
 ```
@@ -281,16 +283,19 @@ This distinction is critical when working with **AJAX-heavy applications**.
 
 ## 3.6.2 Helper Attributes – Overview Table
 
-| Helper Attribute | Used With `runas` | Purpose                                                |
-| ---------------- | ----------------- | ------------------------------------------------------ |
-| `renderonce`     | all               | Prevent duplicate output delivery across AJAX requests |
-| `data-comp`      | `holder`          | Target a specific Component                            |
-| `data-prop`      | `holder`          | Read a property value                                  |
-| `function`       | jsfunction*       | JavaScript function name                               |
-| `functionpara`   | jsfunction        | JavaScript function parameters                         |
-| `binder`         | jsfunctionbnd*    | jQuery selector to bind event                          |
-| `listenevent`    | jsfunctionbnd*    | JavaScript event name                                  |
-| `handler`        | jsfunctionbnds    | Server-side PageEvent parameter                        |
+| Helper Attribute      | Used With `runas` | Purpose                                                |
+| --------------------- | ----------------- | ------------------------------------------------------ |
+| `renderonce`          | all               | Prevent duplicate output delivery across AJAX requests |
+| `sphp-comp`           | `holder`          | Target a specific Component                            |
+| `sphp-comp-prop`      | `holder`          | Read a Component property value                        |
+| `sphp-comp-fun `      | `holder`          | Call and print return of Component Method              |
+| `sphp-app-prop`       | `holder`          | Read App property value                                |
+| `sphp-app-fun `       | `holder`          | Call and Print Method of App                           |
+| `function`            | jsfunction*       | JavaScript function name                               |
+| `functionpara`        | jsfunction        | JavaScript function parameters                         |
+| `binder`              | jsfunctionbnd*    | jQuery selector to bind event                          |
+| `listenevent`         | jsfunctionbnd*    | JavaScript event name                                  |
+| `handler`             | jsfunctionbnds    | Server-side PageEvent parameter                        |
 
 ---
 
@@ -325,19 +330,24 @@ Acts as a **dynamic placeholder** resolved at runtime.
 
 **Helper Attributes:**
 
-| Attribute   | Purpose          |
-| ----------- | ---------------- |
-| `data-comp` | Target Component |
-| `data-prop` | Target property  |
+| Attribute        | Purpose                    |
+| ---------------- | -------------------------- |
+| `sphp-comp`      | Target Component           |
+| `sphp-comp-prop` | Target Component property  |
+| `sphp-comp-fun`  | Target Component method    |
+| `sphp-app-prop`  | Target App property        |
+| `sphp-app-fun`   | Target App method          |
 
 #### Resolution Rules (Authoritative)
 
-| Used Attributes           | Runtime Behavior                                     |
-| ------------------------- | ---------------------------------------------------- |
-| `data-comp` + `data-prop` | Display **Component property value**                 |
-| `data-prop` only          | Display **App property value**                       |
-| `data-comp` only          | Trigger **Component `onholder` event**, pass NodeTag |
-| none                      | Trigger **App `onholder` event**, pass NodeTag       |
+| Used Attributes                | Runtime Behavior                                     |
+| ------------------------------ | ---------------------------------------------------- |
+| `sphp-comp` + `sphp-comp-prop` | Display **Component property value**                 |
+| `sphp-comp` + `sphp-comp-fun`  | Display **Component method return**                  |
+| `sphp-app-prop` only           | Display **App property value**                       |
+| `sphp-app-fun` only            | Display **App method return**                       |
+| `sphp-comp` only               | Trigger **Component `onholder` event**, pass NodeTag |
+| none                           | Trigger **App `onholder` event**, pass NodeTag       |
 
 This makes `holder` a **bridge between FrontFile and App/Component state**.
 

@@ -1,0 +1,91 @@
+<title metakeywords="Contact Address" metadescription="Contact Address" metaclassification="Contacts" keywords="contact,address">Contact Address</title>
+
+<div class="container"><div class="row py-4 px-4">
+<h1>Inquiry Form</h1>
+        <div class="col-12 col-sm-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>    
+                    <div class="card">
+                        <div class="card-head">
+                            <img class="img img-fluid" src="masters/images/logo.png" />
+                        </div>
+                        <div class="card-body">
+                            <address>
+                                <strong>##{$a= 3; $b=2;readGlobal('cmpname')}#</strong><br>
+                                ##{ raw:readGlobal('cmpaddress1') != "" ? readGlobal('cmpaddress1') . "<br>" : "" }#
+                                ##{ raw:readGlobal('cmpaddress2') != "" ? readGlobal('cmpaddress2') . "<br>" : "" }#
+                                      <a href="tel:##{readGlobal('cmpphone1')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
+                                      <a href="tel:##{readGlobal('cmpphone2')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
+
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">Fill the Following Details:-</h5>    
+<div class="error">##{traceError(true); }#</div>
+<div class="msgerr">##{traceMsg(true); }#</div>
+
+                    <form id='form2' runat="server" action="##{getEventURL('subquote','','index2');}#">
+                      <table border="0" width="80%" align="center">
+                        <tbody><tr> 
+                          <td>Name:</td>
+                        </tr>
+                        <tr> 
+ <td><input name="qname" type="text" runat="server" fui-setForm="form2" fui-setMinLen="2" fui-setMsgName="Name" fui-setRequired="" /></td>
+                        </tr>
+                        <tr> 
+                          <td>Email:</td>
+                        </tr>
+                        <tr> 
+                          <td>
+                            <input name="qemail" type="text" runat="server" fui-setForm="form2" fui-setMinLen="5" fui-setEmail="" fui-setMsgName="Email" fui-setRequired="" />
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>Phone:</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input name="qphone" type="text" runat="server" fui-setForm="form2" fui-setMinLen="10" fui-setNumeric="" fui-setMsgName="Phone" fui-setRequired="" />
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>Address:</td>
+                        </tr>
+                        <tr>
+                          <td>
+<textarea name="qadd" runat="server" fui-setForm="form2" fui-setMinLen="5" fui-setMsgName="Address" fui-setRequired="" cols="10" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr> 
+                          <td>Comments / Requirements :</td>
+                        </tr>
+                        <tr> 
+                          <td>
+<textarea name="qcomments" runat="server" fui-setForm="form2" fui-setMinLen="12" fui-setMsgName="Comments" fui-setRequired=""></textarea>
+</td>
+                        </tr>
+                        <tr> 
+                          <td>Please type the characters in the Security code box.(Not case-sensitive)</td>
+                        </tr>
+                        <tr> 
+                          <td>
+<input type="text" runat="server" id="catcaha" path="components/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="form2" fui-setMsgName="Secure Code">
+</td>
+                        </tr>
+                        <tr> 
+                          <td> 
+                              <input name="Submit" value="Submit" type="submit" class="btn btn-primary" />
+                            </td>
+                        </tr>
+                      </tbody></table>
+                    </form>
+<br /><br />
+</div>
+        </div></div></div></div>

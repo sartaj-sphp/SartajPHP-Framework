@@ -17,7 +17,7 @@ class signin extends \Sphp\tools\BasicApp {
         //$this->getAuthenticate("GUEST,MEMBER,ADMIN");
         //$this->page->getAuthenticatePerm("GUEST,ADMIN,MEMBER"); 
         $this->setTableName("member");
-        $this->signinvar = new FrontFile($this->apppath . "/forms/signin.front", false, $this);
+        $this->signinvar = new FrontFile($this->apppath . "/fronts/signin.front", false, $this);
         // comp.php setting about default master file for Guest User
         $this->setMasterFile($masterf); 
     }

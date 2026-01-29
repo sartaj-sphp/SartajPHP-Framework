@@ -1,6 +1,25 @@
 <?php
+if(!isset($_SERVER['HTTP_HOST']) || strpos(" " . $_SERVER['HTTP_HOST'], "localhost") !== false) define("autocompkey","FD45A279GH");
+if(strpos($slibversion,".phar") !== false){
+    $slibpath = "phar://{$phppath}/{$slibversion}";
+    $jslibpath = "{$respath}/jslib_lib.phar";
+}else{
+    $slibpath = "{$phppath}/{$slibversion}";
+    $jslibpath = "{$respath}/jslib";
+}
+$libpath = "{$phppath}/Score/$libversion";
+$jquerypath = "{$jslibpath}/jquery";
+$comppath = "{$phppath}/components";
+$slibrespath = "{$respath}/{$slibversion}";
+
+// Global Framework Settings
+// ------------------------------
 // default cache time in sec
 $cache_time = "100";
+
+// Component UI Kit uikitdef/bootstrap folder
+$ComponentUI = "/uikitdef/bootstrap"; // Bootstrap
+
 //default company info
 $cmpid = "demo";
 $cmpname = "Demo";
@@ -13,11 +32,10 @@ $cmpphone2 = "+1000-000-1111";
 $google_oauth_client_secret = "";
 
 // use ms
-$ajaxready_max = 300;
+$ajaxready_max = 50;
 // 2= defer, 1= async, 0=nop
 $default_filelink_load = 2;
-
-if(!isset($_SERVER['HTTP_HOST']) || strpos(" " . $_SERVER['HTTP_HOST'], "localhost") !== false) define("autocompkey","FD45A279GH");
+// default security key
 $defenckey = "aHmlP1";
 date_default_timezone_set("America/New_York");
 // set session state, if false you can not login
@@ -35,6 +53,7 @@ $debugmode = 0;
 $debugprofiler = "";
 //$debugprofiler = "{$phppath}/classes/base/debug/SPHP_Profiler3.php";
 $errorLog = true;
+
 $sphpRunasLib = false;
 $run_hd_parser = false; // not working under process
 $translatermode = false;
@@ -47,32 +66,32 @@ $blnPreLibCache = false;
 $blnPreLibLoad = true;
 $blnStopResponse = false;
 
-if(strpos($slibversion,".phar") !== false){
-    $slibpath = "phar://{$phppath}/{$slibversion}";
-    $jslibpath = "{$respath}/jslib_lib.phar";
-}else{
-    $slibpath = "{$phppath}/{$slibversion}";
-    $jslibpath = "{$respath}/jslib";
-}
-$libpath = "{$phppath}/Score/$libversion";
-$jquerypath = "{$jslibpath}/jquery";
-$comppath = "{$phppath}/components";
-$slibrespath = "{$respath}/{$slibversion}";
-
-$db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
+//$db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
+$db_engine_path = $libpath . "/lib/MySQLiPdo.php,\\MySQLiPdo";
 $ddriver = "";
 $duser = "root";
 $db = "dbplugin";
 $dpass = "";
 $dhost = "localhost:3306";
 
+// session settings
+$SESSION_NAME = 'SPHPID';
+$SESSION_PATH = '';
+
+// admin login user
+$admuser = 'admin';
+$admpass = '1234';
+
 $jsProtection = false;
 
-$masterf = "{$slibpath}/masters/default/master.php";
+$masterf = "{$comppath}{$ComponentUI}/masters/default/master.php";
 //$mobimasterf = "{$slibpath}/masters/default/mobimaster.php";
-$admmasterf = "{$slibpath}/masters/default_1/admmaster.php";
-$mebmasterf = "{$slibpath}/masters/default/master.php";
+//$admmasterf = "{$slibpath}/masters/default_1/admmaster.php";
+$mebmasterf = $masterf;
 //$softmasterf = "{$slibpath}/masters/default/softmaster.php";
+
+// ------------------------------
+// Global Framework Settings End
 
 if (filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_FLAG_EMPTY_STRING_NULL)) {
     if (isset($_SERVER["HTTPS"]) && ( $_SERVER["HTTPS"] == "on" || $_SERVER["HTTPS"] == 1)){
@@ -84,11 +103,6 @@ if (filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_FLAG_EMPTY_STRING_NULL)) {
     $basepath = "";
 }
 $serverpath = $_SERVER['DOCUMENT_ROOT'];
-$SESSION_NAME = 'SPHPID';
-$SESSION_PATH = '';
-// admin login user
-$admuser = 'admin';
-$admpass = '1234';
 
 include_once(PROJ_PATH . "/plugin/ccachelist.php");
 include_once(PROJ_PATH . "/cachelist.php");

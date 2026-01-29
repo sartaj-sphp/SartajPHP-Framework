@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Enhanced Captcha Control
+ * Enhanced Captcha Component
  * 
  * @author SARTAJ
  * Usage in Front File:
@@ -12,8 +12,8 @@
  *        funsetForm="loginForm"
  *        funsetMsgName="Security Code">
  */
-
-class Captcha extends \Sphp\comp\html\TextField {
+include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php");
+class Captcha extends \Sphp\comp\form\TextField {
     
     private $sessionKey = 'captcha_data';
     private $maxAttempts = 5;

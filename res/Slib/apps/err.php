@@ -1,10 +1,12 @@
 <?php
 
-SphpBase::$dynData = new FrontFile("{$apppath}/forms/error_msg.php");
+$frtMain = new \Sphp\tools\FrontFile(__DIR__ . "/fronts/error_msg.front");
 
 if(SphpBase::page()->getEvent() == 'page'){
-    SphpBase::$dynData->spnmsg->setInnerHTML("HTML Error " . SphpBase::page()->getEventParameter());
+    frtMain->getComponent("spnmsg")->setInnerHTML("HTML Error " . SphpBase::page()->getEventParameter());
 }
 
-SphpBase::$dynData->run();
+$frtMain->processMe();
+SphpBase::$dynData = $frtMain;
+global $masterf;
 include_once("$masterf");

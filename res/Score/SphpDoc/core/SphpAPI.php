@@ -193,6 +193,7 @@ public function respathToFilepath($fileurl) {}
 * @return array pathinfo,directory,url path,filepath
 */
 public function filepathToRespaths($filepath) {}
+public function getMyResPath($filepath){}
 /**
 * Run Class type Application
 * @param string $path

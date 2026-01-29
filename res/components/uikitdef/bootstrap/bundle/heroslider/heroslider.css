@@ -1,0 +1,77 @@
+/* Hero Slider */
+.heroCarousel {
+  height: 100vh;
+}
+.heroCarousel .carousel-item {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.heroCarousel .carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4); /* dark overlay */
+}
+.heroCarousel .carousel-caption {
+  z-index: 2;
+}
+.overlay-dark {
+  position:absolute; inset:0;
+  background:rgba(0,0,0,0.4);
+}
+.overlay-gradient {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
+.overlay-blur {
+  position:absolute; inset:0;
+  backdrop-filter: blur(5px);
+  background:rgba(0,0,0,0.2);
+}
+/* Animations */
+.animate__animated {
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+.animate__fadeInUp {
+  animation-duration: 2s;
+}
+.animate__fadeInDown {
+  animation-duration: 2s;
+}
+.animate__fadeInLeft {
+  animation-duration: 2s;
+}
+.animate__fadeInRight {
+  animation-duration: 2s;
+}
+.animate__zoomIn {
+  animation-duration: 2s;
+}
+.animate__zoomOut {
+  animation-duration: 2s;
+}
+.animate__bounce {
+  animation-duration: 2s;
+}
+.animate__slideInLeft  {
+  animation-duration: 2s;
+}
+.animate__slideInRight  {
+  animation-duration: 2s;
+}
+.animate__slideInUp  {
+  animation-duration: 2s;
+}
+.animate__slideInDown  {
+  animation-duration: 2s;
+}
+.animate__shakeX {
+  animation-duration: 2s;
+}
+.animate__shakeY {
+  animation-duration: 2s;
+}

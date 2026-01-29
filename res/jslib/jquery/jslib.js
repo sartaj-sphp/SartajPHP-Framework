@@ -2,7 +2,7 @@
  * All rights are reserved by SartajPHP. for more info contact on sartajphp.com
  * 
  */
-const lsttempfun = {};
+const lstfrontfun = {};
 function makeFirstUpper(str){
 str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();

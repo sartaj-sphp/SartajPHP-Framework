@@ -38,17 +38,17 @@ This table documents the default mappings.
 
 | HTML Tag | type attribute | Component Class                |
 | -------- | -------------- | ------------------------------ |
-| `input`  | `text`         | `Sphp\comp\html\TextField`     |
-| `input`  | `password`     | `Sphp\comp\html\TextField`     |
-| `input`  | `hidden`       | `Sphp\comp\html\TextField`     |
-| `input`  | `submit`       | `Sphp\comp\html\TextField`     |
-| `input`  | `button`       | `Sphp\comp\html\TextField`     |
-| `input`  | `email`        | `Sphp\comp\html\TextField`     |
-| `input`  | `number`       | `Sphp\comp\html\TextField`     |
-| `input`  | `date`         | `Sphp\comp\html\DateField`     |
-| `input`  | `file`         | `Sphp\comp\html\FileUploader`  |
-| `input`  | `checkbox`     | `Sphp\comp\html\CheckBox`      |
-| `input`  | `radio`        | `Sphp\comp\html\Radio`         |
+| `input`  | `text`         | `Sphp\Comp\Form\TextField`     |
+| `input`  | `password`     | `Sphp\Comp\Form\TextField`     |
+| `input`  | `hidden`       | `Sphp\Comp\Form\TextField`     |
+| `input`  | `submit`       | `Sphp\Comp\Form\TextField`     |
+| `input`  | `button`       | `Sphp\Comp\Form\TextField`     |
+| `input`  | `email`        | `Sphp\Comp\Form\TextField`     |
+| `input`  | `number`       | `Sphp\Comp\Form\TextField`     |
+| `input`  | `date`         | `Sphp\Comp\Form\DateField`     |
+| `input`  | `file`         | `Sphp\Comp\Form\FileUploader`  |
+| `input`  | `checkbox`     | `Sphp\Comp\Form\CheckBox`      |
+| `input`  | `radio`        | `Sphp\Comp\Form\Radio`         |
 
 ---
 
@@ -56,9 +56,9 @@ This table documents the default mappings.
 
 | HTML Tag   | Component Class            |
 | ---------- | -------------------------- |
-| `form`     | `Sphp\comp\html\HTMLForm`  |
-| `select`   | `Sphp\comp\html\Select`    |
-| `textarea` | `Sphp\comp\html\TextArea`  |
+| `form`     | `Sphp\Comp\Form\HTMLForm`  |
+| `select`   | `Sphp\Comp\Form\Select`    |
+| `textarea` | `Sphp\Comp\Form\TextArea`  |
 
 ---
 
@@ -66,18 +66,18 @@ This table documents the default mappings.
 
 | HTML Tag | Component Class                |
 | -------- | ------------------------------ |
-| `image`  | `Sphp\comp\html\Img`           |
-| `title`  | `Sphp\comp\html\Title`         |
-| `alert`  | `Sphp\comp\html\DisplayError`  |
+| `image`  | `Sphp\Comp\Form\Img`           |
+| `title`  | `Sphp\Comp\Form\Title`         |
+| `alert`  | `Sphp\Comp\Form\DisplayError`  |
 
 ---
 
 ### FrontFile Composition Components
 
-| HTML Tag        | Component Class                |
-| --------------- | ------------------------------ |
-| `include`       | `Sphp\comp\html\IncludeFront`  |
-| `include_place` | `Sphp\comp\html\IncludePlace`  |
+| HTML Tag        | Component Class                  |
+| --------------- | -------------------------------- |
+| `include`       | `Sphp\Comp\Server\IncludeFront`  |
+| `include_place` | `Sphp\Comp\Server\IncludePlace`  |
 
 ---
 
