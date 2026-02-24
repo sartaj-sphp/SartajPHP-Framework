@@ -28,24 +28,24 @@ Each request is resolved directly into an executable PageEvent.
 
 > **Note:**
 > Most **website-type projects only use the `/apps` folder**.
-> The `/appsn` folder is optional and used only for **NativeApp** or **ConsoleApp** projects.
+> The `/appsn` folder is optional and used only for **NativeGate** or **ConsoleGate** projects.
 
 ```text
 /apps
   /fronts
     index_main.front
     calculator_main.front
-  index.app
-  calculator.app
+  IndexGate.php
+  uucalculatorGate.php
   regapp.php
 
 /appsn              # optional (not used by most websites)
   /spython
   /env
-  chatserver.app
+  uuchatserverGate.php
   regapp.php
   /console
-    compile.app
+    uucompileGate.php
     regapp.php
 
 /cache
@@ -75,26 +75,26 @@ start.php
 
 | Path / File                    | Type     | Purpose                                                                                       |
 | ------------------------------ | -------- | --------------------------------------------------------------------------------------------- |
-| `/apps/`                       | Folder   | Holds **BasicApp** applications. This is the primary location for browser-based web projects. |
+| `/apps/`                       | Folder   | Holds **BasicGate** applications. This is the primary location for browser-based web projects. |
 | `/apps/fronts/`                | Folder   | Stores **Front Files** (`*.front`) used for UI design and component layout.                   |
-| `/apps/*.app`                  | App File | Defines BasicApp logic, Appgate, and PageEvents.                                              |
-| `/apps/regapp.php`             | PHP File | Registers all BasicApps and other App Types with Appgate.                                     |
-| `/appsn/`                      | Folder   | Optional. Holds **NativeApp** and **ConsoleApp** projects (CLI, services, long-running apps). |
+| `/apps/*Gate.php`                  | Gate File | Defines BasicGate logic, Gate, and PageEvents.                                              |
+| `/apps/regapp.php`             | PHP File | Registers all BasicGates and other Gate Types with Gate.                                     |
+| `/appsn/`                      | Folder   | Optional. Holds **NativeGate** and **ConsoleGate** projects (CLI, services, long-running apps). |
 | `/cache/`                      | Folder   | Stores cache, compiled data, and error logs. **Must be writable**.                            |
 | `/plugin/`                     | Folder   | Stores plugin configuration and project-level plugin data.                                    |
 | `/masters/`                    | Folder   | Stores **design and UI-related files** shared across Apps.                                    |
 | `/masters/default/`            | Folder   | Default master assets used by the project.                                                    |
-| `/masters/default/master.php`  | PHP File | Defines master design of HTML Output like head,body tags and JS,CSS Lib + App Dynamic Output  |
+| `/masters/default/master.php`  | PHP File | Defines master design of HTML Output like head,body tags and JS,CSS Lib + Gate Dynamic Output  |
 | `/masters/default/menu.php`    | PHP File | Defines menu structure for **guest (unauthorized) users**.                                    |
 | `/masters/default/admmenu.php` | PHP File | Defines menu structure for **authorized / admin users**.                                      |
 | `/masters/db.php`              | PHP File | Contains SQL queries to **create tables and insert default data during installation**.        |
 | `/masters/sphpcodeblock.php`   | PHP File | Used to **extend or override FrontFile CodeBlocks** at project level.                         |
 | `.htaccess`                    | Config   | Apache rewrite rules redirecting all requests to `start.php`.                                 |
 | `app.sphp`                     | Config   | Desktop / environment-specific runtime settings.                                              |
-| `cachelist.php`                | PHP File | Registers cacheable Appgate requests with cache engine.                                       |
+| `cachelist.php`                | PHP File | Registers cacheable Gate requests with cache engine.                                       |
 | `comp.php`                     | PHP File | Project-level configuration (database, email, framework options).                             |
 | `composer.json`                | Config   | Composer dependency configuration.                                                            |
-| `prerun.php`                   | PHP File | Runs **before App loading**. Used for security headers, profiling, and third-party includes.  |
+| `prerun.php`                   | PHP File | Runs **before Gate loading**. Used for security headers, profiling, and third-party includes.  |
 | `reg.php`                      | PHP File | Central registry that loads all `regapp.php` files.                                           |
 | `start.php`                    | PHP File | **Single entry point**. Loads SartajPHP engine and runs the project.                          |
 
@@ -259,7 +259,7 @@ Most SartajPHP runtime objects follow a **consistent naming convention** for pat
 
 | Object Type | Server Path Property | Browser URL Property |
 | ----------- | -------------------- | -------------------- |
-| App         | `mypath`             | `myresurl`           |
+| Gate         | `mypath`             | `myresurl`           |
 | FrontFile   | `mypath`             | `myresurl`           |
 | Component   | `mypath`             | `myresurl`           |
 
@@ -297,8 +297,8 @@ Each SartajPHP project file follows a strict responsibility rule:
 |----|----|
 | `.htaccess` | Only routing and access control. No PHP logic. |
 | `start.php` | Bootstrap only. No project logic. |
-| `reg.php` | App registration only. No business logic. |
-| `prerun.php` | Pre-App hooks only (security, profiling, headers). |
+| `reg.php` | Gate registration only. No business logic. |
+| `prerun.php` | Pre-Gate hooks only (security, profiling, headers). |
 | `comp.php` | Configuration only. No execution logic. |
 | `cachelist.php` | Cache rules only. |
 | `db.php` | Schema creation and default data only. |
@@ -332,7 +332,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ start.php [NC,L]
 
-# Prevent direct access to .front and .app files
+# Prevent direct access to .front and Gate.php files
 RewriteCond %{REQUEST_URI} \.(front|app)$ [NC]
 RewriteRule ^(.*)$ start.php [NC,L]
 ```
@@ -343,7 +343,7 @@ RewriteRule ^(.*)$ start.php [NC,L]
 * Prevents direct access to:
 
   * FrontFiles (`*.front`)
-  * App files (`*.app`)
+  * Gate files (`*Gate.php`)
 * Enables clean URLs like:
 
   ```
@@ -356,7 +356,7 @@ RewriteRule ^(.*)$ start.php [NC,L]
 
 ## 1.7 `cachelist.php` – Cache Registration
 
-Registers Appgate-level caching rules.
+Registers Gate-level caching rules.
 
 ```php
 <?php
@@ -365,7 +365,7 @@ addCacheList("index", 3600);
 
 ### Meaning
 
-* Caches **all events under Appgate `index`**
+* Caches **all events under Gate `index`**
 * Cache duration: **3600 seconds**
 * Reduces processing for static or semi-static pages
 
@@ -418,22 +418,22 @@ $mebmasterf  = $masterf;
  *  call by SphpBase::page()->Authenticate("GUEST") and 
  * SphpBase::page()->getAuthenticatePerm("GUEST") functions when they failed to find 
  * Authorised user. Secure Applications use this function to redirect user on correct home 
- * Page like GUEST user will be forward to Webiste home page (index.app) 
+ * Page like GUEST user will be forward to Webiste home page (IndexGate.php) 
  */
 function getWelcome(){
     $page = SphpBase::page();
 
     switch ($page->getAuthenticateType()) {
         case "ADMIN":
-            $page->forward(getAppURL("mebhome",'','',true));
+            $page->forward(getGateURL("mebhome",'','',true));
             break;
 
         case "MEMBER":
-            $page->forward(getAppURL("mebhome"));
+            $page->forward(getGateURL("mebhome"));
             break;
 
         default:
-            $page->forward(getAppURL("index"));
+            $page->forward(getGateURL("index"));
             break;
     }
 }
@@ -447,9 +447,9 @@ function getWelcome(){
 
 ---
 
-## 1.9 `prerun.php` – Pre-App Execution Hook
+## 1.9 `prerun.php` – Pre-Gate Execution Hook
 
-Executed **before any App is loaded**.
+Executed **before any Gate is loaded**.
 
 ```php
 <?php
@@ -487,20 +487,20 @@ class SphpPreRun extends Sphp\core\SphpPreRunP {
 
 ---
 
-## 1.10 `reg.php` – App Registration & Auto Resolution
+## 1.10 `reg.php` – Gate Registration & Auto Resolution
 
-Registers Appgate → App file mappings.
+Registers Gate → Gate file mappings.
 
 ```php
 <?php
-registerApp("index", __DIR__ . "/apps/index.app");
+uuregisterGate("index", __DIR__ . "/apps/IndexGate.php");
 
 /**
- * Auto-register App if file exists
+ * Auto-register Gate if file exists
  */
 if (!SphpBase::sphp_router()->isRegisterCurrentRequest()) {
     $pth = PROJ_PATH . "/apps/" .
-           SphpBase::sphp_router()->getCurrentRequest() . ".app";
+           SphpBase::sphp_router()->getCurrentRequest() . "Gate.php";
 
     if (is_file($pth)) {
         SphpBase::sphp_router()->registerCurrentRequest($pth);
@@ -510,15 +510,15 @@ if (!SphpBase::sphp_router()->isRegisterCurrentRequest()) {
 
 ### Purpose
 
-* Explicit App registration
-* Automatic App discovery for small projects
-* Prevents missing Appgate errors
+* Explicit Gate registration
+* Automatic Gate discovery for small projects
+* Prevents missing Gate errors
 
 ---
 
 ## 1.11 `start.php` – Framework Bootstrap File
 
-**Single entry point** for browser, CLI, and NativeApp execution.
+**Single entry point** for browser, CLI, and NativeGate execution.
 
 ```php
 <?php
@@ -604,20 +604,20 @@ class menu extends BootstrapMenu{
         $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
         $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index2'),"fa fa-fw fa-clock-o","Home");
         if(SphpBase::page()->getAuthenticateType() == "GUEST"){
-            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+            $this->sphp_api->addMenuLink("Login", getGateURL("signin"),"","Home");
         }else{
             // set menu permissions or login type, as comma separated value
             // not work if app is not using permission system like extend as PermisApp
             $this->sphp_api->addMenu("User",'',"fa fa-home","root",false,"ADMIN,MEMBER");
-            $this->sphp_api->addMenuLink("Users",getAppURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
-            $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
-           // $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
+            $this->sphp_api->addMenuLink("Users",getGateURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
+            $this->sphp_api->addMenuLink("Profile Permission",getGateURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
+           // $this->sphp_api->addMenuLink("Profile Permission",getGateURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
 
             $this->sphp_api->addMenu("Tools",'',"","root",false,"ADMIN");
-            $this->sphp_api->addMenuLink("Plugin Install",getAppURL('installer'),"fa fa-users","Tools");
+            $this->sphp_api->addMenuLink("Plugin Install",getGateURL('installer'),"fa fa-users","Tools");
             $this->sphp_api->addMenuLink("DB Install",getEventURL('install','install','mebhome'),"fa fa-users","Tools");
             
-            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Dashboard",getGateURL('mebhome'),"fa fa-home","Home");
             $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
             include_once(PROJ_PATH . "/plugin/cmenu.php"); 
             include_once(PROJ_PATH . "/plugin/cmebmenu.php"); 
@@ -651,7 +651,7 @@ master file is always a PHP file but we can also add Front Files as
 intermediate file to help master file to use Component Power.
 Fremaework methods getHeaderHTML and getFooterHTML gives framework output of JS and CSS inside 
 master file layout. we can also include bootstrap as master design level rather then 
-App base. So bootstrap and jQuery will be available in whole project. renderFrontPlace function 
+Gate base. So bootstrap and jQuery will be available in whole project. renderFrontPlace function 
 render Front Place. Method getAppOutput of SphpBase use to get Application output. 
 
 ```php
@@ -695,7 +695,7 @@ runFrontPlace("menu", "left");
                 <div class="row">
                     <div class="col">
                         <?php 
-                            /* Print SartajPHP App generated Output with Front File Output */ 
+                            /* Print SartajPHP Gate generated Output with Front File Output */ 
                             SphpBase::getAppOutput(); 
                         ?>
                     </div>
@@ -744,9 +744,9 @@ SphpBase::sphp_api()->addCacheList("index", 100);
 
 | Cache Type | Meaning                    |
 | ---------- | -------------------------- |
-| `Appgate`  | Cache all events under App |
-| `ce`       | Appgate + event            |
-| `cep`      | Appgate + event + evtp     |
+| `Gate`  | Cache all events under Gate |
+| `ce`       | Gate + event            |
+| `cep`      | Gate + event + evtp     |
 | `e`        | Any app event              |
 
 ---

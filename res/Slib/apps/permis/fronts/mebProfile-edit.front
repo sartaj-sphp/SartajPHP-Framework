@@ -1,7 +1,7 @@
 <section class="content-header sty-one">
     <h1 class="text-black">##{$pageName}#</h1>
     <ol class="breadcrumb">
-        <li><a href="##{getAppURL('mebhome')}#">Home</a></li>        
+        <li><a href="##{getGateURL('mebhome')}#">Home</a></li>        
         <li><i class="fa fa-angle-right"></i>##{$pageName}#</li>
     </ol>
 </section>
@@ -13,7 +13,7 @@
                 <div class="card-header">
                     <h5 class="">##{ $pageName; }# Detail &nbsp;&nbsp;</h5>
                     <span style="float:right; margin-top: -20px;">
-                        <a class="btn btn-primary removepd" href="##{ getThisURL(); }#" > <i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-primary removepd" href="##{ getThisGateURL(); }#" > <i class="fa fa-arrow-left"></i> Back</a>
                     </span>                    
                 </div>
                 <div class="card-body" style="padding-top:10px;">								

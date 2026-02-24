@@ -7,22 +7,22 @@ class MenuUi extends BootstrapMenu{
         $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
         $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index2'),"fa fa-fw fa-clock-o","Home");
         if(SphpBase::page()->getAuthenticateType() == "GUEST"){
-            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+            $this->sphp_api->addMenuLink("Login", getGateURL("signin"),"","Home");
             include_once(PROJ_PATH . "/plugin/cmenu.php"); 
             include_once($this->frontfiledir . "/menu.php"); 
         }else{
             // set menu permissions or login type, as comma separated value
             // not work if app is not using permission system like extend as PermisApp
             $this->sphp_api->addMenu("User",'',"fa fa-home","root",false,"ADMIN,MEMBER");
-            $this->sphp_api->addMenuLink("Users",getAppURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
-            $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
-           // $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
+            $this->sphp_api->addMenuLink("Users",getGateURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
+            $this->sphp_api->addMenuLink("Profile Permission",getGateURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
+           // $this->sphp_api->addMenuLink("Profile Permission",getGateURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
 
             $this->sphp_api->addMenu("Tools",'',"","root",false,"ADMIN");
-            $this->sphp_api->addMenuLink("Plugin Install",getAppURL('installer'),"fa fa-users","Tools");
+            $this->sphp_api->addMenuLink("Plugin Install",getGateURL('installer'),"fa fa-users","Tools");
             $this->sphp_api->addMenuLink("DB Install",getEventURL('install','install','mebhome'),"fa fa-users","Tools");
             
-            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Dashboard",getGateURL('mebhome'),"fa fa-home","Home");
             $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
             include_once(PROJ_PATH . "/plugin/cmenu.php"); 
             include_once(PROJ_PATH . "/plugin/cmebmenu.php"); 

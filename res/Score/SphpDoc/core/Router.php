@@ -3,14 +3,14 @@ namespace Sphp\core {
 class Router {
 /** @var string $url_extension extension use in URL default is .html */
 public $url_extension = ".html";
-/** @var string $act Appgate Action */
+/** @var string $act Gate Action */
 public $act = "";
-/** @var string $sact Appgate Event */
+/** @var string $sact Gate Event */
 public $sact = "";
-/** @var string $evtp Appgate Event Parameter */
+/** @var string $evtp Gate Event Parameter */
 public $evtp = "";
-/** @var string $ctrl Current Request Appgate */
-public $ctrl = "";
+/** @var string $gate Current Request Gate */
+public $gate = "";
 /** @var string $uri Request URI */
 public $uri = "";
 /**
@@ -18,45 +18,45 @@ public $uri = "";
 */
 public function route() {}
 /**
-* Get Current Request Appgate
+* Get Current Request Gate
 * @return string
 */
 public function getCurrentRequest() {}
 /**
-* Check if any application registered with current request
+* Check if any Gate registered with current request
 * @return boolean
 */
 public function isRegisterCurrentRequest() {}
 /**
-* Register Current Request with Application
-* @param string $apppath Application file path like apps/index.app
+* Register Current Request with Gate
+* @param string $gate_dir_path Gate file path like Gates/index.Gate
 * @param string $s_namespace Optional Namespace if any
 * @param string $permtitle Title Display in Permission List
-* @param array $permlist Create Permissions List for application
+* @param array $permlist Create Permissions List for Gate
 */
-public function registerCurrentRequest($apppath, $s_namespace = "",$permtitle="",$permlist=null) {}
+public function registerCurrentRequest($gate_dir_path, $s_namespace = "",$permtitle="",$permlist=null) {}
 /**
-* Register Current Request with different Appgate
-* @param string $ctrl <p>
-* registerCurrentAppgate('home')
+* Register Current Request with different App Gate
+* @param string $gate <p>
+* registerCurrentGate('home')
 * </p>
 */
-public function registerCurrentAppgate($ctrl) {}
+public function registerCurrentGate($gate) {}
 public function isRootURI() {}
 /**
-* Get Registered Application FilePath details of Current Request
+* Get Registered Gate Path details of Current Request
 * @return array
 */
-public function getCurrentAppPath() {}
+public function getCurrentGatePath() {}
 /**
-* Get Registered Application FilePath details
-* @param string $ctrl Appgate
+* Get Registered Gate Path details
+* @param string $gate Gate
 * @return array
 */
-public function getAppPath($ctrla2) {}
+public function getGatePath($gatea2) {}
 /**
-* Generate URL for a Appgate
-* @param string $AppgateName Appgate like index
+* Generate URL for a Gate
+* @param string $gate_param Gate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
@@ -64,78 +64,78 @@ public function getAppPath($ctrla2) {}
 * $newbasePath = 'https://domain.com/test
 * </p>
 * @param boolean $blnSesID Add session id default false
-* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param string $ext change url file extension as Gate default empty and use html or set in comp file.
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getAppURL($AppgateName, $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getGateURL($gate_param, $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
-* Generate URL for Current Application
+* Generate URL for Current Gate
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
 * @param boolean $blnSesID Add session id default false
-* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param string $ext change url file extension as Gate default empty and use html or set in comp file.
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getthisURL($extra = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getThisGateURL($extra = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
-* Generate Secure Event URL for a Event Parameter of Application. 
+* Generate Secure Event URL for a Event Parameter of Gate. 
 * If you try tamper the URL Event Parameter then it gives empty event parameter value. If you need 
 * to pass other value also secure then you need to manually secure with function
 * val2Secure function and restore back with secure2Val function. By default event parameter
 * automatically convert by SartajPHP.
 * @param string $eventName <p> Name of Event
-* class index extends Sphp\tools\BasicApp{
+* class index extends Sphp\tools\BasicGate{
 * public function page_event_test($evtp){
 * 
 * }
 * }
 * $eventName = test
-* $AppgateName = index
-* Registered Application = apps/index.app
+* $gate_param = index
+* Registered Gate File = Gates/index.Gate
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $AppgateName Appgate like index
+* @param string $gate_param Gate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
 * @param string $newbasePath <p> new domain url
 * $newbasePath = 'https://domain.com/test
 * </p>
-* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
-* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $blnSesID Add session id default false, url expired with session (Gate can allow expired url)
+* @param string $ext change url file extension as Gate default empty and use html or set in comp file.
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getEventURLSecure($eventName, $evtp = "", $AppgateName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getEventURLSecure($eventName, $evtp = "", $gate_param = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
-* Generate URL for a Event of Application
+* Generate URL for a Event of Gate
 * @param string $eventName <p> Name of Event
-* class index extends Sphp\tools\BasicApp{
+* class index extends Sphp\tools\BasicGate{
 * public function page_event_test($evtp){
 * 
 * }
 * }
 * $eventName = test
-* $AppgateName = index
-* Registered Application = apps/index.app
+* $gate_param = index
+* Registered Gate = Gates/index.Gate
 * </p>
 * @param string $evtp Event Parameter pass to URL
-* @param string $AppgateName Appgate like index
+* @param string $gate_param Gate like index
 * @param string $extra <P> Extra query string in URL 
 * $extra = 'test=1&mpid=13'
 * </p>
 * @param string $newbasePath <p> new domain url
 * $newbasePath = 'https://domain.com/test
 * </p>
-* @param boolean $blnSesID Add session id default false, url expired with session (App can allow expired url)
-* @param string $ext change url file extension as app default empty and use html or set in comp file.
+* @param boolean $blnSesID Add session id default false, url expired with session (Gate can allow expired url)
+* @param string $ext change url file extension as Gate default empty and use html or set in comp file.
 * @param boolean $noncache default false, if true, cache can not save this url in browser or in proxy
 * @return string
 */
-public function getEventURL($eventName, $evtp = "", $AppgateName = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
+public function getEventURL($eventName, $evtp = "", $gate_param = "", $extra = "", $newbasePath = "", $blnSesID = false,$ext='',$noncache=false) {}
 /**
 * Advance Function, Internal use
 * @param string $evt

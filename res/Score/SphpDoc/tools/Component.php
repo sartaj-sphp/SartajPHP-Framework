@@ -65,7 +65,6 @@ protected $styler = 0;
 * @param string $fieldName Database Field name for binding
 * @param string $tableName Database Table name for binding
 */
-final 
 /**
 * List Fusion Methods Start Here.
 * Fusion Methods that can bind with FrontFile. These function always public and prefix with 
@@ -209,12 +208,12 @@ public function fu_submitAjax($eventName, $url = "", $extracomp = "") {}
 * @param string $eventName JS Event Name
 * @param string $host Optional Default=find socket in page to post data, it will ignore if socket already exist.
 * @param string $extracomp Comma Separated list html id to send data
-* @param string $ctrl Appgate of native app to submit data
-* @param string $evt Event of native app to trigger
+* @param string $gate Gate of native Gate to submit data
+* @param string $evt Event of native Gate to trigger
 * @param string $evtp Event Parameter to pass any data
 * 
 */
-public function fu_submitWS($eventName, $host = "", $extracomp = "",$ctrl="main",$evt="",$evtp="") {}
+public function fu_submitWS($eventName, $host = "", $extracomp = "",$gate="main",$evt="",$evtp="") {}
 /**
 * End List of Fusion Methods
 */
@@ -370,7 +369,6 @@ public function getFrontobj() {}
 * Advanced Method,Internal use
 * @param \Sphp\tools\FrontFile $frontobj
 */
-public function _setFrontobj($frontobj) {}
 /**
 * Get Children Components Only First Level. Only Component Tags are included as child and 
 * ignored normal HTML tags.
@@ -387,7 +385,6 @@ public function getAllChildren() {}
 * Add Child Component
 * @param \Sphp\tools\Component $child
 */
-public function _addChild($child) {}
 /**
 * Get Parent Component if any or null
 * @return \Sphp\tools\Component
@@ -401,7 +398,7 @@ protected function registerEvent($event_name) {}
 protected function isRegisterHandler($event_name) {}
 /**
 * Set Event Handler of Component. 
-* This is Registered Event in component which can handle by application.
+* This is Registered Event in component which can handle by Gate.
 * @param string $event_name Event Name to handle
 * @param string $handler Name of Function or Method that handle event
 * @param object $eventhandlerobj Optional Object handle the event 
@@ -504,11 +501,7 @@ protected function createFrontObjectPrivate($filepath,$blnStringData = false){}
 * @return string process html by onprocess callback
 */
 public function parseHTML($html) {}
-final public  function getHelp() {}
-final public function _render() {}
-final public function _prerender() {}
-final public function _oncompinit($element) {}
-final public function _oncompcreate($element) {}
+final public function getHelp() {}
 /**
 * Advance Function
 * Execute Limited PHP Code for Template tags ##{} #{}#. 
@@ -537,9 +530,6 @@ protected function getDynamicContent($filepath) {}
 * @param type $ver
 */
 public function addDynamicFileLink($fileURL2, $renderonce = false, $filename = "", $ext = "", $ver = "0") {}
-public function _trigger_after_create(){}
-public function _trigger_app_event(){}
-public function _trigger_holder($element){}
 /** override functions list start here, in order of life cycle events trigger.
 *  You can Design a new Component with override these functions in child class.
 */
@@ -569,13 +559,13 @@ protected function oncreate($element) {}
 protected function onaftercreate() {}
 /**
 *  override this Life-Cycle event handler in your Component to handle it.
-*  trigger when Component Get Application ready Event as AppEvent. Trigger after 
-*  App onrun event.
+*  trigger when Component Get Gate ready Event as GateEvent. Trigger after 
+*  Gate onrun event.
 *  In this event handler Component can handle it's own PageEvents and reply AJAX directly 
-*  to Browser and reduce the work App and developer. But this will work only if FrontFile
-*  Object is created on App Life-Cycle event handler onstart.
+*  to Browser and reduce the work Gate and developer. But this will work only if FrontFile
+*  Object is created on Gate Life-Cycle event handler onstart.
 */
-protected function onappevent() {}
+protected function ongateevent() {}
 /**
 *  override this Life-Cycle event handler in your Component to handle it.
 *  trigger before onprerender,onjsrender,onrender and before any children Components event PreJsRender and PreRender.
@@ -640,6 +630,7 @@ protected function onholder($obj) {}
 * @param \Sphp\tools\HTMLDOMNode $domelement
 */
 protected function onparse($event, $domelement) {}
+public function &__get($name) {}
 /**
 * Advance Function, Internal use
 */
@@ -677,7 +668,7 @@ public function helpPropList() {}
 protected function genhelpPropList() {}
 }
 /**
-* Component use it own Application to process events and Front File to design own 
+* Component use it own Gate to process events and Front File to design own 
 * Complex design for example:- Tiny Editor Component, Web Page Editor
 */
 class ComponentGroup extends Component {
@@ -691,7 +682,6 @@ public $sphp_api = null;
 public $name = "def";
 protected function onstart() {}
 protected function onrun() {}
-public function _run() {}
 public function getOutput() {}
 public function render() {}
 }

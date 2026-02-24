@@ -26,15 +26,13 @@ public $comppath = "" ;
 public $slibpath = "" ;
 public $debug = null;
 public function getFrontobj() {}
-public function _setFrontobj($frontobj) {}
-public function _setCodebehind($codebehind) {}
 public function getSevalVar($name){}
 public function parseHTMLObj($strData, $obj) {}
 public function parseHTML(){}
 public function parseComponent($compobj,$innerHTML = false){}
 public function createTagComponent($name="mycustomtag1",$tagname="div") {}
 public function getChildrenWrapper($compobj){}
-public function parseComponentChildren($wrapperElement){}
+public function parseComponentChildren($wrGateerElement){}
 public function parseHTMLTag($strData,$callbackfun,$obj){}
 public function setupcomp($element,$parentelement) {}
 public function endupcomp($element,$parentelement) {}    

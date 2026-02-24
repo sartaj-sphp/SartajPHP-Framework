@@ -2,12 +2,12 @@
 
 ## 3.0 FrontFile Organization Rule
 
-Each App should place its related FrontFiles inside a `fronts` folder located
-in the **same parent directory as the App class**.
+Each Gate should place its related FrontFiles inside a `fronts` folder located
+in the **same parent directory as the Gate class**.
 
 This provides:
 
-* Clear App → FrontFile ownership
+* Clear Gate → FrontFile ownership
 * Predictable filesystem resolution
 * Easy grouping of related Apps and views
 
@@ -39,10 +39,10 @@ FrontFile is responsible for:
 * Executing fusion attributes
 * Coordinating rendering with the App
 
-A FrontFile is **created during App startup** and **assigned during PageEvent execution**.
+A FrontFile is **created during Gate startup** and **assigned during PageEvent execution**.
 
 ```php
-class index extends Sphp\tools\BasicApp{
+class index extends Sphp\tools\BasicGate{
   public function onstart(){
       $this->frtMain = new FrontFile(
           $this->mypath . "/fronts/index_main.front"
@@ -57,7 +57,7 @@ class index extends Sphp\tools\BasicApp{
 
 Apps access FrontFiles using $this->mypath, which always resolves to the App’s parent directory.
 Calling `setFrontFile()` selects and enables the FrontFile for rendering,
-but actual rendering occurs during the App render phase.
+but actual rendering occurs during the Gate render phase.
 Calling `showNotFrontFile()` disables the selected FrontFile.
 Calling `showFrontFile()` re-enables the selected FrontFile.
 ---
@@ -66,7 +66,7 @@ Calling `showFrontFile()` re-enables the selected FrontFile.
 
 Reserved path keywords are **not PHP variables**. They are resolved **only inside value of Runtime Tag attributes** and only inside FrontFile.
 
-| Keyword       | Resolves To                               | App Equivalent                                      |
+| Keyword       | Resolves To                               | Gate Equivalent                                      |
 | ------------- | ----------------------------------------- | --------------------------------------------------- |
 | `mypath`      | Filesystem path of current FrontFile      | $this->frtMain->mypath                              |
 | `myrespath`   | Public URL of current FrontFile           | $this->frtMain->myrespath                           |
@@ -78,7 +78,7 @@ Reserved path keywords are **not PHP variables**. They are resolved **only insid
 | `uikit`       | Filesystem path `res/components/uikitdef` | SphpBase::sphp_settings()->comp_uikit_path          |
 | `uikitrespath`| Public URL of `res/components/uikitdef`   | SphpBase::sphp_settings()->comp_uikit_res_path      |
 
-These keywords **do not exist in PHP scope** and cannot be accessed from App code.
+These keywords **do not exist in PHP scope** and cannot be accessed from Gate code.
 
 **Example – use Reserved keywords in Component Runtime Tag**
 
@@ -289,8 +289,8 @@ This distinction is critical when working with **AJAX-heavy applications**.
 | `sphp-comp`           | `holder`          | Target a specific Component                            |
 | `sphp-comp-prop`      | `holder`          | Read a Component property value                        |
 | `sphp-comp-fun `      | `holder`          | Call and print return of Component Method              |
-| `sphp-app-prop`       | `holder`          | Read App property value                                |
-| `sphp-app-fun `       | `holder`          | Call and Print Method of App                           |
+| `sphp-app-prop`       | `holder`          | Read Gate property value                                |
+| `sphp-app-fun `       | `holder`          | Call and Print Method of Gate                           |
 | `function`            | jsfunction*       | JavaScript function name                               |
 | `functionpara`        | jsfunction        | JavaScript function parameters                         |
 | `binder`              | jsfunctionbnd*    | jQuery selector to bind event                          |
@@ -335,8 +335,8 @@ Acts as a **dynamic placeholder** resolved at runtime.
 | `sphp-comp`      | Target Component           |
 | `sphp-comp-prop` | Target Component property  |
 | `sphp-comp-fun`  | Target Component method    |
-| `sphp-app-prop`  | Target App property        |
-| `sphp-app-fun`   | Target App method          |
+| `sphp-app-prop`  | Target Gate property        |
+| `sphp-app-fun`   | Target Gate method          |
 
 #### Resolution Rules (Authoritative)
 
@@ -344,10 +344,10 @@ Acts as a **dynamic placeholder** resolved at runtime.
 | ------------------------------ | ---------------------------------------------------- |
 | `sphp-comp` + `sphp-comp-prop` | Display **Component property value**                 |
 | `sphp-comp` + `sphp-comp-fun`  | Display **Component method return**                  |
-| `sphp-app-prop` only           | Display **App property value**                       |
-| `sphp-app-fun` only            | Display **App method return**                       |
+| `sphp-app-prop` only           | Display **Gate property value**                       |
+| `sphp-app-fun` only            | Display **Gate method return**                       |
 | `sphp-comp` only               | Trigger **Component `onholder` event**, pass NodeTag |
-| none                           | Trigger **App `onholder` event**, pass NodeTag       |
+| none                           | Trigger **Gate `onholder` event**, pass NodeTag       |
 
 This makes `holder` a **bridge between FrontFile and App/Component state**.
 

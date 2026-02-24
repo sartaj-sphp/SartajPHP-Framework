@@ -1,11 +1,11 @@
-# AJAX Calculator Client and Server Side Validation with page_insert event (BasicApp)
+# AJAX Calculator Client and Server Side Validation with page_insert event (BasicGate)
 
 ## 1️⃣ Application File
 
-**`apps/calculator.app`**
+**`apps/uucalculatorGate.php`**
 
 ```php
-class calculator extends Sphp\tools\BasicApp {
+class calculator extends Sphp\tools\BasicGate {
 
     private $frtMain = null;
 
@@ -41,7 +41,7 @@ class calculator extends Sphp\tools\BasicApp {
 
 ```html
 <div id="result"></div>
-<form id="form2" runat="server" fun-setAJAX="" action="##{getThisURL()}#">
+<form id="form2" runat="server" fun-setAJAX="" action="##{getThisGateURL()}#">
 <input id="numa" runat="server" type="text" placeholder="Number1" fui-setNumeric="" fui-setForm="form2" />
 <input id="numb" runat="server" type="text" placeholder="Number2" fui-setNumeric="" fui-setForm="form2" />
 <select id="sltop" runat="server" fui-setForm="form2" fun-setOptions="+,-"></select>
@@ -49,9 +49,9 @@ class calculator extends Sphp\tools\BasicApp {
 </form>
 ```
 
-## 3️⃣ Register App File with SartajPHP reg.php
+## 3️⃣ Register Gate File with SartajPHP reg.php
 
 ```php
-// register Appgate=calculator So Browser URL=calculator.html
-registerApp("calculator",__DIR__ ."/apps/calculator.app");
+// register Gate=calculator So Browser URL=calculator.html
+uuregisterGate("calculator",__DIR__ ."/apps/uucalculatorGate.php");
 ```

@@ -46,7 +46,7 @@ $JSServer->addJSONFront($genFormFront,'showall_editor');
 if(SphpBase::page()->isdelete)
 {
 SphpBase::page()->deleteRec();
-setMsg('app1','Record is Deleted' );
+setMsg('Gate1','Record is Deleted' );
 $JSServer->addJSONBlock('html','showerrdet',traceError(true));
 $JSServer->addJSONBlock('html','showmsgdet',traceMsg(true));
 $JSServer->addJSONComp($showall,'showall_list');
@@ -62,13 +62,13 @@ $JSServer->addJSONComp($showall,'showall_list');
 setMsg('Update Record','Your Data is Updated');
 $JSServer->addJSONBlock('html','showmsgdet',traceMsg(true));    
 }else{
-setErr('app1','Can not Update Data' );
+setErr('Gate1','Can not Update Data' );
 $JSServer->addJSONBlock('html','frmerrdet',traceError(true));
 $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));    
 }
 }
 else{
-setErr('app1','Can not Update Data' );
+setErr('Gate1','Can not Update Data' );
 $JSServer->addJSONBlock('html','frmerrdet',traceError(true));
 $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));
 }
@@ -79,19 +79,19 @@ if(SphpBase::page()->isinsert)
 if(!getCheckErr()){
 SphpBase::page()->insertData();
 if(!getCheckErr()){
-//setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
+//setMsg('Gate1','New Data Record is Inserted, want more record add fill form again' );
 $JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
 $JSServer->addJSONComp($showall,'showall_list');
 setMsg('New Record','Your Data is added in Database');
 $JSServer->addJSONBlock('html','showmsgdet',traceMsg(true));    
 }else{
-setErr('app1','Can not add Data' );
+setErr('Gate1','Can not add Data' );
 $JSServer->addJSONBlock('html','frmerrdet',traceError(true));
 $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));    
 }
 }
 else{
-setErr('app1','Can not add Data' );
+setErr('Gate1','Can not add Data' );
 $JSServer->addJSONBlock('html','frmerrdet',traceError(true));
 $JSServer->addJSONBlock('html','frmmsgdet',traceMsg(true));
 }

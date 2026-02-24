@@ -17,7 +17,7 @@ public $scriptpath = "";
 public $argv = array();
 /** @var string $type Request Type Default NORMAL or AJAX or SOAP */
 public $type = "NORMAL"; 
-/** @var boolean $isNativeClient true if application embed with browser  */
+/** @var boolean $isNativeClient true if Gate embed with browser  */
 public $isNativeClient = false;
 /**
 * Get All Request Headers

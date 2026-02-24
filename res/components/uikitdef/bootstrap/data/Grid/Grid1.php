@@ -30,7 +30,7 @@ public $eventName = 'show';
 public $editeventName = 'view';
 public $deleventName = 'delete';
 private $evtp='';
-private $ctrl='';
+private $gate='';
 private $extra= 'page=';
 private $baseName='';
 private $sesID=false;
@@ -50,7 +50,7 @@ private $sortby = false;
 private $blnpagebar = true;
 
 public function __construct($name='',$fieldName='',$tableName='') {
-global $page,$ctrl,$tblName;
+global $page,$gate,$tblName;
 if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
@@ -58,10 +58,10 @@ $this->init($name,'','');
 $this->extra = $name . 'page='; 
 if(isset($_REQUEST[$name . 'page'])){
 $_SESSION[$name.'p'] = $_REQUEST[$name . 'page'];
-$_SESSION[$name.'pc'] = $ctrl->ctrl;
+$_SESSION[$name.'pc'] = $gate->gate;
 }else{
 $_REQUEST[$name . 'page'] = 1;
-if(isset($_SESSION[$name.'pc']) && $_SESSION[$name.'pc'] == $ctrl->ctrl){
+if(isset($_SESSION[$name.'pc']) && $_SESSION[$name.'pc'] == $gate->gate){
 $_REQUEST[$name . 'page'] = $_SESSION[$name.'p'];
 }
 }
@@ -77,7 +77,7 @@ $this->setHTMLName('');
 public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
-$this->ctrl=$ControllerName;
+$this->gate=$ControllerName;
 if($extra!=''){
 $this->extra=$extra.'&'. $this->name .'page=';
 }
@@ -305,9 +305,9 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST[$this->name . 'page']) {
 if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
 }else{
-         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= $strstart.($k)."</div>";
@@ -342,18 +342,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 
@@ -580,7 +580,7 @@ window.location = link ;
 }
 
 public function onprerender(){
-global $Client,$ctrl;
+global $Client,$gate;
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){
@@ -590,7 +590,7 @@ if(count($spt)>0){
 }
 $storesql = $Client->session($this->name .'store');
 if(!is_array($storesql)) $storesql = array();
-if(isset($storesql['lastapp']) && $storesql['lastapp'] == $ctrl->ctrl){
+if(isset($storesql['lastapp']) && $storesql['lastapp'] == $gate->gate){
 if($this->ordersortby==""){
     $this->ordersortby = $storesql['sortby']; 
 }
@@ -606,7 +606,7 @@ $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->wher
 }
 $storesql['lastsql'] = $this->sql;
 $storesql['lastpagecountsql'] = $this->pageCountSQL;
-$storesql['lastapp'] = $ctrl->ctrl;
+$storesql['lastapp'] = $gate->gate;
 $storesql['sortby'] = $this->ordersortby;
 $storesql['whereby'] = $this->where;
 $Client->session($this->name .'store',$storesql);

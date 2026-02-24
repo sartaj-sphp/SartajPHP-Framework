@@ -1,7 +1,7 @@
 <?php
 include_once(SphpBase::sphp_settings()->lib_path . "/lib/DIR.php");
 
-class indexplg extends \Sphp\tools\BasicApp{
+class indexplg extends \Sphp\tools\BasicGate{
     private $temp1 = "";
     public $eventname = "home";
     

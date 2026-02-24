@@ -16,11 +16,11 @@ This is a **spec-locked environment**.
 ## Required Structure
 
 When generating an App:
-- Always generate **App class + FrontFile**
-- Use correct App base class:
-  - `BasicApp`
-  - `NativeApp`
-  - `ConsoleApp`
+- Always generate **Gate class + FrontFile**
+- Use correct Gate base class:
+  - `BasicGate`
+  - `NativeGate`
+  - `ConsoleGate`
 - Use lifecycle hooks exactly as documented
 - Create FrontFile object inside `onstart` only
 

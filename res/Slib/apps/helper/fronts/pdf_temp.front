@@ -3,7 +3,7 @@
 <page backtop="20mm" backbottom="10mm" backleft="20mm" backright="20mm">
     <page_header>
         <div class="header"><table style="width: 100%; border: solid 1px black;"><tr>
-                    <td style="text-align: left;    width: 33%"><img id="imglogo1" runat="server" src="##{ $this->frontobj->parentapp->logoimg }#" alt="Logo" width=50 /></td>
+                    <td style="text-align: left;    width: 33%"><img id="imglogo1" runat="server" src="##{ $this->frontobj->parentgate->logoimg }#" alt="Logo" width=50 /></td>
                     <td style="text-align: center;    width: 34%"><h1 class="heading" runas="holder" data-prop="heading"></h1></td>
                     <td style="text-align: right;    width: 33%">
                         <span>Ph: <span runas="holder" data-prop="phone"></span></span><br />

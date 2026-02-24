@@ -1,19 +1,19 @@
-package <?php echo $caller->mobappid ; ?>
+package ##{$caller->mobappid}#
 
 import android.util.Log
-import com.sartajphp.webviewlib.BasicApp
+import com.sartajphp.webviewlib.KotlinGate
 import com.sartajphp.webviewlib.JSServerC
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
 
-class Index(JSServer: JSServerC, ctrl:String, evt:String, evtp:String, data: JSONObject): BasicApp(JSServer,ctrl,evt,evtp,data) {
+class Index: KotlinGate() {
 
-    override fun onstart(){
+    override suspend fun onstart(){
         Log.d("Index","on start");
     }
-    override fun page_new() {
+    override suspend fun page_new() {
         thread {
             for (i in 1..4) {
 

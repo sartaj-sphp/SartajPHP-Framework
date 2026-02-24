@@ -9,8 +9,8 @@ SartajPHP follows an **event-oriented architecture** where browser requests are 
 flowchart TD
     A[Browser Request<br>e.g., GET /index.html] --> B{SartajPHP Engine}
     
-    B --> C[Route to Appgate]
-    C --> D[Load index.app]
+    B --> C[Route to Gate]
+    C --> D[Load IndexGate.php]
     D --> E[Execute page_new Event]
     
     E --> F[Process index_main.front<br>Front File]
@@ -39,12 +39,12 @@ flowchart TD
 
 **Phase 1: Request Initialization**
 ```
-Browser → .htaccess → start.php → reg.php → Appgate Resolution → Load index.app
+Browser → .htaccess → start.php → reg.php → Gate Resolution → Load IndexGate.php
 ```
 
 **Phase 2: Event Processing**
 ```
-index.app::onstart() → Set Master File → index.app::page_new() → Set Front File
+IndexGate.php::onstart() → Set Master File → IndexGate.php::page_new() → Set Front File
 ```
 
 **Phase 3: Content Generation**
@@ -59,10 +59,10 @@ HTML Assembly → Asset Injection → Browser Delivery → Client-side Execution
 
 ## **3. Detailed Component Specifications**
 
-### **A. BasicApp Structure (`index.app`)**
+### **A. BasicGate Structure (`IndexGate.php`)**
 ```php
 <?php
-class index extends \Sphp\tools\BasicApp{
+class index extends \Sphp\tools\BasicGate{
     private $frtMain = null;
     
     // PHASE 1: Application Initialization
@@ -276,7 +276,7 @@ try {
 1. **Event-Oriented vs MVC**
    - No controllers or routers
    - PageEvents as primary handlers
-   - Appgate-based request resolution
+   - Gate-based request resolution
 
 2. **Separation of Concerns**
    - App: Business logic and event handling
@@ -301,7 +301,7 @@ try {
 
 ### **Correct Implementation Checklist:**
 
-- [ ] BasicApp extends `\Sphp\tools\BasicApp`
+- [ ] BasicGate extends `\Sphp\tools\BasicGate`
 - [ ] FrontPlace implements both `_run()` and `render()`
 - [ ] Master File uses `addFrontPlace()`/`runFrontPlace()`/`renderFrontPlace()`
 - [ ] Database access via `SphpBase::dbEngine()`
@@ -506,12 +506,12 @@ flowchart TD
 </div>
 ```
 
-### **G. Setting Data in BasicApp for Components**
+### **G. Setting Data in BasicGate for Components**
 
 ```php
 <?php
-// In your index.app
-class index extends \Sphp\tools\BasicApp{
+// In your IndexGate.php
+class index extends \Sphp\tools\BasicGate{
     private $frtMain;
     
     public function onstart() {
@@ -567,7 +567,7 @@ class index extends \Sphp\tools\BasicApp{
 - ❌ Putting loops in expression tags `##{foreach}##`
 - ❌ Using PHP code blocks in `.front` files
 - ❌ Confusing Component paths (use `slibpath/` for built-in)
-- ❌ Forgetting to set data in App before component renders
+- ❌ Forgetting to set data in Gate before component renders
 
 **Testing Pattern:**
 ```html

@@ -59,7 +59,7 @@ Expression tags may call methods **only** on the following objects:
 * `$debug` (`Sphp\core\DebugProfiler`)
 
 Example:
-addMetaData in App can access as variable in Expression Tag of Front File.
+addMetaData in Gate can access as variable in Expression Tag of Front File.
 ```php
 // in App
 $this->frtMain->addMetaData("title","My Page Title");

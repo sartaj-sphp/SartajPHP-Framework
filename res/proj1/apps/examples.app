@@ -1,6 +1,6 @@
 <?php 
 
-class examples extends Sphp\tools\BasicApp{
+class examples extends Sphp\tools\BasicGate{
 
     public function page_new(){
         $temp1 = new FrontFile($this->mypath . "/forms/example_list.front");

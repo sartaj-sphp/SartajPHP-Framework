@@ -1,0 +1,65 @@
+Front file ##{ $frontobj->filePath }# Start Here:-
+<br />
+<div class="row">
+<div class="col">
+    <div>
+        <p>Default Super Admin login:- user:- admin and password:- 1234.</p><p>
+            You can set it in comp.php file. use $admuser = 'admin';
+            $admpass = '1234'; 
+  </p>
+<table class="table">
+    <tr><td>Project Path</td><td>##{$sphp_settings->getProj_path()}#</td></tr>
+    <tr><td>Project Registery file reg.php</td><td>##{''. $sphp_settings->getProj_path() . '/reg.php'}#</td></tr>
+    <tr><td>Project Settings file comp.php</td><td>##{''. $sphp_settings->getProj_path() . '/comp.php'}#</td></tr>
+    <tr><td>Current Browser Request to Appgate</td><td>##{$sphp_router->getCurrentRequest()()}#</td></tr>
+    <tr><td>Current Browser Request Event</td><td>##{$parentapp->page->getEvent()}#</td></tr>
+    <tr><td>Current Browser Request Event Param</td><td>##{$parentapp->page->getEventParameter()}#</td></tr>
+    <tr><td>Register App with Appgate which running this file</td><td>##{$a=$sphp_router->getCurrentAppPath(); $a[0]}#</td></tr>
+    <tr><td>This Front file Path check setFrontFile in BasicApp's PageEvent page_new event handler</td><td>##{$frontobj->getFilePath()}#</td></tr>
+    <tr><td>Master file Path check setMasterFile in BasicApp's LifeCycle onstart Event Handler</td><td>##{$parentapp->page->masterfilepath}#</td></tr>
+</table>
+<p>
+Master design file path: ##{$parentapp->page->masterfilepath; }#  You can edit menu bar and basic html design
+in this file. Which master design file work is set in application path:-
+        </p>
+       
+    </div>
+<form id="form1" runat="server" class="form-horizontal">
+    <label for="txtname">Name</label><br />
+<span id="spn2" runat="server"></span>
+ <input id="txtname" runat="server" type="text" dfield="" fun-submitAJAX="keyup"  fui-setForm="form1" fun-setMsgName="Name" fui-setRequired="" fui-setMinLen="4" fui-setMaxLen="8" />
+<input type="submit" value="Submit" />
+</form>
+<!-- AJAX form -->
+<span id="spn1">Server Response Display here</span>
+<form id="form2" runat="server" class="form-horizontal" fun-setAJAX=""  action="##{ getEventURL('formsub',1) }#">
+    <label for="txtaddress">Address</label>
+ <input id="txtaddress" runat="server" type="text" dfield=""  fui-setForm="form2" fun-setMsgName="Address" fui-setRequired="" fui-setMinLen="4" fui-setMaxLen="8" />
+<input type="submit" value="Submit AJAX" />
+</form>
+</div>
+</div>
+
+<br />
+Front file ##{ $frontobj->getFilePath() }# End Here:-
+<br />
+<br />
+<p>For Binding Python or Node JS, you may need to install python and node js on your system</p>
+<div id="div1" runat="server" path="slibpath/comp/server/SocketOutput.php" lfun-setURL="localhost:8001"></div>
+<h2>Integrate, bind Pyhton with SartajPhp App with use of "\Sphp\tools\NativeApp" Class</h2>
+
+<div class="row row-cols-1 gap-2">
+    <button id="python1" class="btn btn-primary" onclick="callApp('bind_python','genimg')">Start Python App</button>
+    <button class="btn btn-primary" onclick="callApp('bind_python','quitme')">Quit Python</button>
+	
+	<br /><br />
+</div>
+
+<h2>Integrate, bind Node JS with SartajPhp App with use of "\Sphp\tools\NativeApp" Class</h2>
+
+<div class="row row-cols-1 gap-2">
+    <button id="node1" class="btn btn-primary" onclick="callApp('bind_node','genimg')">Start Node JS App</button>
+    <button class="btn btn-primary" onclick="callApp('bind_node','quitme')">Quit Node JS App</button>
+	
+	<br /><br />
+</div>

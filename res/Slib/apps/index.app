@@ -1,5 +1,5 @@
 <?php
-class index extends \Sphp\tools\BasicApp{
+class index extends \Sphp\tools\BasicGate{
     
     public function onstart() {
         global $masterf;

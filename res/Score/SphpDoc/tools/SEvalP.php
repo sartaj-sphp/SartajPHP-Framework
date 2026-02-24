@@ -19,10 +19,10 @@ public function parse($expression) {}
 * Peek ahead token
 */
 /**
-* Advance to next token
+* Back previous token
 */
 /**
-* Check if current token matches type
+* Advance to next token
 */
 /**
 * Check if current token matches type

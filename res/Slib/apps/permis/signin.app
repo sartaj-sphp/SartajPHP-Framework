@@ -6,7 +6,7 @@ global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirec
 $google_oauth_redirect_uri = getEventURL("gauthr"); 
 $google_oauth_version = 'v3';
 
-class signin extends \Sphp\tools\BasicApp {
+class signin extends \Sphp\tools\BasicGate {
 
     protected $signinvar = null;
     protected $extra = array();
@@ -89,7 +89,7 @@ class signin extends \Sphp\tools\BasicApp {
             }
             setSession('ADMIN', 0);
             // enable session on sphp app mode
-            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeApp()){
+            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeGate()){
                 // Generate a unique session id
                 $sid = session_create_id();
                 $this->Client->cookie(SphpBase::sphp_settings()->getSession_name(), $sid,false, $date_of_expiry);

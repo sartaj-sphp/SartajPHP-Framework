@@ -85,7 +85,7 @@ class Header extends \Sphp\tools\Component{
                     $menu->setNavBarCss('navbar navbar-expand-md');
                     $menu->setNavMenuCss('nav nav-pills');
                 });
-                $st = '<a href="'. getAppURL('index') .'" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none gap-3">
+                $st = '<a href="'. getGateURL('index') .'" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none gap-3">
                 <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
                 <span class="fs-4">'. $this->text .'</span>
               </a>'. $menuo ;        

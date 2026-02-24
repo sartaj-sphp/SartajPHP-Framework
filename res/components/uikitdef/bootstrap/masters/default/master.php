@@ -10,7 +10,7 @@ $sj1 = SphpBase::SphpJsM();
 $sj1::addBootStrap(); 
 echo SphpBase::sphp_api()->getHeaderHTML(); 
 ?>
-<link href="<?php echo SphpBase::sphp_settings()->slib_res_path; ?>/masters/default/css/custom.css" rel="stylesheet"  type="text/css" />
+<link href="<?php echo SphpBase::sphp_settings()->comp_uikit_res_path; ?>/masters/default/css/custom.css" rel="stylesheet"  type="text/css" />
 </head>
 <body class="h-100">
 <?php echo renderFrontPlace('main_master','centersp1'); ?>

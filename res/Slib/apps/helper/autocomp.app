@@ -1,6 +1,6 @@
 <?php
 
-class autocomp extends Sphp\tools\BasicApp{
+class autocomp extends Sphp\tools\BasicGate{
     public $atype = "";
     public $aid = "";
     public $lblid = "";
@@ -34,7 +34,7 @@ class autocomp extends Sphp\tools\BasicApp{
         $this->getList(new SphpBase());
         $this->getList( new  Sphp\kit\Eventer());
         
-        $this->getList(new Sphp\tools\BasicApp());
+        $this->getList(new Sphp\tools\BasicGate());
         //$this->getList($this);
         //$this->getList($this->JQuery);
         

@@ -1,6 +1,6 @@
 <?php
-include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisApp.php");
-class mebhome extends PermisApp {
+include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisGate.php");
+class mebhome extends PermisGate {
 
     public $genFormFront = null;
     

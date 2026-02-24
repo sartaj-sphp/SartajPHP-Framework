@@ -1,7 +1,7 @@
 <section class="content-header sty-one">
     <h1 class="text-black">##{$pageName}#</h1>
     <ol class="breadcrumb">
-        <li><a href="##{getAppURL('mebhome')}#">Home</a></li>        
+        <li><a href="##{getGateURL('mebhome')}#">Home</a></li>        
         <li><i class="fa fa-angle-right"></i>##{$pageName}#</li>
     </ol>
 </section>

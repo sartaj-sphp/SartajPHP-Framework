@@ -15,7 +15,7 @@
 ## Correct
 
 ```html
-<form action="##{getThisURL()}#">
+<form action="##{getThisGateURL()}#">
 ```
 
 Use JavaScript for client-only behavior.

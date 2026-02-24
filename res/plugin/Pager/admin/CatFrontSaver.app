@@ -4,7 +4,7 @@
  *
  * @author sartaj
  */
-class CatFrontSaver extends \Sphp\tools\BasicApp{
+class CatFrontSaver extends \Sphp\tools\BasicGate{
     private $tmp1 = null;
     
     public function onstart() {

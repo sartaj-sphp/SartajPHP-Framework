@@ -6,21 +6,8 @@
 */
 class DIR {
 public $arr = Array();
-public static function directoryExists($dirPath){
-$ret = false;
-if(file_exists($dirPath) && is_dir($dirPath)){
-$ret = true;
-}
-return $ret;
-}
-public static function directoryCreate($dirPath){
-$ret = false;
-if(!file_exists($dirPath) && mkdir($dirPath)){
-chmod($dirPath, 0775);
-$ret = true;
-}
-return $ret;
-}
+public static function directoryExists($dirPath){}
+public static function directoryCreate($dirPath){}
 public function directoriesCreate($dirPath){}
 public function isIgnoreFolder($folder,$ignore_folder=array()) {}
 public function isIgnoreFile($file,$ignore_file=array()) {}

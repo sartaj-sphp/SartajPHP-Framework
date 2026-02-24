@@ -1,18 +1,25 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+	##{$caller->renderAndroidSettings("plugins")}#
 }
 
 android {
-    namespace = "<?php echo $caller->mobappid ; ?>"
-    compileSdk = 34
+    namespace = "##{$caller->mobappid}#"
+    compileSdk = ##{$caller->compileSdkVersion}#
+
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
+    }
 
     defaultConfig {
-        applicationId = "<?php echo $caller->mobappid ; ?>"
-        minSdk = 25
-        targetSdk = 34
+        applicationId = "##{$caller->mobappid}#"
+        minSdk = ##{$caller->minSdkVersion}#
+        targetSdk = ##{$caller->targetSdkVersion}#
         versionCode = 1
-        versionName = "<?php echo $caller->mobappversion ; ?>"
+        versionName = "##{$caller->mobappversion}#"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -46,8 +53,15 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
+    
     buildToolsVersion = "34.0.0"
+	
+    ##{raw:$caller->renderAndroidSettings("android")}#
+	
 }
 
 dependencies {
@@ -62,7 +76,13 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation(files("libs/webviewlib-release.aar"))
+    implementation(fileTree(mapOf(
+        "dir" to "libs",
+        "include" to listOf("*.jar")
+    )))
 
+  ##{raw:$caller->renderAndroidSettings("dependency")}#
+	
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

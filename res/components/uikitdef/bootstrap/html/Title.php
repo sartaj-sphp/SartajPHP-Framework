@@ -87,12 +87,12 @@ namespace Sphp\Comp\Html {
                 \SphpBase::sphp_settings()->keywords = explode(",",\SphpBase::sphp_settings()->metakeywords);
             }
             // create social media og meta tags for sharing webpage
-            $str1 = '<link rel="canonical" href="'. getThisURL() .'" /><meta property="og:locale" content="en_US" />
+            $str1 = '<link rel="canonical" href="'. getThisGateURL() .'" /><meta property="og:locale" content="en_US" />
 		<meta property="og:site_name" content="'. $cmpname .'" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="'. \SphpBase::sphp_settings()->title .'" />
 		<meta property="og:description" content="'. \SphpBase::sphp_settings()->metadescription .'" />
-		<meta property="og:url" content="'. getThisURL() .'" />';
+		<meta property="og:url" content="'. getThisGateURL() .'" />';
             if ($this->element->hasAttribute("img")) {
                 $str1 .= '<meta property="og:image" content="'. $this->element->getAttribute("img") .'" />';
             }else{

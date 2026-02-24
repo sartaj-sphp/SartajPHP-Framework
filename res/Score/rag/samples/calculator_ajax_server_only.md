@@ -1,19 +1,19 @@
-# AJAX Calculator only Server Side Validation (BasicApp)
+# AJAX Calculator only Server Side Validation (BasicGate)
 
-## App: calculator.app register with Appgate=calculator and URL=calculator.html
+## App: uucalculatorGate.php register with Gate=calculator and URL=calculator.html
 
 This sample Design UI with HTML in Front File and Calculate all mathematical 
-calculations on Server Side in BasicApp. Finally result send as AJAX response 
+calculations on Server Side in BasicGate. Finally result send as AJAX response 
 with JSServer Object to <div> Tag with id=result. 
 
 ---
 
 ## 1️⃣ Application File
 
-**`apps/calculator.app`**
+**`apps/uucalculatorGate.php`**
 
 ```php
-class calculator extends Sphp\tools\BasicApp {
+class calculator extends Sphp\tools\BasicGate {
     private $frtMain = null;
 
     public function onstart(){
@@ -57,9 +57,9 @@ fun-submitAJAX="change,|##{getEventURL('calc')}#,|numa,numb"
 fun-setOptions="+,-"></select>
 ```
 
-## 3️⃣ Register App File with SartajPHP reg.php
+## 3️⃣ Register Gate File with SartajPHP reg.php
 
 ```php
-// register Appgate=calculator So Browser URL=calculator.html
-registerApp("calculator",__DIR__ ."/apps/calculator.app");
+// register Gate=calculator So Browser URL=calculator.html
+uuregisterGate("calculator",__DIR__ ."/apps/uucalculatorGate.php");
 ```

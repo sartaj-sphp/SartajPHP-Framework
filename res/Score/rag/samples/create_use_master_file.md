@@ -5,7 +5,7 @@ A SartajPHP Master File is a **procedural PHP script** (not a class) that:
 * Defines the global HTML structure (`<head>` and `<body>`).
 * Registers and runs **Front Places** (like menus, sidebars).
 * Includes framework-managed assets (CSS, JS libraries).
-* Renders the dynamic output from the App and its Front Files using the critical `SphpBase::getAppOutput()` call.
+* Renders the dynamic output from the Gate and its Front Files using the critical `SphpBase::getAppOutput()` call.
 
 ---
 
@@ -48,7 +48,7 @@ Here is the correct process, structured as Retrieval-Augmented steps, to transfo
     
     <?php
         // 6. RENDER APP OUTPUT (MOST CRITICAL LINE)
-        // This injects the dynamic content from your BasicApp and its Front File.
+        // This injects the dynamic content from your BasicGate and its Front File.
         SphpBase::getAppOutput();
     ?>
 
@@ -128,7 +128,7 @@ runFrontPlace("mainmenu", "left");
 ```
 
 #### **Step R3: Create Supporting Files (Front Place & App)**
-*   **Retrieve** the concept of Front Places and BasicApps from the documentation.
+*   **Retrieve** the concept of Front Places and BasicGates from the documentation.
 *   **Generate** the minimal required supporting files for the Master File to work.
 
 **1. Create the Front Place File (`menu.php`):**
@@ -156,16 +156,16 @@ class menu extends FrontPlace {
 ?>
 ```
 
-**2. Create a BasicApp (`index.app`) to handle requests:**
+**2. Create a BasicGate (`IndexGate.php`) to handle requests:**
 ```php
 <?php
-// apps/index.app
+// apps/IndexGate.php
 namespace apps;
 
-use Sphp\apps\BasicApp;
+use Sphp\apps\BasicGate;
 use Sphp\tools\FrontFile;
 
-class index extends BasicApp {
+class index extends BasicGate {
     private $frtMain;
     
     public function onstart() {
@@ -197,9 +197,9 @@ class index extends BasicApp {
 
 1.  **Master File (`master.php`)** is a **procedural script** that sets up the page skeleton, registers/runs Front Places, and calls `SphpBase::getAppOutput()`.
 2.  **Front Places** (like `menu.php`) are PHP classes that generate reusable HTML chunks inserted via `renderFrontPlace()`.
-3.  **BasicApp** (like `index.app`) handles the request event (`page_new`) and sets the main **Front File** (`index_main.front`) which holds the page-specific content.
+3.  **BasicGate** (like `IndexGate.php`) handles the request event (`page_new`) and sets the main **Front File** (`index_main.front`) which holds the page-specific content.
 4.  The **Framework** stitches it together: The content from the App's Front File is injected where `SphpBase::getAppOutput()` is called in the Master File.
 
-This architecture cleanly separates your global layout (Master File), reusable widgets (Front Places), and page-specific content/logic (BasicApp + Front File).
+This architecture cleanly separates your global layout (Master File), reusable widgets (Front Places), and page-specific content/logic (BasicGate + Front File).
 
 To proceed, take your specific HTML file, insert its unique `<head>` elements and static `<body>` layout into the `master.php` skeleton from Step R2, and ensure your main content area is replaced by the `SphpBase::getAppOutput();` call.

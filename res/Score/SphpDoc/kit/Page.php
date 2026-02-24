@@ -2,7 +2,7 @@
 /**
 * page class
 *
-* This class is parent class of all page application. You can Develop SartajPHP Application with extend
+* This class is parent class of all page Gate. You can Develop SartajPHP Gate with extend
 * of this class or simple use SphpBase::page() function to implement page object in any php module.
 * 
 * @author     Sartaj Singh
@@ -23,28 +23,28 @@ public $act = "";
 public $sact = "";
 public $evtp = "";
 public $txtid = "";
-public $apppath = "";
-public $appfilepath = "";
-public $appobj = null;
+public $gate_dir_path = "";
+public $gate_file_path = "";
+public $current_gate_obj = null;
 public $tblName = "";
 public $auth = "";
 public $masterfilepath = "";
-/** App use Session Security */
+/** Gate use Session Security */
 public $isSesSecure = false;
 /**
 * Advance No Use
 * @depends start
 */
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 public function page_init() {}
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 public function page_load() {}
 /** Advance 
-* Appgate Event handler like (url=index-page-contacts.html)
+* Gate Event handler like (url=index-page-contacts.html)
 * this function gives $event = page and $evtp = contacts
 * @param string $event
 * @param string $evtp
@@ -60,87 +60,87 @@ public function page_event($event, $evtp) {}
 public function page_action($act, $event, $evtp) {}
 /** Special Event
 * Delete Event Handler, occur when browser get (url=index-delete.html)
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_delete() {}
 /** Special Event
 * View Event Handler, occur when browser get (url=index-view-19.html)
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 * view = event name 
 * 19 = recid of database table or any other value.
 */
 public function page_view() {}
 /** Special Event
 * Submit Event Handler, occur when browser post form (url=index.html)
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_submit() {}
 /** Special Event
 * Insert Event Handler, occur when browser post form (url=index.html) as new form
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_insert() {}
 /** Special Event
 * Update Event Handler, occur when browser post form (url=index.html) as filled form
 * from database with view_data function
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_update() {}
 /** Special Event
 * New Event Handler, occur when browser get (url=index.html) first time
-* where index is Appgate of application and application path is in reg.php file 
+* where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_new() {}
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 public function page_unload() {}
 /**
-* Get Appgate Event name of current request
+* Get Gate Event name of current request
 * @return string
 */
 public function getEvent() {}
 /**
-* Get Appgate Event parameter of current request
+* Get Gate Event parameter of current request
 * @return string
 */
 public function getEventParameter() {}
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 public function readyPage() {}
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 public function init() {}
 /** Advance 
-* Overload, Event Handler For App Type development
+* Overload, Event Handler For Gate Type development
 */
 /**
-* Set which user Permission can access this application. Default Permission is ALL.
-* You can set session variable in login app 
+* Set which user Permission can access this Gate. Default Permission is ALL.
+* You can set session variable in login Gate 
 * SphpBase::sphp_request()->session('lstpermis','profile-view,prfile-delete');
-* If user is not login with specific permission then application exit and
+* If user is not login with specific permission then Gate exit and
 * redirect according to the getWelcome function in comp.php
 * @param string $perm Default=null mean, permission to everyone<p>
-* @param string $ctrl optional Default is current App, permission like index-view where index is Appgate.
-* permission to allow app. Example:- AuthenticatePerm("view")
+* @param string $gate optional Default is current Gate, permission like index-view where index is Gate.
+* permission to allow Gate Processing. Example:- AuthenticatePerm("view")
 * </p>
 * @return boolean true if permission match with session variable lstpermis, never return false
 */
-public function getAuthenticatePerm($perm=null,$ctrl=null) {}
+public function getAuthenticatePerm($perm=null,$gate=null) {}
 /**
 *  Check Permission is given to authorised user or not given.
 * @param string $perm permission to check
-* @param string $ctrl optional Default is current App, permission like index-view where index is Appgate.
+* @param string $gate optional Default is current Gate, permission like index-view where index is Gate.
 * @return bool return true if permission found
 */
-public function hasPermission($perm,$ctrl=null) {}
+public function hasPermission($perm,$gate=null) {}
 /**
-* Set which user can access this application. Default user is GUEST.
-* You can set session variable in login app 
+* Set which user can access this Gate. Default user is GUEST.
+* You can set session variable in login Gate 
 * SphpBase::sphp_request()->session('logType','ADMIN');
-* If user is not login with specific type then application exit and
+* If user is not login with specific type then Gate exit and
 * redirect according to the getWelcome function in comp.php
 * @param string $auth <p>
 * comma separated list of string. Example:- Authenticate("GUEST,ADMIN") or Authenticate("ADNIN")
@@ -171,12 +171,12 @@ public function checkUnAuth($param) {}
 */
 public function checkAuth($param) {}
 /**
-* Read logType session variable as User Type of login user which is set in login app
+* Read logType session variable as User Type of login user which is set in login Gate
 * @return string
 */
 public function getAuthenticateType() {}
-/** Application exit if URL isn't session secure
-*@return Application exit if URL isn't session secure
+/** Gate exit if URL isn't session secure
+*@return Gate exit if URL isn't session secure
 */
 public function sesSecure() {}
 /**
@@ -232,7 +232,7 @@ public function setDBEngine($objdbengine) {}
 /**
 * This Function delete the record of database table with generate and execute delete query.
 * DELETE FROM $tblName WHERE id='$evtp'
-* $tblName = default table of application
+* $tblName = default table of Gate
 * $evtp = \SphpBase::page()->getEventParameter()
 * @param string $recid If empty then use event parameter as record id.<br>
 *
@@ -253,7 +253,7 @@ public function insertData($form1,$extra = array()) {}
 * When Components use Database Binding. Then This Function Fill the values from database table to a
 * Component value.<br>
 * changeable $sql = "SELECT $fldList FROM $tbln $where"<br>
-* $tbln = use default tblName of application or Components dtable attribute
+* $tbln = use default tblName of Gate or Components dtable attribute
 * SphpBase::page()->viewData(,,"WHERE id='1'");<br>
 * SphpBase::page()->viewData('','aname,pass,lst',"WHERE lastname='devel'");<br>
 * @param type $form <p> Form Component

@@ -1,5 +1,5 @@
 Steps to convert any online webpage into Master File:- 
-Master File provide design for SartajPHP App in which Front File output is displayed according to css,js libraries load in Master File. 
+Master File provide design for SartajPHP Gate in which Front File output is displayed according to css,js libraries load in Master File. 
 Here is easy way to convert any webpage into Master File of SartajPHP.
 1. Identify HTML which is project wide not page wide and then copy all those HTML code into Master File.
 2. Identify HTML layout and mark dynamic content, menu, footer menu and other dynamic places.
@@ -143,7 +143,7 @@ You've successfully deconstructed the STAX theme. The **static shell** is in `ma
 
 To move forward:
 1.  **Build the Components**: Start creating the Testimonial or Portfolio components you identified.
-2.  **Populate with Data**: Your BasicApp (`index.app`) will fetch data (like products, posts) and pass it to the Front File and Components using `$frontobj->set()`.
+2.  **Populate with Data**: Your BasicGate (`IndexGate.php`) will fetch data (like products, posts) and pass it to the Front File and Components using `$frontobj->set()`.
 3.  **Style Refinement**: Ensure your local `stax-style.css` matches the original design.
 
 

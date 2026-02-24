@@ -1,3 +1,3 @@
 <?php
-//registerApp("index","apps/index.app");
+//registerGate("index","apps/index.app");
 

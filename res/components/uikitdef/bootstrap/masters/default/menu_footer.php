@@ -11,10 +11,10 @@ class FooterMenuUi extends BootstrapFooterMenu{
         $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
         
         if(SphpBase::page()->getAuthenticateType() == "GUEST"){
-            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+            $this->sphp_api->addMenuLink("Login", getGateURL("signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }else{            
-            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Dashboard",getGateURL('mebhome'),"fa fa-home","Home");
             $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }

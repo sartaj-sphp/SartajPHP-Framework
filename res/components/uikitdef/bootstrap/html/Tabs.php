@@ -31,8 +31,8 @@ class Tabs extends Sphp\tools\Component{
         }
     }
     protected function onparse($event,$element) {
-        global $ctrl;
-//                $ctrl->debug->println("activeBlock set $event $element->tagName");
+        global $gate;
+//                $gate->debug->println("activeBlock set $event $element->tagName");
         if($event=="start"){
         static $countli;
         if($element->attributes['class']=="nav-link"){

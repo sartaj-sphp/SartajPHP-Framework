@@ -7,30 +7,30 @@ Models **MUST imitate these patterns exactly**.
 
 ## 9.1 Minimal “Hello World” Application
 
-### Application Code (`apps/Hello.app`)
+### Application Code (`apps/HelloGate.php`)
 
 ```php
-use Sphp\tools\BasicApp;
+use Sphp\tools\BasicGate;
 use Sphp\tools\FrontFile;
 
-class Hello extends BasicApp
+class Hello extends BasicGate
 {
     private $frtMain = null;
 
     public function onstart()
     {
-        // App initialization only
+        // Gate initialization only
         // FrontFile object created once
-        // Name of Front File "App Class Name" + "_" + "main" + ".front"
-        // store inside fronts folder inside App folder
+        // Name of Front File "Gate Class Name" + "_" + "main" + ".front"
+        // store inside fronts folder inside Gate folder
         $this->frtMain = new FrontFile($this->mypath . '/fronts/hello_main.front');
     }
 
     /**
      * Default page request: index.html → page_new
-     * need register App File with SartajPHP inside reg.php 
-     * use code registerApp("index",__DIR__ ."/apps/Hello.app");
-     * index = Appgate = URL = index.html or index-*.html
+     * need register Gate File with SartajPHP inside reg.php 
+     * use code uuregisterGate("index",__DIR__ ."/apps/HelloGate.php");
+     * index = Gate = URL = index.html or index-*.html
      */
     public function page_new()
     {
@@ -55,26 +55,26 @@ class Hello extends BasicApp
 ### Application
 
 ```php
-use Sphp\tools\BasicApp;
+use Sphp\tools\BasicGate;
 
-class index extends BasicApp {
+class index extends BasicGate {
 
     private $frtMain = null;
 
     public function onstart()
     {
-        // App initialization only
+        // Gate initialization only
         // FrontFile object created once
-        // Name of Front File "App Class Name" + "_" + "main" + ".front"
-        // store inside fronts folder inside App folder
+        // Name of Front File "Gate Class Name" + "_" + "main" + ".front"
+        // store inside fronts folder inside Gate folder
         $this->frtMain = new FrontFile($this->mypath . '/fronts/index_main.front');
     }
 
     /**
      * Default page request: index.html → page_new
-     * need register App File with SartajPHP inside reg.php 
-     * use code registerApp("index",__DIR__ ."/apps/index.app");
-     * index = Appgate = URL = index.html or index-*.html
+     * need register Gate File with SartajPHP inside reg.php 
+     * use code uuregisterGate("index",__DIR__ ."/apps/IndexGate.php");
+     * index = Gate = URL = index.html or index-*.html
      */
     public function page_new()
     {
@@ -115,7 +115,7 @@ class index extends BasicApp {
 
 ## 9.4 Reference Rules
 
-* Always generate App + FrontFile together
+* Always generate Gate + FrontFile together
 * Never invent lifecycle methods
 * Never mix PHP and FrontFile
 * Never use `.php` as FrontFile

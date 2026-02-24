@@ -1,7 +1,7 @@
 <?php
-include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisApp.php");
+include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisGate.php");
 
-class mebProfile extends PermisApp {
+class mebProfile extends PermisGate {
 
     public function onstart() {
         global $mebmasterf;

@@ -4,7 +4,7 @@
 <form id="formsignin" runat="server" method="post" class="py-4" runcb="true" sphp-cb-card="">
         <input type="text" runat="server" id="uname" fui-setForm="formsignin" placeholder="Email" fui-setRequired="" fui-setMinLen="4" fui-setStyler="2">
         <input type="password" runat="server" id="pword" fui-setForm="formsignin" placeholder="Password" fui-setRequired="" fui-setMinLen="4" fui-setStyler="2">
-    <input type="text" runat="server" id="catcaha" path="components/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="formsignin" placeholder="Secure Code">
+    <input type="text" runat="server" id="catcaha" path="comppath/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="formsignin" placeholder="Secure Code">
 
         <div class="row">
         <div class="col-sm-4">
@@ -23,7 +23,7 @@
     </div>
 </form>
     
-<div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentapp->getAuthGoogle(); }#" >
+<div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentgate->getAuthGoogle(); }#" >
         <div class="col-sm-4"> 
             <h1>OR</h1>
     <a href="##{getEventURL('gauth')}#" class="btn btn-primary google-login-btn">

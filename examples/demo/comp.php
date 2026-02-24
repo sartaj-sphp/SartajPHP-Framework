@@ -21,8 +21,8 @@ $mailUser = "info@domain.com";
 $mailPass = "";
 $mailPort = "26";
 
-$masterf = "temp/default/master.php";
-//$admmasterf = "temp/admin/master.php";
+$masterf = "masters/default/master.php";
+$mebmasterf = $masterf;
 
 function getWelcome(){
 $page = SphpBase::page();

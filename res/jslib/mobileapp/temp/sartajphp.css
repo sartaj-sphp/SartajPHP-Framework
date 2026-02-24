@@ -1,0 +1,76 @@
+body{
+background-image: url("./favicon/bg3.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.page__background{
+background-image: url("./favicon/bg3.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.displaynone{
+    display: none;
+}
+.shadow1{
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);    
+}
+.shadow2{
+    box-shadow: 1px -4px 10px 10px rgba(0, 0, 0, 0.3);    
+}
+.img-opacity{
+    opacity: 0.3;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    background-position-x: -20px;
+    background-position-y: -200px;
+    background-repeat: repeat-x;
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    /*color: #818181;*/
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.imgBrand{
+height: 80px;
+padding-bottom: 10px;
+padding-top: 10px;
+}
+.bg-header{
+    height: auto;
+}
+.bg-col1{
+    background-color: #4bafc6;
+}
+.txtimei{
+    font-size: 20px;
+    color: #000000;
+}
+#btnUnlock{
+    
+}
+.fixheaderbar { padding-top: 140px; }
+@media screen and (max-width: 768px) {
+    .fixheaderbar { padding-top: 140px; }
+}

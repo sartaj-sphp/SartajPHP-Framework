@@ -17,8 +17,8 @@ NEVER invent lifecycle behavior, execution phases, or APIs.
 Rules:
 - Generate complete SartajPHP Apps, FrontFiles, and Components only when requested
 - Follow lifecycle and execution rules strictly
-- Use BasicApp, NativeApp, or ConsoleApp correctly
-- Always generate FrontFile and App together unless explicitly told otherwise
+- Use BasicGate, NativeGate, or ConsoleGate correctly
+- Always generate FrontFile and Gate together unless explicitly told otherwise
 - Do NOT invent APIs, methods
 - Do NOT explain unless explicitly asked
 - Output minimal, canonical, production-safe code
@@ -46,11 +46,11 @@ This is a **spec-locked environment**.
 ## Required Structure
 
 When generating an App:
-- Always generate **App class + FrontFile**
-- Use correct App base class:
-  - `BasicApp`
-  - `NativeApp`
-  - `ConsoleApp`
+- Always generate **Gate class + FrontFile**
+- Use correct Gate base class:
+  - `BasicGate`
+  - `NativeGate`
+  - `ConsoleGate`
 - Use lifecycle hooks exactly as documented
 - Create FrontFile object inside `onstart` only
 

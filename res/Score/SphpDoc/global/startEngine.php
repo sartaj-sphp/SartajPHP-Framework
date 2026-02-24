@@ -9,7 +9,7 @@ class SphpPermission {
 * $arrp = array("perm1" => true,"perm2" => true);
 * perm1 can be like index-view or allview or any word you want to use as
 * permission identification. This permissions can be manage content in front file or
-* enable disable application features or menus.
+* enable disable Gate features or menus.
 * </p>
 */
 public function setPermissions($arrP) {}
@@ -28,7 +28,7 @@ public function hasPermission($permission) {}
 */
 public function isPermission($permissions) {}
 /**
-* Authorise user if permission is available otherwise application will be exit 
+* Authorise user if permission is available otherwise Gate will be exit 
 * and redirected by according to getWelcome function in comp.php file in project folder 
 * @param string $perm <p>
 * string or comma separated string list
@@ -45,208 +45,139 @@ public static $stmycache = null;
 * @static
 * @return \Sphp\Engine
 */
-public static function engine() {
-return self::$engine;
-}
+public static function engine() {}
 /**
 * Get Router
 * @static
 * @return \Sphp\core\Router
 */
-public static function sphp_router() {
-return self::$sphp_router;
-}
+public static function sphp_router() {}
 /**
 * Get SphpAPI
 * @static
 * @return \Sphp\core\SphpAPI
 */
-public static function sphp_api() {
-return self::$sphp_api;
-}
+public static function sphp_api() {}
 /**
 * Get Request
 * @static
 * @return \Sphp\core\Request
 */
-public static function sphp_request() {
-return self::$sphp_request;
-}
+public static function sphp_request() {}
 /**
 * Get Response
 * @static
 * @return \Sphp\core\Response
 */
-public static function sphp_response() {
-return self::$sphp_response;
-}
+public static function sphp_response() {}
 /**
 * Get Session
 * @static
 * @return \Sphp\core\Session
 */
-public static function sphp_session() {
-return self::$sphp_session;
-}
+public static function sphp_session() {}
 /**
 * Get Settings
 * @static
 * @return \Sphp\core\Settings
 */
-public static function sphp_settings() {
-return self::$sphp_settings;
-}
+public static function sphp_settings() {}
 /**
 * Get SphpPermission
 * @static
 * @return \SphpPermission
 */
-public static function sphp_permissions() {
-return self::$sphp_permissions;
-}
+public static function sphp_permissions() {}
 /**
 * Get JSServer
 * @static
 * @return \Sphp\kit\JSServer
 */
-public static function JSServer() {
-return self::$JSServer;
-}
+public static function JSServer() {}
 /**
 * Get JQuery
 * @static
 * @return \Sphp\kit\JQuery
 */
-public static function JQuery() {
-return self::$JQuery;
-}
+public static function JQuery() {}
 /**
 * Get Page Object
 * @static
 * @return \Sphp\kit\Page
 */
-public static function page() {
-return self::$page;
-}
+public static function page() {}
 /**
 * Set Page Object
 * @static
 * @param \Sphp\kit\Page $p
 */
-public static function set_page($p) {
-//in future controll here for assignment more then one
-self::$page = $p;
-}
+public static function set_page($p) {}
 /**
 * Get getAppOutput
 * @static
 */
-public static function getAppOutput() {
-self::$dynData->render();
-}    
+public static function getAppOutput() {}    
 /**
 * Get DebugProfiler
 * @static
 * @return \Sphp\core\DebugProfiler
 */
-public static function debug() {
-return self::$debug;
-}    
+public static function debug() {}    
 /**
 * Get DB Engine
 * @static
 * @return \MySQL
 */
-public static function dbEngine() {
-return self::$dbEngine;
-}
+public static function dbEngine() {}
 /**
 * set DB Engine
 * @static
 * @param \MySQL $d
 */
-public static function set_dbEngine($d) {
-self::$dbEngine = $d;
-}
+public static function set_dbEngine($d) {}
 /**
 * Get JS Manager
 * @static
 * @return \SphpJsM
 */
-public static function sphpJsM() {
-return self::$sphpJsM;
-}
+public static function sphpJsM() {}
 /**
 * Advance Function, No Use
 * @static
 * @ignore
 */
-public static function _startme() {
-// set up settings
-self::$sphp_settings = new \Sphp\Settings();
-}
 /**
 * Advance Function, No Use
 * @static
 * @ignore
 */
-public static function init() {
-global $stmycache;
-self::$stmycache = $stmycache;
-self::$sphp_request = new \Sphp\core\Request();
-}
+public static function init() {}
 /**
 * Advance Function, No Use
 * @static
 * @ignore
 */
-public static function setReady($engine) {
-self::$engine = $engine;
-self::$sphp_router = $engine->getRouter();
-self::$sphp_api = $engine->getSphpAPI();
-self::$sphp_response = $engine->getResponse();
-self::$sphp_session = $engine->getSession();
-self::$JSServer = $engine->getJSServer();
-self::$JQuery = $engine->getJQuery();
-self::$debug = $engine->getDebug();
-self::$dbEngine = $engine->getDBEngine();
-self::$sphp_permissions = new SphpPermission();
-self::$sphpJsM = new \SphpJsM();
-}
+public static function setReady($engine) {}
 /**
 * Advance Function, No Use
 * @static
 * @ignore
 */
-public static function refreshCacheEngine() {
-global $ytetimestart1;
-$ytetimestart1 = microtime(true);
-self::$stmycache = new stmycache();
-self::$sphp_response->init();
-return self::$stmycache;
-}
+public static function refreshCacheEngine() {}
 /**
 * Advance Function, No Use
 * @static
 * @ignore
 */
-public static function addNewRequest() {
-self::$sphp_api->init();
-self::$JSServer->init();
-self::$sphpJsM->init();
-self::$sphp_request->parseRequest();
-self::$sphp_router->route();
-self::$page()->init();
-self::$engine->engine_start_time = microtime(true);
+public static function addNewRequest() {}
 }
-}
-final class SphpCodeBlock{
+class SphpCodeBlock{
 /**
 * Add Code Block for FrontFile. use runcb="true" and sphp-cb-blockName on tag
 * @param string $name Name of code block
-* @param function $callback function($element,$args,$lstOther_CB){} 
+* @param function $callback function($element,$args,$lstOther_CB) 
 * $element=NodeTag object, $args=list of arguments, $lstOther_CB=List of other Code Blocks
-* apply on this element 
+* Gately on this element 
 * @param array $para add css,html for simple code block
 * Values can pass as associative array:-
 *  class = CSS class Attribute
@@ -257,24 +188,9 @@ final class SphpCodeBlock{
 *  innerposttag = tag end inner html
 *  documentation = Help details about code block, also display in VS Code and other editors.
 */
-public static function addCodeBlock($name,$callback=null,$para=[]){
-$defpara = SphpCodeBlock::genCodeBlock();
-$defpara["callback"] = $callback;
-$a1 = array_merge($defpara,$para);
-SphpCodeBlock::$cb[$name] = $a1;
-}
-return $a1;
-}
-public static function getCodeBlocks(){
-if(! SphpCodeBlock::$blnresload){
-SphpCodeBlock::$blnresload = true;
-addFileLink(SphpBase::sphp_settings()->comp_uikit_res_path . "/assets/sphpcodeblocks.css", true);
-}
-return SphpCodeBlock::$cb;
-}
-public static function getCodeBlock($name){
-return SphpCodeBlock::$cb[$name];
-}
+public static function addCodeBlock($name,$callback=null,$para=[]){}
+public static function getCodeBlocks(){}
+public static function getCodeBlock($name){}
 }
 if (!$blnPreLibCache) {
 if ($blnPreLibLoad) {

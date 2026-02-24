@@ -9,7 +9,7 @@ class OnsenPage extends \Sphp\tools\Component{
     public static $navigator = false;
     
 public function oncreate($element){
-    $this->setHTMLName("");
+    $this->fu_setHTMLName("");
     $this->registerEventJS('init');
     $this->registerEventJS('destroy');
     $this->registerEventJS('show');

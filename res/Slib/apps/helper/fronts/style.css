@@ -21,7 +21,7 @@ h1 {
   font-weight: normal;
   text-align: center;
   margin: 0 0 20px 0;
-  background: url(<?php echo SphpBase::sphp_settings()->res_path; ?>/apps/helper/forms/dimension.png);
+  background: url(##{$sphp_settings()->res_path}#/apps/helper/forms/dimension.png);
 }
 
 #company {

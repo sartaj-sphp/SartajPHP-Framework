@@ -47,7 +47,7 @@ Purpose:
 
 * Output server-provided values
 * Bind runtime data
-* Reflect App state
+* Reflect Gate state
 
 Expression syntax and behavior are defined in **Chapter04**.
 
@@ -123,7 +123,7 @@ A FrontFile MUST NOT contain:
 * PHP code
 * PHP tags
 * Controllers
-* App logic
+* Gate logic
 * Request parsing logic
 * Citation markers (`[1]`, `[2]`, etc.)
 * Documentation artifacts
@@ -135,7 +135,7 @@ A FrontFile MUST NOT contain:
 FrontFiles:
 
 * Do **not** define lifecycle
-* Do **not** invoke App methods
+* Do **not** invoke Gate methods
 * Do **not** replace Apps
 * Do **not** act as Controllers
 

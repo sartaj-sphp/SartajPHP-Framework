@@ -1,14 +1,47 @@
 <?php 
-include_once($slibpath . "/comp/bundle/menu/BootstrapMenu.php"); 
-class MenuUi extends BootstrapMenu{
+/* use bootstrap menu generater file provide by SartajPHP Framework */
+include_once(SphpBase::sphp_settings()->comp_uikit_path . "/bundle/menu/BootstrapMenu.php"); 
+/* Create Class name as same as file name */
+class menu extends BootstrapMenu{
     public function onstart() {
         //$this->setNavBarCss("navbar sticky-top navbar-expand-md bg-dark navbar-dark");
         $this->sphp_api->addMenu("Home", "","fa fa-home","root");
-        $this->sphp_api->addMenuLink("Home", getAppPath("index"),"fa fa-home","Home");
-        $this->sphp_api->addMenuLink("Admin Login", getAppPath("admin"),"fa fa-home","Home");
-        $this->sphp_api->addMenuLink("User Login", getAppPath("signin"),"fa fa-home","Home");
-        $this->sphp_api->addMenuLink("Contact Us", getEventPath('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
-        include_once("plugin/cmenu.php"); 
-        
+        $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
+        $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index2'),"fa fa-fw fa-clock-o","Home");
+        if(SphpBase::page()->getAuthenticateType() == "GUEST"){
+            $this->sphp_api->addMenuLink("Login", getAppURL("signin"),"","Home");
+        }else{
+            // set menu permissions or login type, as comma separated value
+            // not work if app is not using permission system like extend as PermisApp
+            $this->sphp_api->addMenu("User",'',"fa fa-home","root",false,"ADMIN,MEMBER");
+            $this->sphp_api->addMenuLink("Users",getAppURL('mebProfile'),"fa fa-users","User",false,"mebProfile-view");
+            $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"mebProfilePermission-view");
+           // $this->sphp_api->addMenuLink("Profile Permission",getAppURL('mebProfilePermission'),"fa fa-users","User",false,"MEMBER");
+
+            $this->sphp_api->addMenu("Tools",'',"","root",false,"ADMIN");
+            $this->sphp_api->addMenuLink("Plugin Install",getAppURL('installer'),"fa fa-users","Tools");
+            $this->sphp_api->addMenuLink("DB Install",getEventURL('install','install','mebhome'),"fa fa-users","Tools");
+            
+            $this->sphp_api->addMenuLink("Dashboard",getAppURL('mebhome'),"fa fa-home","Home");
+            $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
+            include_once(PROJ_PATH . "/plugin/cmenu.php"); 
+            include_once(PROJ_PATH . "/plugin/cmebmenu.php"); 
+            include_once(PROJ_PATH . "/plugin/cadmmenu.php"); 
+        }
+    }
+    
+    public function getHeaderSubMenu() {
+        return '<div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="'. SphpBase::sphp_settings()->comp_uikit_res_path . "/masters/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">getHeaderSubMenu from menu file</a></li>
+            <li><a class="dropdown-item" href="#">for override this</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>';
     }
 }

@@ -24,8 +24,8 @@ class Tabs4 extends Sphp\tools\Component{
         echo $event;
     }
     protected function onparse($event,$element) {
-        global $ctrl;
-//                $ctrl->debug->println("activeBlock set $event $element->tagName");
+        global $gate;
+//                $gate->debug->println("activeBlock set $event $element->tagName");
         if($event=="start"){
         static $countli;
         if($element->attributes['class']=="nav-link"){
@@ -68,7 +68,7 @@ class Tabs4 extends Sphp\tools\Component{
         addHeaderJSCode('tab1', ' activeTab = "'.$this->activeli.'"; previousTab = "null";');
     }
     protected function onrender(){
-    global $ctrl;
+    global $gate;
 
         //$this->parseMe();
         $this->class .= "tabblock";

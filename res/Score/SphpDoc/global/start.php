@@ -12,30 +12,30 @@ $cacheFileList = array();
 /**
 * Cache a request URL if it doesn't need processing.
 * SphpBase::sphp_api()->addCacheList("index",100)
-* Cache index application with all events and refersh interval is 100 seconds. Cache will update the index app with
+* Cache index Gate with all events and refersh interval is 100 seconds. Cache will update the index Gate with
 * interval of 100 seconds.
 * @param string $url match for cache like cache "index" or "index-page"
 * @param int $sec Expiry Time in seconds -1 mean never expire
 * @param string $type <p>
-* type = Default Appgate mean url has Appgate name only and response to all events basis on this Appgate
-* type = ce mean Appgate-event cache only that event
-* type = cep mean Appgate-event-evtp cache only that event with that parameter
-* type = e event on any application will be use cache
-* Cache all index app responses for 1 hour
+* type = Default Gate mean url has Gate name only and response to all events basis on this Gate
+* type = ce mean Gate-event cache only that event
+* type = cep mean Gate-event-evtp cache only that event with that parameter
+* type = e event on any Gate will be use cache
+* Cache all index Gate responses for 1 hour
 *  addCacheList("index", 3600);
 *
-*  Cache specific Appgate + event
+*  Cache specific Gate + event
 *  addCacheList("blog-view", 1800, "ce");
 *
-*  Cache with Appgate + event + event parameter
+*  Cache with Gate + event + event parameter
 *  addCacheList("shop-product-shirt", 3600, "cep");
 *
-*  Cache only match event from any Appgate and with any event parameter
+*  Cache only match event from any Gate and with any event parameter
 *  addCacheList("info", 3600, "e");
 *
 * </p>
 */
-function addCacheList($url, $sec = 0, $type = "Appgate") {}
+function addCacheList($url, $sec = 0, $type = "Gate") {}
 /**
 * Check if URL register with cache list
 * @param string $url
@@ -54,7 +54,7 @@ function getCacheItem($url) {}
 */
 function clearCacheItem($url) {}
 /** isPharApp()
-* Check if application run as Phar app.
+* Check if Gate run as Phar Gate.
 * @return boolean
 */
 function isPharApp() {}
@@ -134,7 +134,7 @@ public $url_extension = ".html";
 public $act = "";
 public $sact = "";
 public $evtp = "";
-public $ctrl = "";
+public $gate = "";
 public $blnrooturi = true;
 public $htmlfileName = "";
 public $blnCash = false;

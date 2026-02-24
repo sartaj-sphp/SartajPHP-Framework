@@ -37,17 +37,13 @@ protected function  SetTokens ( $tokens )
 protected function  Reset ( $data = '' )
 {}
 abstract protected function	MinifyData ( ) ;
-/*--------------------------------------------------------------------------------------------------------------
-Minify, MinifyFile -	 
-Minifies a string/file.
-*-------------------------------------------------------------------------------------------------------------*/
-public function  Minify ( $contents )
+public function Minify ( $contents )
 {}
-public function  MinifyFrom ( $input )
+public function MinifyFrom ( $input )
 {}
-public function  MinifyTo ( $output, $contents ) 
+public function MinifyTo ( $output, $contents ) 
 {}
-public function  MinifyFileTo ( $output, $input )
+public function MinifyFileTo ( $output, $input )
 {}
 protected function  GetNextToken ( &$offset, &$token, &$token_type )
 {}

@@ -40,7 +40,7 @@ public function post_data($post, $posturl, $n=false, $session=false, $referer=""
 * @param boolean $proxystatus use proxy default false
 * @return string 
 $curl = new CURL();
-$headers = array('Content-Type:application/json');
+$headers = array('Content-Type:Gate/json');
 $ret = $curl->curl_grab_page("https://im.com/api/Device/GetVersion?key=syrurr&imei=". $param,true);
 */
 public function curl_grab_page($url,$ssl=false,$headers=array(),$post=false,$postdata=array(),$ref_url='',$session=false,$proxy='',$proxystatus=false){}

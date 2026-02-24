@@ -1,6 +1,6 @@
 <?php
 namespace Sphp\core {
-final class SphpAPI {
+class SphpAPI {
 public $errStatus = false;
 /**
 * Advance function, Internal use
@@ -135,42 +135,42 @@ public function readFromCache($filename,$ttl) {}
 */
 public function isCacheExpired($filename, $ttl) {}
 /**
-* Register Application with an Appgate
-* @param string $ctrl Name of Appgate assigned to application
-* @param string $apppath <p>
-* Attach application path. 
-* Path end with .php is module application 
-* and path end with .app is class application. 
+* Register file with App Gate Name
+* @param string $gate Name of Gate assigned to Gate
+* @param string $gate_dir_path <p>
+* Attach Gate path. 
+* Path end with .php is module Gate 
+* and path end with .Gate is class Gate. 
 * Filename should match with class name
 * </p>
-* @param string $s_namespace if class application is under a name space
+* @param string $s_namespace if class Gate is under a name space
 * @param string $permtitle Title Display in Permission List
-* @param array $permlist Create Permissions List for application
+* @param array $permlist Create Permissions List for Gate
 */
-public function registerApp($ctrl, $apppath, $s_namespace = "",$permtitle="",$permlist=null) {}
+public function registerGate($gate, $gate_dir_path, $s_namespace = "",$permtitle="",$permlist=null) {}
 /**
-* Check application is registered
-* @param string $ctrl
+* Check Gate is registered
+* @param string $gate
 * @return boolean
 */
-public function isRegisterApp($ctrl) {}
+public function isRegisterGate($gate) {}
 /**
-* Get Application Details that is registered with Appgate name $ctrl 
-* @param string $ctrl
+* Get Gate Path that is registered with Gate name $gate 
+* @param string $gate
 * @return array
 */
-public function getAppPath($ctrl) {}
+public function getGatePath($gate) {}
 /**
-* Get List of Registered Applications 
+* Get List of Registered Gates 
 * @return array
 */
-public function getRegisteredApps() {}
+public function getRegisteredGates() {}
 /**
-* Get Appgate name that has matched apppath with $appfilepath
-* @param string $appfilepath
+* Get Gate name that has matched file path with $gate_file_path
+* @param string $gate_file_path
 * @return string|null
 */
-public function getAppCtrl($appfilepath) {}
+public function getRegisteredGate($gate_file_path) {}
 /**
 * Get Root folder path of a path. 
 * It may be inside res folder or project folder.
@@ -188,30 +188,30 @@ public function getRootPath($val) {}
 public function respathToFilepath($fileurl) {}
 /**
 * Convert filepath to URL path for browser
-* $a = SphpBase::sphp_api->filepathToRespaths("apps/chat/index.app")
+* $a = SphpBase::sphp_api->filepathToRespaths("Gates/chat/index.Gate")
 * @param string $filepath
 * @return array pathinfo,directory,url path,filepath
 */
 public function filepathToRespaths($filepath) {}
 public function getMyResPath($filepath){}
 /**
-* Run Class type Application
+* Run Class type Gate
 * @param string $path
 */
-public function runApp($path) {}
+public function runGate($path) {}
 /**
-* Create Application object from $path as filepath
+* Create Gate object from $path as filepath
 * @param string $path
 * @return \Sphp\core\formname
 */
-public function getAppObject($path) {}
+public function getGateObject($path) {}
 /**
 * 
-* @param string $filepath App Path
-* @param boolean $setEnv Default true = set apppath variable
+* @param string $filepath Gate Path
+* @param boolean $setEnv Default true = set Gate_gate_dir_path variable
 * @return type
 */
-public function getRegisterAppClass($filepath, $setEnv = true) {}
+public function getRegisterGateClass($filepath, $setEnv = true) {}
 /**
 * Read Global Variable
 * @param string $varname

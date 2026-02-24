@@ -28,11 +28,11 @@ An Application:
 
 An Application **MUST** extend exactly one of the following:
 
-| App Type   | Parent Class            |
+| Gate Type   | Parent Class            |
 | ---------- | ----------------------- |
-| Web App    | `Sphp\tools\BasicApp`   |
-| Native App | `Sphp\tools\NativeApp`  |
-| CLI App    | `Sphp\tools\ConsoleApp` |
+| Web Gate    | `Sphp\tools\BasicGate`   |
+| Native Gate | `Sphp\tools\NativeGate`  |
+| CLI Gate    | `Sphp\tools\ConsoleGate` |
 
 ❌ Extending any other class is invalid
 ❌ `Controller`, `App`, `Core\App`, or invented classes are invalid
@@ -75,9 +75,9 @@ A Web Application **MUST** bind a FrontFile.
 ### Canonical Pattern
 
 ```php
-use Sphp\tools\BasicApp;
+use Sphp\tools\BasicGate;
 
-class index extends BasicApp {
+class index extends BasicGate {
     private $frtMain = null;
     // -----------------------------
     // Application life cycle events onstart, onready, onrun, onrender
@@ -85,7 +85,7 @@ class index extends BasicApp {
 
         /**
          * onstart=1
-         * App Life Cycle Event
+         * Gate Life Cycle Event
          * override this event handler in your application to handle it.
          * trigger when application start
          */
@@ -95,34 +95,34 @@ class index extends BasicApp {
 
         /**
          * onready=4
-         * App Life Cycle Event
+         * Gate Life Cycle Event
          * override this event handler in your application to handle it.
          * trigger after FrontFile Initialization and ready to Run App.
          */
         public function onready() {
-            echo "App is ready to process <br />";
+            echo "Gate is ready to process <br />";
         }
 
         /** 
          * onrun=5
-         * App LifeCycle Event
+         * Gate LifeCycle Event
          * override this event handler in your application to handle it.
          * trigger when application run after ready event and before trigger any PageEvent
          */
         public function onrun() {
-            echo "App is Ready to Process PageEvents <br />";
+            echo "Gate is Ready to Process PageEvents <br />";
         }
         
         /** 
          * onrender=10
-         * App Life Cycle Event
+         * Gate Life Cycle Event
          * override this event handler in your application to handle it.
          * trigger when application render after run FrontFile but before start master
          * file process. You can't manage FrontFile output here but you can replace FrontFile
          * output in SphpBase::$dynData or change master file or add front place for master filepath
          */
         public function onrender() {
-            echo "Trigger At Last when App Ready to render <br />";            
+            echo "Trigger At Last when Gate Ready to render <br />";            
         }
 
     // -----------------------------
@@ -133,7 +133,7 @@ class index extends BasicApp {
          * Only Trigger if Front File is used with App
          * Trigger After FrontFile Parse Phase, Component oninit and oncreate 
          * Events and before Components onaftercreate event. Trigger for 
-         *  each Front File use with BasicApp
+         *  each Front File use with BasicGate
          * override this event handler in your application to handle it.
          * @param \Sphp\tools\FrontFile $frontobj
          */
@@ -145,7 +145,7 @@ class index extends BasicApp {
          * onfrontprocess=3
          * Only Trigger if Front File is used with App
          * Trigger after onaftercreate Event of Component and before 
-         * BasicApp onready and onrun Events 
+         * BasicGate onready and onrun Events 
          * and also before onappevent Event of Component 
          * override this event handler in your application to handle it.
          * @param \Sphp\tools\FrontFile $frontobj
@@ -164,7 +164,7 @@ class index extends BasicApp {
          * Trigger after onrun Event and before on render.
          * override this event handler in your application to handle it.
          * trigger when browser get (url=index-delete.html)
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          */
         public function page_delete() {
             echo "you open in browser " . getEventURL("delete",1) .
@@ -182,7 +182,7 @@ class index extends BasicApp {
          * Trigger after onrun Event and before on render.
          * override this event handler in your application to handle it.
          * trigger when browser get (url=index-view-19.html)
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          * view = event name 
          * 19 = recid of database table or any other value.
          */
@@ -199,10 +199,10 @@ class index extends BasicApp {
          * Trigger after onrun Event and before on render.
          * override this event handler in your application to handle it.
          * trigger when browser post Filled Form Components (url=index.html)
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          */
         public function page_submit() {
-            echo "you submit form to " . getThisURL();
+            echo "you submit form to " . getThisGateURL();
         }
 
         /** 
@@ -212,11 +212,11 @@ class index extends BasicApp {
          * Trigger after onrun Event and before on render.
          * override this event handler in your application to handle it.
          * trigger when browser post Filled Empty Form Components (url=index.html)
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          */
         public function page_insert() {
-            echo "you open in browser " . getThisURL() . 
-                " and form submit to " . getThisURL() . " url";
+            echo "you open in browser " . getThisGateURL() . 
+                " and form submit to " . getThisGateURL() . " url";
             
         }
 
@@ -229,11 +229,11 @@ class index extends BasicApp {
          * trigger when browser post Edited Form Components Which Filled with 
          * \SphpBase::page()->viewData() (url=index.html) 
          * from database with view_data function
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          */
         public function page_update() {
             echo "you open in browser " . getEventURL("view",1) .
-                " and edited form submit to " . getThisURL() . " url";
+                " and edited form submit to " . getThisGateURL() . " url";
             
         }
 
@@ -247,10 +247,10 @@ class index extends BasicApp {
          * Trigger after onrun Event and before on render.
          * override this event handler in your application to handle it.
          * trigger when browser get URL (url=index.html) first time
-         * where index is Appgate of application and application path is in reg.php file 
+         * where index is Gate of application and application path is in reg.php file 
          */
         public function page_new() {
-            echo "you open in browser " . getThisURL();            
+            echo "you open in browser " . getThisGateURL();            
         }
 
     // -------------------------------------

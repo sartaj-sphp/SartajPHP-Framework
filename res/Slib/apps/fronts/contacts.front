@@ -76,7 +76,7 @@
                         </tr>
                         <tr> 
                           <td>
-<input type="text" runat="server" id="catcaha" path="components/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="form2" fui-setMsgName="Secure Code">
+<input type="text" runat="server" id="catcaha" path="comppath/bundle/captcha/Captcha.php"  fui-setMaxLen="5" fui-setRequired="" fui-setForm="form2" fui-setMsgName="Secure Code">
 </td>
                         </tr>
                         <tr> 

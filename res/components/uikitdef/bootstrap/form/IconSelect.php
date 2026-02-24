@@ -22,7 +22,7 @@ protected function onjsrender() {
     . "}");
 }
 protected function onrender(){
-global $ctrl;
+global $gate;
 
     $this->tagName = 'div';
     $this->setPreTag('<span id="'. $this->name .'spn" class="'.$this->value.'"></span><input id="'.$this->name.'" name="'.$this->name.'" value="'.$this->value.'" type="hidden" /><br />

@@ -4,11 +4,11 @@ class sweetalert extends \Sphp\tools\Component{
     private $msg = 'Hi';
     private $type = 'success';
 
-    public function setMsg($msg){
+    public function fu_setMsg($msg){
         $this->msg = $msg;        
     }
 
-    public function onjsrender(){
+    protected function onjsrender(){
         $this->fu_unsetRender();
         if($this->element->hasAttribute('type')){
             $this->type = $this->getAttribute('type');

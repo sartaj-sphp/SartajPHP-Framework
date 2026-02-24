@@ -7,7 +7,7 @@
                 fur_data-recidv="##{ $this->frontobj->showall->getRow('id_c') }#" 
  * fur_data-mval="##{ $this->frontobj->showall->getRow('shipper_c') }#" 
  * data-recid="id_c" runat="server">
- * ##{ $this->frontobj->parentapp->getShipList2($this->frontobj->showall->getRow('shipper_c')) }#
+ * ##{ $this->frontobj->parentgate->getShipList2($this->frontobj->showall->getRow('shipper_c')) }#
  * </td>
  */
 class DbEdit extends \Sphp\tools\Component{

@@ -22,7 +22,7 @@ Direct use of raw HTML form controls is discouraged because:
 
 * Components provide validation hooks
 * Components support server-side state
-* Components integrate with App events
+* Components integrate with Gate events
 
 ---
 
@@ -208,7 +208,7 @@ Then use a holder to **inject property values as innerHTML**.
 In this case:
 
 * FrontFile controls **structure and styling**
-* App or Component provides **data only**
+* Gate or Component provides **data only**
 * The holder reduces the need for expressions
 
 **Result:**
@@ -216,7 +216,7 @@ Only `innerHTML` changes; the tag itself is static.
 
 ---
 
-### Case 2: App or Component Controls the Entire Content
+### Case 2: Gate or Component Controls the Entire Content
 
 If:
 
@@ -228,7 +228,7 @@ Then the holder tag is **passed to the `onholder` event**.
 In this case:
 
 * The FrontFile provides a placeholder node
-* App or Component generates the complete output
+* Gate or Component generates the complete output
 * The original content is replaced during rendering
 
 **Important limitations:**
@@ -246,7 +246,7 @@ In this case:
 | Creates PHP object           | No                        | Yes                          |
 | Controls innerHTML           | Yes                       | Yes                          |
 | Controls full tag structure  | Limited (one-time)        | Yes                          |
-| Accessible later from App    | No                        | Yes                          |
+| Accessible later from Gate    | No                        | Yes                          |
 | Supports auth / permission   | No                        | Yes                          |
 | Supports lifecycle & updates | No                        | Yes                          |
 
@@ -391,14 +391,14 @@ Expression tags are used to:
 ### ✅ Correct (Expression Tag)
 
 ```html
-<a href="##{ getAppURL('index') }#">Home</a>
+<a href="##{ getGateURL('index') }#">Home</a>
 <a href="##{ getEventURL('logout','','signin') }#">Logout</a>
 ```
 
 ### ❌ Incorrect (PHP Short Tag – NOT ALLOWED)
 
 ```html
-<a href="<?= getAppURL('index') ?>">Home</a>
+<a href="<?= getGateURL('index') ?>">Home</a>
 ```
 
 ---
@@ -414,23 +414,23 @@ Always use the following helper functions inside expression tags:
 
 | Purpose                                 | Helper Function |
 | --------------------------------------- | --------------- |
-| App `page_new` Event                    | `getAppURL()`   |
-| App user-defined Event (`page_event_*`) | `getEventURL()` |
-| Current App `page_new` Event            | `getThisURL()`  |
+| Gate `page_new` Event                    | `getGateURL()`   |
+| Gate user-defined Event (`page_event_*`) | `getEventURL()` |
+| Current Gate `page_new` Event            | `getThisGateURL()`  |
 
 ### Correct Examples
 
 ```html
-<a href="##{ getAppURL('index') }#">Home</a>
+<a href="##{ getGateURL('index') }#">Home</a>
 <a href="##{ getEventURL('logout','','signin') }#">Logout</a>
-<a href="##{ getThisURL() }#">Refresh</a>
+<a href="##{ getThisGateURL() }#">Refresh</a>
 ```
 
 ### Incorrect Examples
 
 ```html
 <a href="/index">Home</a>
-<a href="<?= getAppURL('index') ?>">Home</a>
+<a href="<?= getGateURL('index') ?>">Home</a>
 ```
 
 **Why this matters:**
@@ -442,14 +442,14 @@ Always use the following helper functions inside expression tags:
 
 ---
 
-## 4.9 AJAX Requests Must Match App Response Type
+## 4.9 AJAX Requests Must Match Gate Response Type
 
-If a FrontFile sends an **AJAX request**, the App **must respond using `$this->JSServer`**.
+If a FrontFile sends an **AJAX request**, the Gate **must respond using `$this->JSServer`**.
 
 ### Correct Flow
 
 * FrontFile → AJAX request
-* App → `$this->JSServer->send(...)`
+* Gate → `$this->JSServer->send(...)`
 
 ### Important Rule
 
@@ -509,7 +509,7 @@ Reasons:
 | ----------------------------- | ----------- |
 | AJAX Request without callback | `getURL()`  |
 | AJAX request with callback    | `getAJAX()` |
-| WebSocket call                | `callApp()` |
+| WebSocket call                | `callNativeGate()` |
 
 ### Disallowed (Unless You Handle Everything Manually)
 
@@ -520,7 +520,7 @@ Reasons:
 Using helpers ensures:
 
 * Automatic routing
-* Correct App execution
+* Correct Gate execution
 * Seamless `$this->JSServer` responses
 
 ---
@@ -528,7 +528,7 @@ Using helpers ensures:
 ## Important Design Rule (For Models & Developers)
 
 > A FrontFile **describes UI intent**,
-> an App **controls behavior**,
+> an Gate **controls behavior**,
 > and Components **bridge the two**.
 > **FrontFiles must never contain PHP code.
 > All dynamic output must use Expression Tags.**

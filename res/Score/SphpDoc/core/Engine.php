@@ -4,7 +4,7 @@ use Sphp\core\Request;
 use Sphp\core\Response;
 use Sphp\core\Router;
 use Sphp\core\SphpAPI;
-use Sphp\core\AppLoader;
+use Sphp\core\GateLoader;
 use Sphp\core\DebugProfiler;
 use Sphp\core\DebugProfiler2;
 use Sphp\kit\Session;
@@ -12,7 +12,7 @@ use Sphp\kit\JQuery;
 use Sphp\kit\JSServer;
 use Sphp\kit\Page;
 use Sphp\core\SphpVersion;
-final class Engine{
+class Engine{
 public $engine_start_time = 0.0;
 public $engine_end_time = 0.0;
 public $drespath = "";
@@ -23,7 +23,7 @@ public function start()
 {}
 public function executeinit()
 {}
-public function execute($globalapp = false)
+public function execute($globalGate = false)
 {}
 public function sendDataCaseOfError($ermsg="",$erfile="",$erline=0,$nofatel=true) {}
 public function stopOutput(){}
@@ -37,12 +37,12 @@ public function getRouter(){}
 public function getSphpAPI() {}
 public function getSession() {}
 /** 
-* Get Default Page Object to develop page application.
+* Get Default Page Object to develop page Gate.
 * @return page
 */
 public function getDefaultPageObject() {}
 /** 
-* Set Default Page Object to develop page application.
+* Set Default Page Object to develop page Gate.
 * @return void
 * @deprecated 4.4.8
 */

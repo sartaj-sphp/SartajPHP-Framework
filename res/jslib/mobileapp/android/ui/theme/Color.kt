@@ -1,4 +1,4 @@
-package <?php echo $caller->mobappid ; ?>.ui.theme
+package ##{$caller->mobappid}#.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

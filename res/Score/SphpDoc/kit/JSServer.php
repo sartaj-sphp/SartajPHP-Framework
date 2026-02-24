@@ -137,7 +137,7 @@ public function getResponse() {}
 /**
 * Advance Function
 * Send all response of Server as JSON to browser.
-* if application run continiously then you can send intermediate data
+* if Gate run continiously then you can send intermediate data
 *  
 */
 public function flush() {}

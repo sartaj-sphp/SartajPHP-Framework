@@ -1,6 +1,6 @@
 <div class="card">
         <div class="card-header">
-        Plugin:- <?php echo  SphpBase::page()->getEventParameter(); if($parentapp->isPlugExist()) {echo "<span class='text-success'> - Installed</span>";}else{echo "<span class='text-danger'> - Not Installed</span>";} ?>
+        Plugin:- <?php echo  SphpBase::page()->getEventParameter(); if($parentgate->isPlugExist()) {echo "<span class='text-success'> - Installed</span>";}else{echo "<span class='text-danger'> - Not Installed</span>";} ?>
     </div>
 
     <div class="card-body">
@@ -18,7 +18,7 @@
         <h3>Commands</h3>
         </div>
     <div class="card-body">
-<?php if($parentapp->isPlugExist()){ ?>
+<?php if($parentgate->isPlugExist()){ ?>
 <a href="<?php print getEventURL('update',SphpBase::page()->evtp,'installer'); ?>">Update Plugin</a><br/>
 <a href="<?php print getEventURL('rmp',SphpBase::page()->evtp,'installer'); ?>">Uninstall Plugin</a>
 <?php }else{?>

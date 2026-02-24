@@ -28,19 +28,12 @@ public $innerposttag = "";
 public $myclass = "Sphp\\tools\\NodeTag";
 public $frontobj = null;
 public function init($strtag){}
-public function _setRefComp($compobj) {}
 public function checkSelfClose(){}
 public function isSelfClose(){}
-public function _setParent($parent){}
 public function getParent(){}
-public function _setLineNo($num){}
 public function getLineNo(){}
 public function closeTag(){}
-public function _setComponent($component) {}
 public function getComponent() {}
-public function _fetchAttributes($strdata){}
-public function _fetchAttributes3($strdata){}
-public function _fetchAttributes2($strdata){}
 public function getAttributesHTML(){}
 public function getAttributesCat($prefix){}
 public function createElement($taghtml) {}
@@ -81,5 +74,6 @@ public function setTagName($tagname) {}
 public function wrapTag($taghtml) {}
 public function wrapInnerTags($taghtml) {}
 public function appendHTML($html){}
+public function &__get($name) {}
 }
 }

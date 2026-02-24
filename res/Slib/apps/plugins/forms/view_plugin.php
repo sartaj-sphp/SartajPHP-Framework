@@ -1,5 +1,5 @@
 <?php 
-$arr = $parentapp->directoryCount(SphpBase::sphp_settings()->php_path . "/plugin");
+$arr = $parentgate->directoryCount(SphpBase::sphp_settings()->php_path . "/plugin");
 foreach($arr as $key=>$val){
  ?>
 <div class="card mb-3">

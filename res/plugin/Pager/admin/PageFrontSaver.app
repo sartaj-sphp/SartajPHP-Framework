@@ -5,7 +5,7 @@
  *
  * @author sartaj
  */
-class PageFrontSaver extends \Sphp\tools\BasicApp {
+class PageFrontSaver extends \Sphp\tools\BasicGate {
 
     private $tmp1 = null;
 

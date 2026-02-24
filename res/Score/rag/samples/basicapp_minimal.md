@@ -1,19 +1,19 @@
 ## 1️⃣ Application File
 
-**`apps/HelloApp.app`**
+**`apps/HelloGate.php`**
 
 ```php
 <?php
-use Sphp\tools\BasicApp;
+use Sphp\tools\BasicGate;
 use Sphp\tools\FrontFile;
 
-class HelloApp extends BasicApp
+class HelloGate extends BasicGate
 {
     private $frtMain = null;
 
     public function onstart()
     {
-        // App initialization only
+        // Gate initialization only
         // FrontFile object created once
         $this->frtMain = new FrontFile($this->mypath . '/fronts/helloapp_main.front');
     }
@@ -38,7 +38,7 @@ class HelloApp extends BasicApp
 
 ✔ **Why correct**
 
-* Uses `BasicApp`
+* Uses `BasicGate`
 * No rendering forced in `onstart` only Fornt File Object Create as Class Level
 * FrontFile bound **only** in `page_new`
 * AJAX handled via `page_event_*`
@@ -89,11 +89,11 @@ $("#btnCall").on("click", function () {
 
 ---
 
-## 3️⃣ Register App File with SartajPHP reg.php
+## 3️⃣ Register Gate File with SartajPHP reg.php
 
 ```php
-// register Appgate=hello so Browser URL=hello.html
-registerApp("hello",__DIR__ ."/apps/HelloApp.app");
+// register Gate=hello so Browser URL=hello.html
+uuregisterGate("hello",__DIR__ ."/apps/HelloGate.php");
 ```
 
 

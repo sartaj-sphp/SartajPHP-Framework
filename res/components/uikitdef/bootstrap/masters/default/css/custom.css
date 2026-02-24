@@ -78,7 +78,9 @@
 .sidebar-container.collapsed ~ .content-column {
     width: calc(100% - 60px);
 }
-
+.fixed-top{
+    z-index: 99;
+}
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .sidebar-container {

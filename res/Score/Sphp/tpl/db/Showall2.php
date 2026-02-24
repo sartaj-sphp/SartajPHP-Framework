@@ -28,7 +28,7 @@ $this->form = new HTMLForm($name,'','');
 $this->peg1->tagName = 'div';
 $this->dt1->tagName = 'div';
 $this->form->tagName = 'form';
-$this->form->parameterA['action'] = getThisURL('', true);
+$this->form->parameterA['action'] = getThisGateURL('', true);
 $this->dt1->setForm($name);
 $this->dt1->setDontUseFormat();
 $this->tbln = $tblName;
@@ -67,7 +67,7 @@ public function setWhere($val){
 $this->peg1->where = $val;
 }
 public function setApp($val){
-$this->peg1->app = $val;
+$this->peg1->Gate = $val;
 }
 public function setEdit(){
 $this->peg1->blnEdit = true;

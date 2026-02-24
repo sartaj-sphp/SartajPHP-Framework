@@ -8,8 +8,8 @@
  * Front File code:-
  * <div id="div1" runat="server" path="libpath/comp/ajax/SocketOutput.php"></div>
  * Then call js function:-
- * Params = $controller,$evt,$evtp,$data
- * callApp('shell','ls','-l',{});
+ * Params = $gate,$evt,$evtp,$data
+ * callNativeGate('shell','ls','-l',{});
  * @author SARTAJ
  */
 class SocketOutput extends \Sphp\tools\Component {
@@ -24,9 +24,9 @@ class SocketOutput extends \Sphp\tools\Component {
         $protocol = "ws";
         $this->setAttributeDefault('style', 'style="overflow-y: scroll; height: 500px; max-height: 500px;');
         $this->setAttributeDefault('class', 'text-wrap');
-        addHeaderJSCode($this->name , 'window["'. $this->name .'"] = {wsobj: null, onopen: function(){}}; window["callApp"] = function (ctrl,evt="",evtp="",data={}){
+        addHeaderJSCode($this->name , 'window["'. $this->name .'"] = {wsobj: null, onopen: function(){}}; window["callNativeGate"] = function (gate,evt="",evtp="",data={}){
         $("#'. $this->name .'").html(\'\');
-        window["'. $this->name .'"]["wsobj"].callProcessApp(ctrl,evt,evtp,data);
+        window["'. $this->name .'"]["wsobj"].callProcessNativeGate(gate,evt,evtp,data);
     };
 ');
         if (\SphpBase::sphp_request()->server('HTTPS') == 1) $protocol = "wss";

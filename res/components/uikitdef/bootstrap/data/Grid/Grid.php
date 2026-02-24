@@ -30,7 +30,7 @@ public $eventName = 'show';
 public $editeventName = 'view';
 public $deleventName = 'delete';
 private $evtp='';
-private $ctrl='';
+private $gate='';
 private $extra='page=';
 private $baseName='';
 private $sesID=false;
@@ -57,19 +57,19 @@ $this->sesID = true;
 }
 if(\SphpBase::sphp_request()->isRequest('page')){
 \SphpBase::sphp_request()->session($this->name.'p',\SphpBase::sphp_request()->request('page'));
-\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->ctrl);
+\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->gate);
 }else{
 \SphpBase::sphp_request()->request('page',false, 1);
-if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::sphp_router()->ctrl){
+if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::sphp_router()->gate){
 \SphpBase::sphp_request()->request('page',false,$_SESSION[$this->name.'p']);
 }
 }
 $this->pageNo = \SphpBase::sphp_request()->request('page') - 1;
 
 if($this->dtable == ''){
-    $parentapp = $this->frontobj->getBindApp();
-    if($parentapp !== null){
-        $this->dtable = $parentapp->getTableName();
+    $parentgate = $this->frontobj->getBindApp();
+    if($parentgate !== null){
+        $this->dtable = $parentgate->getTableName();
     }
 }
 $this->fu_setHTMLName('');
@@ -82,7 +82,7 @@ $this->fu_setHTMLName('');
 public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
-$this->ctrl=$ControllerName;
+$this->gate=$ControllerName;
 if($extra!=''){
 $this->extra=$extra.'&page=';
 }
@@ -295,7 +295,7 @@ $stro .= $this->getPaging();
 $roote = $this->frontobj->getChildrenWrapper($this);
 foreach($this->result as $key1=>$keyar){
     foreach($keyar as $index=>$this->row){ 
-        //$tmpf = new FrontFile($this->strFormat,true,false,$this->frontobj->parentapp);
+        //$tmpf = new FrontFile($this->strFormat,true,false,$this->frontobj->parentgate);
         //$tmpf->run();
         //$stro .= $tmpf->data;
         $stro .= $this->frontobj->parseComponentChildren($roote); 
@@ -329,9 +329,9 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST['page']) {
 if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
 }else{
-         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= $strstart.($k)."</div>";
@@ -366,18 +366,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->ctrl,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 
@@ -405,7 +405,7 @@ public function onaftercreate(){
     }
 }
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->ctrl, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -747,7 +747,7 @@ window.location = link ;
 
 public function onprerender(){
 $Client = \SphpBase::sphp_request();
-$ctrl = \SphpBase::sphp_router();
+$gate = \SphpBase::sphp_router();
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){
@@ -757,7 +757,7 @@ if(count($spt)>0){
 }
 $storesql = $Client->session($this->name .'store');
 if(!is_array($storesql)) $storesql = array();
-if(isset($storesql['lastapp']) && $storesql['lastapp'] == $ctrl->ctrl){
+if(isset($storesql['lastapp']) && $storesql['lastapp'] == $gate->gate){
 if($this->ordersortby==""){
     $this->ordersortby = $storesql['sortby']; 
 }
@@ -781,7 +781,7 @@ $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->wher
 }
 $storesql['lastsql'] = $this->sql;
 $storesql['lastpagecountsql'] = $this->pageCountSQL;
-$storesql['lastapp'] = $ctrl->ctrl;
+$storesql['lastapp'] = $gate->gate;
 $storesql['sortby'] = $this->ordersortby;
 $storesql['whereby'] = $this->where;
 $Client->session($this->name .'store',$storesql);

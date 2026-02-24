@@ -1,6 +1,6 @@
 <?php
 
-class index extends \Sphp\tools\BasicApp{
+class index extends \Sphp\tools\BasicGate{
     private $temp1 = "";
     public $eventname = "home";
     private $record = array();

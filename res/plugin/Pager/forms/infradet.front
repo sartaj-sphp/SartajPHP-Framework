@@ -12,7 +12,7 @@
 
   <div id="btncat2" runat="server" fun-setrender="pagea-catedit">
     <a href="#." 
-       onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgedit.html',data);" 
+       onclick="var data={}; data['txtid']='##{$parentgate->getRow('catid')}#'; getURL('catfsav-pgedit.html',data);" 
        class="btn btn-sm btn-primary" 
        data-bs-toggle="tooltip" title="Edit selected category">
        <i class="fa fa-edit"></i> Category
@@ -21,7 +21,7 @@
 
   <div id="btncat3" runat="server" fun-setrender="pagea-catdel">
     <a href="#." 
-       onclick="var data={}; data['txtid']='##{$parentapp->getRow('catid')}#'; getURL('catfsav-pgdel.html',data);" 
+       onclick="var data={}; data['txtid']='##{$parentgate->getRow('catid')}#'; getURL('catfsav-pgdel.html',data);" 
        class="btn btn-sm btn-danger" 
        data-bs-toggle="tooltip" title="Delete selected category">
        <i class="fa fa-trash"></i> Category
@@ -41,7 +41,7 @@
 
   <div id="btncat4" runat="server" fun-setrender="pagea-edit">
     <a href="#." 
-       onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgedit.html',data);" 
+       onclick="var data={}; data['txtid']='##{$parentgate->getRow('id')}#'; getURL('pagefsav-pgedit.html',data);" 
        class="btn btn-sm btn-primary" 
        data-bs-toggle="tooltip" title="Edit selected page">
        <i class="fa fa-edit"></i> Page
@@ -50,7 +50,7 @@
 
   <div id="btncat5" runat="server" fun-setrender="pagea-del">
     <a href="#." 
-       onclick="var data={}; data['txtid']='##{$parentapp->getRow('id')}#'; getURL('pagefsav-pgdel.html',data);" 
+       onclick="var data={}; data['txtid']='##{$parentgate->getRow('id')}#'; getURL('pagefsav-pgdel.html',data);" 
        class="btn btn-sm btn-danger" 
        data-bs-toggle="tooltip" title="Delete selected page">
        <i class="fa fa-trash"></i> Page
@@ -63,19 +63,19 @@
 <nav aria-label="breadcrumb" id="spn4" runat="server">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      ##{$a = explode(",",$parentapp->getRow('catname')); $b = $a[1];}#
+      ##{$a = explode(",",$parentgate->getRow('catname')); $b = $a[1];}#
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-      ##{$parentapp->getRow('pagetitle'); }#
+      ##{$parentgate->getRow('pagetitle'); }#
     </li>
   </ol>
 </nav>
 
 </div>
 
-#{if($parentapp->getRow('pagetitle') != "")}#
+#{if($parentgate->getRow('pagetitle') != "")}#
 <h2 class="headerbar px-4" title="##{getKeyword()}#">
-    ##{$parentapp->getRow('pagetitle') }# 
+    ##{$parentgate->getRow('pagetitle') }# 
 </h2>
 #{endif}#
     
@@ -93,20 +93,20 @@
                 $("#pgdata").css("display","none"); 
             });
         </script>
-        <input id="pagename" runat="server" type="hidden" value="##{ $parentapp->eventname }#" />
-        <input id="txtidtiny" runat="server" type="hidden" value="##{ $parentapp->getRow('id'); }#" />
+        <input id="pagename" runat="server" type="hidden" value="##{ $parentgate->eventname }#" />
+        <input id="txtidtiny" runat="server" type="hidden" value="##{ $parentgate->getRow('id'); }#" />
 <div id="pgdatae" runat="server">
     <div id="tinydetails" runat="server" path="mypath/../TinyEditor/TinyEditor.php" rows="100" cols="50" lfun-setAuth="ADMIN" on-startrender="true"  ></div>
 </div>
     </form>
     
-    <title metakeywords="##{$parentapp->getRow('pagekey')}#" metadescription="##{$parentapp->getRow('pagedes')}#" 
-       metaclassification="##{readGlobal('cmpname') . ' '. $parentapp->getRow('pagetitle')}#"  runat="server" id="title1">
-##{readGlobal('cmpname') . "|" . $parentapp->getRow('pagesubttitle')}#
+    <title metakeywords="##{$parentgate->getRow('pagekey')}#" metadescription="##{$parentgate->getRow('pagedes')}#" 
+       metaclassification="##{readGlobal('cmpname') . ' '. $parentgate->getRow('pagetitle')}#"  runat="server" id="title1">
+##{readGlobal('cmpname') . "|" . $parentgate->getRow('pagesubttitle')}#
 </title>
 
 <div class="text" id="pgdata" runat="server">
-    <include id="b1" lrunat="server" fun-setFrontFile="##{$parentapp->Client->request('txtid',false,$parentapp->getRow('id'));  'pagres/b' . $parentapp->getRow('id') . '.html' }#"></include>
+    <include id="b1" lrunat="server" fun-setFrontFile="##{$parentgate->Client->request('txtid',false,$parentgate->getRow('id'));  'pagres/b' . $parentgate->getRow('id') . '.html' }#"></include>
 </div>
 
 

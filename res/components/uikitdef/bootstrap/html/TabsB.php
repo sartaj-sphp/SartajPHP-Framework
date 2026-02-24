@@ -21,8 +21,8 @@ class TabsB extends Sphp\tools\Component{
         }
     }
     protected function onparse($event,$element) {
-        global $ctrl;
-//                $ctrl->debug->println("activeBlock set");
+        global $gate;
+//                $gate->debug->println("activeBlock set");
         static $countli;
         if($element->tag=="li"){
             $countli += 1;

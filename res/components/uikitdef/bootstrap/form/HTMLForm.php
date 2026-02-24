@@ -14,6 +14,7 @@ class HTMLForm extends \Sphp\tools\Component {
     private $onvalidation = '';
     private $blnajax = false;
     private $blnsocket = false;
+    private $blnmobileapp = false;
     private $socketctrl = "index";
     private $socketevt = "";
     private $socketevtp = "";
@@ -54,12 +55,20 @@ class HTMLForm extends \Sphp\tools\Component {
         addFileLink($this->myrespath . "/assets/jquery.form.js", true);
     }
 
-    public function fu_setSocket($ctrl,$evt="",$evtp="") {
+    public function fu_setSocket($gate,$evt="",$evtp="") {
         $this->blnsocket = true;
-        $this->socketctrl = $ctrl;
+        $this->socketctrl = $gate;
         $this->socketevt = $evt;
         $this->socketevtp = $evtp;
     }
+    
+    public function fu_setMobileApp($gate,$evt="",$evtp="") {
+        $this->blnmobileapp = true;
+        $this->socketctrl = $gate;
+        $this->socketevt = $evt;
+        $this->socketevtp = $evtp;
+    }
+    
     
     public function fu_setAjaxTarget($val) {
         $this->target = $val;
@@ -104,7 +113,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             /*
               if(!isset($this->parameterA['action'])){
               $subcode ="
-              getURL('".getThisURL('',true)."',$('#$this->name').serialize());
+              getURL('".getThisGateURL('',true)."',$('#$this->name').serialize());
               ";
               }else{
               $subcode ="
@@ -120,9 +129,20 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             $subcode = " frontobj.getSphpSocket(function(wsobj1){
     var formData = $('#" . $this->name . "').serializeAssoc();
 	delete formData['sphpajax'];
-    wsobj1.callProcessApp('{$this->socketctrl}','{$this->socketevt}','{$this->socketevtp}',formData);
+    wsobj1.callProcessNativeGate('{$this->socketctrl}','{$this->socketevt}','{$this->socketevtp}',formData);
 });";
-            
+
+  }else if($this->blnmobileapp){
+            \SphpBase::JSServer()->getAJAX();
+            $this->setAttribute("onsubmit","var vt = {$this->name}_submit2(''); return false;");
+            // ban submit
+        //addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}mobapp", ' blnSubmit = false ; ');
+            $subcode = " 
+    var formData = $('#" . $this->name . "').serializeAssoc();
+    delete formData['sphpajax'];
+    callKotlinGateEvent('{$this->socketctrl}','{$this->socketevt}','{$this->socketevtp}',formData);
+";
+    
 } else {
             $subcode = "
 if(val==''){
@@ -179,7 +199,7 @@ return false;
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
-        $this->setAttributeDefault("action",getThisURL("",false,".app"));
+        $this->setAttributeDefault("action",getThisGateURL("",false,".app"));
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit2('');return false;");
         if(!isset($this->onsubmit)){
             addHeaderJSFunctionCode("ready", $this->name .'rd1', "$('#" . $this->name . "').on('submit',function(e){e.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");

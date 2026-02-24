@@ -58,7 +58,7 @@ Think of this phase as:
 
 This phase:
 
-* Triggers App lifecycle events
+* Triggers Gate lifecycle events
 * Prepares Components for output
 * Applies runtime mutations
 
@@ -276,7 +276,7 @@ Why it fails:
 
 Example: Pagination, Grid, Image Generator
 
-* Data may not be needed if App exits early (AJAX)
+* Data may not be needed if Gate exits early (AJAX)
 * Fetching data in parse phase is wasteful
 * `fur-` ensures work happens **only if rendering happens**
 
@@ -366,7 +366,7 @@ If unsure:
 These:
 
 * Can be written **only in FrontFile**
-* Are **not allowed** in App or Component PHP code
+* Are **not allowed** in Gate or Component PHP code
 * Execute according to FrontFile processing order
 * Are affected by Fusion attribute prefixes
 

@@ -2,7 +2,7 @@
 
 This sample demonstrates:
 
-* `BasicApp` lifecycle
+* `BasicGate` lifecycle
 * **Form Component (auto AJAX)**
 * **TextField Component**
 * **Fusion attributes (`fui-`, `fur-`, `fun-`)**
@@ -15,14 +15,14 @@ This sample demonstrates:
 
 ## 1️⃣ Application File
 
-**`apps/register.app`**
+**`apps/uuregisterGate.php`**
 
 ```php
 <?php
-use Sphp\tools\BasicApp;
+use Sphp\tools\BasicGate;
 use Sphp\tools\FrontFile;
 
-class RegisterApp extends BasicApp
+class RegisterGate extends BasicGate
 {
     private $frtMain = null;
 
@@ -61,7 +61,7 @@ class RegisterApp extends BasicApp
             );
 
             // Optional redirect
-            // $this->page->forward(getAppURL("signin"));
+            // $this->page->forward(getGateURL("signin"));
 
         } else {
 
@@ -80,7 +80,7 @@ class RegisterApp extends BasicApp
 
 ### ✔ Why this is correct
 
-* Uses **BasicApp shortcuts**
+* Uses **BasicGate shortcuts**
 
   * `$this->JSServer` instead of `SphpBase::JSServer()`
   * `$this->Client` instead of `$_REQUEST`
@@ -160,7 +160,7 @@ Display Form Result Here:
 
 ## 3️⃣ Important Concepts Reinforced (For RAG)
 
-### 🔹 BasicApp Shortcuts
+### 🔹 BasicGate Shortcuts
 
 | API                        | Shortcut          |
 | -------------------------- | ----------------- |
@@ -185,7 +185,7 @@ Display Form Result Here:
 | Situation          | Behavior                  |
 | ------------------ | ------------------------- |
 | Validation error   | Component displays error  |
-| Logic error        | App decides response      |
+| Logic error        | Gate decides response      |
 | Critical PHP error | Stops (PHP limitation)    |
 | Debug > 0          | Developer info in console |
 
@@ -194,7 +194,7 @@ Display Form Result Here:
 ## 🔒 RAG-Safe Canonical Rules Demonstrated
 
 * FrontFile = **View only**
-* App = **Event-driven**
+* Gate = **Event-driven**
 * Components = **Self-validating**
 * No controller-style request parsing
 * No invented APIs

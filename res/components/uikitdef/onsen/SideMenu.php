@@ -11,8 +11,8 @@ OnsenPage::$navigator = true;
 class SideMenu extends \Sphp\tools\Component{
     
 public function oncreate($element){
-    $this->setHTMLName("");
-    $this->setHTMLID("");
+    $this->fu_setHTMLName("");
+    $this->fu_setHTMLID("");
     //$this->registerEventJS('demo');
 }
 

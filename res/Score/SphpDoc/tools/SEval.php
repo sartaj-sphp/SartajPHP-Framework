@@ -22,9 +22,6 @@ public function process($template){}
 * Resolve variable name reference
 */
 /**
-* Resolve variable reference
-*/
-/**
 * Convert value to string for output
 */
 /**

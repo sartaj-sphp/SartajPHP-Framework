@@ -63,144 +63,144 @@ $maxlen = $arrn[5];
 $req = $arrn[3];
 switch($type){
     case 'text':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'hidden':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
-$ctrl->unsetVisible();
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
+$gate->unsetVisible();
 break;
     }
    case 'pass':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
-$ctrl->setPassword();
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
+$gate->setPassword();
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'num':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
-$ctrl->setNumeric();
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
+$gate->setNumeric();
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'numeric':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
-$ctrl->setNumeric();
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
+$gate->setNumeric();
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'email':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
-$ctrl->tagName = "input";
-$ctrl->setEmail();
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate->tagName = "input";
+$gate->setEmail();
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'textarea':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/TextArea.php","Sphp\\comp\\html\\TextArea");
-$ctrl->tagName = "textarea";
+$gate = $this->createComp($id,"{$libpath}/comp/html/TextArea.php","Sphp\\comp\\html\\TextArea");
+$gate->tagName = "textarea";
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'select':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/Select.php","Sphp\\comp\\html\\Select");
-$ctrl->tagName = "select";
-$ctrl->setOptions($req);
+$gate = $this->createComp($id,"{$libpath}/comp/html/Select.php","Sphp\\comp\\html\\Select");
+$gate->tagName = "select";
+$gate->setOptions($req);
 break;
     }
     case 'date':{
-$ctrl = $this->createComp($id,"controls/jquery/DateField2.php");
-$ctrl->tagName = "input";
+$gate = $this->createComp($id,"controls/jquery/DateField2.php");
+$gate->tagName = "input";
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     case 'file':{
-$ctrl = $this->createComp($id,"{$libpath}/comp/html/FileUploader.php","Sphp\\comp\\html\\FileUploader");
-$ctrl->tagName = "input";
-$ctrl->setParameterA('type', 'file');
+$gate = $this->createComp($id,"{$libpath}/comp/html/FileUploader.php","Sphp\\comp\\html\\FileUploader");
+$gate->tagName = "input";
+$gate->setParameterA('type', 'file');
 if($minlen!=""){
-$ctrl->setFileMinLen($minlen);
+$gate->setFileMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setFileMaxLen($maxlen);
+$gate->setFileMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
     default:{
-$ctrl = $this->createComp($id,"$type");
+$gate = $this->createComp($id,"$type");
 if($minlen!=""){
-$ctrl->setMinLen($minlen);
+$gate->setMinLen($minlen);
 }
 if($maxlen!=""){
-$ctrl->setMaxLen($maxlen);
+$gate->setMaxLen($maxlen);
 }
 if($req=="r"){
-$ctrl->setRequired();
+$gate->setRequired();
 }
 break;
     }
 }
 
-$ctrl->setMsgName($label);
+$gate->setMsgName($label);
 }
 }
 

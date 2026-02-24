@@ -25,3 +25,5 @@
                 ENDLOG_DATA
 [2026-01-08: 07:36:30] URL:- /res/proj1/signin.html SartajPHP Fatel Error:- Type:-2 Msg:-include_once(D:\www\res\proj1/masters/sphpcodeblock.php): Failed to open stream: No such file or directory File:-D:\www\res\Slib\comp\sphpcodeblock.php on line no. 458 
                 ENDLOG_DATA
+[2026-02-24: 17:05:24] URL:- / SartajPHP Fatel Error:- Type:-256 Msg:- Error in FrontFile D:\github\gitdemo\res\proj1/forms/index.php :FrontFile Line: 3 :Object: swalert :Type: sweetalert :Undefined Method: setMsg :Source File: D:\github\gitdemo\res\proj1\comp\sweetalert.php :Tag Name: span :List of fu_ Fusion Methods Available in Class: setStyler, setValue, setUnAuth, setAuth, setrender, unsetrender, setrenderTag, unsetrenderTag, setHTMLName, setHTMLID, submitAjax, submitWS,  File:-C:\sphpdesk\vendor\sartajphp\sartajphp\res\Score\Sphp\libsphp1.php on line no. 65 
+                ENDLOG_DATA

@@ -37,7 +37,7 @@ $formNo = 2;
 else{
 $blngetFront = true;
 $formNo = 1;
-setErr('app1','Can not Update Data' );
+setErr('Gate1','Can not Update Data' );
 }
 }
 
@@ -47,12 +47,12 @@ if(!getCheckErr()){
 SphpBase::page()->insertData();
 $blngetFront = true;
 $formNo = 2;
-setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
+setMsg('Gate1','New Data Record is Inserted, want more record add fill form again' );
 }
 else{
 $blngetFront = true;
 $formNo = 1;
-setErr('app1','Can not Insert Data' );
+setErr('Gate1','Can not Insert Data' );
 }
  }
 

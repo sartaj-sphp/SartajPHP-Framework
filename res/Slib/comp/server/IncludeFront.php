@@ -10,6 +10,9 @@ namespace Sphp\Comp\Server{
 class IncludeFront extends \Sphp\tools\Component {
 private $frontobj2 = null;
 
+    protected function oninit(){
+        $this->fu_unsetrenderTag();
+    }
     protected function genhelpPropList() {
         $this->addHelpPropFunList('setFrontFile','Include Other Front File','','$filepath');
     }

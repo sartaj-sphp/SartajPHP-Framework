@@ -21,7 +21,7 @@ class CalculatorController {
 
 Apps:
 
-* Extend `BasicApp`, `NativeApp`, or `ConsoleApp`
+* Extend `BasicGate`, `NativeGate`, or `ConsoleGate`
 * Use lifecycle hooks
 * Instantiate FrontFile in `onstart`
 
