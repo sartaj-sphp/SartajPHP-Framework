@@ -4,4 +4,4 @@ For run:-
 npm install
 electron .
 
-remove .txt extension before use.
+
