@@ -3,3 +3,5 @@ This is Electron JS project which run browser, SartajPhp server and SartajPhp Pr
 For run:-
 npm install
 electron .
+
+remove .txt extension before use.
