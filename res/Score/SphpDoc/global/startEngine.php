@@ -79,7 +79,7 @@ public static function sphp_session() {}
 /**
 * Get Settings
 * @static
-* @return \Sphp\core\Settings
+* @return \Sphp\Settings
 */
 public static function sphp_settings() {}
 /**

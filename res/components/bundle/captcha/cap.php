@@ -30,7 +30,7 @@ class CaptchaSub {
                 $num1 = rand(2, 5);
                 $num2 = rand(2, 5);
                 $result = $num1 * $num2;
-                $expression = "$num1 × $num2";
+                $expression = "$num1 X $num2";
                 break;
             default:
                 $result = $num1 + $num2;

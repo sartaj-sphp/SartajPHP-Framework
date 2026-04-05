@@ -1,0 +1,39 @@
+
+[2024-03-26: 21:22:57] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-require_once(C:\Users\minto): Failed to open stream: Permission denied File:-C:\Users\minto\AppData\Roaming\npm\node_modules\sphpdesk\scripts\scriptrun.php on line no. 7 
+                ENDLOG_DATA
+[2024-03-26: 21:56:44] URL:- / SartajPHP Exception: Class "test" not found File:- C:\Users\minto\AppData\Roaming\npm\node_modules\sphpdesk\vendor\sartajphp\sartajphp\res\Score\Sphp8e\libsphp1.php On Line:-37 
+                ENDLOG_DATA
+[2024-03-26: 22:09:51] URL:- / SartajPHP Fatel Error:- Type:-8192 Msg:-Creation of dynamic property test::$proj is deprecated File:-D:\www\sphpdesk\win_runner\sbrowser\test.php on line no. 15 
+                ENDLOG_DATA
+[2024-03-26: 22:10:24] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-Undefined property: test::$setGccp File:-D:\www\sphpdesk\win_runner\sbrowser\test.php on line no. 31 
+                ENDLOG_DATA
+[2024-03-26: 22:11:35] URL:- / SartajPHP Exception: syntax error, unexpected token "&", expecting ")" File:- D:\www\sphpdesk\win_runner\sbrowser\test.php On Line:-31 
+                ENDLOG_DATA
+[2024-03-26: 22:12:24] URL:- / SartajPHP Exception: syntax error, unexpected token "&", expecting ")" File:- D:\www\sphpdesk\win_runner\sbrowser\test.php On Line:-31 
+                ENDLOG_DATA
+[2024-03-26: 22:12:48] URL:- / SartajPHP Exception: Undefined constant test::setGccp File:- D:\www\sphpdesk\win_runner\sbrowser\test.php On Line:-31 
+                ENDLOG_DATA
+[2024-03-26: 22:12:57] URL:- / SartajPHP Exception: Undefined constant test::setGccp File:- D:\www\sphpdesk\win_runner\sbrowser\test.php On Line:-31 
+                ENDLOG_DATA
+[2024-06-17: 13:57:18] URL:- / SartajPHP Fatel Error:- Type:-8192 Msg:-Creation of dynamic property demo::$proj is deprecated File:-E:\devapp\c\asm\demo2\demo.php on line no. 18 
+                ENDLOG_DATA
+[2024-06-17: 14:01:12] URL:- / SartajPHP Exception: syntax error, unexpected token "echo" File:- E:\devapp\c\asm\demo2\demo.php On Line:-24 
+                ENDLOG_DATA
+[2024-06-26: 21:39:33] URL:- / SartajPHP Exception: Couldn't Open Database Please Check user, password and permissions File:- C:\Users\minto\AppData\Roaming\npm\node_modules\sphpdesk\vendor\sartajphp\sartajphp\res\Score\Sphp8e\lib\MySQL.php On Line:-82 
+                ENDLOG_DATA
+[2025-01-06: 12:14:21] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-socket_connect(): unable to connect [10061]: No connection could be made because the target machine actively refused it File:-D:\deskapp\nodejs\kasa\kasa.php on line no. 37 
+                ENDLOG_DATA
+[2025-01-06: 12:15:43] URL:- / SartajPHP Exception: Call to undefined function encryptKasaCommand() File:- D:\deskapp\nodejs\kasa\kasa.php On Line:-45 
+                ENDLOG_DATA
+[2025-01-06: 17:07:14] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-socket_recvfrom(): Unable to recvfrom [10060]: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond File:-D:\deskapp\nodejs\kasa\kasa.php on line no. 92 
+                ENDLOG_DATA
+[2025-01-06: 17:27:36] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-socket_recvfrom(): Unable to recvfrom [10060]: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond File:-D:\deskapp\nodejs\kasa\kasa.php on line no. 92 
+                ENDLOG_DATA
+[2025-01-06: 17:30:25] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-socket_recvfrom(): Unable to recvfrom [10060]: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond File:-D:\deskapp\nodejs\kasa\kasa.php on line no. 92 
+                ENDLOG_DATA
+[2025-01-21: 18:03:32] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-require(class.ponvif.php): Failed to open stream: No such file or directory File:-D:\deskapp\sphp\ipcam\ipcam.php on line no. 4 
+                ENDLOG_DATA
+[2025-01-21: 18:07:15] URL:- / SartajPHP Exception: Class "SimpleXMLElement" not found File:- D:\deskapp\sphp\ipcam\vendor\kuroneko-san\php-onvif\lib\class.ponvif.php On Line:-907 
+                ENDLOG_DATA
+[2025-01-21: 18:10:50] URL:- / SartajPHP Exception: Class "SimpleXMLElement" not found File:- D:\deskapp\sphp\ipcam\class.ponvif.php On Line:-907 
+                ENDLOG_DATA

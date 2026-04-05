@@ -46,9 +46,9 @@ namespace Sphp\Comp\Form {
         }
 
         public function setErrMsg($msg) {
-            $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+            $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
             if(\SphpBase::sphp_request()->isAJAX()){
-                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
             }
             setErr($this->name, $msg);
         }

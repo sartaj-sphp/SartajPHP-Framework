@@ -38,6 +38,7 @@ public $run_hd_parser = false;
 public $blnPreLibLoad = false;
 public $blnStopResponse = false;
 public $default_filelink_load = 0;
+public function getRealPath($p1){}
 /**
 * Advance Function, Internal Use
 */

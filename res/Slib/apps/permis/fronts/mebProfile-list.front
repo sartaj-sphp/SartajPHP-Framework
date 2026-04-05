@@ -21,8 +21,8 @@
 
                 <div class="col-lg-12" style="padding-top:10px;">								
                     <div class=" " id="frmstatus"></div>
-                    <span style="text-align: center; font-weight: bold; color: red;">##{ traceError(true) }#</span>                                        
-                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                    <span style="text-align: center; font-weight: bold; color: red;">##{ raw:traceError(true) }#</span>                                        
+                    <div class="" > 
                         <table class="table table-striped">
                             <thead>
                                 <tr> 
@@ -35,11 +35,11 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>                            
-                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php"  
+                            <tbody id="showall" runat="server" path="uikit/data/Pagination.php"  
                                    fun-setFieldNames="profile_id, profile_name, fname, lname, email, username, member.submit_timestamp as submit_timestamp,member.parentid, member.status as status"
                                    fun-setAJAX="" dtable='member, profile_permission' >
                                 <tr>
-                                    <td runas="holder" data-comp="showall" dfield="profile_name"></td>
+                                    <td runas="holder" sphp-comp="showall" dfield="profile_name"></td>
                                     <td>##{$a = $showall->getRow('fname') . " " . $showall->getRow('lname'); $a}#</td>
                                     <td>##{ $showall->getRow('email') }#</td>                                
                                     <td>##{ $showall->getRow('username') }#</td>                                

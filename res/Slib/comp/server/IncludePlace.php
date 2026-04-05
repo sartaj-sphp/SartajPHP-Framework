@@ -11,16 +11,21 @@ class IncludePlace extends \Sphp\tools\Component {
     private $front_name = "dynData";
     private $section = "left";
     
+    protected function oninit(){
+        $this->fu_unsetrenderTag();
+    }
+
     protected function genhelpPropList() {
         $this->addHelpPropFunList('setFrontPlaceFile','Include Front Place','','$filepath');
     }
 
    
-public function fu_setFrontPlaceFile($filepath,$front_name="main_master",$section="centersp1"){
+public function fu_setFrontPlaceFile($filepath,$front_name="",$section="centersp1"){
     $filepath = $this->frontobj->HTMLParser->resolvePathVar($filepath);
+    if($front_name == "") $front_name = $this->name;
     $this->front_name = $front_name;
     $this->section = $section;
-    \addFrontPlace($fornt_name,$filepath,$section);
+    \addFrontPlace($front_name,$filepath,$section);
 }
 protected function onrender() {
    if ($this->front_name != "dynData") \runFrontPlace($this->front_name,$this->section);

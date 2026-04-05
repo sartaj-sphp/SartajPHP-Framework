@@ -19,7 +19,7 @@ class mebProfile extends PermisGate {
         $this->genFormFront->addMetaData('pageName','User Form');
         $this->showallFront->addMetaData('pageName','Manage Users');
         $this->setMasterFile($mebmasterf);
-        
+        SphpBase::sphp_api()->addProp('page_title',"System Users");
     }
     
     public function page_insert() {

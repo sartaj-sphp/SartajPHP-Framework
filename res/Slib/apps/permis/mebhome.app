@@ -9,6 +9,7 @@ class mebhome extends PermisGate {
         //echo $this->page->getAuthenticateType();
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm();
+        SphpBase::sphp_api()->addProp('page_title','Dashborad');
         //$this->setTableName("omer_employee"); 
         if($this->page->getAuthenticateType() == "ADMIN" && file_exists("apps/fronts/admmebmain.front")){
             $this->genFormFront = new FrontFile("apps/fronts/admmebmain.front", false,null, $this); 

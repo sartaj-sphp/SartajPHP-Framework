@@ -21,7 +21,7 @@
 
                 <div class="col-lg-12" style="padding-top:10px;">								
                     <div class=" " id="frmstatus"></div>
-                    <div class="panel panel-primary" style="margin-bottom:0px;">
+                    <div class="">
 
                         <table class="table table-striped">
                             <thead>
@@ -32,12 +32,12 @@
                                 </tr>                                
                             </thead>                            
 
-                            <tbody id="showall" runat="server" path="slibpath/comp/data/Pagination.php" 
+                            <tbody id="showall" runat="server" path="uikit/data/Pagination.php" 
                                    fun-setFieldNames="profile_name,permission_id"
                                    fun-setAJAX="" >
                                 <tr>
                                     <td runas="holder" dfield="profile_name" sphp-comp="showall"></td>
-                                    <td>##{$showall->getRow('permission_id')}#</td>
+                                    <td><p>##{raw:$parentgate->displayList($showall->getRow('permission_id'))}#</p></td>
                                     <td>  
                                         <div id='admPreference_view' class="btn-action" runat='server'>
                                             <a href="##{ getEventURLSecure('view', $showall->getRow('id'))}#">

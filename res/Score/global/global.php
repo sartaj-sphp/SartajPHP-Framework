@@ -84,11 +84,11 @@ $admpass = '1234';
 
 $jsProtection = false;
 
-$masterf = "{$comppath}{$ComponentUI}/masters/default/master.php";
-//$mobimasterf = "{$slibpath}/masters/default/mobimaster.php";
-//$admmasterf = "{$slibpath}/masters/default_1/admmaster.php";
+$masterf = "{$comppath}{$ComponentUI}/masters/default/master.mast.php";
+//$mobimasterf = "{$slibpath}/masters/default/mobimaster.mast.php";
+//$admmasterf = "{$slibpath}/masters/default_1/admmaster.mast.php";
 $mebmasterf = $masterf;
-//$softmasterf = "{$slibpath}/masters/default/softmaster.php";
+//$softmasterf = "{$slibpath}/masters/default/softmaster.mast.php";
 
 // ------------------------------
 // Global Framework Settings End

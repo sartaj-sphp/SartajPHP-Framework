@@ -9,6 +9,7 @@ namespace Sphp\Comp\Server{
 
 class IncludeFront extends \Sphp\tools\Component {
 private $frontobj2 = null;
+private $renderonce = true;
 
     protected function oninit(){
         $this->fu_unsetrenderTag();
@@ -19,6 +20,8 @@ private $frontobj2 = null;
 
    
 public function fi_setFrontFile($filepath){
+    if($filepath == "") return;
+    $this->renderonce = true;
     $filepath = $this->frontobj->HTMLParser->resolvePathVar($filepath);
     $this->frontobj2 = new \Sphp\tools\FrontFileChild($filepath,false,null, $this->frontobj);
     // apend children components
@@ -30,8 +33,9 @@ protected function onrender() {
     //$this->fu_unsetrenderTag();
     $this->tagName = "div";
     $strOut = "";
-    $strOut .= $this->frontobj2->ProcessMe();
+    if($this->renderonce && is_object($this->frontobj2)) $strOut .= $this->frontobj2->ProcessMe();
     $this->setInnerHTML($strOut);
+    $this->renderonce = false;
 }
     
 }

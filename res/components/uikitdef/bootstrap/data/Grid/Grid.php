@@ -143,7 +143,7 @@ $this->colwidths = $val;
 public function fu_setWhere($val){
 $this->where = $val;
 }
-public function setWhereDef($val){
+public function fu_setWhereDef($val){
 $this->whereDef = $val;
 }
 public function fu_setApp($val){
@@ -195,7 +195,6 @@ public function setHandleEvent(){
 
 public function executeSQL(){
   $mysql = \SphpBase::dbEngine();
-  $libpath = \SphpBase::sphp_settings()->lib_path;
   $stro = "";
 // count total page
 $mysql->connect();
@@ -750,7 +749,7 @@ $Client = \SphpBase::sphp_request();
 $gate = \SphpBase::sphp_router();
 // set default values
 $spt = explode(',', $this->dtable);
-if(count($spt)>0){
+if(count($spt)>1){
     $idf = $spt[0].".id";
 }else{
     $idf = "id";
@@ -777,7 +776,12 @@ if($this->pageCountSQL==''){
 $this->pageCountSQL = "SELECT count($idf) FROM ".$this->dtable." ".$this->where;
 } 
 if($this->sql==''){
-$this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
+    if ($this->fieldNames!=''){
+        $this->fieldNames = $idf . ',' . $this->fieldNames;
+    }else{
+        $this->fieldNames = $idf;        
+    }
+$this->sql = "SELECT $this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
 }
 $storesql['lastsql'] = $this->sql;
 $storesql['lastpagecountsql'] = $this->pageCountSQL;
@@ -811,7 +815,11 @@ public function onparse($event,$element) {
      //echo "parse event " . $event; 
 }
     public function onholder($obj) {
-        $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+        if(isset($this->row[$obj->getAttribute("dfield")])){
+            $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+        }else{
+            throw new \Exception('Grid:- Field '. $obj->getAttribute("dfield") .' in Database isn\'t found');
+        }
     }
 
 }

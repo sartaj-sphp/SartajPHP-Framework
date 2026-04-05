@@ -2,7 +2,7 @@
 
 ## 1️⃣ Application File
 
-**`apps/uucalculatorGate.php`**
+**`apps/calculator.php`**
 
 ```php
 class calculator extends Sphp\tools\BasicGate {
@@ -68,5 +68,5 @@ class calculator extends Sphp\tools\BasicGate {
 
 ```php
 // register Gate=calculator So Browser URL=calculator.html
-uuregisterGate("calculator",__DIR__ ."/apps/uucalculatorGate.php");
+registerGate("calculator",__DIR__ ."/apps/calculator.php");
 ```

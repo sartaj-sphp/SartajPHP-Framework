@@ -15,7 +15,7 @@ This sample demonstrates:
 
 ## 1️⃣ Application File
 
-**`apps/uuregisterGate.php`**
+**`apps/registerGate.php`**
 
 ```php
 <?php

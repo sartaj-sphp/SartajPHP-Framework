@@ -91,6 +91,7 @@ function includeOnce($filepath) {}
 * @param string $filepath
 */
 function includeOnce2($filepath) {}
+function includeMasterFile($filepath) {}
 /**
 * Get $GLOBALS PHP Variable
 * @return array

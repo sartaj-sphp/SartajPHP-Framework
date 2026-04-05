@@ -17,7 +17,7 @@ class signin extends \Sphp\tools\BasicGate {
         //$this->getAuthenticate("GUEST,MEMBER,ADMIN");
         //$this->page->getAuthenticatePerm("GUEST,ADMIN,MEMBER"); 
         $this->setTableName("member");
-        $this->signinvar = new FrontFile($this->apppath . "/fronts/signin.front", false, $this);
+        $this->signinvar = new FrontFile($this->mypath . "/fronts/signin.front", false, $this);
         // comp.php setting about default master file for Guest User
         $this->setMasterFile($masterf); 
     }
@@ -89,7 +89,7 @@ class signin extends \Sphp\tools\BasicGate {
             }
             setSession('ADMIN', 0);
             // enable session on sphp app mode
-            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeGate()){
+            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeApp()){
                 // Generate a unique session id
                 $sid = session_create_id();
                 $this->Client->cookie(SphpBase::sphp_settings()->getSession_name(), $sid,false, $date_of_expiry);

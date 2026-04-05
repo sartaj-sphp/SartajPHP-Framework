@@ -1,6 +1,6 @@
 # AJAX Calculator only Server Side Validation (BasicGate)
 
-## App: uucalculatorGate.php register with Gate=calculator and URL=calculator.html
+## App: CalculatorGate.php register with Gate=calculator and URL=calculator.html
 
 This sample Design UI with HTML in Front File and Calculate all mathematical 
 calculations on Server Side in BasicGate. Finally result send as AJAX response 
@@ -10,10 +10,10 @@ with JSServer Object to <div> Tag with id=result.
 
 ## 1️⃣ Application File
 
-**`apps/uucalculatorGate.php`**
+**`apps/CalculatorGate.php`**
 
 ```php
-class calculator extends Sphp\tools\BasicGate {
+class CalculatorGate extends Sphp\tools\BasicGate {
     private $frtMain = null;
 
     public function onstart(){
@@ -61,5 +61,5 @@ fun-setOptions="+,-"></select>
 
 ```php
 // register Gate=calculator So Browser URL=calculator.html
-uuregisterGate("calculator",__DIR__ ."/apps/uucalculatorGate.php");
+registerGate("calculator",__DIR__ ."/apps/CalculatorGate.php");
 ```

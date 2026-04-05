@@ -58,9 +58,9 @@ class Select extends \Sphp\tools\Component {
         }        
     }
     public function setErrMsg($msg){
-        $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+        $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
         if(\SphpBase::sphp_request()->isAJAX()){
-            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
         }
         setErr($this->name, $msg);
     }
@@ -333,8 +333,8 @@ document.getElementById('$this->name').focus();
     
     protected function onprerender() {
         if($this->blnsearch){
-            addFileLink($this->myrespath . "/jslib/select2.min.css");
-            addFileLink($this->myrespath . "/jslib/select2.min.js");
+            addFileLink($this->myrespath . "/assets/select2.min.css");
+            addFileLink($this->myrespath . "/assets/select2.min.js");
         }
     }
 

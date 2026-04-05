@@ -174,7 +174,7 @@ class Captcha extends \Sphp\comp\form\TextField {
             // We just log the attempt
             $this->logAttempt(false, 'empty_input');
         } elseif (!hash_equals(md5($userInput), md5($expected))) {
-            $this->setErrMsg("Security code is incorrect! $userInput = $expected");
+            $this->setErrMsg("Security code is incorrect!");
             $this->incrementAttempts();
             SphpBase::sphp_request()->session($this->sessionKey, null);
             $this->logAttempt(false, 'incorrect_code');

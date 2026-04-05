@@ -32,7 +32,7 @@ class AutoGatePermis extends PermisGate {
         $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
-        $this->showallFront->getComponent('showall')->setPerPageRows(10);
+        $this->showallFront->getComponent('showall')->fu_setPerPageRows(10);
         SphpBase::sphp_api()->addProp('page_title',$this->heading);
     }
 

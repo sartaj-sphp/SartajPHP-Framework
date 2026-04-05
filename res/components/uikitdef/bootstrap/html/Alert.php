@@ -17,7 +17,7 @@ class Alert extends \Sphp\tools\Component {
         $this->addHelpPropFunList('setInnerError','Display Inner Error','','');
     }
     protected function onrender() {
-        $this->tagName = "span";
+        $this->tagName = "div";
         $stro = "";
         //<strong class="alert-danger">' . $msg . '</strong>
         if($this->showall){
@@ -25,9 +25,21 @@ class Alert extends \Sphp\tools\Component {
             $emsg = traceError(true);
             if($this->innerErr) $emsg .= traceErrorInner(true);            
         }else{
-            $msg = getMsg($this->name);
-            $emsg = getErrMsg($this->name);
-            if($this->innerErr) $emsg .= getErrMsgInner($this->name);
+            $msg = $emsg = "";
+            $v1 = getMsg($this->name);
+            foreach($v1 as $k1=>$v2){
+                $msg .= $v2 . '</ br>';                    
+            }
+            $v1 = getErrMsg($this->name);
+            foreach($v1 as $k1=>$v2){
+                $emsg .= $v2 . '</ br>';                    
+            }
+            if($this->innerErr){
+                $v1 = getErrMsgInner($this->name);
+                foreach($v1 as $k1=>$v2){
+                    $emsg .= $v2 . '</ br>';                    
+                }
+            }
         }        
         if($msg != ""){
              $stro .= '<strong class="alert alert-info">' . $msg . '</strong>';

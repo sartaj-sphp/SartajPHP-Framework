@@ -27,7 +27,7 @@ class MenuUi extends BootstrapMenu{
             include_once(PROJ_PATH . "/plugin/cmenu.php"); 
             include_once(PROJ_PATH . "/plugin/cmebmenu.php"); 
             include_once(PROJ_PATH . "/plugin/cadmmenu.php"); 
-            include_once($this->frontfiledir . "/admmenu.php"); 
+            include_once($this->frontfiledir . "/menu.php"); 
         }
     }
     

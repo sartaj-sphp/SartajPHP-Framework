@@ -60,5 +60,6 @@ public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
 public function row_fetch_array($result) {}
 public function last_insert_id() {}        
+public function is_rows($result) {}
 }
 }

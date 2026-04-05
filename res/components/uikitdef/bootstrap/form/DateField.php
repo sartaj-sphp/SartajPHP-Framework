@@ -49,9 +49,9 @@ namespace Sphp\Comp\Form {
         }
 
         public function setErrMsg($msg) {
-            $this->errmsg .= '<strong class="alert-danger">' . $msg . '</strong>';
+            $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
             if(\SphpBase::sphp_request()->isAJAX()){
-                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"alert-danger\">' . $msg . '! </strong>");');
+                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
             }
             setErr($this->name, $msg);
         }
@@ -175,7 +175,7 @@ namespace Sphp\Comp\Form {
             if ($this->nomonth != '') {
                 $str .= ",numberOfMonths: $this->nomonth";
             }
-            $this->setParameterA('onfocus', '$(\'#' . $this->name . '\').datepicker(\'show\');');
+            $this->setAttribute('onfocus', '$(\'#' . $this->name . '\').datepicker(\'show\');');
             addHeaderJSFunctionCode('ready', $this->name, "
 $('#$this->name').datepicker({ changeMonth: true,changeYear: true $str});
 ");

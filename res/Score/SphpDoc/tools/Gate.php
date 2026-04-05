@@ -25,6 +25,8 @@ public $respath = "";
 public $myrespath = "";
 /** @var string $mypath Gate folder path */
 public $mypath = "";
+/** @var string $myclass Gate Class Name Without Gate postfix */
+public $myclass = "";
 /** @var \Sphp\kit\JSServer $JSServer */
 public $JSServer = null;
 /** @var \Sphp\core\Request $Client */

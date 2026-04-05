@@ -78,6 +78,7 @@ protected function setForceCopyGen(){}
 * Project will compile and run by Android Studio
 */
 protected function enableAndroidStudio(){}
+protected function enableSphpMobile(){}
 protected function disableAndroidStudio(){}
 protected function publishAndroidApp($curdirpath) {}
 protected function sendRenderData() {}

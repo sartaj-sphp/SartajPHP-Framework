@@ -195,6 +195,14 @@ public function respathToFilepath($fileurl) {}
 public function filepathToRespaths($filepath) {}
 public function getMyResPath($filepath){}
 /**
+*  Get Gate Class Name From PATHINFO_FILENAME of pathinfo
+*  It will return class name without second extension as type and remove it.
+*  basename as Index.gate.php will return "Index" as class name. gate is just 
+*  naming convention for developer help to differentiate file task. 
+*  @param string $filename
+*/
+public function getClassTypeName($filename) {}
+/**
 * Run Class type Gate
 * @param string $path
 */

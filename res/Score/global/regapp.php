@@ -6,7 +6,7 @@ registerGate('error',"{$slibpath}/apps/err.php");
 registerGate('admin',"{$slibpath}/apps/auth/admlogin.php");
 registerGate('admlogin',"{$slibpath}/apps/auth/admlogin.php");
 registerGate('admhome',"{$slibpath}/apps/auth/admhome.php");
-registerGate('installer',"{$libpath}/dev/installer.app");
+registerGate('installer',"{$libpath}/dev/installer.php");
 //registerGate("autocomp", "{$slibpath}/apps/helper/autocomp.app");
 registerGate("signin", "{$slibpath}/apps/permis/signin.app");
 registerGate("mebhome", "{$slibpath}/apps/permis/mebhome.app","","Dash Board",array(["install","Install"]));

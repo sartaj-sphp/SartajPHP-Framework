@@ -268,6 +268,26 @@ var b_version=navigator.appVersion;
 browsercap['version']=parseFloat(b_version);
 return browsercap;
 }
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  let os = "Unknown OS";
+  let browser = "Unknown Browser";
+
+  // Detect OS
+  if (/android/i.test(ua)) os = "Android";
+  else if (/iPad|iPhone|iPod/.test(ua)) os = "iOS";
+  else if (/Windows/i.test(ua)) os = "Windows";
+  else if (/Mac/i.test(ua)) os = "macOS";
+  else if (/Linux/i.test(ua)) os = "Linux";
+
+  // Detect Browser
+  if (/chrome|crios/i.test(ua)) browser = "Chrome";
+  else if (/firefox|fxios/i.test(ua)) browser = "Firefox";
+  else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari";
+  else if (/edg/i.test(ua)) browser = "Edge";
+
+  return { os, browser };
+}
 function getAppPath(ctrl){
 var loc = new String(window.location);
 var url = "";

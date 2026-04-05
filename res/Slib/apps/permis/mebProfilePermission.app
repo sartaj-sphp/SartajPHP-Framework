@@ -18,6 +18,8 @@ class mebProfilePermission extends PermisGate {
         $this->genFormFront->addMetaData('pageName','Profile Form');
         $this->showallFront->addMetaData('pageName','Manage Profiles');
         $this->setMasterFile($mebmasterf);
+        SphpBase::sphp_api()->addProp('page_title',"System Profile");
+
     }
     
     public function page_new(){
@@ -31,6 +33,12 @@ class mebProfilePermission extends PermisGate {
         $this->extra[]['permission_id'] = $permission_id;
         parent::page_insert();
     } 
+    
+    public function displayList($lst){
+        $lstar1 = explode(',',$lst);
+        $str1 = implode('</ br>',$lstar1);
+        return $str1;
+    }
     
     public function page_update() {
         $permission_id = implode(",", $_REQUEST['permissionlist']);
@@ -72,7 +80,7 @@ class mebProfilePermission extends PermisGate {
         $permission = array();
         $lih = "";
         $lih2 = "";
-        foreach(SphpBase::sphp_api()->getRegisteredApps() as $key => $armain) {
+        foreach(SphpBase::sphp_api()->getRegisteredGates() as $key => $armain) {
             $lih = "";
             $lih2 = "";
             if($armain[3] !== null){

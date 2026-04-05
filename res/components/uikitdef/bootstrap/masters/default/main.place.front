@@ -1,0 +1,12 @@
+<div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+    <div id="header1" runat="server" fun-setText="##{readGlobal('cmpname')}#" fun-setMenuFile="##{$sphp_settings->comp_uikit_path}#/masters/default/menu_header.php" 
+         lfunsetVerticalMenuFile="##{$sphp_settings->comp_uikit_path}#/masters/default/verticalmenu.php" class="py-3 mb-4" fun-setFixed="" 
+         fun-setStyler="4" fun-setFullSize="" path="uikit/html/Header.php">
+        <main class="container  px-4 py-4">
+            <section id="hero" runat="server" path="uikit/html/HeaderImage.php" fun-setStyler="1"></section>
+            <include_place id="app_content" runat="server"></include_place>
+        </main>
+    </div>
+    <div id="footer1" runat="server" fun-setMenuFile="##{$sphp_settings->comp_uikit_path}#/masters/default/menu_footer.php" fun-setStyler="2" 
+         fun-setFullSize="" path="uikit/html/Footer.php"></div>
+</div>

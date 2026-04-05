@@ -93,7 +93,7 @@ $("#btnCall").on("click", function () {
 
 ```php
 // register Gate=hello so Browser URL=hello.html
-uuregisterGate("hello",__DIR__ ."/apps/HelloGate.php");
+registerGate("hello",__DIR__ ."/apps/HelloGate.php");
 ```
 
 
