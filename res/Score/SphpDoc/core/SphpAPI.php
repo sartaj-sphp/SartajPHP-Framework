@@ -140,7 +140,7 @@ public function isCacheExpired($filename, $ttl) {}
 * @param string $gate_dir_path <p>
 * Attach Gate path. 
 * Path end with .php is module Gate 
-* and path end with .Gate is class Gate. 
+* and path end with .gate.php is class Gate. 
 * Filename should match with class name
 * </p>
 * @param string $s_namespace if class Gate is under a name space
@@ -188,7 +188,7 @@ public function getRootPath($val) {}
 public function respathToFilepath($fileurl) {}
 /**
 * Convert filepath to URL path for browser
-* $a = SphpBase::sphp_api->filepathToRespaths("Gates/chat/index.Gate")
+* $a = SphpBase::sphp_api->filepathToRespaths("Gates/chat/index.gate.php")
 * @param string $filepath
 * @return array pathinfo,directory,url path,filepath
 */
@@ -775,12 +775,11 @@ public function addFrontPlace($frontname, $filepath = "", $secname = "left") {}
 * Get Front Place Object or path
 * @param string $frontname name is id
 * @param string $secname Optional Default=left
-* @return \Sphp\tools\FrontFile|string
+* @return \Sphp\tools\FrontPlace|\Sphp\tools\FrontPlacePhp
 */
 public function getFrontPlace($frontname, $secname = "left") {}
 /**
-* Run Front Place. Only Run FrontFile not PHP. 
-* PHP file include only on render time.
+* Run Front Place. 
 * @param string $frontname name is id
 * @param string $secname Optional Default=left
 */

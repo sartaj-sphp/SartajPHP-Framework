@@ -132,7 +132,7 @@ function isSecureVal($sval){}
 function secure2Val($sval, $key = "sartajphp211"){}
 class stmycache {
 public $url_extension = ".html";
-public $act = "";
+public $act = "evt"; 
 public $sact = "";
 public $evtp = "";
 public $gate = "";

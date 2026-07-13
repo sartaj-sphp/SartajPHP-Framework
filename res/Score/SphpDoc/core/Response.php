@@ -57,6 +57,11 @@ public function removeHttpHeader($key) {}
 */
 public function getHeader() {}
 /**
+* Get All Response Cookies
+* @return array
+*/
+public function getCookie() {}
+/**
 * Advance Function, Internal use
 */
 public function sendHeaders() {}

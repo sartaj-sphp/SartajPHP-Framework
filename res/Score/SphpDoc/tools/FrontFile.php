@@ -1,11 +1,11 @@
 <?php
 namespace Sphp\tools {
 /**
-* Description of FrontFile
+* Description of FrontParser
 *
 * @author Sartaj Singh
 */
-class FrontFile {
+class FrontParser {
 public $data = "";
 public $filePath = "";
 public $fileDir = "";
@@ -202,7 +202,6 @@ public function getBlncodefront() {}
 */
 public function getBlncodebehind() {}
 /**
-* 
 * @param string $FrontFilePath File path of FrontFile Or Direct code as string
 * @param boolean $blnStringData Optional Default=false, If true then $FrontFilePath= string code
 * @param \Sphp\tools\BasicGate $backfileobj Optional Default=null, bind Gate with FrontFile
@@ -299,10 +298,41 @@ public function getChildrenWrapper($compobj) {}
 public function parseComponentChildren($obj) {}
 }
 /**
-* Child Front File Share Components and meta data with parent as reference not a copy. So changes in child
-*  effect in parent also.
+* Description of FrontFile Class
+* FrontFile Class use FrontParser to Parse the *.front file and Create NodeTag, Components
+*  Objects to Manage HTML generation for Browser. Front File use expression Tags (#{($d)? "Yes":"No"}#) to Evaluate
+*  limited PHP syntax and also filter output (##{raw:$d}#) without use of echo or print function.
+*  Front File don't support:-
+*      1. PHP Tags <?, ?> alternative use Expression Tags
+*      2. PHP Loops alternative use Loop Components
+*      3. echo, print functions alternative use expression Tag ##{'Hello'}#
+*      4. Super Global Variables $_POST alternative use $sphp_request->post()
+*      5.  
+* @author Sartaj Singh
 */
-class FrontFileChild extends FrontFile {
+class FrontFile extends FrontParser{
+/**  
+* FrontFile Path is always relative to Gate File Path + "/fronts/" + Gate Class + "_" + FrontFile Name + ".front" . 
+* In Gate Class It will ignore namespace. Use FrontParser Class to any path and name of Front File.
+* @param string $FrontFileName Front File name and Path is relative to Gate File Path + "/fronts/" Or Direct code as string
+* @param boolean $blnStringData Optional Default=false, If true then $FrontFilePath= string code
+* @param \Sphp\tools\BasicGate $backfileobj Optional Default=null, bind Gate with FrontFile
+* @param \Sphp\tools\BasicGate $parentgateobj Optional Default=null, Parent Gate of FrontFile
+* @param boolean $dhtml Optional Default=false, if true then use different parser engine
+* @param string $prefixNameadd Optional Default='', prefix for component id
+*/
+}
+/**
+* Child Front File Share Components and meta data with parent as reference not a copy. So changes in child
+*  effect in parent also.FrontFileChild need file extension as *.child.front
+*/
+class FrontFileChild extends FrontParser {
+/**
+* Create FrontFileChild object. It is required file name post fix as .child.front and pass parent FrontFile Object.
+* @param string $FrontFilePath
+* @param \Sphp\tools\FrontFile $parentfront
+* @param string $prefixNameadd Optional Prefix use for Component ID
+*/
 /**
 * Advance Function
 * Add component object in FrontFile
@@ -310,15 +340,23 @@ class FrontFileChild extends FrontFile {
 * @param \Sphp\tools\Component $obj
 */
 }
-class FrontFileComp extends FrontFile {
+class FrontFileComp extends FrontParser {
 }
 /**
-* Description of FrontPlace
+*  FrontPlace File should always extension end with as *.place.front 
+*  Parent Class for create Front File as Front Place Object. 
+*  Front Place is generate dynamic content in Master File and it can enable, disable by Master File.
+*  For Example you can generate a slider with FrontFile.
+*/
+class FrontPlace extends FrontParser {
+}
+/**
+* Description of FrontPlacePhp
 *  Parent Class for create PHP Class as Front Place Object. 
 *  Front Place is generate dynamic content in Master File and it can enable, disable by Master File.
 *  For Example you can generate a slider with PHP file rather then FrontFile.
 */
-abstract class FrontPlace{
+abstract class FrontPlacePhp{
 abstract protected function _run();
 abstract protected function render();
 }

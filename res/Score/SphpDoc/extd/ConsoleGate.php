@@ -142,40 +142,13 @@ public function onfrontinit($frontobj) {}
 public function onfrontprocess($frontobj) {}
 /** Inbuilt Event
 * override this event handler in your Gate to handle it.
-* trigger when browser get (url=index-delete.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_delete() {}
-/** Inbuilt Event
-* override this event handler in your Gate to handle it.
-* trigger when browser get (url=index-view-19.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-* view = event name 
-* 19 = recid of database table or any other value.
-*/
-public function page_view() {}
-/** Inbuilt Event
-* override this event handler in your Gate to handle it.
-* trigger when browser post form (url=index.html)
+* trigger when browser post data to Landing URL (url=index.html)
 * where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_submit() {}
 /** Inbuilt Event
 * override this event handler in your Gate to handle it.
-* trigger when browser post form (url=index.html) as new form
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_insert() {}
-/** Inbuilt Event
-* override this event handler in your Gate to handle it.
-* trigger when browser post form (url=index.html) as filled form
-* from database with view_data function
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_update() {}
-/** Inbuilt Event
-* override this event handler in your Gate to handle it.
-* trigger when browser get (url=index.html) first time
+* trigger when browser get Request to Landing URL(url=index.html) 
 * where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_new() {}

@@ -16,7 +16,7 @@ public $blncodebehind = false;
 /**
 * @var \Sphp\tools\FrontFile
 */
-public $frontobj;
+public $frontobj = null;
 public $dhtmldom;
 /** @var Sphp\Settings */
 public $sphp_settings = null;
@@ -33,6 +33,13 @@ public function parseComponent($compobj,$innerHTML = false){}
 public function createTagComponent($name="mycustomtag1",$tagname="div") {}
 public function getChildrenWrapper($compobj){}
 public function parseComponentChildren($wrGateerElement){}
+/**
+*  Remove in Future use NodeTag Object rather then raw HTML Tags
+* @param type $strData
+* @param type $callbackfun
+* @param type $obj
+* @return type
+*/
 public function parseHTMLTag($strData,$callbackfun,$obj){}
 public function setupcomp($element,$parentelement) {}
 public function endupcomp($element,$parentelement) {}    

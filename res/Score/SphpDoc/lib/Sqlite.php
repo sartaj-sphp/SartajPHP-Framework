@@ -31,8 +31,7 @@ public function updateSQL($frm, $txttbl, $where) {}
 public function insertSQL($frm, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}
 public function createDatabase() {}
-public function createTable($sql) {}
-public function dropTable($tableName) {}
+public function exec($sql) {}
 public function isRecordExist($sql) {}
 public function row_fetch_assoc($result) {}
 public function row_fetch_array($result) {}

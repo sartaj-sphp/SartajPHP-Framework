@@ -1,8 +1,13 @@
 <?php
 /**
- * Description of AutoAppPermis
- *
- * @author Sartaj
+ * Description of AutoGatePermis
+ * It extends PermisGate Class and Add Search,Grid to Print as PDF, 
+ * Add heading and footer for Front File and Printer Format. This class 
+ * is also add AJAX base error and notification reply.
+ * This Class helps to develop Gate Class easy as CRUD App with Permissions System.
+ * It reduce coding to handle most of PageEvents to handle two Front Files.
+ *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
+ *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
 include_once(SphpBase::sphp_settings()->lib_path . "/dev/QueryBuilder.php");
 include_once(SphpBase::sphp_settings()->slib_path . "/apps/permis/PermisGate.php");
@@ -51,18 +56,23 @@ class AutoGatePermis extends PermisGate {
         $this->setFrontFile($this->showallFront);
     }
 
-// user event handling start here
-    public function page_event_test($param) {
-        $this->setFrontFile($this->showallFront);
+    public function page_submit() {
+        /** @var Sphp\Comp\Form\HTMLForm */
+        $cmpForm = $this->genFormFront->getComponent($this->formid);
+        if ($cmpForm->isUpdateRequest()) {
+            $this->update();
+        } else {
+            $this->insert();
+        }
     }
 
-    public function page_event_showall_show($param) {
+    public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         $this->JSServer->addJSONComp($showall, 'showall');
-        $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
+        $this->JSServer->addJSONHTMLBlock('pagebar', $showall->getPageBar());
     }
 
-    public function page_event_print($param) {
+    public function page_event_print($evtp) {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
         require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
@@ -81,7 +91,7 @@ class AutoGatePermis extends PermisGate {
          
     }
 
-    public function page_event_usersrch($param) {
+    public function page_event_usersrch($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
             if (!getCheckErr()) {
@@ -98,20 +108,16 @@ class AutoGatePermis extends PermisGate {
         }
     }
 
-    public function page_event_up($param) {
-        if ($this->Client->request('txtid') != "") {
-            $this->update();
-        } else {
-            $this->insert();
-        }
-    }
-
-    public function page_event_rowclick($param) {
+    public function page_event_rowclick($evtp) {
         if($this->blndisableperm == true || $this->hasPermission("view")){
         $this->Client->session("formType", "Edit");
+        // Fill Form Components from Database
         $this->page->viewData($this->genFormFront->getComponent('form2'));
+        // Show btnDel Button in browser, by default hidden in onstart event
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
+        // Open Dialog of showall Grid or Pagination Component
         $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
+        // display content in Dialog of showall Component
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
 //        $this->JSServer->addJSONBlock('html','frmstatus',"Form is on Update Mode!");
         }else{
@@ -121,10 +127,10 @@ class AutoGatePermis extends PermisGate {
 
     }
  
-    public function page_event_showall_newa($param) {
-        $this->page_event_addform($param);
+    public function page_event_showall_newa($evtp) {
+        $this->page_event_addform($evtp);
     }
-    public function page_event_addform($param) {
+    public function page_event_addform($evtp) {
 	if(isset($_SESSION['curtrec'])){
             unset($_SESSION['curtrec']);
         }
@@ -133,7 +139,7 @@ class AutoGatePermis extends PermisGate {
     }
 
 // user event handling end here
-    public function page_event_crossclick($param) {
+    public function page_event_crossclick($evtp) {
         $this->page->viewData($this->genFormFront->getComponent('form2'));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $extupdate = array();
@@ -144,7 +150,7 @@ class AutoGatePermis extends PermisGate {
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
     }
 
-    public function page_insert() {
+    public function insert() {
         global $cmpid;
         if($this->blndisableperm == false && !$this->hasPermission("add")){
             setErr("app2", "Permission Denied");
@@ -157,7 +163,8 @@ class AutoGatePermis extends PermisGate {
         
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
-            $this->insertedid = $this->page->insertData($this->extra);
+                $form2 = $this->genFormFront->getComponent($this->formid);
+                $this->insertedid = $this->page->insertData($form2,$this->extra);            
             if (!getCheckErr()) {
                 //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
                 //$JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
@@ -197,13 +204,14 @@ class AutoGatePermis extends PermisGate {
         $this->JSServer->addJSONJSBlock("getURL('" . getEventURL("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
     }
 
-    public function page_update() {
+    public function update() {
         if($this->blndisableperm == false && !$this->hasPermission("view")){
             setErr("app2", "Permission Denied");
         }
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
-            $this->page->updateData($this->extra, $this->recID, $this->recWhere);
+                $form2 = $this->genFormFront->getComponent($this->formid);
+                $this->page->updateData($form2,$this->extra, $this->recID, $this->recWhere);
             if (!getCheckErr()) {
                 if ($blnsendList) {
                     $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
@@ -224,7 +232,7 @@ class AutoGatePermis extends PermisGate {
         }
     }
 
-    public function page_delete() {
+    public function page_event_delete($evtp) {
         if($this->blndisableperm == false && !$this->hasPermission("delete")){
             setErr("app2", "Permission Denied");
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of AutoApp
+ * Description of AutoGate
  *
  * @author Sartaj
  */
@@ -59,18 +59,14 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $this->setFrontFile($this->showallFront);
     }
 
-// user event handling start here
-    public function page_event_test($param) {
-        $this->setFrontFile($this->showallFront);
-    }
 
-    public function page_event_showall_show($param) {
+    public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         $this->JSServer->addJSONComp($showall, 'showall');
         $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
     }
 
-    public function page_event_print($param) {
+    public function page_event_print($evtp) {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
         require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
@@ -84,7 +80,7 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $pdf->render('sample.pdf', 'I');
     }
 
-    public function page_event_usersrch($param) {
+    public function page_event_usersrch($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
             if (!getCheckErr()) {
@@ -101,15 +97,25 @@ class AutoGate extends \Sphp\tools\BasicGate {
         }
     }
 
-    public function page_event_up($param) {
-        if ($this->Client->request('txtid') != "") {
+    public function page_event_up($evtp) {
+        // Forward Request to submit event as Form Submit
+        $this->page_submit();
+    }
+    /**
+     * Browser Post Data on Landing URL. If Form is submitted Then 
+     * Forward request to update or insert Database.
+     */
+    public function page_submit() {
+        /** @var Sphp\Comp\Form\HTMLForm */
+        $cmpForm = $this->genFormFront->getComponent($this->formid);
+        if ($cmpForm->isUpdateRequest()) {
             $this->update();
         } else {
             $this->insert();
         }
     }
 
-    public function page_event_rowclick($param) {
+    public function page_event_rowclick($evtp) {
         $this->Client->session("formType", "Edit");
         $this->page->viewData($this->genFormFront->getComponent($this->formid));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
@@ -118,10 +124,10 @@ class AutoGate extends \Sphp\tools\BasicGate {
 //        $this->JSServer->addJSONBlock('html','frmstatus',"Form is on Update Mode!");
     }
 
-    public function page_event_showall_newa($param) {
-        $this->page_event_addform($param);
+    public function page_event_showall_newa($evtp) {
+        $this->page_event_addform($evtp);
     }
-    public function page_event_addform($param) {
+    public function page_event_addform($evtp) {
 	if(isset($_SESSION['curtrec'])){
             unset($_SESSION['curtrec']);
         }
@@ -130,7 +136,7 @@ class AutoGate extends \Sphp\tools\BasicGate {
     }
 
 // user event handling end here
-    public function page_event_crossclick($param) {
+    public function page_event_crossclick($evtp) {
         $this->page->viewData($this->genFormFront->getComponent($this->formid));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $extupdate = array();
@@ -141,7 +147,7 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
     }
 
-    public function page_insert() {
+    public function insert() {
         global $cmpid;
         $this->extra[]['spcmpid'] = $cmpid;
         $blnsendList = $this->checkCrossCall();
@@ -185,7 +191,7 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $this->JSServer->addJSONJSBlock("getURL('" . getEventURL("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
     }
 
-    public function page_update() {
+    public function update() {
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
             $this->page->updateData($this->genFormFront->getComponent($this->formid),$this->extra, $this->recID, $this->recWhere);
@@ -209,7 +215,7 @@ class AutoGate extends \Sphp\tools\BasicGate {
         }
     }
 
-    public function page_delete() {
+    public function page_event_delete() {
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
             $this->page->deleteRec();
@@ -263,25 +269,25 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $this->JSServer->addJSONJSBlock('runanierr("info");');
     }
 
-    public function page_event_efillstate($param) {
+    public function page_event_efillstate($evtp) {
         $this->Client->session('country', $this->Client->request('country'));
         $this->JSServer->addJSONComp($this->genFormFront->getComponent('state'), 'edit_state_box');
         $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
-    public function page_event_efillcity($param) {
+    public function page_event_efillcity($evtp) {
         $this->Client->session('country', $this->Client->request('country'));
         $this->Client->session('state', $this->Client->request('state'));
         $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
     /// Search
-    public function page_event_efillstates($param) {
+    public function page_event_efillstates($evtp) {
         $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_state'), 'edit_state_boxs');
         $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 
-    public function page_event_efillcitys($param) {
+    public function page_event_efillcitys($evtp) {
         $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 

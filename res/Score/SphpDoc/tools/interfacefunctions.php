@@ -37,7 +37,7 @@ function getThisGateURL($extra="",$blnSesID=false,$ext='',$noncache=false){}
 * }
 * $eventName = test
 * $gate_param = index
-* Registered Gate = Gates/index.Gate
+* Registered Gate = Gates/index.gate.php
 * </p>
 * @param string $evtp Event Parameter pass to URL
 * @param string $gate_param Gate like index
@@ -63,7 +63,7 @@ function getEventURLSecure($eventName,$evtp="",$gate_param="",$extra="",$newbase
 * }
 * $eventName = test
 * $gate_param = index
-* Registered Gate = Gates/index.Gate
+* Registered Gate = Gates/index.gate.php
 * </p>
 * @param string $evtp Event Parameter pass to URL
 * @param string $gate_param Gate like index

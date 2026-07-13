@@ -26,18 +26,27 @@ class bind_node extends \Sphp\tools\NativeApp{
 
 
     public function page_event_quitme($evtp){
-        $this->sendCommand("quit");
+        $this->sendCommand("index-quitme");
         $this->JSServer->addJSONReturnBlock("Quite now");
         $this->sendTo();
     }
 
-
+	/**
+	* override this event handler in your Gate to handle it.
+	* WebSocket Connection Handler, 
+	* @param \Sphp\tools\WsCon $conobj WS Client Object
+	*/
     public function onwscon($conobj) {
-        $this->JSServer->addJSONReturnBlock("app: new Connection " . $conobj["conid"]);
+        $this->JSServer->addJSONReturnBlock("app: new Connection " . $conobj->getConnectionId());
         $this->sendAllProcess();
     }
+	/**
+	* override this event handler in your Gate to handle it.
+	* WebSocket Connection Handler, 
+	* @param \Sphp\tools\WsCon $conobj WS Client Object
+	*/
     public function onwsdiscon($conobj) {
-        $this->JSServer->addJSONReturnBlock("app: DisConnection " . $conobj["conid"]);
+        $this->JSServer->addJSONReturnBlock("app: DisConnection " . $conobj->getConnectionId());
         $this->sendOthers();
     }
     public function onconsole($data,$type) {
@@ -67,15 +76,14 @@ class bind_node extends \Sphp\tools\NativeApp{
     // call on quit of child process
     // only child process is use with life of app. so quit with child process
     public function oncquit(){
-            //$this->childprocess = null;
             $this->JSServer->addJSONJSBlock("$('#btnstart').prop('disabled',false)");
             $this->JSServer->addJSONReturnBlock("cquit");
             $this->JSServer->flush();
             $this->exitMe();
     }
     public function page_event_setm($evtp){
-        $this->setGlobalAppManager();
-        $this->JSServer->addJSONReturnBlock("Change Manager: ". $this->mainConnection["conid"]);
+        $this->setGlobalGateManager();
+        $this->JSServer->addJSONReturnBlock("Change Manager: ". $this->mainConnection);
         $this->sendTo();
     }
     

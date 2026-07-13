@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * PermisGate Class
+ * This Class helps to develop Gate Class easy as CRUD App with Permissions System.
+ * It reduce coding to handle most of PageEvents to handle two Front Files.
+ *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
+ *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
+ */
 class PermisGate extends \Sphp\tools\BasicGate {       
     /**
      * $extra array as $extra[table][field] = value format. pass $extra value while 
@@ -28,39 +34,49 @@ class PermisGate extends \Sphp\tools\BasicGate {
      * This Front File provide Edit Form to use Insert and Update records
      *  @var \Sphp\tools\FrontFile
      */
-    protected $genFormFront = null;
+    public $genFormFront = null;
 
     /**
      * This Front File provide List Records with Pagination + search Form
      *  @var \Sphp\tools\FrontFile
      */
-    protected $showallFront = null;
+    public $showallFront = null;
         
     
-    public function page_event_showallShow($param) {
-        $showall = $this->showallFront->getComponent('showall');
-        $showall->fu_unsetRenderTag();
-        $this->JSServer->addJSONComp($showall,'showall');
-        $this->JSServer->addJSONBlock('html','pagebar',$showall->getPageBar());            
+    public function page_new(){
+        // no any permission check, you can overwrite this behaviour in your app
+        $this->setFrontFile($this->showallFront);
+    }
+    public function page_event_up($evtp) {
+        // Forward Request to submit event as Form Submit
+        $this->page_submit();
+    }
+    /**
+     * Browser Post Data on Landing URL. If Form is submitted Then 
+     * Forward request to update or insert Database.
+     */
+    public function page_submit() {
+        /** @var Sphp\Comp\Form\HTMLForm */
+        $cmpForm = $this->genFormFront->getComponent($this->formid);
+        if ($cmpForm->isUpdateRequest()) {
+            $this->update();
+        } else {
+            $this->insert();
+        }
     }
     
-    public function page_event_showall_show($param) {
+    public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         $showall->fu_unsetRenderTag();
         $this->JSServer->addJSONComp($showall, 'showall');
         $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
     }
     
-    public function page_new(){
-        // no any permission check, you can overwrite this behaviour in your app
-        $this->setFrontFile($this->showallFront);
-    }
-    
     public function hasPermission($p){
         return $this->page->hasPermission($p);
     }
     
-    public function page_event_addnew($param) {
+    public function page_event_addnew($evtp) {
         if($this->page->hasPermission("add")){
             $this->genFormFront->addMetaData("pageName", "Add " . $this->genFormFront->getMetaData('pageName'));
         // set Submit Button Text
@@ -72,7 +88,7 @@ class PermisGate extends \Sphp\tools\BasicGate {
     }
     
     
-    public function page_view() { 
+    public function page_event_view($evtp) { 
         if($this->page->hasPermission("view") && $this->page->getEventParameter() != ""){
             $this->genFormFront->addMetaData("pageName", "Edit " . $this->genFormFront->getMetaData('pageName'));
         // set Submit Button Text
@@ -86,9 +102,10 @@ class PermisGate extends \Sphp\tools\BasicGate {
         }
     }        
     
-    public function page_insert() {
+    public function insert() {
         global $cmpid;
         if($this->page->hasPermission("add")){
+            $this->genFormFront->addMetaData("formButton", "Save");
             if($this->Client->isSession('sid')) setErr('App','Need to login');
             $this->extra[]['userid'] = $this->Client->session('sid');
             $this->extra[]['parentid'] = $this->Client->session('parentid');
@@ -116,8 +133,9 @@ class PermisGate extends \Sphp\tools\BasicGate {
         }   
     }
     
-    public function page_update() {
+    public function update() {
         if($this->page->hasPermission("view")){
+            $this->genFormFront->addMetaData("formButton", "Update");
             if (!getCheckErr()) {                        
                 $form2 = $this->genFormFront->getComponent($this->formid);
                 $this->page->updateData($form2,$this->extra);
@@ -137,7 +155,7 @@ class PermisGate extends \Sphp\tools\BasicGate {
         }
     }
     
-    public function page_delete() {
+    public function page_event_delete($evtp) {
         if($this->page->hasPermission("delete") && $this->page->getEventParameter() != ""){
             $this->page->deleteRec();
             if (!getCheckErr()) {

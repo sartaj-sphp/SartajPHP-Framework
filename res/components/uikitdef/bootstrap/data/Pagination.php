@@ -66,6 +66,8 @@ if(\SphpBase::sphp_request()->isSession($name.'pc') && \SphpBase::sphp_request()
 }
 $this->pageNo = intval(\SphpBase::sphp_request()->request('page')) - 1;
 $this->dtable = \SphpBase::page()->tblName; echo ' gh del ' . \SphpBase::page()->tblName;
+$this->fu_unsetrenderTag();
+
 }
 
 
@@ -307,7 +309,7 @@ foreach($this->result as $key1=>$keyar){
 $stro .= $this->frontobj->parseComponentChildren($this->roote);
  } }
  //echo $stro;
-$this->fu_unsetrenderTag();
+//$this->fu_unsetrenderTag();
 $strom = $this->getPaging();
 }
 }
@@ -585,7 +587,7 @@ if($spacePos !== false && ($commaPos === false || $spacePos < $commaPos)){
     $spt = explode(',', $this->dtable,2);
 }
 
-if(count($spt)>0){
+if(count($spt)>0 && trim($spt[0]) != "("){
     $idf = $spt[0].".{$this->primarykey}";
 }else{
     $idf = $this->primarykey;
@@ -597,7 +599,11 @@ if($this->sql==''){
 $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->where;
 }
 
-$this->parameterA['class'] = 'pag';
+if($this->element->hasAttribute("class")){
+    $this->element->appendAttribute("class"," pag");
+}else{
+    $this->element->setAttribute("class","pag");    
+}
 //$this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
 
 $this->element->replaceChildren($this->header. $this->executeSQL() . $this->footer);

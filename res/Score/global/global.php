@@ -48,7 +48,7 @@ $sphp_use_session_cookie = false;
 $sphp_app_cmd = false;
 // Default Language
 $serv_language = "ENGLISH"; 
-// debug mode 0,1,2
+// debug mode 0,1,2,3
 $debugmode = 0;
 $debugprofiler = "";
 //$debugprofiler = "{$phppath}/classes/base/debug/SPHP_Profiler3.php";
@@ -67,6 +67,7 @@ $blnPreLibLoad = true;
 $blnStopResponse = false;
 
 //$db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
+// dbEngine object doc = vendor/sartajphp/sartajphp/res/Score/SphpDoc/lib/MySQLiPdo.php
 $db_engine_path = $libpath . "/lib/MySQLiPdo.php,\\MySQLiPdo";
 $ddriver = "";
 $duser = "root";
@@ -86,7 +87,7 @@ $jsProtection = false;
 
 $masterf = "{$comppath}{$ComponentUI}/masters/default/master.mast.php";
 //$mobimasterf = "{$slibpath}/masters/default/mobimaster.mast.php";
-//$admmasterf = "{$slibpath}/masters/default_1/admmaster.mast.php";
+$admmasterf = $masterf;
 $mebmasterf = $masterf;
 //$softmasterf = "{$slibpath}/masters/default/softmaster.mast.php";
 

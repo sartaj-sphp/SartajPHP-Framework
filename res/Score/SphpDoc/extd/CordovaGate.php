@@ -31,6 +31,7 @@ public function addPage($pageobj) {}
 public function addDistLib($folderpath) {}
 public function process($frontobj){}
 public function processEvent(){}
+protected function call_page_events(){}
 protected function createCordovaPlugin($curdirpath) {}
 protected function sendRenderData() {}
 public function run(){}

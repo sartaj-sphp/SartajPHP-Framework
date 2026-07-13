@@ -195,7 +195,7 @@ public function fu_setHTMLID($val) {}
 /**
 * Submit Component value via Ajax Request and it 
 * generate all required JS code automatically.
-* in front file use:- funsubmitAJAX="click,|index-p1.html,|textarea1,textbox1"
+* in front file use:- funsubmitAjax="click,|index-p1.html,|textarea1,textbox1"
 * @param type $eventName JS Event Name
 * @param type $url Optional Default=page_event_compname_$eventName URL to post data
 * @param type $extracomp Comma Separated list html tag id or class with prefix . to send data
@@ -214,6 +214,8 @@ public function fu_submitAjax($eventName, $url = "", $extracomp = "") {}
 * 
 */
 public function fu_submitWS($eventName, $host = "", $extracomp = "",$gate="main",$evt="",$evtp="") {}
+public function fu_setVisible() {}
+public function fu_unsetVisible() {}
 /**
 * End List of Fusion Methods
 */
@@ -325,8 +327,6 @@ public function wrapTag($tagname) {}
 * @return \Sphp\tools\NodeTag
 */
 public function wrapInnerTags($tagname) {}
-public function setVisible() {}
-public function unsetVisible() {}
 public function getVisible() {}
 public function getrender() {}
 public function getrenderTag() {}
@@ -674,9 +674,9 @@ protected function genhelpPropList() {}
 class ComponentGroup extends Component {
 final public function onaftercreate() {}
 final public function onrender() {}
-public function getCompApp() {}
+public function getCompGate() {}
 }
-class MenuGen {
+class MenuGen extends \Sphp\tools\FrontPlacePhp{
 public $htmlout = "";
 public $sphp_api = null;
 public $name = "def";

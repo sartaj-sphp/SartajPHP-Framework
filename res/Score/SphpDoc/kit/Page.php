@@ -1,9 +1,12 @@
 <?php
 /**
-* page class
+* Page class
 *
-* This class is parent class of all page Gate. You can Develop SartajPHP Gate with extend
-* of this class or simple use SphpBase::page() function to implement page object in any php module.
+* This is low level class of Page Events, It Trigger all PageEvent for Gate Class. It is set Even Flags and set 
+*  Event name and parameter then Gate Class Route Events according to their type of Class and way of 
+* development of Application.
+* SphpBase::page() function to get page object of Current Request in any php file and $this->page to get Page 
+* Object in Gate Class.
 * 
 * @author     Sartaj Singh
 * @copyright  2007
@@ -11,18 +14,11 @@
 namespace Sphp\kit{
 class Page {
 public $authentication = false;
-public $issubmit = false;
-public $isview = false;
 public $isnew = false;
-public $isdelete = false;
-public $isinsert = false;
-public $isupdate = false;
-public $isaction = false;
+public $issubmit = false;
 public $isevent = false;
-public $act = "";
 public $sact = "";
 public $evtp = "";
-public $txtid = "";
 public $gate_dir_path = "";
 public $gate_file_path = "";
 public $current_gate_obj = null;
@@ -35,66 +31,6 @@ public $isSesSecure = false;
 * Advance No Use
 * @depends start
 */
-/** Advance 
-* Overload, Event Handler For Gate Type development
-*/
-public function page_init() {}
-/** Advance 
-* Overload, Event Handler For Gate Type development
-*/
-public function page_load() {}
-/** Advance 
-* Gate Event handler like (url=index-page-contacts.html)
-* this function gives $event = page and $evtp = contacts
-* @param string $event
-* @param string $evtp
-*/
-public function page_event($event, $evtp) {}
-/** Advance 
-* Custom action designer. Default value delete or view or evt. 
-* like for events value = evt
-* @param string $act
-* @param string $event
-* @param string $evtp
-*/
-public function page_action($act, $event, $evtp) {}
-/** Special Event
-* Delete Event Handler, occur when browser get (url=index-delete.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_delete() {}
-/** Special Event
-* View Event Handler, occur when browser get (url=index-view-19.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-* view = event name 
-* 19 = recid of database table or any other value.
-*/
-public function page_view() {}
-/** Special Event
-* Submit Event Handler, occur when browser post form (url=index.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_submit() {}
-/** Special Event
-* Insert Event Handler, occur when browser post form (url=index.html) as new form
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_insert() {}
-/** Special Event
-* Update Event Handler, occur when browser post form (url=index.html) as filled form
-* from database with view_data function
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_update() {}
-/** Special Event
-* New Event Handler, occur when browser get (url=index.html) first time
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_new() {}
-/** Advance 
-* Overload, Event Handler For Gate Type development
-*/
-public function page_unload() {}
 /**
 * Get Gate Event name of current request
 * @return string
@@ -105,17 +41,28 @@ public function getEvent() {}
 * @return string
 */
 public function getEventParameter() {}
-/** Advance 
-* Overload, Event Handler For Gate Type development
+/**
+* Get Request to Landing URL of Gate
+* Return True if page_new event triggered
+* @return bool
 */
-public function readyPage() {}
+public function isNewEvent(){}
+/**
+* Data Post on Landing URL of Gate
+* Return True if page_submit event triggered
+* @return bool
+*/
+public function isSubmitEvent(){}
+/**
+* Browser Request to Event URL of Gate
+* Return True if page_submit event triggered
+* @return bool
+*/
+public function isUrlEvent(){}
 /** Advance 
 * Overload, Event Handler For Gate Type development
 */
 public function init() {}
-/** Advance 
-* Overload, Event Handler For Gate Type development
-*/
 /**
 * Set which user Permission can access this Gate. Default Permission is ALL.
 * You can set session variable in login Gate 
@@ -187,43 +134,6 @@ public function sesSecure() {}
 */
 public function forward($loc) {}
 /**
-* Return True if page_insert event triggered
-* @return bool
-*/
-public function isInsertMode(){}
-/**
-* Return True if page_update event triggered
-* @return bool
-*/
-public function isUpdateMode(){}
-/**
-* Return True if page_view event triggered
-* @return bool
-*/
-public function isViewMode(){}
-/**
-* Return True if page_delete event triggered
-* @return bool
-*/
-public function isDeleteMode(){}
-/**
-* Return True if page_submit event triggered
-* @return bool
-*/
-public function isSubmitMode(){}
-/**
-* Return True if page_new event triggered
-* @return bool
-*/
-public function isNewMode(){}
-/**
-* User Event is a type of PageEvent as a custom Event build from url which 
-* doesn't match with any inbuilt Event.
-* Return True if page_event_* User event triggered
-* @return bool
-*/
-public function isUserEventMode(){}
-/**
 * Set default Database Engine for execute query and managing connections 
 * Default is MySQL
 * @param \MySQL $objdbengine
@@ -247,6 +157,7 @@ public function deleteRec($recid="") {}
 * $extra[]['datecreate'] = date('Y-m-d)
 * insertData($extra)
 * @param array $extra extra fields to insert with query.
+* @return int|bool Return Inserted Last ID
 */
 public function insertData($form1,$extra = array()) {}
 /**
@@ -353,5 +264,8 @@ public function getCreateTableSQL($table) {}
 * @return boolean true if rows exist
 */
 public function is_rows($result) {}
+public function createTable($sql) {}
+public function dropTable($tableName) {}
+public function emptyTable($tableName) {}
 }
 }

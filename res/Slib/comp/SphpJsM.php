@@ -9,6 +9,7 @@ final class SphpJsM {
     
     public function init() {
         global $jslibpath;
+        self::$jslib = array();
 // load js lib and jquery ready function
 //addFileLink("{$respath}/jquery/jquery-min.js",true);
 //addFileLink("{$respath}/jquery/jquery-min1.10.js",true,"jquery-min");

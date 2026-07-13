@@ -1,89 +1,56 @@
 <?php
-namespace Sphp\tools{
-class HTMLDOMNode {
-public $nodetype = 3;
-public $tag = 'text';
-public $attr = array();
-public $children = array();
-public $nodes = array();
-public $parent = null;
-public $_a = array();
-public $charpos = 0;
-const HDOM_TYPE_ELEMENT = 1;
-const HDOM_TYPE_COMMENT = 2;
-const HDOM_TYPE_TEXT = 3;
-const HDOM_TYPE_ENDTAG = 4;
-const HDOM_TYPE_ROOT = 5;
-const HDOM_TYPE_UNKNOWN = 6;
-const HDOM_QUOTE_DOUBLE = 0;
-const HDOM_QUOTE_SINGLE = 1;
-const HDOM_QUOTE_NO = 3;
-const HDOM_INFO_BEGIN = 0;
-const HDOM_INFO_END = 1;
-const HDOM_INFO_QUOTE = 2;
-const HDOM_INFO_SPACE = 3;
-const HDOM_INFO_TEXT = 4;
-const HDOM_INFO_INNER = 5;
-const HDOM_INFO_OUTER = 6;
-const HDOM_INFO_ENDSPACE = 7;
-public function getNodetype() {}
-public function getTag() {}
-public function getAttr() {}
-public function getChildren() {}
-public function hasChildren() {}
-public function addChild($node) {}
-public function getNodes() {}
-public function addNode($node) {}
-public function getParent() {}
-public function setNodetype($nodetype) {}
-public function setTag($tag) {}
-public function setAttr($attr) {}
-public function setChildren($children) {}
-public function setNodes($nodes) {}
-public function setParent($parent) {}
-public function isEndTag() {}
-public function isSelfClose() {}
-public function clear() {}
-public function dump($show_attr = true) {}
-public function parent() {}
-public function children($idx = -1) {}
-public function first_child() {}
-public function last_child() {}
-public function next_sibling() {}
-public function prev_sibling() {}
-public function setA($key,$val) {}
-public function setAppendA($key,$val) {}
-public function setAA($key,$val) {}
-public function innertext() {}
-public function outertext() {}
-public function outertext2() {}
-public function text() {}
-public function xmltext() {}
-public function makeup() {}
-public function find($selector, $idx = null) {}
-protected function seek($selector, $ret) {}
-protected function match($exp, $pattern, $value) {}
-protected function parse_selector($selector_string) {}
+namespace Sphp\tools {
 /**
-* Set inner HTML and also clear all children without any save method called. 
-* If you don't want to clear children references then use innertext property
-* @param string $value html text
+* HTMLDOMNode - Represents a single node in the DOM tree
+*
+* @package HTMLDOM
+* @version 4.0
+*
+* Changes in v4.0
+* ───────────────
+* • <comment> tag support: nodetype=TYPE_TEXT, INFO_TEXT='', both
+*   innertext() and outertext() return '' so the block is invisible in output.
+* • TYPE_SILENT constant added for <comment> nodes (nodetype stays TYPE_TEXT
+*   so existing code that checks nodetype is unaffected; tag property = 'comment').
+* • outertext() / innertext() TEXT-node result cached in INFO_OUTER so
+*   repeated calls on the same text node are O(1).
+* • All v3 optimisations retained.
 */
-public function setInnerHTML($value) {}
-public function getAllAttributes() {}
+class HTMLDOMNode
+{
+const TYPE_ELEMENT = 1;
+const TYPE_COMMENT = 2;
+const TYPE_TEXT    = 3;
+const TYPE_ROOT    = 5;
+const INFO_BEGIN    = 0;
+const INFO_END      = 1;
+const INFO_TEXT     = 4;
+const INFO_INNER    = 5;
+const INFO_OUTER    = 6;
+const INFO_ENDSPACE = 7;
+public $nodetype = self::TYPE_TEXT;
+public $tag      = 'text';
+public $attr     = [];
+public $children = [];
+public $nodes    = [];
+public $parent   = null;
+public $info     = [];
+public $line     = 1;
+public $charpos  = 0;
+public function setInfo($key, $value)
+{}
+public function appendInfo($key, $value)
+{}
+public function isSelfClose()
+{}
+public function innertext()
+{}
+public function outertext()
+{}
+public function clear()
+{}
 public function getAttribute($name) {}
 public function setAttribute($name, $value) {}
 public function hasAttribute($name) {}
-public function removeAttribute($name) {}
-public function getElementById($id) {}
-public function getElementsById($id, $idx = null) {}
-public function getElementByTagName($name) {}
-public function getElementsByTagName($name, $idx = null) {}
-public function parentNode() {}
-public function childNodes($idx = -1) {}
-public function firstChild() {}
-public function lastChild() {}
-public function nextSibling() {}
-public function previousSibling() {}
 }
 }

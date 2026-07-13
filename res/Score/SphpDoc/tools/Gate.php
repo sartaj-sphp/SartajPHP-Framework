@@ -115,28 +115,6 @@ public function onready() {}
 */
 public function onrun() {}
 /** 
-* PageEvent Delete
-* Trigger only when Browser access URL is matched with PageEvent
-* Trigger only one PageEvent per request.
-* Trigger after onrun Event and before on render.
-* override this event handler in your Gate to handle it.
-* trigger when browser get (url=index-delete.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_delete() {}
-/** 
-* PageEvent View
-* Trigger only when Browser access URL is matched with PageEvent
-* Trigger only one PageEvent per request.
-* Trigger after onrun Event and before on render.
-* override this event handler in your Gate to handle it.
-* trigger when browser get (url=index-view-19.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-* view = event name 
-* 19 = recid of database table or any other value.
-*/
-public function page_view() {}
-/** 
 * PageEvent Submit
 * Trigger only when Browser access URL is matched with PageEvent
 * Trigger only one PageEvent per request.
@@ -146,28 +124,6 @@ public function page_view() {}
 * where index is Gate of Gate and Gate path is in reg.php file 
 */
 public function page_submit() {}
-/** 
-* PageEvent Insert
-* Trigger only when Browser access URL is matched with PageEvent
-* Trigger only one PageEvent per request.
-* Trigger after onrun Event and before on render.
-* override this event handler in your Gate to handle it.
-* trigger when browser post Filled Empty Form Components (url=index.html)
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_insert() {}
-/** 
-* PageEvent Update
-* Trigger only when Browser access URL is matched with PageEvent
-* Trigger only one PageEvent per request.
-* Trigger after onrun Event and before on render.
-* override this event handler in your Gate to handle it.
-* trigger when browser post Edited Form Components Which Filled with 
-* \SphpBase::page()->viewData() (url=index.html) 
-* from database with view_data function
-* where index is Gate of Gate and Gate path is in reg.php file 
-*/
-public function page_update() {}
 /** 
 * PageEvent New
 * Trigger only when Browser access URL is matched with PageEvent
@@ -220,6 +176,7 @@ public function getSesSecurity() {}
 * Advance function for change the behavior of Gate
 */
 protected function _processEvent() {}
+protected function call_page_events() {}
 /**
 * Advance function for change the behavior of Gate
 */

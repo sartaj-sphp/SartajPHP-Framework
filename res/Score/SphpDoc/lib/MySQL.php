@@ -49,8 +49,7 @@ public function insertSQL($frm, $txttbl) {}
 public function insertSQLMulti($arr, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}
 public function createDatabase() {}
-public function createTable($sql) {}
-public function dropTable($tableName) {}
+public function exec($sql) {}
 /**
 * 
 * @param string $sql

@@ -32,11 +32,7 @@ public function onstart() {}
 public function onready() {}
 public function onfrontinit($frontobj) {}
 public function onfrontprocess($frontobj) {}
-public function page_delete() {}
-public function page_view() {}
 public function page_submit() {}
-public function page_insert() {}
-public function page_update() {}
 public function page_new() {}
 public function getEvent() {}
 public function getEventParameter() {}

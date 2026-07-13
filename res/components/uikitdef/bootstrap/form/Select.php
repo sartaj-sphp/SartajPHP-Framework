@@ -53,7 +53,7 @@ class Select extends \Sphp\tools\Component {
             $this->HTMLName = $this->getAttribute("name");            
         }
 
-        if($this->getAttribute("msgname") != ""){
+        if($this->element->hasAttribute("msgname")){
             $this->msgName = $this->getAttribute("msgname");
         }        
     }
@@ -62,7 +62,8 @@ class Select extends \Sphp\tools\Component {
         if(\SphpBase::sphp_request()->isAJAX()){
             \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
         }
-        setErr($this->name, $msg);
+        $eid = ($this->element->hasAttribute("placeholder")) ? $this->placeholder : $this->name; 
+        setErr($eid, $msg);
     }
     /**
      * Find and replace string in option text
@@ -97,7 +98,7 @@ class Select extends \Sphp\tools\Component {
         $this->formName = $val;
     }
 
-    public function fu_setMsgName($val) {
+    public function fi_setMsgName($val) {
         $this->msgName = $val;
         $this->setAttribute('placeholder', $val);
     }
@@ -147,6 +148,14 @@ class Select extends \Sphp\tools\Component {
     }
 
     public function fi_setNotValue($val) {
+        $this->notvalue = $val;
+        if ($this->issubmit) {
+            if ($this->notvalue == $this->getValue()) {
+                $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Please Select a Value");
+            }
+        }
+    }
+    public function fi_setRequired($val) {
         $this->notvalue = $val;
         if ($this->issubmit) {
             if ($this->notvalue == $this->getValue()) {
@@ -358,9 +367,12 @@ document.getElementById('$this->name').focus();
         if ($this->options != '') {
             $this->innerHTML = $this->getOptionsHTML();
         } else {
+            // remove in future, don't use parseHTMLTag, use NodeTag Object
             $this->innerHTML = $HTMLParser->parseHTMLTag($this->innerHTML, 'processStaticOptions', $this);
             if (!$this->fstatic) {
-                $this->innerHTML .= '<option selected="selected">' . $this->value . '</option>';
+                //$this->innerHTML .= '<option selected="selected">' . $this->value . '</option>';
+                $this->options = $this->value;
+                $this->innerHTML .= $this->getOptionsHTML();
             }
         }
         switch($this->styler){
@@ -397,6 +409,14 @@ document.getElementById('$this->name').focus();
                 $arr1[] = Array($stra[0], $stra[1]);
             } else {
                 $arr1[] = Array($stra[0], $stra[0]);
+            }
+            // insert static options on top
+            foreach($this->element->getChildren() as $i=>$n){
+                if($n->tagName == "option"){
+                    $v = $n->getAttribute("value");
+                    $t = $n->innerHTML();
+                    $arr1[] = Array($v,$t);
+                }
             }
             $holder = array_merge($arr1, $this->opt);
             $ar2 = array('firstopt');

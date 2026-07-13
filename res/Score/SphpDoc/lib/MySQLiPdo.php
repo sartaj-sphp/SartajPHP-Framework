@@ -24,7 +24,17 @@ public function connect($db1 = "", $dhost1 = "", $duser1 = "", $dpass1 = "") {}
 public function selectDB($db1) {}
 public function cleanQuery($string) {}
 public function clearQuery($string) {}
+/**
+* Execute Query After connect and return result object
+* @param string $sql
+* @return \PDOStatement | false
+*/
 public function executeQuery($sql) {}
+/**
+* Execute Query and Auto connect if not connected and return result object
+* @param string $sql
+* @return \PDOStatement | false
+*/
 public function executeQueryQuick($sql) {}
 public function commitRollback() {}
 public function commit() {}
@@ -49,8 +59,7 @@ public function insertSQL($frm, $txttbl) {}
 public function insertSQLMulti($arr, $txttbl) {}
 public function searchSQL($frm, $tbllist, $where, $OP) {}
 public function createDatabase() {}
-public function createTable($sql) {}
-public function dropTable($tableName) {}
+public function exec($sql) {}
 /**
 * 
 * @param string $sql

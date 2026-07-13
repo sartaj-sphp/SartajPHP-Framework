@@ -211,4 +211,15 @@ error_reporting(E_ALL);
 */
 function loadSphpLibClass($name) {}
 spl_autoload_register("loadSphpLibClass");
+/**
+* 
+* @param array $server REQUEST_METHOD,REQUEST_URI,SERVER_SOFTWARE
+* @param array $get data of GET
+* @param array $post Data of POST
+* @param array $file Data of POST
+* @param array $cookies key,value pair
+* @param array $session key,value pair
+* @return array [code,content,headers,cookies,session]
+*/
+function pushToSartajPHPEngine($server,$get,$post,$file,$cookies,$session){}
 function runSartajPHPEngine(){}

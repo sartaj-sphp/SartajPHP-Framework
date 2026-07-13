@@ -8,5 +8,4 @@ if(SphpBase::page()->getEvent() == 'page'){
 
 $frtMain->processMe();
 SphpBase::$dynData = $frtMain;
-global $masterf;
-include_once("$masterf");
+include_once(readGlobal("masterf"));

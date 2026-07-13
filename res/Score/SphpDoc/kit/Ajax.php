@@ -10,6 +10,9 @@ public function postDataAjax($url, $outputID, $showObj = '', $flds = Array(), $M
 public function getDataAjax($url, $outputID, $showObj = '') {}
 }
 class Session {
+public $name = "";
+public function setSessionID($uid){}
+public function getSessionID(){}
 public function setSessionName($name="SphpID") {}
 public function setSessionSavePath($path="") {}
 public function closeSession() {}

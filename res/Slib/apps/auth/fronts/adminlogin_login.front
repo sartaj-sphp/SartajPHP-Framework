@@ -1,0 +1,32 @@
+<div class="heading">Admin Login Form</div>
+
+<form id='form2' runat="server" action="##{ getGateURL('admin')}#">
+<table align="center">
+<tr><td>
+User ID
+</td><td>
+<input name="txtuserID" type="text" class="inputpass" runat="server" fun-setForm="form2" fun-setMinLen="4" fun-setRequired="" fun-setMsgName="User ID">
+</td></tr>
+<tr><td>
+Password
+</td><td>
+<input name="txtpass" type="password" class="inputpass" runat="server" fun-setForm="form2" fun-setMinLen="4" fun-setRequired="" fun-setMsgName="Password">
+</td></tr>
+<tr><td>
+Remember me
+</td><td>
+    <input name="chkremb" type="checkbox" class="inputpass" runat="server" value="yes" />
+</td></tr>
+
+<tr><td>
+&nbsp;</td><td>
+        <input class="btn btn-primary" type="submit" value="Login">
+</td></tr>
+<tr><td>
+&nbsp;</td><td><br />
+        <p align="left"><alert id="app1" runat="server"></alert></p>
+</td></tr>
+</table>
+            
+</form>
+<br>

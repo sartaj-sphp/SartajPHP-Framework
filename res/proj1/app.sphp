@@ -1,9 +1,0 @@
-{
-    "project": "Demo",
-    "type": "srvapp",
-    "extra": "port 0 mean auto",
-    "host": "127.0.0.1",
-    "port": 0,
-    "php": "",
-   "browser": "default"
-}

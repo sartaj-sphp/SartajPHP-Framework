@@ -6,7 +6,7 @@
  * create socket and 
  * display data send by native app.
  * Front File code:-
- * <div id="div1" runat="server" path="libpath/comp/ajax/SocketOutput.php"></div>
+ * <div id="div1" runat="server" fui-setURL="127.0.0.1:8081" path="libpath/comp/ajax/SocketOutput.php"></div>
  * Then call js function:-
  * Params = $gate,$evt,$evtp,$data
  * callNativeGate('shell','ls','-l',{});

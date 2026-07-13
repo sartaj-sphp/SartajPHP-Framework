@@ -15,6 +15,7 @@ public $myrespath = "";
 public function setup($frontobj){}
 public function process($frontobj){}
 public function processEvent(){}
+protected function call_page_events(){}
 public function run(){}
 public function render(){}
 public function setClassPath() {}

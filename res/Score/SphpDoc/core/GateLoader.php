@@ -45,14 +45,17 @@ public function setLineNumber($line) {}
 */
 public function setFilePath($file) {}
 }
-class FrontPlace {
+/**
+* Experimental Class as Store Front Place as Object
+*/
+class FrontPlaceHolder {
 /**
 * Create Front Place Object
 * @param string $frontname Unique Name of Front Place
 * @param string $filepath File Path of Front Place
 * @param string $secname Section Name of master file where to display Front PLace
 * @param string $type <p> Type of file using in File Path.
-* $type = FrontFile(*.front) or PHP
+* $type = FrontFile(*.place.front) or PHP(Class File *.place.php)
 * </p>
 */
 /**

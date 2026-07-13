@@ -5,7 +5,7 @@ class CURL{
 * Fetch any url Data
 * @param string $url
 * @param boolean $bin default false
-* @return type 
+* @return string 
 */
 public function get_url_data($url,$bin=false)
 {}

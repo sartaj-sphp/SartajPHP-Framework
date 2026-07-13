@@ -9,12 +9,16 @@ namespace Sphp\comp{
 class Tag extends \Sphp\tools\Component{
 
 protected function onrender(){
-    if($this->tagName == "div"){
+    if($this->tagName != "input"){
         $this->HTMLName = "";
+        if($this->value!=''){
+            $this->setInnerHTML($this->value);
+        }
+    }else{
+        if($this->value!=''){
+            $this->setAttribute('value', $this->value);
+        }
     }
-if($this->value!=''){
-$this->setAttribute('value', $this->value);
-}
 }
 
 // javascript functions

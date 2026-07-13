@@ -69,6 +69,7 @@ public function addCppDir($srcdir){}
 public function addJavaDir($srcdir){}
 public function process($frontobj){}
 public function processEvent(){}
+protected function call_page_events(){}
 /**
 * Force Copy and Generate Mobile app Files from Source. This can over write Android project files from
 * source forcefully.

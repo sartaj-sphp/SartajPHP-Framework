@@ -27,14 +27,14 @@ protected function onrender(){
                 </h4>
             </div>
             <div  id="collapseOne" class="card-collapse collapse in">
-            <div class="card-block">
+            <div class="card-block" style="visibility: visible;">
             <div class="block">
             <div class="content px-4 py-4">
 ';
     $this->setPreTag($pre1);
     $this->class = "col-md-12"; 
     $this->setPostTag('<br></div></div></div></div></div></div>');        
-    
+    addHeaderJSFunctionCode('ready', $this->name .  "lk", 'setTimeout(function(){$("#collapseOne").css("cssText","visibility: visible !important;");},100);');
 }
 
 }

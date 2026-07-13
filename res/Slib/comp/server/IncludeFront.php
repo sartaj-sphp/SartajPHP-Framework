@@ -23,7 +23,7 @@ public function fi_setFrontFile($filepath){
     if($filepath == "") return;
     $this->renderonce = true;
     $filepath = $this->frontobj->HTMLParser->resolvePathVar($filepath);
-    $this->frontobj2 = new \Sphp\tools\FrontFileChild($filepath,false,null, $this->frontobj);
+    $this->frontobj2 = new \Sphp\tools\FrontFileChild($filepath,$this->frontobj);
     // apend children components
     foreach($this->frontobj2->getComponents() as $i=>$comp){
         $this->_addChild($comp);

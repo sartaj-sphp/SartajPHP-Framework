@@ -29,7 +29,7 @@ public function getCurrentRequest() {}
 public function isRegisterCurrentRequest() {}
 /**
 * Register Current Request with Gate
-* @param string $gate_dir_path Gate file path like Gates/index.Gate
+* @param string $gate_dir_path Gate file path like Gates/index.gate.php
 * @param string $s_namespace Optional Namespace if any
 * @param string $permtitle Title Display in Permission List
 * @param array $permlist Create Permissions List for Gate
@@ -94,7 +94,7 @@ public function getThisGateURL($extra = "", $blnSesID = false,$ext='',$noncache=
 * }
 * $eventName = test
 * $gate_param = index
-* Registered Gate File = Gates/index.Gate
+* Registered Gate File = Gates/index.gate.php
 * </p>
 * @param string $evtp Event Parameter pass to URL
 * @param string $gate_param Gate like index
@@ -120,7 +120,7 @@ public function getEventURLSecure($eventName, $evtp = "", $gate_param = "", $ext
 * }
 * $eventName = test
 * $gate_param = index
-* Registered Gate = Gates/index.Gate
+* Registered Gate = Gates/index.gate.php
 * </p>
 * @param string $evtp Event Parameter pass to URL
 * @param string $gate_param Gate like index

@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class EditPanel extends Sphp\tools\Component{
 private $label = "";
 private $lstcomp = "";
@@ -29,9 +26,16 @@ private function setLabel2($label,$tfield="") {
 }
 protected function onrender(){
     $this->setLabel2($this->label,$this->lstcomp);
+    /** Check If Browser request is a AJAX Request */
+    if(SphpBase::sphp_request()->isAJAX()){
+        SphpBase::JSServer()->addJSONHTMLBlock("ui-id-1", $this->label); 
+    }else{
+        // work on all type of request
+        addHeaderJSFunctionCode('ready', $this->name . 'lbl1', '$("#ui-id-1").html("'. $this->label.'")');
+    }
     $this->tagName = 'div';
     $this->setPreTag('<div class="card card-primary">
-  <div class="card-header">
+  <div class="card-header bg-primary text-white">
       <h3 class="card-title"><span style="font-size:16px;" class="pull-left hidden-xs showopacity fa fa-user"></span> &nbsp;<span id="editheading">'.$this->label.'</span></h3>
   </div>
   <div class="card-block">

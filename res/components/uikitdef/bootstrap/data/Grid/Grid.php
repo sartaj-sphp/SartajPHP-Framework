@@ -1,4 +1,5 @@
 <?php
+include_once(__DIR__ . "/JQueryUIDialogDecorator.php");
 /**
  * Description of Grid
  *
@@ -21,6 +22,7 @@ public $headNames = '';
 public $colwidths = '';
 public $where = '';
 public $ordersortby = '';
+public $ordersortbyDef = '';
 public $whereDef = '';
 public $app = '';
 public $blnEdit = false;
@@ -45,9 +47,8 @@ private $footer = '';
 public $buttonnext = '';
 public $buttonprev = '';
 public $links = '';
-private $sortby = false;
 private $blnpagebar = true;
-private $handleeventapp = false;
+private $handleeventgate = false;
 public $content_section = null;
 
 
@@ -60,14 +61,14 @@ if(\SphpBase::sphp_request()->isRequest('page')){
 \SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->gate);
 }else{
 \SphpBase::sphp_request()->request('page',false, 1);
-if(isset($_SESSION[$this->name.'pc']) && $_SESSION[$this->name.'pc'] == \SphpBase::sphp_router()->gate){
-\SphpBase::sphp_request()->request('page',false,$_SESSION[$this->name.'p']);
+if(\SphpBase::sphp_request()->isSession($this->name.'pc') && \SphpBase::sphp_request()->session($this->name.'pc') == \SphpBase::sphp_router()->gate){
+\SphpBase::sphp_request()->request('page',false,\SphpBase::sphp_request()->session($this->name.'p'));
 }
 }
 $this->pageNo = \SphpBase::sphp_request()->request('page') - 1;
 
 if($this->dtable == ''){
-    $parentgate = $this->frontobj->getBindApp();
+    $parentgate = $this->frontobj->getBindGate();
     if($parentgate !== null){
         $this->dtable = $parentgate->getTableName();
     }
@@ -78,11 +79,13 @@ $this->fu_setHTMLName('');
     }
 
 }
-
-public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function fu_getEventURL($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
+    $this->getEventURL($eventName,$evtp,$gate_name,$extra,$newBasePath,$blnSesID);
+}
+public function getEventURL($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
-$this->gate=$ControllerName;
+$this->gate=$gate_name;
 if($extra!=''){
 $this->extra=$extra.'&page=';
 }
@@ -97,7 +100,8 @@ public function getRow($field) {
     }
 }
 
-     public function fu_setMsgName($val) { $this->msgName = $val;}
+public function fu_setMsgName($val) { $this->msgName = $val;}
+
 public function fu_setSQL($sql){
 $this->sql = $sql;
 }
@@ -149,8 +153,8 @@ $this->whereDef = $val;
 public function fu_setApp($val){
 $this->app = $val;
 }
-public function fu_setSortBy() {
-    $this->sortby = true;
+public function fu_setOrderSByDef($v) {
+    $this->ordersortbyDef = $v;
 }
 public function fu_setAjax(){
 $this->blnajax = true;
@@ -166,7 +170,7 @@ public function fu_setDelete(){
 $this->blnDelete = true;
 }
 public function getPageBar(){
-return $this->links;
+return '<div class="pagination px-2 py-2">' . $this->links . '</div>';
 }
 public function getButtonNext(){
 return $this->buttonnext;
@@ -186,11 +190,14 @@ $this->blndlg = false;
 public function unsetAddButton(){
 $this->blnadd = false;
 }
+public function fu_unsetAddButton(){
+$this->blnadd = false;
+}
 public function unsetPageBar(){
 $this->blnpagebar = false;
 }
-public function setHandleEvent(){
-    $this->handleeventapp = true;
+public function setHandleEventByGate(){
+    $this->handleeventgate = true;
 }
 
 public function executeSQL(){
@@ -315,96 +322,88 @@ return $stro;
 private function getPaging(){
     $lynx = "";
     $del = "";
-$linkNo = $this->linkno;
-$startPage = $this->getPageNo()- $linkNo;
-$endPage = $this->getPageNo()+$linkNo;
-if($startPage<1){
-$startPage = 1;
-}
-if($endPage>$this->totalPages){
-$endPage = $this->totalPages;
-}
- $strstart = "<div class=\"pfloat-left\">";
-for ($k=$startPage; $k<=$endPage; $k++) {
-        if ($k != $_REQUEST['page']) {
-if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
-}else{
-         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
-}
-        } else {
-         $lynx .= $strstart.($k)."</div>";
+    $linkNo = $this->linkno;
+    $startPage = $this->getPageNo()- $linkNo;
+    $endPage = $this->getPageNo()+$linkNo;
+    if($startPage<1){
+        $startPage = 1;
+    }
+    if($endPage>$this->totalPages){
+        $endPage = $this->totalPages;
+    }
+
+    for ($k=$startPage; $k<=$endPage; $k++) {
+            if ($k != $_REQUEST['page']) {
+                if($this->blnajax){
+                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+                }else{
+                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+                }
+            } else {
+             $lynx .= "<div class=\"page-item active\"><span class=\"page-link\">" .($k)."</span></div>";
+            }
+    }
+
+    $startPage2 = $this->getPageNo();
+    $blnEndP = false;
+    $blnStartP = false;
+    if($startPage2>1){
+        $prev = $startPage2 - 1;
+    }else{
+        $prev = 1;
+        $blnStartP = true;
+    }
+    if($startPage2 >= $this->totalPages){
+        $next = $this->totalPages;
+        $blnEndP = true;
+    }else{
+        $next = $startPage2 + 1;
+    }
+    $edt = '';
+    if($blnStartP){
+        $strlinkP = "";
+    }else{
+        if($this->blnajax){
+            $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+        }else{
+            $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
         }
-}
-$startPage2 = $this->getPageNo();
-$blnEndP = false;
-$blnStartP = false;
-if($startPage2>1){
-$prev = $startPage2 - 1;
-}else{
-$prev = 1;
-$blnStartP = true;
-}
-if($startPage2 >= $this->totalPages){
-$next = $this->totalPages;
-$blnEndP = true;
-}else{
-$next = $startPage2 + 1;
-}
-$edt = '';
-/* use for multi delete functions
-if($this->blnEdit){
-    $edt = "&nbsp;&nbsp;<a class=\"pagedit\" href=\"". $this->linkURL. "?page=" . $next ."\">Edit</a>";
-}
-if($this->blnDelete){
-    $del = "&nbsp;&nbsp;<a class=\"pagdelete\" href=\"". $this->linkURL. "?page=" . $next ."\">Delete</a>";
-}
- *
- */
-if($blnStartP){
-$strlinkP = "";
-}else{
-if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
-}else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
-}
-}
-if($blnEndP){
-$strlinkN = "";
-}else{
-if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
-}else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
-}
+    }
+    if($blnEndP){
+        $strlinkN = "";
+    }else{
+        if($this->blnajax){
+            $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+        }else{
+            $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+        }
+    }
+
+    if($blnStartP && $blnEndP){
+        $strout = '';
+    }else{
+        $strlink = $strlinkP . $strlinkN ;
+        $this->buttonnext = $strlinkN;
+        $this->buttonprev = $strlinkP;
+        $this->links = $lynx;
+        if($strlink!=''){
+            $strout = '<div class="pagbar"><div class="pagnums">&nbsp; '.$lynx.'</div>
+            <div class="pagprevnext">'.
+            $strlink .$edt.$del.'
+            </div></div>
+            <div style="clear:both"></div>';
+        }
+    }
+    return $strout;
 }
 
-if($blnStartP && $blnEndP){
-$strout = '';
-}else{
-$strlink = $strlinkP . $strlinkN ;
-$this->buttonnext = $strlinkN;
-$this->buttonprev = $strlinkP;
-$this->links = $lynx;
-if($strlink!=''){
-$strout = '<div class="pagbar"><div class="pagnums">&nbsp; '.$lynx.'</div>
-<div class="pagprevnext">'.
-$strlink .$edt.$del.'
-</div></div>
-<div style="clear:both"></div>';
-}
-}
-return $strout;
-}
-
-public function onaftercreate(){
-    if(!$this->handleeventapp){
+public function ongateevent(){
+    if(!$this->handleeventgate){
         $this->handleEvent();
     }
 }
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $ControllerName="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $gate_name="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -439,9 +438,36 @@ public function handleEvent(){
     }
 }
 
+private function setDialogTheme(){
+     $this->styler = 1;
+        $dialogDecorator = new JQueryUIDialogDecorator(
+            $this->name, 
+            $this->styler,  // 1=Bootstrap, 2=Dark, 3=Minimal, 4=Custom
+            'default'
+        );
+
+        // Optional: Add animations
+        $dialogDecorator->animateDialog();
+        $dialogDecorator->addResizableHandles();
+
+        // For custom theme override
+        if($this->styler == 4) {
+            $dialogDecorator->setCustomStyle(
+                '.ui-dialog-titlebar', 
+                'background: #ff6b6b !important; color: white !important;'
+            );
+            $dialogDecorator->setCustomStyle(
+                '.ui-dialog', 
+                'border: 2px solid #ff6b6b !important; border-radius: 15px !important;'
+            );
+        }
+    
+}
+
 public function startAJAX(){
 $opendlg = "";
 if($this->blndlg){
+    $this->setDialogTheme();
 addHeaderJSFunctionCode('ready',$this->name,'
 $("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
@@ -460,7 +486,7 @@ title: "Grid Editor Form",
 create: function(event, ui) { 
       var widget = $(this).dialog("widget");
       $(".ui-dialog-titlebar-close", widget)
-          .html(\'<span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>\')
+          .html(\'<span class="ui-button-icon ui-icon ui-icon-closethick  btn btn-primary"></span><span class="ui-button-icon-space"> </span>\')
           .addClass("ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close");
    },
 closeText: "",
@@ -485,6 +511,7 @@ $jsAjax = "true";
 }else{
 $jsAjax = "false";        
 }
+
 addHeaderJSCode($this->name,"
 window['confirmDel_$this->name'] = function(link){
 confirmDel(link,$jsAjax);
@@ -502,8 +529,8 @@ var {$this->name}_setg = {
 sortby: '',
 dir: 1
 };
-function getSortBy(obj,field,link){
-data = {};
+window['getSortBy_{$this->name}'] = function(obj,field,link){
+var data = {};
 var setg = {$this->name}_setg ;
 var span1 = $(obj).children('span:first');
 if(setg.sortby!=field){
@@ -532,8 +559,12 @@ data['dir'] = setg.dir;
 
 getURL(link,data);
 return false;
- }
-    window['rowclick'] = function(obj,link,data){
+}
+window['getSortBy'] = window['getSortBy_{$this->name}'];
+");
+
+    addHeaderJSCode('pagi1',"
+ window['rowclick'] = function(obj,link,data){
         if(data==undefined){
             data = {};
         }
@@ -561,6 +592,9 @@ window['runanierr'] = function(type){
     $(\"#sphp\" + type).css(\"display\",\"block\");
     $(\"#sphp\" + type).delay(5000).fadeOut(\"slow\", function () { $(this).css(\"display\",\"none\"); });            
 }
+");
+
+    addHeaderJSCode($this->name .'pagi1',"
 function pagiedit_$this->name(link){
 $opendlg
 pagiedit(link,$jsAjax);
@@ -570,6 +604,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
+
     addHeaderJSCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
@@ -598,7 +633,7 @@ window.location = link ;
 }
 ");
 
-if($this->blnadd){
+if($this->blnajax){
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
 </div><div id="'.$this->name.'_toolbar">';
@@ -626,7 +661,7 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
         <strong>Note!</strong> <span id="sphpinfomsg"></span>
     </div>
 </div><div id="srvmsg"></div>';
-    $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\">";     
+    $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\" class=\"container\"> ";     
     if($this->tagName == 'tbody'){
         $this->element->parentNode->setPreTag($divt.$this->getPreTag());    
         $this->element->parentNode->setPostTag('</div>'.$this->getPostTag());        
@@ -664,8 +699,8 @@ var {$this->name}_setg = {
 sortby: '',
 dir: 1
 };
-function getSortBy(obj,field,link){
-data = {};
+window['getSortBy_{$this->name}']  = function(obj,field,link){
+var data = {};
 var setg = {$this->name}_setg ;
 var span1 = $(obj).children('span:first');
 if(setg.sortby!=field){
@@ -695,6 +730,8 @@ data['dir'] = setg.dir;
 getURL(link,data);
 return false;
  }
+ window['getSortBy'] = window['getSortBy_{$this->name}'];
+
     function rowclick(obj,link,data){
         if(data==undefined){
             data = {};
@@ -749,17 +786,23 @@ $Client = \SphpBase::sphp_request();
 $gate = \SphpBase::sphp_router();
 // set default values
 $spt = explode(',', $this->dtable);
+if(count($spt)<2) $spt = explode(' ', $this->dtable);
 if(count($spt)>1){
     $idf = $spt[0].".id";
 }else{
     $idf = "id";
 }
+
 $storesql = $Client->session($this->name .'store');
 if(!is_array($storesql)) $storesql = array();
 if(isset($storesql['lastapp']) && $storesql['lastapp'] == $gate->gate){
 if($this->ordersortby==""){
     $this->ordersortby = $storesql['sortby']; 
 }
+if($this->ordersortby==""){
+    $this->ordersortby = $this->ordersortbyDef; 
+}
+
 if($this->where==""){
     if($storesql['whereby']!=""){
         $this->where = $storesql['whereby'];
@@ -781,8 +824,21 @@ if($this->sql==''){
     }else{
         $this->fieldNames = $idf;        
     }
-$this->sql = "SELECT $this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
+    // if ORDERBY exist in where then remove from ordersortby
+    $a1 = strpos(strtolower($this->where),'order by');
+    if($a1 !== false) {
+        // remove order by
+        $this->where = substr($this->where,0,$a1-1);
+    }
+    $this->sql = "SELECT $this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
+}else if($this->ordersortby != ""){
+     $a1 = strpos(strtolower($this->sql),'order by');
+    if($a1 === false) {
+        $this->sql .= "  " . $this->ordersortby;    
+    }
+    //$this->sql = " ";
 }
+ 
 $storesql['lastsql'] = $this->sql;
 $storesql['lastpagecountsql'] = $this->pageCountSQL;
 $storesql['lastapp'] = $gate->gate;
@@ -802,6 +858,15 @@ $this->setInnerHTML($this->header. $this->executeSQL() . $this->footer);
 //$this->unsetrender();
 }
 
+public function resetSQL(){
+    $storesql['lastsql'] = "";
+    $storesql['lastpagecountsql'] = "";
+    $storesql['lastapp'] = \SphpBase::sphp_router()->gate;
+    $storesql['sortby'] = "";
+    $storesql['whereby'] = "";
+    \SphpBase::sphp_request()->session($this->name .'store',$storesql);
+
+}
 
 public function onchildevent($event,$obj) {
     if($event=="oncreate" && $obj->type=='content'){
@@ -818,7 +883,8 @@ public function onparse($event,$element) {
         if(isset($this->row[$obj->getAttribute("dfield")])){
             $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
         }else{
-            throw new \Exception('Grid:- Field '. $obj->getAttribute("dfield") .' in Database isn\'t found');
+            //throw new \Exception('Grid:- Field '. $obj->getAttribute("dfield") .' in Database isn\'t found');
+            $obj->setInnerHTML('&nbsp;');
         }
     }
 

@@ -9,16 +9,16 @@ namespace {
 
 class SearchQuery extends \Sphp\tools\Component{
 public $sql = '';
-public $strFormat = '';
 public $result = array();
 public $row = array();
 public $cacheTime = 0;
 private $cachesave = false;
 private $cachefile = '';
 private $cachekey = 'id';
+private $roote = null;
 
 protected function oninit() {
-$this->unsetrenderTag();
+//$this->fu_unsetrenderTag();
 }
 
     protected function genhelpPropList() {
@@ -53,36 +53,49 @@ return  $this->row[$dfield];
 }
 
 private function genrender(){
-$stro = "";
-//$roote = $this->frontobj->getChildrenWrapper($this);
-foreach($this->result as $key1=>$keyar){
- foreach($keyar as $index=>$this->row){
-$tmpf = new \Sphp\tools\FrontFileChild($this->strFormat,true,null,$this->frontobj);
-$tmpf->run();
-$stro .= $tmpf->data;
-//$stro .= $this->frontobj->parseComponentChildren($roote);
- } }
+    $mysql = \SphpBase::dbEngine();
+    $this->result = $mysql->fetchQuery($this->sql,$this->cacheTime,$this->cachefile,$this->cachekey,$this->cachesave);
 
-return $stro;
+    $stro = "";
+    if($this->roote == null){
+        $this->roote = $this->frontobj->getChildrenWrapper($this);
+    }
+    foreach($this->result as $key1=>$keyar){ 
+        foreach($keyar as $index=>$this->row){ 
+       $stro .= $this->frontobj->parseComponentChildren($this->roote);
+        }  
+    }
+    //SphpBase::debug()->println($stro);
+
+    return $stro;
 
 }
 
-
-protected function oncreate($element){
-$this->strFormat = $this->element->innertext;
-$this->element->innertext = '';
-}
 
 
 protected function onprerender(){
-$mysql = \SphpBase::dbEngine();
-$this->result = $mysql->fetchQuery($this->sql,$this->cacheTime,$this->cachefile,$this->cachekey,$this->cachesave);
+    $this->element->replaceChildren($this->genrender());
 }
 
-protected function onrender(){
-$this->innerHTML = $this->genrender();
-}
-
+    protected function onholder($obj) {
+        switch($obj->tagName){
+            case 'img':{
+                if($this->row[$obj->getAttribute("dfield")] != ''){
+                    $obj->setAttribute('src',$this->row[$obj->getAttribute("dfield")]);
+                }else if($obj->hasAttribute('default')){
+                    $obj->setAttribute('src',$obj->getAttribute('default'));                    
+                }
+                break;
+            }default:{
+                if($this->row[$obj->getAttribute("dfield")] != ''){
+                    $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+                }else if($obj->hasAttribute('default')){
+                    $obj->setInnerHTML($obj->getAttribute('default'));                    
+                }
+                break;
+            }
+        }
+    }
 
 }
 }

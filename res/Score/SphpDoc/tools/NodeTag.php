@@ -6,6 +6,7 @@ namespace Sphp\tools{
 * @author Sartaj
 */
 class NodeTag extends \Sphp\tools\SNode{
+public $linenum = -1;
 public $tagName = "";
 public $type = "element";
 public $attributes = array();
