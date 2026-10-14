@@ -1,8 +1,8 @@
 # AJAX Calculator with HTML only, No Components (BasicGate)
 
-## 1️⃣ Application File
+## 1️⃣ Application' Gate File
 
-**`apps/calculator.php`**
+**`apps/calculator.gate.php`**
 
 ```php
 class calculator extends Sphp\tools\BasicGate {
@@ -11,9 +11,8 @@ class calculator extends Sphp\tools\BasicGate {
 
     public function onstart(){
         // create Front File Object
-        $this->frtMain = new FrontFile(
-            $this->mypath."/fronts/calculator_main.front"
-        );
+		// $this->mypath."/fronts/calculator_main.front"
+        $this->frtMain = new Sphp\tools\FrontFile("main");
     }
 
     // URL = calculator.html handle by this
@@ -42,7 +41,7 @@ class calculator extends Sphp\tools\BasicGate {
 
 ```html
 <div id="result"></div>
-<form id="form2" action="##{getEventURL('calc')}#">
+<form id="form2" action="##{getEventURL('calc','','calculator')}#">
 <input id="numa" type="number" />
 <input id="numb" type="number" />
 <select id="sltop">
@@ -67,6 +66,6 @@ class calculator extends Sphp\tools\BasicGate {
 ## 3️⃣ Register Gate File with SartajPHP reg.php
 
 ```php
-// register Gate=calculator So Browser URL=calculator.html
-registerGate("calculator",__DIR__ ."/apps/calculator.php");
+// register Gate=calculator So Browser default URL=calculator.html
+registerGate("calculator",__DIR__ ."/apps/calculator.gate.php");
 ```

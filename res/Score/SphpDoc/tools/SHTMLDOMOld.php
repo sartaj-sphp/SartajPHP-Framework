@@ -12,7 +12,7 @@ public $dhtmlparser = null;
 public $htmlparser = null;
 public function getDoc() {}
 public function load($str){}
-public function parseback2($element) {}
+public function parseback2($domNode) {}
 public function parseobj() {}
 public function parseObjectLoop($domNode) {}
 public function renderobj() {}

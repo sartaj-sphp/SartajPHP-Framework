@@ -125,7 +125,7 @@ class MebHome extends PermisGate {
         $dbEngine->createTable($sql);
         }
         
-        include_once(PROJ_PATH . "/db/db_main.php");
+        include_once(PROJ_PATH . "/db/db_index.php");
         $dbEngine->disconnect();
         $this->setFrontFile(new FrontFile("Database Created",true));
         }else{

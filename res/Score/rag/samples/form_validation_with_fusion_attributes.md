@@ -13,23 +13,23 @@ This sample demonstrates:
 
 ---
 
-## 1️⃣ Application File
+## 1️⃣ Application's Gate File
 
-**`apps/registerGate.php`**
+**`apps/register.gate.php`**
 
 ```php
 <?php
 use Sphp\tools\BasicGate;
 use Sphp\tools\FrontFile;
 
-class RegisterGate extends BasicGate
+class Register extends BasicGate
 {
     private $frtMain = null;
 
     public function onstart()
     {
         // Setup only (no rendering here)
-        $this->frtMain = new FrontFile($this->mypath . '/fronts/registerapp_main.front');
+        $this->frtMain = new FrontFile("main");
     }
 
     /**
@@ -55,9 +55,10 @@ class RegisterGate extends BasicGate
             $user_type = $this->Client->post('user_type');
 
             // Send result to browser
-            $this->JSServer->addJSONHTMLBlock(
+            $this->JSServer->addJSONHTMLBlock([
                 "alt1",
                 "Form submitted successfully.<br>Username: $username<br>User Type: $user_type"
+				]
             );
 
             // Optional redirect
@@ -82,9 +83,7 @@ class RegisterGate extends BasicGate
 
 * Uses **BasicGate shortcuts**
 
-  * `$this->JSServer` instead of `SphpBase::JSServer()`
   * `$this->Client` instead of `$_REQUEST`
-  * `$this->debug` instead of `SphpBase::debug()`
 * No superglobals ❌
 * No forced rendering ❌
 * Graceful error handling ✅
@@ -93,7 +92,7 @@ class RegisterGate extends BasicGate
 
 ## 2️⃣ FrontFile
 
-**`fronts/register.front`**
+**`fronts/register_main.front`**
 
 ```html
 <title id="title1" runat="server">Register</title>

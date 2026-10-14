@@ -24,6 +24,8 @@ namespace Sphp\Comp\Form {
             \SphpJsM::addjQueryUI();
             if ($this->value != '') {
                 $this->value = $this->dateToMySQLDate($this->value);
+            }else{
+                if($this->issubmit) $this->unsetDataBound();
             }
             if(!$this->element->hasAttribute("name")){
                 $this->HTMLName = $this->name;
@@ -161,7 +163,7 @@ namespace Sphp\Comp\Form {
                 $str .= ",appendText: '$this->appendText', dateFormat: '$this->appendText'";
             }
             if ($this->image == '') {
-                $this->image = $sphp_settings->slib_res_path . "/comp/html/res/calendar.gif";
+                $this->image = $sphp_settings->comp_uikit_res_path . "/form/assets/calendar.gif";
             }
             if ($this->image != '') {
                 $str .= ",showOn: 'button',buttonImageOnly: true, buttonImage: '$this->image'";

@@ -36,6 +36,7 @@ protected $noiseLines = [];
 protected static $selfClosing  = null;
 protected static $rawText      = null;
 protected static $commentTag   = 'comment'; 
+public function getDoc() {}
 public function load($str)
 {}
 public function restoreNoise($text)

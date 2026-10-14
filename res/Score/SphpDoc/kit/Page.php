@@ -77,7 +77,7 @@ public function init() {}
 */
 public function getAuthenticatePerm($perm=null,$gate=null) {}
 /**
-*  Check Permission is given to authorised user or not given.
+*  Check Permission is given to Authorized user or not given.
 * @param string $perm permission to check
 * @param string $gate optional Default is current Gate, permission like index-view where index is Gate.
 * @return bool return true if permission found

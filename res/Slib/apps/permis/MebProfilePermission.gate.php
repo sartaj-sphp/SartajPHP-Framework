@@ -37,7 +37,8 @@ class MebProfilePermission extends PermisGate {
     
     public function displayList($lst){
         $lstar1 = explode(',',$lst);
-        $str1 = implode('</ br>',$lstar1);
+        $str1 = implode('<br>',$lstar1);
+        $this->debug->println($str1);
         return $str1;
     }
     

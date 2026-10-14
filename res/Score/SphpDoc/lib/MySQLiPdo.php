@@ -48,6 +48,7 @@ public function executeQueryJFX($sql) {}
 public function executeQueryQuickJFX($sql) {}
 public function disconnect() {}
 public function updateSQL($frm, $txttbl, $where) {}
+public function runUpdateSQL($table, $ar,$where) {}        
 public function runSQL($table, $ar) {}        
 public function insertSQL($frm, $txttbl) {}
 /**

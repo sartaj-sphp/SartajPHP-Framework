@@ -12,7 +12,8 @@ class CaptchaSub {
         $num1 = rand(1, 9);
         $num2 = rand(1, 9);
         $operator = $this->operators[rand(0, 2)];
-        
+        $result = 0;
+        $expression=0;
         switch ($operator) {
             case '+':
                 $result = $num1 + $num2;

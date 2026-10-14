@@ -1,21 +1,21 @@
-## 1️⃣ Application File
+## 1️⃣ Application' Gate File
 
-**`apps/HelloGate.php`**
+**`apps/HelloApp.gate.php`**
 
 ```php
 <?php
 use Sphp\tools\BasicGate;
 use Sphp\tools\FrontFile;
 
-class HelloGate extends BasicGate
+class HelloApp extends BasicGate
 {
     private $frtMain = null;
 
     public function onstart()
     {
         // Gate initialization only
-        // FrontFile object created once
-        $this->frtMain = new FrontFile($this->mypath . '/fronts/helloapp_main.front');
+        // FrontFile object created from __DIR__ . "/fronts/helloapp_main.front"
+        $this->frtMain = new FrontFile('main');
     }
 
     /**
@@ -31,7 +31,8 @@ class HelloGate extends BasicGate
      */
     public function page_event_getMessage($evtp)
     {
-        \SphpBase::JSServer()->addJSONReturnBlock("Hello from AJAX");
+		// $this->JSServer == SphpBase::JSServer()
+        $this->JSServer->addJSONReturnBlock("Hello from AJAX");
     }
 }
 ```
@@ -41,7 +42,7 @@ class HelloGate extends BasicGate
 * Uses `BasicGate`
 * No rendering forced in `onstart` only Fornt File Object Create as Class Level
 * FrontFile bound **only** in `page_new`
-* AJAX handled via `page_event_*`
+* AJAX handled via Page Event `page_event_*`
 
 ---
 
@@ -93,7 +94,7 @@ $("#btnCall").on("click", function () {
 
 ```php
 // register Gate=hello so Browser URL=hello.html
-registerGate("hello",__DIR__ ."/apps/HelloGate.php");
+registerGate("hello",__DIR__ ."/apps/HelloApp.gate.php");
 ```
 
 

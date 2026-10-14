@@ -60,16 +60,17 @@ public function callJsFunction($jsfun, $dataa) {}
 * Send Component object inside a HTML Tag
 * @param \Sphp\tools\Component $obj
 * @param string $outid <p>
-* HTML Tag id where to display html of Component
+* HTML Tag id where to display html output of Component
 * </p>
-* @param boolean $innerHTML Optional <p>
-* Default = false:- Not send Inner Components
-* true:- mean send all Inner Components also
+* @param boolean $OnlyinnerHTML Optional <p>
+* Default = false:- send full html output with Component Tag
+* true:- mean send only Inner html output Component
 * </p>
 */
-public function addJSONComp($obj, $outid = "outid", $innerHTML = false) {}
+public function addJSONComp($obj, $outid = "outid", $OnlyinnerHTML = false) {}
 /**
-* Send only Inner Components of Object
+* Send only Inner Components of Object 
+* same as addJSONComp with pass $OnlyinnerHTML=true
 * @param \Sphp\tools\Component $obj
 * @param string $outid
 */

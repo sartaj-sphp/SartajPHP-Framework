@@ -194,9 +194,9 @@ public static function getCodeBlock($name){}
 }
 if (!$blnPreLibCache) {
 if ($blnPreLibLoad) {
-include_once("{$libpath}/libsphp1.php");
+include_once(__DIR__ . "/../libsphp1.php");
 } else {
-include_once("{$libpath}/global/libloader.php");
+include_once(__DIR__ . "/libloader.php");
 }
 }
 include_once("{$slibpath}/comp/SphpJsM.php");

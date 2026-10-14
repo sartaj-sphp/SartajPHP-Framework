@@ -1,8 +1,8 @@
 # AJAX Calculator Client and Server Side Validation with page_insert event (BasicGate)
 
-## 1️⃣ Application File
+## 1️⃣ Application's Gate File
 
-**`apps/Calculator.php`**
+**`apps/Calculator.gate.php`**
 
 ```php
 class Calculator extends Sphp\tools\BasicGate {
@@ -11,9 +11,8 @@ class Calculator extends Sphp\tools\BasicGate {
 
     public function onstart(){
         // create Front File Object
-        $this->frtMain = new FrontFile(
-            $this->mypath."/fronts/calculator_main.front"
-        );
+		// $this->mypath."/fronts/calculator_main.front"
+        $this->frtMain = new Sphp\tools\FrontFile("main");
     }
 
     // URL = calculator.html handle by this
@@ -52,6 +51,6 @@ class Calculator extends Sphp\tools\BasicGate {
 ## 3️⃣ Register Gate File with SartajPHP reg.php
 
 ```php
-// register Gate=calculator So Browser URL=calculator.html
-registerGate("calculator",__DIR__ ."/apps/Calculator.php");
+// register Gate=calculator So Browser default URL=calculator.html
+registerGate("calculator",__DIR__ ."/apps/Calculator.gate.php");
 ```

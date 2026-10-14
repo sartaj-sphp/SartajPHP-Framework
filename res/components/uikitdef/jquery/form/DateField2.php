@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of DateField
+ * Description of DateField2
  *
  * @author SARTAJ
  */
@@ -116,7 +116,7 @@ addFileLink("{$jquerypath}/ui/jquery.ui.datepicker.min.js");
  */
 $str = '';
 if($this->appendText!=''){$str .= ",appendText: '$this->appendText', dateFormat: '$this->appendText'";}
-if($this->image==''){$this->image= "$respath/controls/sphp/res/calendar.gif";}
+if($this->image==''){$this->image= "$respath/components/uikitdef/jquery/html/res/calendar.gif";}
 if($this->image!=''){$str .= ",showOn: 'button',buttonImageOnly: true, buttonImage: '$this->image'";}
 if($this->datemax!=''){$str .= ",maxDate: '$this->datemax'";}
 if($this->datemin!=''){$str .= ",minDate: '$this->datemin'";}

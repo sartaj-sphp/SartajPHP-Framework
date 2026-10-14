@@ -75,6 +75,5 @@ public function setTagName($tagname) {}
 public function wrapTag($taghtml) {}
 public function wrapInnerTags($taghtml) {}
 public function appendHTML($html){}
-public function &__get($name) {}
 }
 }

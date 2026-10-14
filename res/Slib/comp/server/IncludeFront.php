@@ -1,7 +1,8 @@
 <?php
 /**
  * Description of IncludeFront
- *
+ * Front File use Tag Like and Front file has suffix *.child.front 
+ * <include id="customer-list" fun-setFrontFile="apps/pos/fronts/customer_list.child.front" runat="server" ></include>
  * @author SARTAJ
  */
 

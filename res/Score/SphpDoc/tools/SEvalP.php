@@ -6,11 +6,11 @@ namespace {
 */
 class SEvalParser {
 /**
-* Parse a PHP-like expression into AST
+* Parse a PHP-like expression into AST (cached by expression string).
 */
 public function parse($expression) {}
 /**
-* Tokenize expression using PHP tokenizer
+* Tokenize expression using PHP tokenizer (cached by source string).
 */
 /**
 * Get current token

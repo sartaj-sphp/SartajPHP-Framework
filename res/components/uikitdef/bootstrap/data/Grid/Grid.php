@@ -162,6 +162,7 @@ $this->eventName = $this->name ."_show";
 $this->editeventName = $this->name ."_view";
 $this->deleventName = $this->name ."_delete";
 SphpJsM::addjQueryUI();
+SphpBase::JSServer()->getAJAX();
 }
 public function fu_setEdit(){
 $this->blnEdit = true;
@@ -661,6 +662,11 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
         <strong>Note!</strong> <span id="sphpinfomsg"></span>
     </div>
 </div><div id="srvmsg"></div>';
+        if(SphpBase::sphp_api()->getProp("alert") == true){
+            $msg1 = "";
+        }else{
+            SphpBase::sphp_api()->addProp("alert", true);
+        }
     $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\" class=\"container\"> ";     
     if($this->tagName == 'tbody'){
         $this->element->parentNode->setPreTag($divt.$this->getPreTag());    

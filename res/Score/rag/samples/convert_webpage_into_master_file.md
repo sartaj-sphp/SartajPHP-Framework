@@ -56,9 +56,9 @@ The unique content for the homepage (hero, feature blocks, testimonials, FAQ) go
 Dynamic sections like the **header menu**, **footer**, and **WooCommerce product list** are perfect candidates for Front Places or Components.
 
 *   **Header & Footer**: Create as **Front Places** (e.g., `header.php`, `footer.php`) since they are global layout components. You would `addFrontPlace()` and `renderFrontPlace()` them in `master.php`.
-*   **Reusable Blocks**: Elements like the **Testimonial Slider**, **FAQ Accordion**, or **Product Grid** should be created as powerful **Components**. This makes them reusable across different Front Files.
+*   **Reusable Blocks**: Elements like the **Testimonial Slider**, **FAQ Accordion**, or **Product Grid** should be created as powerful **Components**. This makes them reusable across different Front Files. It used same FrontParser like FrontFile but diffirent extension required like *.place.php
 
-**Example `Header` Front Place (`masters/default/header.php`):**
+**Example `Header` Front Place (`masters/default/header.place.php`):**
 ```php
 <?php
 namespace masters\default;
@@ -92,13 +92,13 @@ header("Content-Security-Policy: script-src 'self' https://cdnjs.cloudflare.com 
 ```
 
 ### 📄 The Resulting Master File Structure
-Here is a conceptual outline of your resulting `masters/default/master.php`:
+Here is a conceptual outline of your resulting `masters/default/master.mast.php`: master file use extension suffix *.mast.php
 
 ```php
 <?php
-// masters/default/master.php
-addFrontPlace("siteHeader", __DIR__ . "/header.php", "top");
-addFrontPlace("siteFooter", __DIR__ . "/footer.php", "bottom");
+// masters/default/master.mast.php
+addFrontPlace("siteHeader", __DIR__ . "/header.place.php", "top");
+addFrontPlace("siteFooter", __DIR__ . "/footer.place.php", "bottom");
 runFrontPlace("siteHeader", "top");
 runFrontPlace("siteFooter", "bottom");
 ?>
@@ -122,7 +122,7 @@ runFrontPlace("siteFooter", "bottom");
     <?php renderFrontPlace("siteHeader", "top"); ?>
 
     <main class="main-content container-fluid">
-        <!-- The App's Front File output injects here -->
+        <!-- The Gate's Front File output injects here -->
         <?php SphpBase::getAppOutput(); ?>
     </main>
 
@@ -139,11 +139,11 @@ runFrontPlace("siteFooter", "bottom");
 ```
 
 ### ✅ Summary and Next Steps
-You've successfully deconstructed the STAX theme. The **static shell** is in `master.php`, the **homepage content** is in `index_main.front`, and **reusable global parts** are in Front Places/Components.
+You've successfully deconstructed the STAX theme. The **static shell** is in `master.mast.php`, the **homepage content** is in `index_main.front`, and **reusable global parts** are in Front Places/Components.
 
 To move forward:
 1.  **Build the Components**: Start creating the Testimonial or Portfolio components you identified.
-2.  **Populate with Data**: Your BasicGate (`IndexGate.php`) will fetch data (like products, posts) and pass it to the Front File and Components using `$frontobj->set()`.
+2.  **Populate with Data**: Your BasicGate (`Index.gate.php`) will fetch data (like products, posts) and pass it to the Front File and Components using `$frontobj->getComponent("txt1")`.
 3.  **Style Refinement**: Ensure your local `stax-style.css` matches the original design.
 
 

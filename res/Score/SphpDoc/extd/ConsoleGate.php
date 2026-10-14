@@ -84,6 +84,16 @@ public function callf($cmd, $msg = "", $fun2 = null, $funer2 = null, $fun_ready2
 * @return boolean true = run successful
 */
 public function callSudo($cmd, $msg = "", $fun2 = null, $funer2 = null, $fun_ready2 = null) {}
+/**
+*  Execute Command Asynchronously
+* @param string $cmd command
+* @param string $msg command help text display with command result
+* @param function $fun stdout
+* @param function $funer stderror
+* @param function $callback_ready callback on process ready
+* @param function $statuscall execute after end of execution with result
+* @return bool
+*/
 public function calla($cmd, $msg = "", $fun = null, $funer = null, $callback_ready = null, $statuscall = null) {}
 /**
 * Print Error Message on terminal

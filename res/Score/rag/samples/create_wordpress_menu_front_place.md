@@ -5,7 +5,7 @@ from the database and integrates WordPress theme assets.
 
 ```php
 <?php
-// masters/default/wordpressmenu.php
+// masters/default/wordpressmenu.place.php
 namespace masters\default;
 
 use Sphp\tools\FrontPlace;
@@ -133,7 +133,7 @@ class wordpressmenu extends FrontPlace {
 
 ```php
 <?php
-// masters/default/wordpressmenu_advanced.php
+// masters/default/wordpressmenu_advanced.place.php
 namespace masters\default;
 
 use Sphp\tools\FrontPlace;
@@ -287,10 +287,10 @@ class wordpressmenu_advanced extends FrontPlace {
 
 ```php
 <?php
-// masters/default/master.php
+// masters/default/master.mast.php
 
 // Register WordPress menu as FrontPlace
-addFrontPlace("wpmenu", __DIR__ . "/wordpressmenu.php", "header");
+addFrontPlace("wpmenu", __DIR__ . "/wordpressmenu.place.php", "header");
 runFrontPlace("wpmenu", "header");
 ?>
 <!DOCTYPE html>

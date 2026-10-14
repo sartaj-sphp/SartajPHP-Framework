@@ -1267,6 +1267,8 @@ if(runbackground==false && idimg!=''){
 hideOverlay(idimg);
 //document.getElementById(idimg).style.visibility = 'hidden';
 }
+     if(html.length < 2) console.error("Invalid Server Response:- " + url);
+
 if(callback != undefined){
 MySelf.sartajpro(html,callback); 
 }else{
@@ -1303,6 +1305,7 @@ cache: cache,
 async: async2,
 chunking: true,
  progress: function(e, part) {
+     if(part.length < 2) console.error("Invalid Server Response:- " + url);
 if(callback != undefined){
 MySelf.sartajpro(part,callback); 
 }else{
@@ -1350,7 +1353,7 @@ this.sartajpro = function(valm,callback){
             }
         }
         if(blnf1){
-            console.error(strerr);
+            console.error("Invalid Server Response:- " + valm);
         }
         valm = valm.substring(i1,i2-i1);
         jsonobjar = JSON.parse("[" + valm + "{}]");
@@ -1483,12 +1486,13 @@ this.sartajproc = function(keym,key,value,val){
 if(key!= undefined){ 
 switch(key){
     case 'proces' :{
-    try{
-    eval(value);
-    }catch(error){
-  console.error(error);  
+try {
+        new Function(value)();
+    } catch (error) {
+        console.error("JavaScript execution error:", error);
+        console.error(value);
     }
-/* $.globalEval(value);
+    /* $.globalEval(value);
 var l1 = Function(value);
 l1(); */
 break;

@@ -61,15 +61,16 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      */
     public function onstart() {
         // SECURITY: Restrict to command line only by default
-        // AI models should call this via CLI for security
-        if ($this->Client->mode != "CLI") {
+        // AI models should call this via CLI for security or localhost
+        if (strpos(SphpBase::sphp_request()->server("HTTP_HOST"),"localhost") !== false  || $this->Client->mode == "CLI") {
+            // Optional: Add logging to track AI queries
+            $this->logAiQuery($_SERVER['argv'] ?? []);
+        }else{
             echo "SECURITY: This Gate can only be called from Command Line\n";
             echo "For AI assistance, use: php -f start.php -- --gate aiinfo --evt help\n";
             \SphpBase::engine()->exitMe();
         }
         
-        // Optional: Add logging to track AI queries
-        $this->logAiQuery($_SERVER['argv'] ?? []);
     }
     
     /**

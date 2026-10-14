@@ -224,6 +224,10 @@ public function fu_unsetVisible() {}
 * @return String
 */
 public function getName() {}
+/**
+* Get Value of Object Set or posted from Browser.
+* @return String
+*/
 public function getValue() {}
 /**
 * escape single or double quotation in value. This don't need DB Connection.
@@ -630,7 +634,6 @@ protected function onholder($obj) {}
 * @param \Sphp\tools\HTMLDOMNode $domelement
 */
 protected function onparse($event, $domelement) {}
-public function &__get($name) {}
 /**
 * Advance Function, Internal use
 */

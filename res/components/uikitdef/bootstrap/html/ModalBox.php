@@ -1,9 +1,9 @@
 <?php
 /**
- *  $("#model1").modal("hide");
- *  $("#model1").modal("show");
+ *  $("#modal1").modal("hide");
+ *  $("#modal1").modal("show");
  */
-class ModalB extends Sphp\tools\Component{
+class ModalBox extends Sphp\tools\Component{
 private $url = "";
 private $btn1 = ""; 
 

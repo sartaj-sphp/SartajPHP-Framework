@@ -14,12 +14,12 @@ A SartajPHP Master File is a **procedural PHP script** (not a class) that:
 Here is the correct process, structured as Retrieval-Augmented steps, to transform your static HTML.
 
 #### **Step R1: Establish the Basic Skeleton**
-*   **Retrieve** the core structure from your example and the documentation's `/masters/default/master.php`.
+*   **Retrieve** the core structure from your example and the documentation's `/masters/default/master.mast.php`.
 *   **Generate** the starting point for your file.
 
 ```php
 <?php
-// masters/default/master.php
+// masters/default/master.mast.php
 
 // 1. REGISTER FRONT PLACES (like menus, sidebars)
 // addFrontPlace("[unique_name]", [file_path], "[section_name]");
@@ -68,9 +68,9 @@ Here is the correct process, structured as Retrieval-Augmented steps, to transfo
 
 ```php
 <?php
-// masters/default/master.php
+// masters/default/master.mast.php
 // Add a menu from an external PHP file as a Front Place in the "left" section
-addFrontPlace("mainmenu", __DIR__ . "/menu.php", "left");
+addFrontPlace("mainmenu", __DIR__ . "/menu.place.php", "left");
 runFrontPlace("mainmenu", "left");
 ?>
 <!DOCTYPE html>
@@ -78,7 +78,7 @@ runFrontPlace("mainmenu", "left");
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Converted Website | <?php echo $cmpname; ?></title>
+    <title>My Converted Website | <?php echo readGlobal('cmpname'); ?></title>
     <?php
         // Add Bootstrap CSS via framework API
         SphpBase::SphpJsM()::addBootStrap();
@@ -134,7 +134,7 @@ runFrontPlace("mainmenu", "left");
 **1. Create the Front Place File (`menu.php`):**
 ```php
 <?php
-// masters/default/menu.php
+// masters/default/menu.place.php
 
 use Sphp\tools\FrontPlace;
 
@@ -156,10 +156,10 @@ class menu extends FrontPlace {
 ?>
 ```
 
-**2. Create a BasicGate (`IndexGate.php`) to handle requests:**
+**2. Create a BasicGate (`Index.gate.php`) to handle requests:**
 ```php
 <?php
-// apps/IndexGate.php
+// apps/Index.gate.php
 namespace apps;
 
 use Sphp\apps\BasicGate;
@@ -170,9 +170,10 @@ class index extends BasicGate {
     
     public function onstart() {
         // Load the Front File for the main page content
-        $this->frtMain = new FrontFile($this->mypath . "/fronts/index_main.front");
-        // You can pass data to the Front File here
-        $this->frtMain->set("welcome_message", "Hello from SartajPHP!");
+		// $this->mypath . "/fronts/index_main.front"
+        $this->frtMain = new FrontFile("main");
+        // You can pass data as variable value $welcome_message in the Front File here or front_init event
+        $this->frtMain->addProp("welcome_message", "Hello from SartajPHP!");
     }
     
     // Handle the main page load event
@@ -188,16 +189,16 @@ class index extends BasicGate {
 <!-- apps/fronts/index_main.front -->
 <div class="page-content">
     <h2>Welcome</h2>
-    <p>##{welcome_message}##</p>
+    <p>##{$welcome_message}#</p>
     <p>This is dynamic content inside the App's output area.</p>
 </div>
 ```
 
 ### 📋 Summary: The Correct Flow
 
-1.  **Master File (`master.php`)** is a **procedural script** that sets up the page skeleton, registers/runs Front Places, and calls `SphpBase::getAppOutput()`.
-2.  **Front Places** (like `menu.php`) are PHP classes that generate reusable HTML chunks inserted via `renderFrontPlace()`.
-3.  **BasicGate** (like `IndexGate.php`) handles the request event (`page_new`) and sets the main **Front File** (`index_main.front`) which holds the page-specific content.
+1.  **Master File (`master.mast.php`)** is a **procedural script** that sets up the page skeleton, registers/runs Front Places, and calls `SphpBase::getAppOutput()`.
+2.  **Front Places** (like `menu.place.php`) are PHP classes that generate reusable HTML chunks inserted via `renderFrontPlace()`.
+3.  **BasicGate** (like `Index.gate.php`) handles the request event (`page_new`) and sets the main **Front File** (`index_main.front`) which holds the page-specific content.
 4.  The **Framework** stitches it together: The content from the App's Front File is injected where `SphpBase::getAppOutput()` is called in the Master File.
 
 This architecture cleanly separates your global layout (Master File), reusable widgets (Front Places), and page-specific content/logic (BasicGate + Front File).

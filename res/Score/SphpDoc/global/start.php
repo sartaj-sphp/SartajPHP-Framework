@@ -1,12 +1,13 @@
 <?php
 $ytetimestart1 = microtime(true);
+function safe_realpath(string $path): string|false {}
 if (!defined("start_path")) {
-define("start_path", getcwd());
+define("start_path", safe_realpath(getcwd()));
 }
 if (defined("PHARAPP")) {
-define("PROJ_PATH", PHARAPP);
+define("PROJ_PATH", safe_realpath(PHARAPP));
 } else {
-define("PROJ_PATH", start_path);
+define("PROJ_PATH", safe_realpath(start_path));
 }
 $cacheFileList = array();
 /**
@@ -58,7 +59,7 @@ function clearCacheItem($url) {}
 * @return boolean
 */
 function isPharApp() {}
-include_once("{$phppath}/Score/global/global.php");
+include_once(__DIR__ . "/../../global/global.php");
 $response_method = "NORMAL";
 if (defined("PHARAPPW")) {
 $basepath = "";

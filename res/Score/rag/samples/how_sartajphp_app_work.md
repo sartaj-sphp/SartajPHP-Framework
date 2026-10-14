@@ -10,15 +10,15 @@ flowchart TD
     A[Browser Request<br>e.g., GET /index.html] --> B{SartajPHP Engine}
     
     B --> C[Route to Gate]
-    C --> D[Load IndexGate.php]
+    C --> D[Load Index.gate.php]
     D --> E[Execute page_new Event]
     
     E --> F[Process index_main.front<br>Front File]
     F --> G[Generate Dynamic Content]
     
-    G --> H[Execute Master File<br>master.php]
+    G --> H[Execute Master File<br>master.mast.php]
     H --> I[Process Front Places]
-    I --> J[Render WordPress Menu<br>via wordpressmenu.php]
+    I --> J[Render WordPress Menu<br>via wordpressmenu.place.php]
     
     J --> K[Combine All Outputs]
     K --> L[Send Final HTML<br>to Browser]
@@ -39,12 +39,12 @@ flowchart TD
 
 **Phase 1: Request Initialization**
 ```
-Browser → .htaccess → start.php → reg.php → Gate Resolution → Load IndexGate.php
+Browser → .htaccess → start.php → reg.php → Gate Resolution → Load Index.gate.php
 ```
 
 **Phase 2: Event Processing**
 ```
-IndexGate.php::onstart() → Set Master File → IndexGate.php::page_new() → Set Front File
+Index.gate.php::onstart() → Set Master File → Index.gate.php::page_new() → Set Front File
 ```
 
 **Phase 3: Content Generation**
@@ -59,20 +59,18 @@ HTML Assembly → Asset Injection → Browser Delivery → Client-side Execution
 
 ## **3. Detailed Component Specifications**
 
-### **A. BasicGate Structure (`IndexGate.php`)**
+### **A. BasicGate Structure (`Index.gate.php`)**
 ```php
 <?php
 class index extends \Sphp\tools\BasicGate{
     private $frtMain = null;
     
-    // PHASE 1: Application Initialization
+    // PHASE 1: Application Start Event Handler
     public function onstart() {
         global $masterf;  
         
         // 1. Load Front File template
-        $this->frtMain = new \Sphp\tools\FrontFile(
-            $this->mypath . "/fronts/index_main.front"
-        );
+        $this->frtMain = new FrontFile('main');
         
         // 2. Set Master File (from comp.php configuration)
         $this->setMasterFile($masterf);
@@ -91,7 +89,9 @@ class index extends \Sphp\tools\BasicGate{
 ```
 
 **Key Responsibilities:**
-- **Event Mapping**: URL `index.html` → `page_new()` method
+- **Event Mapping**: GET URL `index.html` → `page_new()` method
+- **Event Mapping**: POST URL `index.html` → `page_submit()` method
+- **Event Mapping**: GET/POST To EVENT-URL `index-calc-multiply.html` → `page_event_calc($evtp=multiply)` method
 - **Resource Allocation**: Loads Front Files and sets Master File
 - **Lifecycle Management**: `onstart()` for setup, event methods for request handling
 
@@ -103,27 +103,28 @@ Front file ##{ $frontobj->getFilePath() }# End Here:-<br />
 
 <!-- Component Integration Example -->
 <div runat="server" id="dynamicContent">
-    <app:WordPressMenu />
+   Call parent Gate's method :-  
+    ##{$parentgate->WordPressMenu()}#
 </div>
 
 <!-- Data Binding Example -->
 <div id="div1" runat="server" path="slibpath/comp/server/ForEachLoop.php" fun-setObject="post">
-    <h3>##{$div1->getItem('title')}##</h3>
-    <p>##{$div1->getItem('excerpt')}##</p>
+    <h3>##{$div1->getItem('title')}#</h3>
+    <p>##{$div1->getItem('excerpt')}#</p>
 </div>
 ```
 
 **Expression Tags:**
-- `##{ expression }#` - Evaluates PHP expressions
-- `runat="server"` - Converts element to Component
+- `##{ expression }#` - Evaluates and print PHP expressions output
+- `runat="server"` - Converts HTML Tag to Component Tag
 
-### **C. Master File Orchestration (`master.php`)**
+### **C. Master File Orchestration (`master.mast.php`)**
 ```php
 <?php
 // PHASE 3: Layout Initialization
 
 // 1. Register Front Places (pre-execution registration)
-addFrontPlace("wpmenu", __DIR__ . "/wordpressmenu.php", "header");
+addFrontPlace("wpmenu", __DIR__ . "/wordpressmenu.place.php", "header");
 
 // 2. Execute Front Places (early processing)
 runFrontPlace("wpmenu", "header");
@@ -168,7 +169,7 @@ runFrontPlace("wpmenu", "header");
 4. **Dynamic Content Injection** (`getAppOutput()`)
 5. **Asset Finalization**
 
-### **D. Front Place Implementation (`wordpressmenu.php`)**
+### **D. Front Place Implementation (`wordpressmenu.place.php`)**
 ```php
 <?php
 class wordpressmenu extends FrontPlace {
@@ -294,10 +295,9 @@ try {
 
 ### **Common Pitfalls to Avoid:**
 
-1. **❌ Calling WordPress functions** in SartajPHP context
-2. **❌ Mixing Front File and Master File responsibilities**
-3. **❌ Hardcoding paths** instead of using `$this->mypath` and `getMyResPath()`
-4. **❌ Forgetting `_run()` and `render()`** in FrontPlace classes
+1. **❌ Mixing Front File and Master File responsibilities**
+2. **❌ Hardcoding paths** instead of using `$this->mypath` and `getMyResPath()`
+3. **❌ Forgetting `_run()` and `render()`** Implementation in FrontPlace classes
 
 ### **Correct Implementation Checklist:**
 
@@ -306,7 +306,6 @@ try {
 - [ ] Master File uses `addFrontPlace()`/`runFrontPlace()`/`renderFrontPlace()`
 - [ ] Database access via `SphpBase::dbEngine()`
 - [ ] Asset management via `addFileLink()` and framework APIs
-- [ ] No direct WordPress function calls in SartajPHP files
 
 ## **6. Debugging and Optimization**
 
@@ -346,8 +345,8 @@ Front file ##{ $frontobj->getFilePath() }# End Here:-<br />
 <div id="div1" runat="server" 
      path="slibpath/comp/server/ForEachLoop.php" 
      fun-setObject="post">
-    <h3>##{$div1->getItem('title')}##</h3>
-    <p>##{$div1->getItem('excerpt')}##</p>
+    <h3>##{$div1->getItem('title')}#</h3>
+    <p>##{$div1->getItem('excerpt')}#</p>
 </div>
 
 <!-- 3. CONDITIONAL COMPONENT -->
@@ -373,7 +372,7 @@ Front file ##{ $frontobj->getFilePath() }# End Here:-<br />
 **WordPress Menu Component:**
 ```php
 <?php
-// apps/components/WordPressMenu.php
+// apps/components/WordPressMenu.place.php
 
 use Sphp\tools\Component;
 
@@ -465,9 +464,10 @@ flowchart TD
      path="component/ClassPath.php"   <!-- Custom component -->
      class="css-class"                <!-- CSS classes -->
      style="color: red;"              <!-- Inline styles -->
-     fun-setObject="dataKey"          <!-- Data binding -->
-     fun-setAuth="ROLE"               <!-- Security -->
-     fun-setCondition="expression"    <!-- Conditional logic -->
+     dfiled="dataKey"                 <!-- Data binding -->
+     fun-setAuth="ROLE"               <!-- Auto Init/Render Call Fusion Mehtod with prefix fu_ or fi_ -->
+     fui-setCondition="a,|b,|c"       <!-- Init Call Fusion Method fi_ of component and pass 'a','b','c' -->
+     fur-setCondition2="a"            <!-- Render Call Fusion Method fu_ of component and pass 'a' -->
      data-custom="value">             <!-- Custom data attributes -->
     <!-- Component content -->
 </div>
@@ -481,8 +481,8 @@ flowchart TD
      path="slibpath/comp/server/ForEachLoop.php"
      fun-setObject="posts">
     <article class="post">
-        <h2>##{$postsLoop->getItem('title')}##</h2>
-        <div>##{$postsLoop->getItem('content')}##</div>
+        <h2>##{$postsLoop->getItem('title')}#</h2>
+        <div>##{$postsLoop->getItem('content')}#</div>
     </article>
 </div>
 
@@ -491,8 +491,8 @@ flowchart TD
      path="slibpath/comp/server/ForEachLoop.php"
      fun-setObject="users">
     <div class="user">
-        Name: ##{$usersLoop->getItem('name')}##<br />
-        Email: ##{$usersLoop->getItem('contact.email')}##
+        Name: ##{$usersLoop->getItem('name')}#<br />
+        Email: ##{$usersLoop->getItem('contact.email')}#
     </div>
 </div>
 
@@ -500,8 +500,8 @@ flowchart TD
 <div id="productsLoop" runat="server"
      path="slibpath/comp/server/ForEachLoop.php"
      fun-setObject="products">
-    <div class="product-index-##{$productsLoop->getIndex()}##">
-        ##{$productsLoop->getIndex()+1}##. ##{$productsLoop->getItem('name')}##
+    <div class="product-index-##{$productsLoop->getIndex()}#">
+        ##{$productsLoop->getIndex()+1}# : ##{$productsLoop->getItem('name')}#
     </div>
 </div>
 ```
@@ -515,13 +515,11 @@ class index extends \Sphp\tools\BasicGate{
     private $frtMain;
     
     public function onstart() {
-        $this->frtMain = new \Sphp\tools\FrontFile(
-            $this->mypath . "/fronts/index_main.front"
-        );
+        $this->frtMain = new \Sphp\tools\FrontFile("main");
         
         // Set data for loop components
-        $this->frtMain->set("posts", $this->getRecentPosts());
-        $this->frtMain->set("users", $this->getActiveUsers());
+        $this->frtMain->addProp("posts", $this->getRecentPosts());
+        $this->frtMain->addProp("users", $this->getActiveUsers());
     }
     
     private function getRecentPosts() {
@@ -540,7 +538,7 @@ class index extends \Sphp\tools\BasicGate{
 |--------|------------|-----------|
 | **Registration** | Master File (`addFrontPlace()`) | Front File (`runat="server"`) |
 | **Scope** | Global layout sections | Page-specific elements |
-| **Data Access** | Direct DB in `_run()` | Set via `FrontFile::set()` |
+| **Data Access** | Direct DB in `_run()` | Set via `FrontFile::addProp()` |
 | **Reusability** | Across entire site | Per page/instance |
 | **Lifecycle** | Early execution in Master | During Front File processing |
 | **Best For** | Headers, Footers, Sidebars | Lists, Forms, Widgets |
@@ -573,7 +571,7 @@ class index extends \Sphp\tools\BasicGate{
 ```html
 <!-- Test component is working -->
 <div runat="server" id="testComp">
-    Component loaded at: ##{date('H:i:s')}##
+    Component loaded at: ##{date('H:i:s')}#
 </div>
 ```
 

@@ -212,7 +212,7 @@ return false;
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
-        $this->setAttributeDefault("action",getThisGateURL("",false,".app"));
+        $this->setAttributeDefault("action",getThisGateURL("",false,".gate"));
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit2('');return false;");
         if(!isset($this->onsubmit)){
             addHeaderJSFunctionCode("ready", $this->name .'rd1', "$('#" . $this->name . "').on('submit',function(e){e.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");

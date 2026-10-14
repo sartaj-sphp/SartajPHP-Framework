@@ -38,13 +38,22 @@ namespace Sphp\Comp\Form {
             if (\SphpBase::sphp_request()->isFile("$this->name")) {
                 $this->issubmit = true;
                 $f1 = \SphpBase::sphp_request()->files("$this->name");
-                $this->fileType = $f1["type"];
+                if(isset($f1["type"])){
+                    $this->fileType = $f1["type"];
+                }
                 $this->fileSize = $f1["size"];
+                if(!isset($f1["tmp_name"])){
+                    $f1["tmp_name"] = $f1["saved_path"];
+                }
+                if(!isset($f1["name"])){
+                    $f1["name"] = $f1["saved_path"];
+                }
                 $this->fileFrontName = $f1["tmp_name"];
                 if ($this->fileFrontName != '') {
                     \SphpBase::sphp_request()->request($this->name, false, $f1["name"]);
                     $ft = pathinfo($f1["name"]);
                     $this->fileExtention = $ft['extension'];
+                    //\SphpBase::debug()->println( $this->fileExtention);
                     $this->filename = $ft['filename'];
                 }
             }
@@ -260,15 +269,17 @@ namespace Sphp\Comp\Form {
            return round(microtime(true)) . 'a.' . $this->getFileExtension();
         }
         public function saveFile($FilePath) {
+            //\SphpBase::debug()->print_r($_FILES);
             if ($this->issubmit) {
                 if(!getCheckErr()){
                     $file = \SphpBase::sphp_request()->files($this->name);
-                if (\SphpBase::sphp_request()->isFile($this->name) && $file["error"] > 0) {
+                if (\SphpBase::sphp_request()->isFile($this->name) && isset($file["error"]) && $file["error"] > 0) {
                     if($file["error"] !== UPLOAD_ERR_OK && $file["error"] !== UPLOAD_ERR_NO_FILE){
                         $this->setErrMsg($file["error"]);
                     }
                 } else {
                     $p1 = "";
+                    // run with Sphp Server
                     if (\SphpBase::sphp_request()->isNativeClient) {
                         $p1 = \SphpBase::sphp_request()->request($this->name);
                         if (file_exists($p1) && !rename($p1, $FilePath)) {

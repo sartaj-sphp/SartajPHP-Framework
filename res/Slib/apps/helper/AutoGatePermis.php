@@ -1,7 +1,7 @@
 <?php
 /**
  * Description of AutoGatePermis
- * It extends PermisGate Class and Add Search,Grid to Print as PDF, 
+ * It extends BasicsGate Class and Add Search,Grid to Print as PDF, 
  * Add heading and footer for Front File and Printer Format. This class 
  * is also add AJAX base error and notification reply.
  * This Class helps to develop Gate Class easy as CRUD App with Permissions System.
@@ -10,52 +10,126 @@
  *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
 include_once(SphpBase::sphp_settings()->lib_path . "/dev/QueryBuilder.php");
-include_once(SphpBase::sphp_settings()->slib_path . "/apps/permis/PermisGate.php");
-// may use div tag id edtFormHolder for editor form
 
-class AutoGatePermis extends PermisGate {
-
+class AutoGatePermis extends Sphp\tools\BasicGate {
+   /**
+    * PDF and Front File Page Heading
+    * @var string
+    */
     public $heading = "heading";
+   /**
+    * PDF and Front File Page Footer
+    * @var string
+    */
     public $footer = "set footer property of app, for logo image set logoimg";
+   /**
+    * PDF and Front File Logo Image Path
+    * @var string
+    */
     public $logoimg = "apps/helper/fronts/logo.png";
     public $phone = "6AA-AAA-AAAA";    
     public $mobile = "AAA-AAA-AAAA";    
     public $address = "address";    
     public $city = "Mississauga";    
     public $country = "Canada";    
-    protected $insertedid = -1;
+   /**
+    * Temporary Disable permissions for Gate
+    * @var bool
+    */
     protected $blndisableperm = false;
-
-    public $extra = array();
+    /**
+     * DB Record ID for Update Record. It is optional and by default Form Component 
+     * provide Record ID
+     * @var int
+     */
     public $recID = "";
+    /**
+     * DB Update SQL Where for Update Record. It is optional and by default Form Component 
+     * provide Record ID=id
+     * @var int
+     */
     public $recWhere = "";
     public $printstyle = "test";
+   /**
+    * PDF Print Style CSS File Path Default __DIR__ ."/fronts/style.css"
+    * @var string
+    */
     public $printstylefile = __DIR__ ."/fronts/style.css";
 
+    /**
+     * $extra array as $extra[table][field] = value format. pass $extra value while 
+     * insert,update data to database. this is extra data which is not provided by bound Components.
+     * @var array
+     */
+    public $extra = array();
+    /**
+     * Set Last inserted record "id" value in database when insert operation process.
+     * @var int
+     */
+    protected $insertedid = 0;
+    /**
+     * pass default WHERE login to Pagination Component to Search Records. It will only work when 
+     * no other WHERE logic exists.
+     * @var string
+     */
+    protected $defWhere = "";
+    /**
+     * Form Component ID to process Database bound Component for automatic INSERT,UPDATE and VIEW 
+     * Database record.
+     * @var string default value is form2
+     */
+    protected $formid = "form2";
+    /**
+     * This Front File provide Edit Form to use Insert and Update records
+     *  @var \Sphp\tools\FrontFile
+     */
+    public $genFormFront = null;
 
+    /**
+     * This Front File provide List Records with Pagination + search Form
+     *  @var \Sphp\tools\FrontFile
+     */
+    public $showallFront = null;
+
+    /**
+     * Handle LifeCycle Event onstart of Gate
+     *  Setting up Basic Configurations and call from Child Class after 
+     *  create Front Files Objects and name of object required showall, btnDel.
+     */
     public function onstart() {
         $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
+        /** Disable Render Component-Tag of Grid Component which will not stop Render Children of Grid */
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
+        /** Disable Render delete Button btnDel Component */
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
         $this->showallFront->getComponent('showall')->fu_setPerPageRows(10);
         SphpBase::sphp_api()->addProp('page_title',$this->heading);
     }
-
+    /**
+     * Handle Event URL "loadform" AJAX Request of Gate
+     * Update Front File showallFront with Grid Component to id=listFormHolder and reply via AJAX
+     */
     public function page_event_loadform($evtp) {
+        /** Enable Render Component-Tag of Grid Component */
         $this->showallFront->getComponent('showall')->fu_setRenderTag();
-        //$this->JSServer->addJSONFront($this->genFormFront,'showall_editor');
+        /** Send showallFront Front-File to Tag id=listFormHolder */
         $this->JSServer->addJSONFront($this->showallFront, 'listFormHolder');
-//      $this->JSServer->addJSONBlock('html','listheading',$listheading->innerHTML);
-//      $this->JSServer->addJSONBlock('html','editheading',$editheading->innerHTML);
     }
-
+    /**
+     * Handle Landing URL GET Request of Gate
+     *  Reply as Full Front File + Master File
+     */
     public function page_new() {
+        /** Enable Render Component-Tag of Grid Component */
         $this->showallFront->getComponent('showall')->fu_setRenderTag();
         //$tmp = new FrontFile('This is not a standalone Application!', true);
         //trigger_error('This is not a standalone Application!');
         $this->setFrontFile($this->showallFront);
     }
 
+    /**
+     * Handle Landing URL POST Request of Gate
+     */
     public function page_submit() {
         /** @var Sphp\Comp\Form\HTMLForm */
         $cmpForm = $this->genFormFront->getComponent($this->formid);
@@ -66,12 +140,29 @@ class AutoGatePermis extends PermisGate {
         }
     }
 
+    /**
+     * Handle Event URL "showall_show" AJAX Request of Gate
+     * Update Grid Component to id=showall and reply via AJAX
+     */
     public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
+        $showall->fu_unsetRenderTag();
         $this->JSServer->addJSONComp($showall, 'showall');
         $this->JSServer->addJSONHTMLBlock('pagebar', $showall->getPageBar());
     }
 
+    /**
+     * Check Permission
+     * @return bool true if permission is given to Logged in User
+     */
+    public function hasPermission($p){
+        return $this->page->hasPermission($p);
+    }
+    
+    /**
+     * Handle Event URL "print" Request of Gate
+     * It Print Grid Component output as PDF file and send to browser
+     */
     public function page_event_print($evtp) {
         $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
@@ -91,6 +182,11 @@ class AutoGatePermis extends PermisGate {
          
     }
 
+    /**
+     * Handle Event URL "usersrch" Request of Gate.
+     * It send Grid Component after change WHERE logic as User Search Form
+     *  Send reply as AJAX
+     */
     public function page_event_usersrch($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
@@ -108,6 +204,12 @@ class AutoGatePermis extends PermisGate {
         }
     }
 
+    /**
+     * Handle Event URL "rowclick" Request of Gate.
+     * When click on row of Grid(tr) then this event handler process output and open 
+     *  Record in genFormFront Form=form2 and send Front File in Dialog=showall_editor 
+     * for editing. Send reply as AJAX
+     */
     public function page_event_rowclick($evtp) {
         if($this->blndisableperm == true || $this->hasPermission("view")){
         $this->Client->session("formType", "Edit");
@@ -119,7 +221,6 @@ class AutoGatePermis extends PermisGate {
         $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
         // display content in Dialog of showall Component
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-//        $this->JSServer->addJSONBlock('html','frmstatus',"Form is on Update Mode!");
         }else{
             setErr("app2", "Permission Denied");
             $this->sendError();
@@ -127,10 +228,12 @@ class AutoGatePermis extends PermisGate {
 
     }
  
+    /**
+     * Handle Event URL "showall_newa" Request of Gate.
+     * Display genFormFront Front File in id=showall_editor and this in dialog box 
+     *  of Grid Component. So you can insert new record in DB. Send reply as AJAX
+     */
     public function page_event_showall_newa($evtp) {
-        $this->page_event_addform($evtp);
-    }
-    public function page_event_addform($evtp) {
 	if(isset($_SESSION['curtrec'])){
             unset($_SESSION['curtrec']);
         }
@@ -138,18 +241,13 @@ class AutoGatePermis extends PermisGate {
         $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
     }
 
-// user event handling end here
-    public function page_event_crossclick($evtp) {
-        $this->page->viewData($this->genFormFront->getComponent('form2'));
-        $this->genFormFront->getComponent('btnDel')->fu_setRender();
-        $extupdate = array();
-        $extupdate["up"] = 12;
-        $extupdate["previd"] = $this->Client->request("previd");
-        $extupdate["prevctrl"] = $this->Client->request("prevctrl");
-        $this->Client->session("extupdate", $extupdate);
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-    }
 
+    /**
+     * Insert Data automatically to DB table with bind Components through 
+     * $this->page->insertData
+     * Display showall Grid Component to id=showall and 
+     *  Close Dialog Box on success. Send reply as AJAX
+     */
     public function insert() {
         global $cmpid;
         if($this->blndisableperm == false && !$this->hasPermission("add")){
@@ -161,19 +259,11 @@ class AutoGatePermis extends PermisGate {
         $this->extra[]['submit_timestamp'] = time();
         $this->extra[]['update_timestamp'] = time();
         
-        $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
                 $form2 = $this->genFormFront->getComponent($this->formid);
                 $this->insertedid = $this->page->insertData($form2,$this->extra);            
             if (!getCheckErr()) {
-                //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
-                //$JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
-                if ($blnsendList) {
-                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                } else {
-                    $this->sendCrossCall();
-                }
-                //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
+                $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
                 $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 $this->sendSuccess('Data is inserted in Database');
                 $this->sendError();
@@ -188,44 +278,27 @@ class AutoGatePermis extends PermisGate {
         
     }
 
-    public function checkCrossCall() {
-        $extupdate = $this->Client->session("extupdate");
-        if (isset($extupdate["up"]) && $extupdate["up"] == 12) {
-            $extupdate["up"] = 11;
-            $this->Client->session("extupdate", $extupdate);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function sendCrossCall() {
-        $extupdate = $this->Client->session("extupdate");
-        $this->JSServer->addJSONJSBlock("getURL('" . getEventURL("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
-    }
-
+    /**
+     * Update Data automatically to DB table with bind Components through 
+     * $this->page->updateData
+     * Display showall Grid Component to id=showall and 
+     *  Close Dialog Box on success. Send reply as AJAX
+     */
     public function update() {
         if($this->blndisableperm == false && !$this->hasPermission("view")){
             setErr("app2", "Permission Denied");
         }
-        $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
                 $form2 = $this->genFormFront->getComponent($this->formid);
                 $this->page->updateData($form2,$this->extra, $this->recID, $this->recWhere);
-            if (!getCheckErr()) {
-                if ($blnsendList) {
+                if (!getCheckErr()) {
                     $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                    //$this->JSServer->addJSONJSBlock(" setFormAsNew('form2');");
+                    $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                    $this->sendSuccess('Record is updated');
                 } else {
-                    $this->sendCrossCall();
+                    setErr('app1', 'Record can not update');
+                    $this->sendError();
                 }
-                //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
-                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
-                $this->sendSuccess('Record is updated');
-            } else {
-                setErr('app1', 'Record can not update');
-                $this->sendError();
-            }
         } else {
             setErr('app1', 'Record can not update');
             $this->sendError();
@@ -236,23 +309,17 @@ class AutoGatePermis extends PermisGate {
         if($this->blndisableperm == false && !$this->hasPermission("delete")){
             setErr("app2", "Permission Denied");
         }
-        $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
             $this->page->deleteRec();
-        if (!getCheckErr()) {
-            if ($blnsendList) {
+            if (!getCheckErr()) {
                 $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
                 $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                $this->sendSuccess('Record is Deleted');
             } else {
-                $this->sendCrossCall();
+                setErr('app1', 'Record could not be deleted');
+                $this->sendError();
             }
-            //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
-            $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
-            $this->sendSuccess('Record is Deleted');
-        } else {
-            setErr('app1', 'Record could not be deleted');
-            $this->sendError();
-        }
         } else {
             setErr('app1', 'Record could not be deleted P');
             $this->sendError();
