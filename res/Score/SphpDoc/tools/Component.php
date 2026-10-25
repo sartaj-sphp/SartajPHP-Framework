@@ -408,7 +408,7 @@ protected function isRegisterHandler($event_name) {}
 * @param object $eventhandlerobj Optional Object handle the event 
 */
 public function setEventHandler($event_name, $handler, $eventhandlerobj = "null") {}
-protected function raiseEvent($event_name, $arglst = array()) {}
+public function raiseEvent($event_name, $arglst = array()) {}
 protected function registerEventJS($event_name) {}
 protected function isRegisterHandlerJS($event_name) {}
 /**
@@ -672,11 +672,26 @@ protected function genhelpPropList() {}
 }
 /**
 * Component use it own Gate to process events and Front File to design own 
-* Complex design for example:- Tiny Editor Component, Web Page Editor
+* Complex design for example:- Tiny Editor Component, Web Page Editor.
+* CompGate(*.cgate.php) onstart trigger after Registered-Gate(*.gate.php) onstart, onready and onrun but all Page-Events 
+* trigger before Registered Gate Page-Events because it handle CompGate in ongateevent handler, so 
+* this event handler and onprerender aren't available in ComponentGroup class. ComponentGroup class 
+* is also write innerHTML from Front File set in CompGate. So all design comes from Front File set with 
+* setFrontFile and send to browser with render of ComponentGroup. CompGate use Child Front File as 
+*  Sphp\tools\FrontFileComp Object which add name of ComponentGroup as prefix with all Components before 
+* insert into Parent Front File. So Name "txtuser" Component in FrontFileComp convert into as 
+* ComponentGroup-Name + "txtuser" . So we can access this component in anywhere with this new name. This 
+* make no over write headache with same name of components in Parent-Front File and also in JS in Browser because 
+* everything run JS as single entity. But take care yourself if you are using Front File as FrontParser Object in CompGate.
+*  
 */
 class ComponentGroup extends Component {
-final public function onaftercreate() {}
-final public function onrender() {}
+final public function ongateevent() {}
+final public function onprerender() {}
+/**
+* 
+* @return \Sphp\tools\CompGate
+*/
 public function getCompGate() {}
 }
 class MenuGen extends \Sphp\tools\FrontPlacePhp{

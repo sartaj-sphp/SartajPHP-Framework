@@ -324,7 +324,8 @@ class FrontFile extends FrontParser{
 }
 /**
 * Child Front File Share Components and meta data with parent as reference not a copy. So changes in child
-*  effect in parent also.FrontFileChild need file extension as *.child.front
+*  effect in parent also.FrontFileChild need file extension as *.child.front , Both Front files shared same Registered 
+*  Gate Class.
 */
 class FrontFileChild extends FrontParser {
 /**
@@ -341,6 +342,12 @@ class FrontFileChild extends FrontParser {
 */
 }
 class FrontFileComp extends FrontParser {
+/**
+* Advance Function
+* Add component object in FrontFile
+* @param string $key component name or id in HTML code
+* @param \Sphp\tools\Component $obj
+*/
 }
 /**
 *  FrontPlace File should always extension end with as *.place.front 
