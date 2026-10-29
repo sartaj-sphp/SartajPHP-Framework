@@ -7,8 +7,9 @@ namespace Sphp\tools {
 * and it is run and execute by ComponentGroup Class and not with GateLoader.
 * CompGate File name use *.cgate.php post fix and inside Sub Folder CompGates of ComponentGroup
 * Class Folder. It doesn't handle page_new and page_submit events. You can use Child Front files *.child.front with this 
-* Type of Gate Class. It is worked as Child Gate of Component and no need registration. It can only handle Component 
-* base PageEvents when Registered Gate Class create Front File Object in LifeCycle Event handler like onstart.
+* Type of Gate Class. It is worked as Child Gate of Component and no need of registration in reg.php file. It can only handle Component 
+* based PageEvents when Registered Gate Class create Front File Object in LifeCycle Event handler like onstart. It can't register Event
+*  for ComponentGroup but it can trigger Event of Component and ComponentGroup class.
 * @author Sartaj Singh
 */
 class CompGate extends Gate {

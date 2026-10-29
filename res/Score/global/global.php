@@ -38,13 +38,22 @@ $default_filelink_load = 2;
 // default security key
 $defenckey = "aHmlP1";
 date_default_timezone_set("America/New_York");
-// set session state, if false you can not login
+// use session state, if false you can not login
 $sphp_use_session = true;
 // single session app
 $sphp_use_session_storage = false;
 // convert session to cookie
 $sphp_use_session_cookie = false;
+// session settings
+$SESSION_NAME = 'SPHPID';
+$SESSION_PATH = '';
+/**
+ * db for Database Handler and Redis Server URL for Reds session handler.
+ * By Default it will use PHP Settings and no over write
+ */
+$SESSION_HANDLER = '';
 
+// if true it will bypass html cache engine
 $sphp_app_cmd = false;
 // Default Language
 $serv_language = "ENGLISH"; 
@@ -54,8 +63,11 @@ $debugprofiler = "";
 //$debugprofiler = "{$phppath}/classes/base/debug/SPHP_Profiler3.php";
 $errorLog = true;
 
+/* run Framework as Lib so it will be not load any Gate Automatically
+ * Run SartajPhp inside other PHP Frameworks.
+ */
 $sphpRunasLib = false;
-$run_hd_parser = false; // not working under process
+$run_hd_parser = false; // not working under process, remove in future
 $translatermode = false;
 $blnEditMode = false; // remove in future only testing purpose
 // true mean use of php preload in ini
@@ -64,6 +76,7 @@ $blnEditMode = false; // remove in future only testing purpose
 $blnPreLibCache = false;
 // if true load libsphp1.php file
 $blnPreLibLoad = true;
+// stop output buffering
 $blnStopResponse = false;
 
 //$db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
@@ -74,10 +87,6 @@ $duser = "root";
 $db = "dbplugin";
 $dpass = "";
 $dhost = "localhost:3306";
-
-// session settings
-$SESSION_NAME = 'SPHPID';
-$SESSION_PATH = '';
 
 // admin login user
 $admuser = 'admin';
