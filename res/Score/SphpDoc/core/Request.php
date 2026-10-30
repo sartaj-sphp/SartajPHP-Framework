@@ -35,7 +35,7 @@ public function parseRequest() {}
 */
 public function isNativeApp() {}
 /**
-* Check if client demand JSON response.
+* Check if client request is AJAX Base or Server are ready to reply as AJAX JSON.
 * @return boolean 
 */
 public function isAJAX() {}
