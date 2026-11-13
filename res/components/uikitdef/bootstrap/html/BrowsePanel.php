@@ -3,7 +3,7 @@
 
 
 
-class BrowsePanel extends Sphp\tools\Component{
+class BrowsePanel extends Sphp\Tools\Component{
 private $label = "Browse";
 
 public function fu_setLabel($label) {
@@ -16,7 +16,7 @@ protected function onrender(){
       <h4 class="card-title">
           <span class="pull-left hidden-xs showopacity fa fa-globe"></span> 
           &nbsp;'.  $this->label .'&nbsp;
-          <a href="<?php echo getEventURL(\'print\', \'\', \''. SphpBase::sphp_router()->getCurrentRequest() .'\'); ?>" target="__blank" title="Print">
+          <a href="<?php echo getEventUrl(\'print\', \'\', \''. SphpBase::sphpRouter()->getCurrentRequest() .'\'); ?>" target="__blank" title="Print">
               <span class="pull-right hidden-xs showopacity fa fa-print"></span></a>
       </h4>
   </div>

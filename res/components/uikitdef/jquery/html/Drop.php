@@ -7,7 +7,7 @@
 
 
 
-class Drop extends Sphp\tools\Component{
+class Drop extends Sphp\Tools\Component{
 protected function oncreate($element){
 $this->setHTMLName("");
 }
@@ -38,7 +38,7 @@ addFileLink($jquerypath.'ui/jquery.ui.core.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.droppable.min.js');
  * 
  */
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'").droppable({
  drop: function() {
 '.$this->parameterA['ondrop'].'
@@ -54,7 +54,7 @@ hoverClass: \'drop-active\',
 });
 ');
 if($this->parameterA['class'] == ''){
-    addHeaderCSS('drop', '
+    addHeaderCss('drop', '
 .drop-hover { 
 background: #999999; 
 }
@@ -63,7 +63,7 @@ background: #DDDDDD;
 }
 
 ');
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 

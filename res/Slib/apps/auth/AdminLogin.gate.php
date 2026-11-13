@@ -12,42 +12,42 @@ class AdminLogin extends Sphp\Tools\BasicGate {
     }
 
     public function page_new() {
-        global $cmpid;
-        if (!$this->Client->isCookie("algdec") && $this->page->getAuthenticateType() !== 'ADMIN') {
+        global $cmpId;
+        if (!$this->client->isCookie("algdec") && $this->page->getAuthenticateType() !== 'ADMIN') {
             // open login form
             $this->send_login_form();
         } else {
-            // authenticate user type ADMIN with value $cmpid
-            setSession('ADMIN', $cmpid);
+            // authenticate user type ADMIN with value $cmpId
+            setSession('ADMIN', $cmpId);
             getWelcome();
         }
     }
 
     private function send_login_form() {
-        SphpBase::sphp_settings()->title = "Login System";
-        SphpBase::sphp_settings()->metakeywords = "";
-        SphpBase::sphp_settings()->metadescription = "";
-        SphpBase::sphp_settings()->metaclassification = "";
-        SphpBase::sphp_settings()->keywords = "login,page,admin";
+        SphpBase::sphpSettings()->title = "Login System";
+        SphpBase::sphpSettings()->metaKeywords = "";
+        SphpBase::sphpSettings()->metaDescription = "";
+        SphpBase::sphpSettings()->metaClassification = "";
+        SphpBase::sphpSettings()->keywords = "login,page,admin";
         $this->setFrontFile($this->genFormFront);
     }
 
     public function page_event_logout() {
-        $this->Client->unsetCookie("algdec");
+        $this->client->unsetCookie("algdec");
         destSession();
         getWelcome();
     }
 
     public function page_submit() {
-        global $admuser, $admpass, $cmpid;
-        if ($this->genFormFront->getComponent("txtuserID")->value == $admuser && $this->genFormFront->getComponent("txtpass")->value == $admpass) {
+        global $adminUser, $adminPass, $cmpId;
+        if ($this->genFormFront->getComponent("txtuserID")->value == $adminUser && $this->genFormFront->getComponent("txtpass")->value == $adminPass) {
             $number_of_days = 10;
             $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days;
-            if ($this->Client->isPost("chkremb")) {
-                $this->Client->cookie("algdec", "dome1", false, $date_of_expiry);
+            if ($this->client->isPost("chkremb")) {
+                $this->client->cookie("algdec", "dome1", false, $date_of_expiry);
             }
-            // authenticate user type ADMIN with value $cmpid
-            setSession('ADMIN', $cmpid);
+            // authenticate user type ADMIN with value $cmpId
+            setSession('ADMIN', $cmpId);
             // forward to home page of ADMIN user type
             getWelcome();
         } else {

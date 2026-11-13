@@ -5,7 +5,7 @@
  * @author SARTAJ
  */
 
-class jQmPage extends Sphp\tools\Component{
+class jQmPage extends Sphp\Tools\Component{
     private $mcache = "true";
     public $header = false;
     public $footer = false;

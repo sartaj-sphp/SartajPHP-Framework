@@ -1,6 +1,6 @@
 <?php
 
-class HLabel extends Sphp\tools\Component{
+class HLabel extends Sphp\Tools\Component{
 private $label = "";
 private $labelfor = "";
 private $lblsize = "col-md-4";
@@ -23,8 +23,8 @@ protected function onprerender(){
 }
 protected function onrender(){
     $this->tagName = 'div';
-    $this->fu_setHTMLID("");
-    $this->fu_setHTMLName("");
+    $this->fu_setHtmlId("");
+    $this->fu_setHtmlName("");
 //    $this->fu_unsetRenderTag();
     $req = "";
     if($this->blnReq){

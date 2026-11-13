@@ -8,7 +8,7 @@
 
 
 
-    class ForLoop extends \Sphp\tools\Component {
+    class ForLoop extends \Sphp\Tools\Component {
 
         private $counterMin = 0;
         private $counterStep = 1;

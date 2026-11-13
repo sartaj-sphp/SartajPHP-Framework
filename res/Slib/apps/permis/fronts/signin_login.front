@@ -23,7 +23,7 @@
     </div>
 </form>
     
-<div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentgate->getAuthGoogle(); }#" >
+<div class="row py-3 px-3" id="divgog" runat="server" g="#{ $parentGate->getAuthGoogle(); }#" >
         <div class="col-sm-4"> 
             <h1>OR</h1>
     <a href="##{getEventURL('gauth')}#" class="btn btn-primary google-login-btn">

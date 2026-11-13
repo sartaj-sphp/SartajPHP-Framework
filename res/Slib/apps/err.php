@@ -1,9 +1,9 @@
 <?php
 
-$frtMain = new \Sphp\tools\FrontFile(__DIR__ . "/fronts/error_msg.front");
+$frtMain = new \Sphp\Tools\FrontFile(__DIR__ . "/fronts/error_msg.front");
 
 if(SphpBase::page()->getEvent() == 'page'){
-    frtMain->getComponent("spnmsg")->setInnerHTML("HTML Error " . SphpBase::page()->getEventParameter());
+    frtMain->getComponent("spnmsg")->setInnerHtml("HTML Error " . SphpBase::page()->getEventParameter());
 }
 
 $frtMain->processMe();

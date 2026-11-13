@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form {
 
-    class DateField extends \Sphp\tools\Component {
+    class DateField extends \Sphp\Tools\Component {
 
         public $datemin = '';
         public $datemax = '';
@@ -25,12 +25,12 @@ namespace Sphp\Comp\Form {
             if ($this->value != '') {
                 $this->value = $this->dateToMySQLDate($this->value);
             }else{
-                if($this->issubmit) $this->unsetDataBound();
+                if($this->blnSubmit) $this->unsetDataBound();
             }
             if(!$this->element->hasAttribute("name")){
-                $this->HTMLName = $this->name;
+                $this->htmlName = $this->name;
             }else{
-                $this->HTMLName = $this->getAttribute("name");            
+                $this->htmlName = $this->getAttribute("name");            
             }
             
             if ($this->getAttribute("msgname") != "") {
@@ -52,8 +52,8 @@ namespace Sphp\Comp\Form {
 
         public function setErrMsg($msg) {
             $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
-            if(\SphpBase::sphp_request()->isAJAX()){
-                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+            if(\SphpBase::sphpRequest()->isAjax()){
+                \SphpBase::jsServer()->addJsonJsBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
             }
             setErr($this->name, $msg);
         }
@@ -68,7 +68,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function fi_setRequired() {
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if (strlen($this->value) < 1) {
                     $this->setErrMsg($this->getAttribute("msgname") . ' ' . "Can not submit Empty");
                 }
@@ -153,7 +153,7 @@ namespace Sphp\Comp\Form {
         }
 
         protected function onjsrender() {
-            $sphp_settings = \SphpBase::sphp_settings();
+            $sphpSettings = \SphpBase::sphpSettings();
 //addFileLink("$jquerypath/themes/base/jquery.ui.all.css");
 //addFileLink("$jquerypath/ui/jquery.ui.core.min.js");
 //addFileLink("$jquerypath/ui/jquery.ui.widget.min.js");
@@ -163,7 +163,7 @@ namespace Sphp\Comp\Form {
                 $str .= ",appendText: '$this->appendText', dateFormat: '$this->appendText'";
             }
             if ($this->image == '') {
-                $this->image = $sphp_settings->comp_uikit_res_path . "/form/assets/calendar.gif";
+                $this->image = $sphpSettings->uiKitUrl . "/form/assets/calendar.gif";
             }
             if ($this->image != '') {
                 $str .= ",showOn: 'button',buttonImageOnly: true, buttonImage: '$this->image'";
@@ -178,12 +178,12 @@ namespace Sphp\Comp\Form {
                 $str .= ",numberOfMonths: $this->nomonth";
             }
             $this->setAttribute('onfocus', '$(\'#' . $this->name . '\').datepicker(\'show\');');
-            addHeaderJSFunctionCode('ready', $this->name, "
+            addHeaderJsFunctionCode('ready', $this->name, "
 $('#$this->name').datepicker({ changeMonth: true,changeYear: true $str});
 ");
             if ($this->formName != '') {
                 if ($this->req) {
-                    addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                    addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
                 }
             }
@@ -204,7 +204,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         }
 
 // javascript functions
-        public function getJSValue() {
+        public function getJsValue() {
             return "document.getElementById('$this->name').value";
         }
 

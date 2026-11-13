@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form {
 
-    class CheckBox extends \Sphp\tools\Component {
+    class CheckBox extends \Sphp\Tools\Component {
 
         private $formName = '';
         private $msgName = '';
@@ -17,18 +17,18 @@ namespace Sphp\Comp\Form {
         private $label = "";
 
         protected function oninit() {
-            $Client = \SphpBase::sphp_request();
+            $client = \SphpBase::sphpRequest();
             $this->tagName = "input";
             if(!$this->element->hasAttribute("name")){
-                $this->HTMLName = $this->name;
+                $this->htmlName = $this->name;
             }else{
-                $this->HTMLName = $this->getAttribute("name");            
+                $this->htmlName = $this->getAttribute("name");            
             }
 
             $this->setAttribute('type', 'checkbox');
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 $this->setAttribute('checked', 'checked');
-            } else if ($Client->request('chktxt' . $this->name) == '1') {
+            } else if ($client->request('chktxt' . $this->name) == '1') {
                 $this->value = '0';
                 $this->setDataBound();
             }
@@ -47,8 +47,8 @@ namespace Sphp\Comp\Form {
 
         public function setErrMsg($msg) {
             $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
-            if(\SphpBase::sphp_request()->isAJAX()){
-                \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+            if(\SphpBase::sphpRequest()->isAjax()){
+                \SphpBase::jsServer()->addJsonJsBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
             }
             setErr($this->name, $msg);
         }
@@ -70,7 +70,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function fi_setRequired() {
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if (strlen($this->value) < 1) {
                     $this->setErrMsg($this->getAttribute("msgname") . ' ' . "Can not submit Empty");
                 }
@@ -80,12 +80,12 @@ namespace Sphp\Comp\Form {
 
         protected function onprejsrender() {
             if ($this->formName != '' && $this->req) {
-                $jscode = "if(blnSubmit==true && " . $this->getJSValue() . "==false){
+                $jscode = "if(blnSubmit==true && " . $this->getJsValue() . "==false){
     blnSubmit = false ;
 alert('Please Accept " . $this->msgName . "');
 document.getElementById('$this->name').focus();
 }";
-                addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
+                addHeaderJsFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
             }
         }
 
@@ -108,24 +108,24 @@ document.getElementById('$this->name').focus();
              switch($this->styler){
             case 1:{
                 $this->setPreTag($this->getPreTag() . '<div class="form-floating mb-3 form-check">');
-                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
+                $this->setPostTag('<label for="'. $this->htmlId .'" class="form-check-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
                 break;
             }case 2:{
                 $this->setPreTag($this->getPreTag() .'<div class="mb-3 form-check">
-                <label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .'</label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
+                <label for="'. $this->htmlId .'" class="form-check-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->htmlId .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
                 break;
             }case 3:{
                 $this->element->getParent()->setAttribute("class","input-group mb-3");
                 $this->setPreTag($this->getPreTag() .'<div class="input-group-text">
-                <label for="'. $this->HTMLID .'" class="form-check-label">'. $this->msgName .' </label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
+                <label for="'. $this->htmlId .'" class="form-check-label">'. $this->msgName .' </label>');
+                $this->setPostTag('<div id="'. $this->htmlId .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
                 break; 
             }
             default:{
                 if ($this->label != "") {
                     $this->setPreTag($this->getPreTag() . '<div class="mb-3 form-check">');
-                    $this->setPostTag('<label class="form-check-label" for="' . $this->HTMLID . '">' . $this->label . '</label></div>' . $this->getPostTag());
+                    $this->setPostTag('<label class="form-check-label" for="' . $this->htmlId . '">' . $this->label . '</label></div>' . $this->getPostTag());
                 }            
                 break;
             }
@@ -134,7 +134,7 @@ document.getElementById('$this->name').focus();
     }
 
 // javascript functions
-        public function getJSValue() {
+        public function getJsValue() {
             return "document.getElementById('$this->name').checked";
         }
 

@@ -22,10 +22,10 @@
  * 4. AI can generate code that matches your exact project structure
  * 
  * COMMAND LINE USAGE:
- * php -f start.php -- --gate aiinfo --evt {event_name} --evtp {parameter}
+ * php -f start.php -- --gate aiinfo --evt {eventName} --evtp {parameter}
  * 
  * WEB ACCESS (if enabled):
- * http://yourdomain.com/{basepath}/aiinfo-{event}-{parameter}.html
+ * http://yourdomain.com/{projectUrl}/aiinfo-{event}-{parameter}.html
  * 
  * @package SartajPHP
  * @subpackage Gates
@@ -33,7 +33,7 @@
  * @version 2.0.0
  */
 
-class AiInfo extends \Sphp\tools\ConsoleGate {
+class AiInfo extends \Sphp\Tools\ConsoleGate {
     
     /**
      * ============================================================
@@ -62,7 +62,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
     public function onstart() {
         // SECURITY: Restrict to command line only by default
         // AI models should call this via CLI for security or localhost
-        if (strpos(SphpBase::sphp_request()->server("HTTP_HOST"),"localhost") !== false  || $this->Client->mode == "CLI") {
+        if (strpos(SphpBase::sphpRequest()->server("HTTP_HOST"),"localhost") !== false  || $this->client->mode == "CLI") {
             // Optional: Add logging to track AI queries
             $this->logAiQuery($_SERVER['argv'] ?? []);
         }else{
@@ -108,7 +108,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      * WHY JSON:
      * - Structured format that AI models parse easily
      * - Consistent schema enables automated processing
-     * - Contains metadata for debugging and context
+     * - Contains metaData for debugging and context
      * 
      * RESPONSE STRUCTURE:
      * {
@@ -117,15 +117,15 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      *   "framework": "SartajPHP",   // Framework identifier
      *   "response_type": "info",     // Type of data (table_data, schema, code, error)
      *   "data": {...},               // The actual response content
-     *   "metadata": {...}            // Context about the project
+     *   "metaData": {...}            // Context about the project
      * }
      * 
      * @param mixed $data The response data (array, string, object)
      * @param string $type Type identifier: intro, table_data, schema, code, error, success, validation, api_reference
-     * @param array $metadata Additional contextual information
+     * @param array $metaData Additional contextual information
      * @return void
      */
-    private function sendAiJsonResponse($data, $type = "info", $metadata = []) {
+    private function sendAiJsonResponse($data, $type = "info", $metaData = []) {
         // Build the complete response object
         $response = [
             "gate" => "aiinfo",
@@ -133,12 +133,12 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
             "framework" => "SartajPHP",
             "response_type" => $type,
             "data" => $data,
-            "metadata" => array_merge([
+            "metaData" => array_merge([
                 "project_path" => PROJ_PATH,
                 "php_version" => PHP_VERSION,
-                "sartajphp_version" => SphpBase::sphp_api()->getSartajPHPVer(),
+                "sartajphp_version" => SphpBase::sphpApi()->getSartajPHPVer(),
                 "execution_time_ms" => round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000)
-            ], $metadata)
+            ], $metaData)
         ];
         
         // Output with pretty print for human readability during debugging
@@ -192,7 +192,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
         $this->showNotFrontFile();
         
         // Path to the introduction documentation
-        $introPath = $this->mypath . "/aidocs/intro.md";
+        $introPath = $this->myPath . "/aidocs/intro.md";
         
         if (!file_exists($introPath)) {
             $this->sendError("Intro documentation not found at: " . $introPath);
@@ -278,7 +278,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
             "SELECT * FROM `$tableName` ORDER BY id DESC LIMIT 10"
         );
         
-        if ($this->dbEngine->is_rows($result)) {
+        if ($this->dbEngine->isRows($result)) {
             // Convert to CSV format for easy parsing by AI
             // CSV is preferred because:
             // 1. Easy for AI to parse
@@ -287,14 +287,14 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
             $csvHandle = fopen('php://temp', 'r+');
             
             // Get column headers first
-            $firstRow = $this->dbEngine->row_fetch_assoc($result);
+            $firstRow = $this->dbEngine->rowFetchAssoc($result);
             if ($firstRow) {
                 fputcsv($csvHandle, array_keys($firstRow));
                 fputcsv($csvHandle, array_values($firstRow));
             }
             
             // Fetch remaining rows
-            while ($row = $this->dbEngine->row_fetch_assoc($result)) {
+            while ($row = $this->dbEngine->rowFetchAssoc($result)) {
                 fputcsv($csvHandle, array_values($row));
             }
             
@@ -381,7 +381,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
     public function page_event_table_sql($evtp) {
         $where = $this->consoleReadArgument("--where");
         $this->dbEngine->connect();
-        $schema =  $this->dbEngine->getTableSQL($evtp,$where);
+        $schema =  $this->dbEngine->getTableSql($evtp,$where);
         $this->dbEngine->disconnect();
         echo $schema;
     }
@@ -392,7 +392,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      */
     public function page_event_table_create_sql($evtp) {
         $this->dbEngine->connect();
-        $schema =  $this->dbEngine->getCreateTableSQL($evtp);
+        $schema =  $this->dbEngine->getCreateTableSql($evtp);
         $this->dbEngine->disconnect();
         echo $schema;
     }
@@ -573,7 +573,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      * @return void
      */
     public function page_event_codeblocks_list($evtp) {
-        $codeBlocksPath = \SphpBase::sphp_settings()->comp_uikit_path . "/sphpcodeblock.php";
+        $codeBlocksPath = \SphpBase::sphpSettings()->uiKitPath . "/sphpcodeblock.php";
         
         if (!file_exists($codeBlocksPath)) {
             $this->sendAiJsonResponse([
@@ -666,14 +666,14 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
             '__get', '__set', '__isset', '__unset', '__sleep', '__wakeup',
             '__toString', '__invoke', '__set_state', '__clone', '__debugInfo',
             'onrender', 'onprerender', 'render', 'prerender', 'loadScript',
-            'parseHTML', 'onjsrender', 'onprejsrender', 'oncreate',
-            'oncompcreate', 'oninit', 'oncompinit', 'executePHPCode',
+            'parseHtml', 'onjsrender', 'onprejsrender', 'oncreate',
+            'oncompcreate', 'oninit', 'oncompinit', 'executePhpCode',
             'getDynamicContent', 'addDynamicFileLink', 'onaftercreate',
             'onappevent', 'renderLast', 'onchildevent', 'onholder', 'onparse',
             'setClassPath', 'init', 'helpPropList', 'setVersion', 'getVersion',
             'setMinVersionSphp', 'getMinVersionSphp', 'setMaxVersionSphp',
-            'getMaxVersionSphp', 'setMinVersionPHP', 'getMinVersionPHP',
-            'setMaxVersionPHP', 'getMaxVersionPHP'
+            'getMaxVersionSphp', 'setMinVersionPhp', 'getMinVersionPhp',
+            'setMaxVersionPhp', 'getMaxVersionPhp'
         ];
         
         $excludedMap = array_flip($excludedMethods);
@@ -822,7 +822,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
             // This is simplified - you may need to parse actual registration calls
             //$content = file_get_contents($regFile);
             //preg_match_all("/registerGate\s*\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]/", $content, $matches);
-            $argates = SphpBase::sphp_api()->getRegisteredGates();
+            $argates = SphpBase::sphpApi()->getRegisteredGates();
                 foreach ($argates as $gate=>$val) {
                     $gates[] = [
                         "name" => $gate,
@@ -866,7 +866,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      */
     private function scanComponents() {
         $components = [];
-        $compPath = \SphpBase::sphp_settings()->comp_path ?? PROJ_PATH . "/components/";
+        $compPath = \SphpBase::sphpSettings()->compPath ?? PROJ_PATH . "/components/";
         
         if (is_dir($compPath)) {
             $files = glob($compPath . "*.comp.php");
@@ -889,10 +889,10 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
      */
     private function getConfiguration() {
         global $masterf,$mebmasterf;
-        $settings = SphpBase::sphp_settings();
+        $settings = SphpBase::sphpSettings();
         return [
-            "basepath" => $settings->getBase_path(),
-            "debug_mode" => $settings->getDebug_mode() ?? 0,
+            "projectUrl" => $settings->projectUrl,
+            "debugMode" => $settings->debugMode ?? 0,
             "master_file" => $masterf ?? "",
             "member_master" => $mebmasterf ?? "",
             "timezone" => date_default_timezone_get(),
@@ -983,7 +983,7 @@ class AiInfo extends \Sphp\tools\ConsoleGate {
         $superglobals = ['$_POST', '$_GET', '$_REQUEST', '$_SESSION', '$_COOKIE', '$_FILES', '$_SERVER'];
         foreach ($superglobals as $superglobal) {
             if (strpos($code, $superglobal) !== false) {
-                $errors['superglobals'][] = "Use \$this->Client->" . strtolower(trim($superglobal, '$_')) . "() instead of $superglobal";
+                $errors['superglobals'][] = "Use \$this->client->" . strtolower(trim($superglobal, '$_')) . "() instead of $superglobal";
             }
         }
         

@@ -7,13 +7,13 @@ include_once(__DIR__ . "/../data/Grid/JQueryUIDialogDecorator.php");
  * @author SARTAJ
  */
 
-class DialogBox extends \Sphp\tools\Component{
+class DialogBox extends \Sphp\Tools\Component{
     private $blnajax = false;
     
     
 protected function oncreate($element){
-$this->fu_setHTMLName("");
-$this->fu_setHTMLID($this->name . '_dlg');
+$this->fu_setHtmlName("");
+$this->fu_setHtmlId($this->name . '_dlg');
 }
 
 private function setDialogTheme(){
@@ -43,16 +43,16 @@ private function setDialogTheme(){
 }
 
 public function sendAJAX($content){
-    SphpBase::JSServer()->addJSONHTMLBlock($this->name . "_editor",$content);
+    SphpBase::jsServer()->addJsonHtmlBlock($this->name . "_editor",$content);
 }
 public function sendFrontFile($frtfile){
-     SphpBase::JSServer()->addJSONJSBlock('$("#modal1_dlg").dialog("open");');
-    SphpBase::JSServer()->addJSONFront($frtfile, $this->name . "_editor");
+     SphpBase::jsServer()->addJsonJsBlock('$("#modal1_dlg").dialog("open");');
+    SphpBase::jsServer()->addJsonFront($frtfile, $this->name . "_editor");
 }
 public function fu_setAjax(){
 $this->blnajax = true;
 SphpJsM::addjQueryUI();
-SphpBase::JSServer()->getAJAX();
+SphpBase::jsServer()->getAjax();
 }
 
 protected function onjsrender(){
@@ -64,8 +64,8 @@ $jsAjax = "false";
 }
     $this->setDialogTheme();
 
-    $this->setInnerHTML('');
-addHeaderJSFunctionCode('ready',$this->name,'
+    $this->setInnerHtml('');
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
 width: "auto",
@@ -95,7 +95,7 @@ beforeClose: function(){
 ');
 
  $opendlg = "$(\"#{$this->name}_dlg\").dialog(\"open\");";
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 window['confirmDel_$this->name'] = function(link){
 confirmDel(link,$jsAjax);
         };
@@ -109,7 +109,7 @@ pagiedit(link,$jsAjax);
         };    
 ");
 
-    addHeaderJSCode('pagi1',"
+    addHeaderJsCode('pagi1',"
  window['rowclick'] = function(obj,link,data){
         if(data==undefined){
             data = {};
@@ -140,7 +140,7 @@ window['runanierr'] = function(type){
 }
 ");
 
-    addHeaderJSCode($this->name .'pagi1',"
+    addHeaderJsCode($this->name .'pagi1',"
 function pagiedit_$this->name(link){
 $opendlg
 pagiedit(link,$jsAjax);
@@ -151,7 +151,7 @@ pagiedit(link,$jsAjax);
         }    
 ");
 
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -199,13 +199,13 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
         <strong>Note!</strong> <span id="sphpinfomsg"></span>
     </div>
 </div><div id="srvmsg"></div>';
-        if(SphpBase::sphp_api()->getProp("alert") == true){
+        if(SphpBase::sphpApi()->getProp("alert") == true){
             $msg1 = "";
         }else{
-            SphpBase::sphp_api()->addProp("alert", true);
+            SphpBase::sphpApi()->addProp("alert", true);
         }
         $this->element->appendAttribute('class','dragdrop');
-    $this->setInnerHTML('<div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>');
+    $this->setInnerHtml('<div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>');
     $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\" class=\"container\"> ";     
     $this->setPreTag($divt.$this->getPreTag());    
     $this->setPostTag('</div>'.$this->getPostTag());

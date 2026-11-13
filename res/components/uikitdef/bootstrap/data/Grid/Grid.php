@@ -6,7 +6,7 @@ include_once(__DIR__ . "/JQueryUIDialogDecorator.php");
  * @author SARTAJ
  */
 
-class Grid extends Sphp\tools\Component{
+class Grid extends Sphp\Tools\Component{
 public $pageNo = -1;
 public $totalPages = 1;
 public $perPageRows = 10;
@@ -56,33 +56,33 @@ public function oncreate($element) {
 if(\SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
-if(\SphpBase::sphp_request()->isRequest('page')){
-\SphpBase::sphp_request()->session($this->name.'p',\SphpBase::sphp_request()->request('page'));
-\SphpBase::sphp_request()->session($this->name.'pc', \SphpBase::sphp_router()->gate);
+if(\SphpBase::sphpRequest()->isRequest('page')){
+\SphpBase::sphpRequest()->session($this->name.'p',\SphpBase::sphpRequest()->request('page'));
+\SphpBase::sphpRequest()->session($this->name.'pc', \SphpBase::sphpRouter()->gate);
 }else{
-\SphpBase::sphp_request()->request('page',false, 1);
-if(\SphpBase::sphp_request()->isSession($this->name.'pc') && \SphpBase::sphp_request()->session($this->name.'pc') == \SphpBase::sphp_router()->gate){
-\SphpBase::sphp_request()->request('page',false,\SphpBase::sphp_request()->session($this->name.'p'));
+\SphpBase::sphpRequest()->request('page',false, 1);
+if(\SphpBase::sphpRequest()->isSession($this->name.'pc') && \SphpBase::sphpRequest()->session($this->name.'pc') == \SphpBase::sphpRouter()->gate){
+\SphpBase::sphpRequest()->request('page',false,\SphpBase::sphpRequest()->session($this->name.'p'));
 }
 }
-$this->pageNo = \SphpBase::sphp_request()->request('page') - 1;
+$this->pageNo = \SphpBase::sphpRequest()->request('page') - 1;
 
-if($this->dtable == ''){
-    $parentgate = $this->frontobj->getBindGate();
-    if($parentgate !== null){
-        $this->dtable = $parentgate->getTableName();
+if($this->dbTable == ''){
+    $parentGate = $this->frontobj->getBindGate();
+    if($parentGate !== null){
+        $this->dbTable = $parentGate->getTableName();
     }
 }
-$this->fu_setHTMLName('');
+$this->fu_setHtmlName('');
     if($element->innertext != ""){
         $this->strFormat = "datajfjfh";
     }
 
 }
-public function fu_getEventURL($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
-    $this->getEventURL($eventName,$evtp,$gate_name,$extra,$newBasePath,$blnSesID);
+public function fu_getEventUrl($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
+    $this->getEventUrl($eventName,$evtp,$gate_name,$extra,$newBasePath,$blnSesID);
 }
-public function getEventURL($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventUrl($eventName, $evtp='', $gate_name='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
 $this->gate=$gate_name;
@@ -162,7 +162,7 @@ $this->eventName = $this->name ."_show";
 $this->editeventName = $this->name ."_view";
 $this->deleventName = $this->name ."_delete";
 SphpJsM::addjQueryUI();
-SphpBase::JSServer()->getAJAX();
+SphpBase::jsServer()->getAjax();
 }
 public function fu_setEdit(){
 $this->blnEdit = true;
@@ -284,10 +284,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/assets/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventUrl($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myUrl}/assets/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/assets/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventUrl($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myUrl}/assets/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -302,7 +302,7 @@ $stro .= $this->getPaging();
 $roote = $this->frontobj->getChildrenWrapper($this);
 foreach($this->result as $key1=>$keyar){
     foreach($keyar as $index=>$this->row){ 
-        //$tmpf = new FrontFile($this->strFormat,true,false,$this->frontobj->parentgate);
+        //$tmpf = new FrontFile($this->strFormat,true,false,$this->frontobj->parentGate);
         //$tmpf->run();
         //$stro .= $tmpf->data;
         $stro .= $this->frontobj->parseComponentChildren($roote); 
@@ -336,9 +336,9 @@ private function getPaging(){
     for ($k=$startPage; $k<=$endPage; $k++) {
             if ($k != $_REQUEST['page']) {
                 if($this->blnajax){
-                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
                 }else{
-                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
                 }
             } else {
              $lynx .= "<div class=\"page-item active\"><span class=\"page-link\">" .($k)."</span></div>";
@@ -365,18 +365,18 @@ private function getPaging(){
         $strlinkP = "";
     }else{
         if($this->blnajax){
-            $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+            $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
         }else{
-            $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+            $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
         }
     }
     if($blnEndP){
         $strlinkN = "";
     }else{
         if($this->blnajax){
-            $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+            $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
         }else{
-            $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+            $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
         }
     }
 
@@ -404,7 +404,7 @@ public function ongateevent(){
     }
 }
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $gate_name="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventUrl','Set Event Path to get page', getEventUrl($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $gate_name="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -430,12 +430,12 @@ public function ongateevent(){
 public function handleEvent(){
     if(\SphpBase::page()->getEvent()== $this->name . "_sortby"){
         $this->fu_unsetRenderTag();
-        if(\SphpBase::sphp_request()->request('dir')=='1'){
-            $this->ordersortby = "ORDER BY ". \SphpBase::sphp_request()->request('sortby'). " DESC";
+        if(\SphpBase::sphpRequest()->request('dir')=='1'){
+            $this->ordersortby = "ORDER BY ". \SphpBase::sphpRequest()->request('sortby'). " DESC";
         }else{
-            $this->ordersortby = "ORDER BY ". \SphpBase::sphp_request()->request('sortby') . " ASC";            
+            $this->ordersortby = "ORDER BY ". \SphpBase::sphpRequest()->request('sortby') . " ASC";            
         }
-        \SphpBase::JSServer()->addJSONComp($this, $this->name);     
+        \SphpBase::jsServer()->addJsonComp($this, $this->name);     
     }
 }
 
@@ -469,7 +469,7 @@ public function startAJAX(){
 $opendlg = "";
 if($this->blndlg){
     $this->setDialogTheme();
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
 width: "auto",
@@ -497,7 +497,7 @@ beforeClose: function(){
 }
     });
 ');
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 
@@ -513,7 +513,7 @@ $jsAjax = "true";
 $jsAjax = "false";        
 }
 
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 window['confirmDel_$this->name'] = function(link){
 confirmDel(link,$jsAjax);
         };
@@ -564,7 +564,7 @@ return false;
 window['getSortBy'] = window['getSortBy_{$this->name}'];
 ");
 
-    addHeaderJSCode('pagi1',"
+    addHeaderJsCode('pagi1',"
  window['rowclick'] = function(obj,link,data){
         if(data==undefined){
             data = {};
@@ -595,7 +595,7 @@ window['runanierr'] = function(type){
 }
 ");
 
-    addHeaderJSCode($this->name .'pagi1',"
+    addHeaderJsCode($this->name .'pagi1',"
 function pagiedit_$this->name(link){
 $opendlg
 pagiedit(link,$jsAjax);
@@ -606,7 +606,7 @@ pagiedit(link,$jsAjax);
         }    
 ");
 
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -642,7 +642,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 $ptag = '<div id="'.$this->name.'_toolbar">';    
 }
 if($this->blnadd){
-$ptag .= '<input class="btn btn-primary" type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+$ptag .= '<input class="btn btn-primary" type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventUrl($this->name.'_newa','','','','',true).'\');" />';
 }
 $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
     <div id="sphpwarning" class="alert alert-warning" style="display: none;">
@@ -662,10 +662,10 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
         <strong>Note!</strong> <span id="sphpinfomsg"></span>
     </div>
 </div><div id="srvmsg"></div>';
-        if(SphpBase::sphp_api()->getProp("alert") == true){
+        if(SphpBase::sphpApi()->getProp("alert") == true){
             $msg1 = "";
         }else{
-            SphpBase::sphp_api()->addProp("alert", true);
+            SphpBase::sphpApi()->addProp("alert", true);
         }
     $divt = "$ptag</div>". $msg1 ."<div id=\"{$this->name}_list\" class=\"container\"> ";     
     if($this->tagName == 'tbody'){
@@ -682,8 +682,8 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
 
 public function onjsrender(){
 $opendlg = "";
-if(!\SphpBase::JSServer()->ajaxrender){
-    addHeaderCSS("gridhighlight", " .highlight{
+if(!\SphpBase::jsServer()->ajaxrender){
+    addHeaderCss("gridhighlight", " .highlight{
  font-size: 16px;
  color: #000000;
  font-weight: bold;
@@ -697,7 +697,7 @@ $this->deleventName = $this->name."_delete";
 $this->startAJAX();
 }else{
 $jsAjax = "false"; 
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function confirmDel_$this->name(link){
 confirmDel(link,$jsAjax);
         }    
@@ -756,7 +756,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -788,18 +788,18 @@ window.location = link ;
 }
 
 public function onprerender(){
-$Client = \SphpBase::sphp_request();
-$gate = \SphpBase::sphp_router();
+$client = \SphpBase::sphpRequest();
+$gate = \SphpBase::sphpRouter();
 // set default values
-$spt = explode(',', $this->dtable);
-if(count($spt)<2) $spt = explode(' ', $this->dtable);
+$spt = explode(',', $this->dbTable);
+if(count($spt)<2) $spt = explode(' ', $this->dbTable);
 if(count($spt)>1){
     $idf = $spt[0].".id";
 }else{
     $idf = "id";
 }
 
-$storesql = $Client->session($this->name .'store');
+$storesql = $client->session($this->name .'store');
 if(!is_array($storesql)) $storesql = array();
 if(isset($storesql['lastapp']) && $storesql['lastapp'] == $gate->gate){
 if($this->ordersortby==""){
@@ -822,7 +822,7 @@ if(strpos($this->where,"WHERE")===false){
 }
 
 if($this->pageCountSQL==''){
-$this->pageCountSQL = "SELECT count($idf) FROM ".$this->dtable." ".$this->where;
+$this->pageCountSQL = "SELECT count($idf) FROM ".$this->dbTable." ".$this->where;
 } 
 if($this->sql==''){
     if ($this->fieldNames!=''){
@@ -836,7 +836,7 @@ if($this->sql==''){
         // remove order by
         $this->where = substr($this->where,0,$a1-1);
     }
-    $this->sql = "SELECT $this->fieldNames FROM ".$this->dtable." ".$this->where. " " . $this->ordersortby;
+    $this->sql = "SELECT $this->fieldNames FROM ".$this->dbTable." ".$this->where. " " . $this->ordersortby;
 }else if($this->ordersortby != ""){
      $a1 = strpos(strtolower($this->sql),'order by');
     if($a1 === false) {
@@ -850,11 +850,11 @@ $storesql['lastpagecountsql'] = $this->pageCountSQL;
 $storesql['lastapp'] = $gate->gate;
 $storesql['sortby'] = $this->ordersortby;
 $storesql['whereby'] = $this->where;
-$Client->session($this->name .'store',$storesql);
+$client->session($this->name .'store',$storesql);
 
 $this->parameterA['class'] = 'pag';
 if($this->content_section===null){ 
-$this->setInnerHTML($this->header. $this->executeSQL() . $this->footer);
+$this->setInnerHtml($this->header. $this->executeSQL() . $this->footer);
 }else{
     $str = $this->executeSQL();
 }
@@ -867,10 +867,10 @@ $this->setInnerHTML($this->header. $this->executeSQL() . $this->footer);
 public function resetSQL(){
     $storesql['lastsql'] = "";
     $storesql['lastpagecountsql'] = "";
-    $storesql['lastapp'] = \SphpBase::sphp_router()->gate;
+    $storesql['lastapp'] = \SphpBase::sphpRouter()->gate;
     $storesql['sortby'] = "";
     $storesql['whereby'] = "";
-    \SphpBase::sphp_request()->session($this->name .'store',$storesql);
+    \SphpBase::sphpRequest()->session($this->name .'store',$storesql);
 
 }
 
@@ -887,10 +887,10 @@ public function onparse($event,$element) {
 }
     public function onholder($obj) {
         if(isset($this->row[$obj->getAttribute("dfield")])){
-            $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+            $obj->setInnerHtml($this->row[$obj->getAttribute("dfield")]);
         }else{
             //throw new \Exception('Grid:- Field '. $obj->getAttribute("dfield") .' in Database isn\'t found');
-            $obj->setInnerHTML('&nbsp;');
+            $obj->setInnerHtml('&nbsp;');
         }
     }
 

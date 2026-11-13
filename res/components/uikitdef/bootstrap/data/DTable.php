@@ -6,7 +6,7 @@
  */
 namespace {
 
-class DTable  extends \Sphp\tools\Component{
+class DTable  extends \Sphp\Tools\Component{
 private $strFormat = '';
 public $fields = array();
 private $app = '';
@@ -18,9 +18,9 @@ private $blnDontuseFormat = false;
 protected function oninit() {
 $tblName = \SphpBase::page()->tblName;
 if($tableName==''){
-$this->dtable = $tblName;
+$this->dbTable = $tblName;
     }
-$this->RenderComp = new \Sphp\tools\RenderComp();
+$this->RenderComp = new \Sphp\Tools\RenderComp();
 }
 
      public function fu_setMsgName($val) { $this->msgName = $val;}
@@ -46,13 +46,13 @@ $comp = $this->RenderComp->createComp2($id,$path,$class,$id);
 $comp->setForm($this->form);
 $comp->setFrontobj($this->frontobj);
 $this->frontobj->setComponent($comp->name,$comp); 
-\SphpBase::sphp_api()->addComponent($comp->name,$comp);
+\SphpBase::sphpApi()->addComponent($comp->name,$comp);
 return $comp;
 }
 
 public function genComp(){
-  $comppath = \SphpBase::sphp_settings()->comp_path;
-  $libpath = \SphpBase::sphp_settings()->slib_path;
+  $compPath = \SphpBase::sphpSettings()->compPath;
+  $libPath = \SphpBase::sphpSettings()->slibPath;
 // count total page
 foreach($this->fields as $key=>$arrn){ 
 $label = $arrn[0];
@@ -63,7 +63,7 @@ $maxlen = $arrn[5];
 $req = $arrn[3];
 switch($type){
     case 'text':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 if($minlen!=""){
 $gate->setMinLen($minlen);
@@ -77,13 +77,13 @@ $gate->setRequired();
 break;
     }
     case 'hidden':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 $gate->unsetVisible();
 break;
     }
    case 'pass':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 $gate->setPassword();
 if($minlen!=""){
@@ -98,7 +98,7 @@ $gate->setRequired();
 break;
     }
     case 'num':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 $gate->setNumeric();
 if($minlen!=""){
@@ -113,7 +113,7 @@ $gate->setRequired();
 break;
     }
     case 'numeric':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 $gate->setNumeric();
 if($minlen!=""){
@@ -128,7 +128,7 @@ $gate->setRequired();
 break;
     }
     case 'email':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextField.php","Sphp\\comp\\html\\TextField");
 $gate->tagName = "input";
 $gate->setEmail();
 if($minlen!=""){
@@ -143,7 +143,7 @@ $gate->setRequired();
 break;
     }
     case 'textarea':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/TextArea.php","Sphp\\comp\\html\\TextArea");
+$gate = $this->createComp($id,"{$libPath}/comp/html/TextArea.php","Sphp\\comp\\html\\TextArea");
 $gate->tagName = "textarea";
 if($minlen!=""){
 $gate->setMinLen($minlen);
@@ -157,7 +157,7 @@ $gate->setRequired();
 break;
     }
     case 'select':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/Select.php","Sphp\\comp\\html\\Select");
+$gate = $this->createComp($id,"{$libPath}/comp/html/Select.php","Sphp\\comp\\html\\Select");
 $gate->tagName = "select";
 $gate->setOptions($req);
 break;
@@ -171,7 +171,7 @@ $gate->setRequired();
 break;
     }
     case 'file':{
-$gate = $this->createComp($id,"{$libpath}/comp/html/FileUploader.php","Sphp\\comp\\html\\FileUploader");
+$gate = $this->createComp($id,"{$libPath}/comp/html/FileUploader.php","Sphp\\comp\\html\\FileUploader");
 $gate->tagName = "input";
 $gate->setParameterA('type', 'file');
 if($minlen!=""){
@@ -285,7 +285,7 @@ $this->unsetrenderTag();
 }
 
 // javascript functions used by ajax control and other control
-public function getJSValue(){
+public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 

@@ -1,16 +1,16 @@
 <?php
 $cmpid = "demo";
-$cmpname = "Sphp Server";
+$cmpName = "Sphp Server";
 
 
-$duser = "root";
+$dbUser = "root";
 $db = "dbproj";
-$dpass = "";
+$dbPass = "";
 
-$debugmode = 1;
+$debugMode = 1;
 
-if($basepath != ""){
-	$basepath .= "/res/proj1";
+if($projectUrl != ""){
+	$projectUrl .= "/res/proj1";
 }
 
 //app mail settings
@@ -27,16 +27,16 @@ $page = SphpBase::page();
 
 switch(SphpBase::page()->getAuthenticateType()){
 case "ADMIN":{
-$page->forward(getGateURL("admhome",'','',true));
+$page->forward(getGateUrl("admhome",'','',true));
 break;
 }
 case "MEMBER":{
-$page->forward(getGateURL("mebhome"));
+$page->forward(getGateUrl("mebhome"));
 break;
 }
 
 default:{
-$page->forward(getGateURL("index"));
+$page->forward(getGateUrl("index"));
 break;
 }
 

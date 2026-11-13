@@ -75,7 +75,7 @@ $this->dtable = $tableName;
 $this->setHTMLName('');
 }
 
-public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventUrl($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
 $this->gate=$ControllerName;
@@ -183,8 +183,8 @@ $this->blnpagebar = false;
 
 public function executeSQL(){
   global $mysql;
-  global $libpath;
-  global $HTMLParser;
+  global $libPath;
+  global $HtmlParser;
   $stro = "";
 // count total page
 $mysql->connect();
@@ -259,10 +259,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventUrl($this->editeventName,$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myUrl}/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td width=\"25\"><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventUrl($this->deleventName,$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myUrl}/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -313,9 +313,9 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST[$this->name . 'page']) {
 if($this->blnajax){
-         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+         $lynx .= $strstart. "<a href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
 }else{
-         $lynx .= $strstart."<a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= $strstart."<a href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= $strstart.($k)."</div>";
@@ -350,18 +350,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 
@@ -391,23 +391,23 @@ public function onaftercreate(){
         $this->handleEvent();
 }
 public function handleEvent(){
-    global $page,$Client,$JSServer,$showall;
+    global $page,$client,$jsServer,$showall;
     if(SphpBase::page()->getEvent()== $this->name . "_sortby"){
         $this->fu_unsetRenderTag();
-        if($Client->request('dir')=='1'){
-            $this->ordersortby = "ORDER BY ". $Client->request('sortby'). " DESC";
+        if($client->request('dir')=='1'){
+            $this->ordersortby = "ORDER BY ". $client->request('sortby'). " DESC";
         }else{
-            $this->ordersortby = "ORDER BY ". $Client->request('sortby') . " ASC";            
+            $this->ordersortby = "ORDER BY ". $client->request('sortby') . " ASC";            
         }
-        $JSServer->addJSONComp($this, $this->name);     
+        $jsServer->addJsonComp($this, $this->name);     
     }
 }
 
 public function startAJAX(){
-global $jquerypath,$JSClient,$JSServer;
+global $jquerypath,$JSclient,$jsServer;
 $opendlg = "";
 if($this->blndlg){
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
 width: "auto",
@@ -424,7 +424,7 @@ position: [10,10],
 title: "Grid Editor Form"
     });
 ');
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 
@@ -439,7 +439,7 @@ $jsAjax = "true";
 }else{
 $jsAjax = "false";        
 }
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function confirmDel_$this->name(link){
 confirmDel(link,$jsAjax);
         }    
@@ -452,7 +452,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -488,7 +488,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 $ptag = '<div id="'.$this->name.'_toolbar">';    
 }
 if($this->blnadd){
-$ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+$ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventUrl($this->name.'_newa','','','','',true).'\');" />';
 }
     $divt = "$ptag</div><div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
@@ -498,9 +498,9 @@ $ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.
 
 
 public function onjsrender(){
-global $jquerypath,$JSClient,$JSServer;
+global $jquerypath,$JSclient,$jsServer;
 $opendlg = "";
-if(!$JSServer->ajaxrender){
+if(!$jsServer->ajaxrender){
 if($this->blnajax){
 $this->eventName = $this->name."_show";
 $this->editeventName = $this->name."_view";
@@ -508,7 +508,7 @@ $this->deleventName = $this->name."_delete";
 $this->startAJAX();
 }else{
 $jsAjax = "false"; 
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function confirmDel_$this->name(link){
 confirmDel(link,$jsAjax);
         }    
@@ -556,7 +556,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -588,7 +588,7 @@ window.location = link ;
 }
 
 public function onprerender(){
-global $Client,$gate;
+global $client,$gate;
 // set default values
 $spt = explode(',', $this->dtable);
 if(count($spt)>0){
@@ -596,7 +596,7 @@ if(count($spt)>0){
 }else{
     $idf = "id";
 }
-$storesql = $Client->session($this->name .'store');
+$storesql = $client->session($this->name .'store');
 if(!is_array($storesql)) $storesql = array();
 if(isset($storesql['lastapp']) && $storesql['lastapp'] == $gate->gate){
 if($this->ordersortby==""){
@@ -624,11 +624,11 @@ $storesql['lastpagecountsql'] = $this->pageCountSQL;
 $storesql['lastapp'] = $gate->gate;
 $storesql['sortby'] = $this->ordersortby;
 $storesql['whereby'] = $this->where;
-$Client->session($this->name .'store',$storesql);
+$client->session($this->name .'store',$storesql);
 
 $this->setAttribute("class", 'pag');
 if($this->content_section===null){ 
-$this->setInnerHTMLApp($this->header. $this->executeSQL() . $this->footer);
+$this->setInnerHtmlApp($this->header. $this->executeSQL() . $this->footer);
 }else{
     $str = $this->executeSQL();
 }

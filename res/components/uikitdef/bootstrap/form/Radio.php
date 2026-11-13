@@ -10,7 +10,7 @@
  */
 namespace Sphp\Comp\Form{
 
-class Radio extends \Sphp\tools\Component{
+class Radio extends \Sphp\Tools\Component{
 private $formName = '';
 private $msgName = '';
 private $req = false;
@@ -26,9 +26,9 @@ private $options = array();
 protected function oninit() {
 $this->tagName = "input";
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
 
 $this->setAttribute('type', 'radio');
@@ -56,7 +56,7 @@ $this->setAttribute('type', 'radio');
          
      }
      public function fi_setRequired() {
-if($this->issubmit){
+if($this->blnSubmit){
 if(strlen($this->value) < 1){
 setErr($this->name,"Can not submit Empty");
             }
@@ -67,8 +67,8 @@ $this->req = true;
 protected function onprejsrender(){
     if($this->msgName == "") $this->msgName = $this->getAttribute("placeholder");
 if($this->formName !='' && $this->req){
-$jscode = "var f1 = ". $this->getJSValue() ."; var v1 = f1(); if(blnSubmit==true && v1[0]==-1){blnSubmit = false ; alert('Please Select ". $this->msgName . "'); document.getElementById('" . $this->name ."0').focus();}";
-addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name",$jscode);
+$jscode = "var f1 = ". $this->getJsValue() ."; var v1 = f1(); if(blnSubmit==true && v1[0]==-1){blnSubmit = false ; alert('Please Select ". $this->msgName . "'); document.getElementById('" . $this->name ."0').focus();}";
+addHeaderJsFunctionCode("{$this->formName}_submit", "$this->name",$jscode);
 }
 }
 
@@ -120,7 +120,7 @@ foreach($this->options as $i=>$v){
 // wrap original tag as child of div
 $parentdiv = $this->element->wrapTag('div');
 // over write original tag with stro html
-$parentdiv->setInnerHTML($stro);
+$parentdiv->setInnerHtml($stro);
 $parentdiv->setAttribute("class","px-2 py-2");
 //$parentdiv->setInnerPreTag("<div class=\"card-body\">");
 //$parentdiv->setInnerPostTag("</div>");
@@ -128,7 +128,7 @@ $parentdiv->setAttribute("class","px-2 py-2");
 
 
 // javascript functions
-public function getJSValue(){
+public function getJsValue(){
     return " function(){var v1 = []; v1[0] = -1; v1[1]='';  for(var c=0;c<". count($this->options) ."; c++){ if(document.getElementById('$this->name' + c).checked){v1[0] = c;v1[1] = \$('#$this->name' + c).val(); } } return v1;}" ;
 }
 

@@ -3,7 +3,7 @@
 
 
 
-class HLabel_Line extends Sphp\tools\Component{
+class HLabel_Line extends Sphp\Tools\Component{
 private $label = "";
 private $labelfor = "";
 private $compsize = "col-md-12";

@@ -7,7 +7,7 @@
 
 namespace Sphp\Comp\Server{
 
-class IncludePlace extends \Sphp\tools\Component {
+class IncludePlace extends \Sphp\Tools\Component {
     private $front_name = "dynData";
     private $section = "left";
     
@@ -21,7 +21,7 @@ class IncludePlace extends \Sphp\tools\Component {
 
    
 public function fu_setFrontPlaceFile($filepath,$front_name="",$section="centersp1"){
-    $filepath = $this->frontobj->HTMLParser->resolvePathVar($filepath);
+    $filepath = $this->frontobj->htmlParser->resolvePathVar($filepath);
     if($front_name == "") $front_name = $this->name;
     $this->front_name = $front_name;
     $this->section = $section;
@@ -30,7 +30,7 @@ public function fu_setFrontPlaceFile($filepath,$front_name="",$section="centersp
 protected function onrender() {
    if ($this->front_name != "dynData") \runFrontPlace($this->front_name,$this->section);
     $strOut = \renderFrontPlaceManually($this->front_name,$this->section);
-    $this->setInnerHTML($strOut);
+    $this->setInnerHtml($strOut);
 }
     
 }

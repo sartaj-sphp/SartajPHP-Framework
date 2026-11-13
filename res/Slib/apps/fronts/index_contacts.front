@@ -1,4 +1,4 @@
-<title metakeywords="Contact Address" metadescription="Contact Address" metaclassification="Contacts" keywords="contact,address">Contact Address</title>
+<title metaKeywords="Contact Address" metaDescription="Contact Address" metaClassification="Contacts" keywords="contact,address">Contact Address</title>
 
 <div class="container"><div class="row py-4 px-4">
 <h1>Inquiry Form</h1>
@@ -12,11 +12,11 @@
                         </div>
                         <div class="card-body">
                             <address>
-                                <strong>##{$a= 3; $b=2;readGlobal('cmpname')}#</strong><br>
-                                ##{ raw:readGlobal('cmpaddress1') != "" ? readGlobal('cmpaddress1') . "<br>" : "" }#
-                                ##{ raw:readGlobal('cmpaddress2') != "" ? readGlobal('cmpaddress2') . "<br>" : "" }#
-                                      <a href="tel:##{readGlobal('cmpphone1')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
-                                      <a href="tel:##{readGlobal('cmpphone2')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
+                                <strong>##{$a= 3; $b=2;readGlobal('cmpName')}#</strong><br>
+                                ##{ raw:readGlobal('cmpAddress1') != "" ? readGlobal('cmpAddress1') . "<br>" : "" }#
+                                ##{ raw:readGlobal('cmpAddress2') != "" ? readGlobal('cmpAddress2') . "<br>" : "" }#
+                                      <a href="tel:##{readGlobal('cmpPhone1')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone1</a>
+                                      <a href="tel:##{readGlobal('cmpPhone2')}#" class="btn btn-light d-none d-sm-inline-block"><i class="fas fa-phone"></i> Phone2</a>
 
                             </address>
                         </div>
@@ -31,7 +31,7 @@
 <div class="error">##{traceError(true); }#</div>
 <div class="msgerr">##{traceMsg(true); }#</div>
 
-                    <form id='form2' runat="server" action="##{getEventURL('subquote','','index2');}#">
+                    <form id='form2' runat="server" action="##{getEventUrl('subquote','','index2');}#">
                       <table border="0" width="80%" align="center">
                         <tbody><tr> 
                           <td>Name:</td>

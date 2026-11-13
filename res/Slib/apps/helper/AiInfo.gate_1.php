@@ -4,11 +4,11 @@
  *  call with command line
  *  php -f start.php -- --gate aiinfo
  */
-class AiInfo extends \Sphp\tools\BasicGate{
+class AiInfo extends \Sphp\Tools\BasicGate{
     
     public function onstart(){
         // only work on command line
-        if ($this->Client->mode != "CLI"){
+        if ($this->client->mode != "CLI"){
             echo "This Gate can't Call on Web";
             SphpBase::engine()->exitMe();
         }
@@ -20,7 +20,7 @@ class AiInfo extends \Sphp\tools\BasicGate{
     public function page_new(){
         // Disable default Front File to Send in Basic Gate
         $this->showNotFrontFile();
-        $this->sendToAiModel(file_get_contents($this->mypath . "/aidocs/intro.md"));
+        $this->sendToAiModel(file_get_contents($this->myPath . "/aidocs/intro.md"));
     }
     /**
      * Command line:- php -f start.php -- --gate aiinfo --evt lastten --evtp user
@@ -31,9 +31,9 @@ class AiInfo extends \Sphp\tools\BasicGate{
     public function page_event_lastten($evtp) {
         /** get last 10 rows */
         $result = $this->dbEngine->executeQueryQuick("SELECT * FROM $evtp ORDER BY id DESC LIMIT 10");
-        if($this->dbEngine->is_rows($result)){
+        if($this->dbEngine->isRows($result)){
             $strrows = fopen('php://temp', 'r+');
-           while($row = $this->dbEngine->row_fetch_assoc($result)){
+           while($row = $this->dbEngine->rowFetchAssoc($result)){
                fputcsv($strrows, $row);
            } 
            rewind($strrows);
@@ -66,7 +66,7 @@ class AiInfo extends \Sphp\tools\BasicGate{
     * @param type $evtp not used
     */
     public function page_event_codeblocks_list($evtp) {
-        include_once(\SphpBase::sphp_settings()->comp_uikit_path . "/sphpcodeblock.php");
+        include_once(\SphpBase::sphpSettings()->uiKitPath . "/sphpcodeblock.php");
             $sphpcodeblocks = \SphpCodeBlock::getCodeBlocks();
             if($sphpcodeblocks && count($sphpcodeblocks) > 0){
                 $str1 = json_encode($sphpcodeblocks);
@@ -89,7 +89,7 @@ class AiInfo extends \Sphp\tools\BasicGate{
         $comp1 = $tmp1->getComponentSafe($tagid);
         if($comp1 !== null){
             $arr = array();
-            $arr['comp#' . $comp1->cfilename] = [array('comp' => ''),array($comp1->mypath => '', $comp1->getName() => '')];
+            $arr['comp#' . $comp1->cfilename] = [array('comp' => ''),array($comp1->myPath => '', $comp1->getName() => '')];
             /*
             $files = $comp1->helpPropList();
             if(count($files)>0){
@@ -98,24 +98,24 @@ class AiInfo extends \Sphp\tools\BasicGate{
                 }
             }
             */
-            $class_info = new \ReflectionClass($comp1);
-            $mainClass = get_class($class_info);
-            $sphp_api = \SphpBase::sphp_api();
+            $classInfo = new \ReflectionClass($comp1);
+            $mainClass = get_class($classInfo);
+            $sphpApi = \SphpBase::sphpApi();
             $ar = array();
-            //$ar = $sphp_api->rtClassMethod($class_info);
-            //$sphp_api()->rtClassMethodHelp($mainClass,$class_info,$ar);
-            $methods = $class_info->getMethods(\ReflectionMethod::IS_PUBLIC | \ReflectionMethod::IS_ABSTRACT | \ReflectionMethod::IS_FINAL);
+            //$ar = $sphpApi->rtClassMethod($classInfo);
+            //$sphpApi()->rtClassMethodHelp($mainClass,$classInfo,$ar);
+            $methods = $classInfo->getMethods(\ReflectionMethod::IS_PUBLIC | \ReflectionMethod::IS_ABSTRACT | \ReflectionMethod::IS_FINAL);
             //$methods = $reflector->getMethods(\ReflectionMethod::IS_PUBLIC);
             $banmethods = array('__construct', '__destruct', '__call', '__callStatic', 
             '__get', '__set', '__isset', '__unset', '__sleep', '__wakeup', '__toString',
              '__invoke', '__set_state', '__clone', '__debugInfo','onrender','onprerender',
-             'render','prerender','loadScript','parseHTML',
+             'render','prerender','loadScript','parseHtml',
             'onjsrender','onprejsrender','oncreate','oncompcreate','oninit','oncompinit',
-            'executePHPCode','getDynamicContent','addDynamicFileLink','onaftercreate',
+            'executePhpCode','getDynamicContent','addDynamicFileLink','onaftercreate',
             'onappevent','renderLast','onchildevent','onholder','onparse','setClassPath',
             'init','helpPropList','setVersion','getVersion','setMinVersionSphp','getMinVersionSphp',
-        'setMaxVersionSphp','getMaxVersionSphp','setMinVersionPHP','getMinVersionPHP',
-        'setMaxVersionPHP','getMaxVersionPHP');
+        'setMaxVersionSphp','getMaxVersionSphp','setMinVersionPhp','getMinVersionPhp',
+        'setMaxVersionPhp','getMaxVersionPhp');
         $banmethodsa = array();
         //foreach ($banmethods as $key => $v1) {
          //    $banmethodsa[$v1] = '';
@@ -123,7 +123,7 @@ class AiInfo extends \Sphp\tools\BasicGate{
             foreach ($methods as $key2 => $method) {
 				$methin = substr($method->getName(),0,3);
                 if($methin == "fu_" || $methin == "fi_"){
-                $strParam = $sphp_api->rtMethodParm($method);
+                $strParam = $sphpApi->rtMethodParm($method);
                 $ar[$method->getName()] = array('(' . $strParam[1] . ')', "Method " . $mainClass, "", $method->getName() . '($0' . $strParam[0] . ')', "Method");
                 //break;
 				}

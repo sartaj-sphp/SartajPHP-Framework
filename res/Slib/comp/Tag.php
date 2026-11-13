@@ -6,13 +6,13 @@
  */
 namespace Sphp\comp{
 
-class Tag extends \Sphp\tools\Component{
+class Tag extends \Sphp\Tools\Component{
 
 protected function onrender(){
     if($this->tagName != "input"){
-        $this->HTMLName = "";
+        $this->htmlName = "";
         if($this->value!=''){
-            $this->setInnerHTML($this->value);
+            $this->setInnerHtml($this->value);
         }
     }else{
         if($this->value!=''){
@@ -22,7 +22,7 @@ protected function onrender(){
 }
 
 // javascript functions
-public function getJSValue(){
+public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 

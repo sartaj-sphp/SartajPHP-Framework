@@ -40,23 +40,23 @@ private $header = '';
 private $footer = '';
 
 public function __construct($name='',$fieldName='',$tableName='') {
-global $page,$gate,$tblName,$JSServer,$Client;
+global $page,$gate,$tblName,$jsServer,$client;
 if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
 $this->init($name,'','');
 $this->blnajax = true;
 $this->eventName = $name ."_show";
-$JSServer->getAJAX();
-if($Client->request($name.'page')!=''){
+$jsServer->getAjax();
+if($client->request($name.'page')!=''){
 $_SESSION[$name.'p'] = $_REQUEST[$name.'page'];
 $_SESSION[$name.'pc'] = $gate;
 }else{
-if($Client->session($name.'pc') == $gate){
+if($client->session($name.'pc') == $gate){
 $_REQUEST[$name.'page'] = $_SESSION[$name.'p'];
 }
 }
-$this->pageNo = $Client->request($name.'page') - 1;
+$this->pageNo = $client->request($name.'page') - 1;
 if($tableName==''){
 $this->dtable = $tblName;
 }else{
@@ -71,11 +71,11 @@ if(SphpBase::page()->isevent)
 {
 switch(SphpBase::page()->sact){
 case $this->name.'_show':{
-$JSServer->addJSONComp($this,'showalledtif');
+$jsServer->addJsonComp($this,'showalledtif');
 break;
 }
 case $this->name.'_newa':{
-$JSServer->addJSONFront($genFormFront,'showalledtif');
+$jsServer->addJsonFront($genFormFront,'showalledtif');
 break;
 }
 }
@@ -83,7 +83,7 @@ break;
 
 }
 
-public function getEventURL($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventUrl($eventName, $evtp='', $ControllerName='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
 $this->gate=$ControllerName;
@@ -164,8 +164,8 @@ $this->blndlg = false;
 
 public function executeSQL(){
   global $mysql;
-  global $libpath;
-  global $HTMLParser;
+  global $libPath;
+  global $HtmlParser;
   $stro = "";
 // count total page
 $mysql->connect();
@@ -245,10 +245,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myrespath}/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventUrl($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$this->myUrl}/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myrespath}/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventUrl($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$this->myUrl}/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -258,7 +258,7 @@ $stro .= "</table>";
 $stro .= $this->getPaging();
 }
 else if($this->strFormat!=''){
-$stro = $HTMLParser->executePHPCode('<?php foreach($'. $this->name .'->result as $key1=>$keyar){
+$stro = $HtmlParser->executePhpCode('<?php foreach($'. $this->name .'->result as $key1=>$keyar){
  foreach($keyar as $index=>$'.$this->name.'->row){
 $tmpf = new FrontFile($'.$this->name.'->strFormat,true);
 $tmpf->run();
@@ -286,9 +286,9 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST[$this->name.'page']) {
 if($this->blnajax){
-         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
+         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
-         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= "<div style=\"float:left;\">".($k)."</div>";
@@ -323,18 +323,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 $strlink = $strlinkP . $strlinkN ;
@@ -358,7 +358,7 @@ $element->innertext = '';
 }
 
 public function startAJAX(){
-global $jquerypath,$JSClient,$JSServer;
+global $jquerypath,$JSclient,$jsServer;
 addFileLink($jquerypath.'themes/base/jquery.ui.all.css');
 addFileLink($jquerypath.'themes/base/jquery.ui.dialog.css');
 addFileLink($jquerypath.'ui/jquery.ui.core.min.js');
@@ -374,7 +374,7 @@ addFileLink($jquerypath.'ui/jquery.ui.effect-blind.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.effect-explode.min.js');
 $opendlg = "";
 if($this->blndlg){
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
 width: "auto",
@@ -391,7 +391,7 @@ position: [10,10],
 title: "Grid Editor Form"
     });
 ');
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 
@@ -405,7 +405,7 @@ $jsAjax = "true";
 }else{
 $jsAjax = "false";    
 }
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function confirmDel_$this->name(link){
 confirmDel(link,$jsAjax);
         }    
@@ -418,7 +418,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -447,7 +447,7 @@ window.location = link ;
 ");
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
-</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventUrl($this->name.'_newa','','','','',true).'\');" />';
     $divt = "$ptag<div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
     $this->setPostTag('</div>'.$this->getPostTag());
@@ -455,8 +455,8 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 }
 
 public function onjsrender(){
-global $jquerypath,$JSClient,$JSServer;
-if(!$JSServer->ajaxrender){
+global $jquerypath,$JSclient,$jsServer;
+if(!$jsServer->ajaxrender){
 if($this->blnajax){
 $this->startAJAX();
 }

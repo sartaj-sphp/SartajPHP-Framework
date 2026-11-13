@@ -1,5 +1,5 @@
 <?php
-include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisGate.php");
+include_once(SphpBase::sphpSettings()->slibPath ."/apps/permis/PermisGate.php");
 class MebHome extends PermisGate {
 
     public $genFormFront = null;
@@ -9,7 +9,7 @@ class MebHome extends PermisGate {
         //echo $this->page->getAuthenticateType();
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm();
-        SphpBase::sphp_api()->addProp('page_title','Dashborad');
+        SphpBase::sphpApi()->addProp('page_title','Dashborad');
         //$this->setTableName("omer_employee"); 
         if($this->page->getAuthenticateType() == "ADMIN" && file_exists("apps/fronts/mebhome_admin_dashboard.front")){
             $this->genFormFront = new FrontFile("apps/fronts/mebhome_admin_dashboard.front"); 
@@ -58,7 +58,7 @@ class MebHome extends PermisGate {
     uniqueno VARCHAR(30),
     submit_timestamp VARCHAR(20) NOT NULL,
     update_timestamp VARCHAR(20) NOT NULL,
-    spcmpid VARCHAR(14)
+    spcmpId VARCHAR(14)
 )";
         $dbEngine->createTable($sql);
 
@@ -73,7 +73,7 @@ class MebHome extends PermisGate {
     status TINYINT NOT NULL,
     submit_timestamp VARCHAR(20) NOT NULL,
     update_timestamp VARCHAR(20) NOT NULL,
-    spcmpid VARCHAR(14)
+    spcmpId VARCHAR(14)
 )";
         $dbEngine->createTable($sql);
             
@@ -103,7 +103,7 @@ class MebHome extends PermisGate {
     uniqueno VARCHAR(30),
     submit_timestamp INT NOT NULL,
     update_timestamp INT NOT NULL,
-    spcmpid VARCHAR(14)
+    spcmpId VARCHAR(14)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ";
         $dbEngine->createTable($sql);
@@ -119,7 +119,7 @@ class MebHome extends PermisGate {
     status TINYINT NOT NULL,
     submit_timestamp INT NOT NULL,
     update_timestamp INT NOT NULL,
-    spcmpid VARCHAR(14)
+    spcmpId VARCHAR(14)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ";
         $dbEngine->createTable($sql);
@@ -129,7 +129,7 @@ class MebHome extends PermisGate {
         $dbEngine->disconnect();
         $this->setFrontFile(new FrontFile("Database Created",true));
         }else{
-            $this->page->forward(getGateURL("mebhome"));
+            $this->page->forward(getGateUrl("mebhome"));
         }
 
     }

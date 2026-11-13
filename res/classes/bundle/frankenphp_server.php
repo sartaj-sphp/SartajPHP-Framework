@@ -8,15 +8,15 @@
 $config = [
     'document_root' => __DIR__,
     'index_files' => ['index.html', 'index.htm', 'index.gate', 'index.app', 'index.front'],
-    'session_path' => __DIR__ . '/storage/sessions',
+    'sessionPath' => __DIR__ . '/storage/sessions',
     'session_lifetime' => 86400,
     'max_file_size' => 10 * 1024 * 1024,
     'debug' => true,
 ];
 
 // Create session directory
-if (!is_dir($config['session_path'])) {
-    mkdir($config['session_path'], 0755, true);
+if (!is_dir($config['sessionPath'])) {
+    mkdir($config['sessionPath'], 0755, true);
 }
 
 // ==================== SartajPHP Initialization ====================
@@ -26,15 +26,15 @@ $_SERVER["HTTP_HOST"] =  "localhost:8080" ;
 $_SERVER["SERVER_SOFTWARE"] =  "FrankenPHP" ; 
 if($secure) $_SERVER["HTTPS"] = "on";
 $sharedpath = "./vendor/sartajphp/sartajphp";
-$respath = "./vendor/sartajphp/sartajphp/res";
-$slibversion = "Slib";
-$libversion = "Sphp";
+$resourceUrl = "./vendor/sartajphp/sartajphp/res";
+$slibVersion = "Slib";
+$libVersion = "Sphp";
 
 require_once $sharedpath . '/res/classes/bundle/SartajPhpRunner.php';
 
 // Create runner instance
 $runner = new SartajPhpRunner([
-    'session_path' => __DIR__ . '/storage/sessions',
+    'sessionPath' => __DIR__ . '/storage/sessions',
     'debug' => true
 ]);
 

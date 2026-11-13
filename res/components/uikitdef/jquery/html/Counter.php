@@ -19,20 +19,20 @@
 
 
 
-class Counter extends Sphp\tools\Component{
+class Counter extends Sphp\Tools\Component{
 protected function oncreate($element){
     $this->setHTMLName("");
 }
 
 protected function onjsrender(){
-    addFileLink($this->myrespath . '/res/jquery.appear.min.js');
-    addFileLink($this->myrespath . '/res/counter-up.js');
+    addFileLink($this->myUrl . '/res/jquery.appear.min.js');
+    addFileLink($this->myUrl . '/res/counter-up.js');
     $this->element->appendAttribute('class', 'counter');
     if(!$this->element->hasAttribute('data-count')) $this->setAttribute('data-count', '+');
     if(!$this->element->hasAttribute('data-to')) $this->setAttribute('data-to', '500');
     if(!$this->element->hasAttribute('data-speed')) $this->setAttribute('data-speed', '3000');
     
-addHeaderJSFunctionCode('ready','counter1','
+addHeaderJsFunctionCode('ready','counter1','
     $(".counter").countTo();
     $(".counter-box").appear(
         function () {

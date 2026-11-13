@@ -1,21 +1,21 @@
 <?php 
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/bundle/menu/BootstrapFooterMenu.php"); 
+include_once(SphpBase::sphpSettings()->uiKitPath . "/bundle/menu/BootstrapFooterMenu.php"); 
 class FooterMenuUi extends BootstrapFooterMenu{
     public function onstart() {
         //$this->setNavMenuCss("nav col-md-4 justify-content-end");
         // just remove to empty for use root menu as same as in header
         $this->setRootMenu("footer");
-        $this->sphp_api->addMenu("Home2", "","fa fa-home","footer");
-        $this->sphp_api->addMenu("Home", "","fa fa-home","Home2");
-        $this->sphp_api->addMenuLink("Home", SphpBase::sphp_settings()->base_path,"fa fa-home","Home");
-        $this->sphp_api->addMenuLink("Contact Us", getEventURL('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
+        $this->sphpApi->addMenu("Home2", "","fa fa-home","footer");
+        $this->sphpApi->addMenu("Home", "","fa fa-home","Home2");
+        $this->sphpApi->addMenuLink("Home", SphpBase::sphpSettings()->projectUrl,"fa fa-home","Home");
+        $this->sphpApi->addMenuLink("Contact Us", getEventUrl('page','contacts','index'),"fa fa-fw fa-clock-o","Home");
         
         if(SphpBase::page()->getAuthenticateType() == "GUEST"){
-            $this->sphp_api->addMenuLink("Login", getGateURL("signin"),"","Home");
+            $this->sphpApi->addMenuLink("Login", getGateUrl("signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }else{            
-            $this->sphp_api->addMenuLink("Dashboard",getGateURL('mebhome'),"fa fa-home","Home");
-            $this->sphp_api->addMenuLink("Logout", getEventURL("logout","","signin"),"","Home");
+            $this->sphpApi->addMenuLink("Dashboard",getGateUrl('mebhome'),"fa fa-home","Home");
+            $this->sphpApi->addMenuLink("Logout", getEventUrl("logout","","signin"),"","Home");
             include_once("plugin/cmenu.php"); 
         }
          

@@ -6,7 +6,7 @@
  */
 
 
-class Panel extends Sphp\tools\Component{
+class Panel extends Sphp\Tools\Component{
 
 protected function oncreate($element){
 $this->setHTMLName("");
@@ -15,7 +15,7 @@ $this->setHTMLName("");
 
 protected function onjsrender(){
 if($this->parameterA['class'] == ''){
-    addHeaderCSS('panel', '
+    addHeaderCss('panel', '
 .panelc
 {
 -moz-box-shadow: 10px 10px 5px #888888;

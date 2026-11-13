@@ -89,7 +89,7 @@ class PHPMailer
     /**
      * Sets the text-only body of the message.  This automatically sets the
      * email to multipart/alternative.  This body can be read by mail
-     * clients that do not have HTML email capability such as mutt. Clients
+     * clients that do not have HTML email capability such as mutt. clients
      * that can read HTML will view the normal Body.
      * @var string
      */
@@ -574,7 +574,7 @@ class PHPMailer
         
                 if($this->SMTPAuth)
                 {
-                    if(!$this->smtp->Authenticate($this->Username, 
+                    if(!$this->smtp->getAuthenticate($this->Username, 
                                                   $this->Password))
                     {
                         $this->SetError($this->Lang("authenticate"));
@@ -1659,7 +1659,7 @@ class SMTP
      * @access public
      * @return bool
      */
-    function Authenticate($username, $password) {
+    function getAuthenticate($username, $password) {
         // Start authentication
         fputs($this->smtp_conn,"AUTH LOGIN" . $this->CRLF);
 

@@ -1,6 +1,6 @@
 <?php
 
-class Header extends \Sphp\tools\Component{
+class Header extends \Sphp\Tools\Component{
     private $menufile = null;
     private $vertimenufile = null;
     private $text = "";
@@ -61,10 +61,10 @@ class Header extends \Sphp\tools\Component{
     }
 
     protected function onaftercreate() {
-        global $cmpname;
+        global $cmpName;
         parent::onaftercreate();
-        if($this->text == "")  $this->text = $cmpname;
-        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->comp_uikit_res_path . "/masters/default/imgs/android-icon-192x192.png";
+        if($this->text == "")  $this->text = $cmpName;
+        if($this->icon == "") $this->icon = SphpBase::sphpSettings()->uiKitUrl . "/masters/default/imgs/android-icon-192x192.png";
     }
     protected function onrender() {
         
@@ -85,7 +85,7 @@ class Header extends \Sphp\tools\Component{
                     $menu->setNavBarCss('navbar navbar-expand-md');
                     $menu->setNavMenuCss('nav nav-pills');
                 });
-                $st = '<a href="'. getGateURL('index') .'" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none gap-3">
+                $st = '<a href="'. getGateUrl('index') .'" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none gap-3">
                 <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
                 <span class="fs-4">'. $this->text .'</span>
               </a>'. $menuo ;        
@@ -125,7 +125,7 @@ class Header extends \Sphp\tools\Component{
         <button id="btnlogin" type="button" class="btn btn-outline-primary me-2">Login</button>
         <button id="btnsignin" type="button" class="btn btn-primary">Sign-up</button>
       </div>';        
-                addHeaderJSFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
                         . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
               break;
             }case 3:{
@@ -141,7 +141,7 @@ class Header extends \Sphp\tools\Component{
            <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
         </a>
 '. $menuo .'
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" id="frmsearch" action="'. getEventURL('search','','index').'" method="post" enctype="mutipart/form-data">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" id="frmsearch" action="'. getEventUrl('search','','index').'" method="post" enctype="mutipart/form-data">
           <input id="txtsearch" name="txtsearch" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
@@ -151,7 +151,7 @@ class Header extends \Sphp\tools\Component{
         </div>
       </div>
     </div>';        
-                addHeaderJSFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
                         . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
               break;
             
@@ -166,7 +166,7 @@ class Header extends \Sphp\tools\Component{
                 if( $menusub == ''){
                 $menusub = '<div class="dropdown text-end ">
           <a href="#" class="d-block nav-dlink text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="'. SphpBase::sphp_settings()->comp_uikit_res_path . "/masters/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
+            <img src="'. SphpBase::sphpSettings()->uiKitUrl . "/masters/default/imgs/android-icon-192x192.png" .'" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small nav-dlink">
             <li><a class="dropdown-item" href="#">use setSubMenuFile as temp file</a></li>
@@ -185,13 +185,13 @@ class Header extends \Sphp\tools\Component{
            <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
         </a>
 '. $menuo .'
-        <form class="col-12 col-lg-auto  mb-3 mb-lg-0 me-lg-3 d-none d-lg-block" role="search" id="frmsearch" action="'. getEventURL('search','','index').'" method="post" enctype="mutipart/form-data">
+        <form class="col-12 col-lg-auto  mb-3 mb-lg-0 me-lg-3 d-none d-lg-block" role="search" id="frmsearch" action="'. getEventUrl('search','','index').'" method="post" enctype="mutipart/form-data">
           <input id="txtsearch" name="txtsearch" type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
 '. $menusub .'        
       </div>
     </div>';        
-                addHeaderJSFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
                         . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
               break;
             }case 5:{
@@ -205,8 +205,8 @@ class Header extends \Sphp\tools\Component{
 '. $menuo .'
     
       <ul class="nav">
-        <li class="nav-item"><a href="'. getEventURL('login','','index') .'" class="nav-link link-body-emphasis px-2">Login</a></li>
-        <li class="nav-item"><a href="'. getEventURL('signup','','index') .'" class="nav-link link-body-emphasis px-2">Sign up</a></li>
+        <li class="nav-item"><a href="'. getEventUrl('login','','index') .'" class="nav-link link-body-emphasis px-2">Login</a></li>
+        <li class="nav-item"><a href="'. getEventUrl('signup','','index') .'" class="nav-link link-body-emphasis px-2">Sign up</a></li>
       </ul>
     </div>
   </nav>'; 
@@ -216,7 +216,7 @@ class Header extends \Sphp\tools\Component{
                 <img src="'. $this->icon .'" class="img img-fluid" width="40"  />
                 <span class="fs-4">'. $this->text .'</span>
       </a>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" id="frmsearch" action="'. getEventURL('search','','index').'" method="post" enctype="mutipart/form-data">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" id="frmsearch" action="'. getEventUrl('search','','index').'" method="post" enctype="mutipart/form-data">
           <input id="txtsearch" name="txtsearch" type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
     </div>';        
@@ -249,7 +249,7 @@ class Header extends \Sphp\tools\Component{
             <i class="fas fa-chevron-left"></i>
         </button>'. $mn1 .'</div></div><div class="overlay"></div><div class="content-column col border rounded shadow-lg">';
             $this->element->setInnerPostTag('</div></div>');
-            addHeaderJSFunctionCode('ready', 'header1a',"// Sidebar toggle functionality
+            addHeaderJsFunctionCode('ready', 'header1a',"// Sidebar toggle functionality
         const sidebarContainer = $('.sidebar-container');
         const sidebarToggleBtn = $('.sidebar-toggle-btn');
         const mobileSidebarToggle = $('.mobile-sidebar-toggle');
@@ -291,7 +291,7 @@ class Header extends \Sphp\tools\Component{
 </button><header id="'. $this->name .'" class="'. $cls .'">' . $st . '</header>' . $stin);
         
         if($this->fixed){
-            addHeaderJSFunctionCode('ready', 'header', '$(window).on("scroll",function(){'
+            addHeaderJsFunctionCode('ready', 'header', '$(window).on("scroll",function(){'
                     . 'const threshold = $(document).scrollTop() > 50;
    $("#'. $this->name .'").toggleClass(\'scrolled\', threshold);});$(window).scroll();');
         }

@@ -1,8 +1,8 @@
 <?php
 // disable bootstrap 4
-//SphpJsM::$jslib["bootstrap"] = 5;
+//SphpJsM::$jsLibUrl["bootstrap"] = 5;
 //permissions system is also implemented, menu ban works
-class BootstrapMenu extends \Sphp\tools\MenuGen{
+class BootstrapMenu extends \Sphp\Tools\MenuGen{
 private $brandicon = "";
 private $navbarClasses = "navbar navbar-expand-md bg-dark navbar-dark";
 private $navmenuClasses = "navbar-nav";
@@ -48,20 +48,20 @@ public function setBrandIcon($val) {
 
 public function genMenus() {
     $strmbar = $this->genMenuBar();
-    $mnuroot = $this->sphp_api->getMenuList($this->rootMenu);
+    $mnuroot = $this->sphpApi->getMenuList($this->rootMenu);
     // generate bootstrap menu
     $str1 = "";
     foreach ($mnuroot as $mnuName => $lstMenu) {
         if($lstMenu[4] == ""){
             $str1 .= $this->genMenu($lstMenu);            
-        }else if(SphpBase::sphp_permissions()->isPermission($lstMenu[4])){
+        }else if(SphpBase::sphpPermissions()->isPermission($lstMenu[4])){
             $str1 .= $this->genMenu($lstMenu);
         }
     }
     $this->htmlout = $strmbar[0] . $str1 . $strmbar[1];
 }
 private function genMenu($lstMenu,$submenu=0){
-    $mnuroot = $this->sphp_api->getMenuList($lstMenu[0]);
+    $mnuroot = $this->sphpApi->getMenuList($lstMenu[0]);
     $stra = array();
     $str = "";
     $str1 = "";
@@ -69,11 +69,11 @@ private function genMenu($lstMenu,$submenu=0){
         foreach ($mnuroot as $mnuName => $lstMenu2) {
             if($lstMenu2[4] == ""){
                 $str .= $this->genMenu($lstMenu2,1);
-            }else if(SphpBase::sphp_permissions()->isPermission($lstMenu2[4])){
+            }else if(SphpBase::sphpPermissions()->isPermission($lstMenu2[4])){
                 $str .= $this->genMenu($lstMenu2,1);
             }
         }
-        $str1 = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str1 = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str1 != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[3],$submenu);  
         }else{
@@ -82,7 +82,7 @@ private function genMenu($lstMenu,$submenu=0){
         return $stra[0] . $str . $str1 . $stra[1];
             
     }else{
-        $str = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[3],$submenu);  
         }else{
@@ -98,7 +98,7 @@ private function genMenuLinks($mnuroot){
     foreach ($mnuroot as $mnuLinkName => $lstMenuLink) {
         if($lstMenuLink[4] == ""){
             $str .= $this->getB4MenuLink($lstMenuLink);   
-        }else if(SphpBase::sphp_permissions()->isPermission($lstMenuLink[4])){
+        }else if(SphpBase::sphpPermissions()->isPermission($lstMenuLink[4])){
             $str .= $this->getB4MenuLink($lstMenuLink);   
         }
     }
@@ -107,8 +107,8 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::JSServer()->getAJAX();
-addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
+SphpBase::jsServer()->getAjax();
+addHeaderJsFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
 private function getB4Menu($mnutext,$mnuhref="",$blnAjaxLink2=false,$mnuSub=0){
@@ -251,9 +251,9 @@ $controlkeysp = "";
     }
     if($strkey != "") $strkey .= " && ";
     // code depend on key listner javascript code of framework
-    addHeaderJSFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", " return true;}",true);
-    addHeaderJSFunctionCode("jq_keyevent", "menukeyevent1", 'ret = (jq_menukeyevent(eventer2) ? ret : false);',true);
-    addHeaderJSFunctionCode("jq_menukeyevent", $mnuname, ' if('. $strkey .'eventer.keycode=='. $mkey .'){
+    addHeaderJsFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", " return true;}",true);
+    addHeaderJsFunctionCode("jq_keyevent", "menukeyevent1", 'ret = (jq_menukeyevent(eventer2) ? ret : false);',true);
+    addHeaderJsFunctionCode("jq_menukeyevent", $mnuname, ' if('. $strkey .'eventer.keycode=='. $mkey .'){
         if(eventer.evt==\'keyup\'){
             $(".dropdown-item[data-mkey='.$mkey.']")[0].click();
         }
@@ -272,7 +272,7 @@ private function init() {
     if($this->bootstrapversion == 5){ 
         $links = 'var links = $(\'.navbar div ul li a\');';
     }    
-        addHeaderJSFunctionCode("ready", "navbar", '
+        addHeaderJsFunctionCode("ready", "navbar", '
  '. $links .'    
     $.each(links, function (key, va) {
         if (va.href == document.URL) {
@@ -299,7 +299,7 @@ $.each($(\'.nav-dlink\'), function (key, va) {
     //va.click();
 });
 ',true);
-    addHeaderCSS("navbar", ' .dropdown-submenu {
+    addHeaderCss("navbar", ' .dropdown-submenu {
   position: relative;
 }
 

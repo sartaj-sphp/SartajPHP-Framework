@@ -1,6 +1,6 @@
 <?php
 
-class HeaderImage extends \Sphp\tools\Component{
+class HeaderImage extends \Sphp\Tools\Component{
     private static $renderon = true;
         
     protected function onrender() {
@@ -8,7 +8,7 @@ class HeaderImage extends \Sphp\tools\Component{
             self::$renderon = false;
         $this->tagName = 'section';
         $this->element->appendAttribute('class', 'hero');
-        if(! $this->element->hasAttribute('src')) $this->src = SphpBase::sphp_settings()->comp_uikit_res_path . '/masters/default/assets/img/hero-bg.jpg';
+        if(! $this->element->hasAttribute('src')) $this->src = SphpBase::sphpSettings()->uiKitUrl . '/masters/default/assets/img/hero-bg.jpg';
         $this->element->setInnerPreTag('<img src="'. $this->src .'" data-aos="fade-in"  /><div class="container">');
         $this->element->setInnerPostTag('</div>');
         $strcs1 = "";
@@ -99,7 +99,7 @@ section, .section {
 }
 ';
         }
-        addHeaderCSS('headerimage',$strcs1);
+        addHeaderCss('headerimage',$strcs1);
     }else{
         $this->fu_unsetrender();
     }

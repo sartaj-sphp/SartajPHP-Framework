@@ -96,9 +96,9 @@ SphpCodeBlock::addCodeBlock('parallax',function($element,$args,$lstOther_CB){
         if($r1 != null){
             $r1->appendAttribute("class","parallax-img");
             $element->setInnerPreTag($r1->render() . '<div class="container py-4">'); 
-            $r1->setOuterHTML(''); // remove tag
+            $r1->setOuterHtml(''); // remove tag
         }else{
-            $element->setInnerPreTag('<img src="'. SphpBase::sphp_settings()->comp_uikit_res_path .'/masters/default/assets/img/cta-bg.jpg"  class="parallax-img" /><div class="container py-4">');
+            $element->setInnerPreTag('<img src="'. SphpBase::sphpSettings()->uiKitUrl .'/masters/default/assets/img/cta-bg.jpg"  class="parallax-img" /><div class="container py-4">');
         }
     }
     $element->setInnerPostTag("</div>");
@@ -304,7 +304,7 @@ SphpCodeBlock::addCodeBlock('label',function($element,$args,$lstOther_CB){
     $id = "";
     if(! $element->hasAttribute('placeholder')) $element->setAttribute('placeholder',$args[0]);
     if($element->getComponent() != null){
-        $id = $element->getComponent()->HTMLID;
+        $id = $element->getComponent()->htmlId;
     }
     $param = str_replace('*', '<span class="text-danger">*</span>', $param);
         $element->setPreTag('<div class="control-group">
@@ -319,9 +319,9 @@ $element->setPostTag($element->posttag . '</div>
 
 SphpCodeBlock::addCodeBlock('aos',function($element,$args,$lstOther_CB){
     // not work in ajax mode
-    addFileLink(SphpBase::sphp_settings()->comp_uikit_res_path . '/assets/aos.css',true);
-    addFileLink(SphpBase::sphp_settings()->comp_uikit_res_path . '/assets/aos.js',true);
-    addHeaderJSCode('aos', 'AOS.init();',true);
+    addFileLink(SphpBase::sphpSettings()->uiKitUrl . '/assets/aos.css',true);
+    addFileLink(SphpBase::sphpSettings()->uiKitUrl . '/assets/aos.js',true);
+    addHeaderJsCode('aos', 'AOS.init();',true);
     if(isset($args[0])){
         $element->setAttribute("data-aos",$args[0]);
     }else{
@@ -338,7 +338,7 @@ SphpCodeBlock::addCodeBlock('counter',function($element,$args,$lstOther_CB){
         $cb1 = SphpCodeBlock::getCodeBlock("aos");
         $cb1["callback"]($element,[],$lstOther_CB);
     }
-    addHeaderJSCode('purecounter', '  var prcounter = new PureCounter();',true);
+    addHeaderJsCode('purecounter', '  var prcounter = new PureCounter();',true);
     $spn1 = '<span class="purecounter" data-purecounter-start="';
     if($element->hasAttribute("data-purecounter-start")){
         $spn1 .= $element->getAttribute("data-purecounter-start") . '"';
@@ -356,7 +356,7 @@ SphpCodeBlock::addCodeBlock('counter',function($element,$args,$lstOther_CB){
         $spn1 .= ' data-purecounter-end="1"';
     }
     $spn1 .= '></span>';
-    $element->setInnerHTML($spn1);
+    $element->setInnerHtml($spn1);
     $element->tagName = "div";
 }); 
 /**
@@ -373,7 +373,7 @@ SphpCodeBlock::addCodeBlock('jui',function($element,$args,$lstOther_CB){
     $opt1 = "{}";
     $timer1 = 2000;
     $timer2 = 1000;
-    SphpBase::JQuery()->getJQKit();
+    \SphpJsM->getJQKit();
     if(isset($args[0])) $effect1 = $args[0];
     if(isset($args[1])) $evt1 = $args[1];
     if(isset($args[2])) $opt1 = $args[2];
@@ -381,7 +381,7 @@ SphpCodeBlock::addCodeBlock('jui',function($element,$args,$lstOther_CB){
     if(isset($args[4])) $timer2 = $args[4];
  
     $element->appendAttribute("class"," $effect1");
-    addHeaderJSFunctionCode('ready', "jui" . $effect1, ' $(".'. $effect1 .'").on("'. $evt1 .'",function(){$(this).toggle("'. $effect1 .'",'. $opt1.','. $timer1 .',function(){$(this).toggle("'. $effect1 .'",{},'. $timer2.');});});');
+    addHeaderJsFunctionCode('ready', "jui" . $effect1, ' $(".'. $effect1 .'").on("'. $evt1 .'",function(){$(this).toggle("'. $effect1 .'",'. $opt1.','. $timer1 .',function(){$(this).toggle("'. $effect1 .'",{},'. $timer2.');});});');
     
 }); 
 /**

@@ -10,7 +10,7 @@ class GenAppFromDb {
         $blnFirst = true;
         $strout = "";
         foreach ($dbfields as $key => $dbfield) {
-            if($key!="id" && $key!="spcmpid"){
+            if($key!="id" && $key!="spcmpId"){
                 if($blnFirst){
                     $blnFirst = false;
                     $strout .= $this->getEditFormFrontlateStart($dbfield,$gate);
@@ -22,13 +22,13 @@ class GenAppFromDb {
         }
         return $strout . '    <div class="align-center"><br /><input type="submit" value="Save" class="btn btn-primary btn-small" />
     <input type="reset" value="New" class="btn btn-primary btn-small" onclick="setFormAsNew(\'form2\');" />
-    <input id="btnDel" runat="server" type="button" value="Delete" onclick="confirmDel_showall(\'##{ getEventURL(\'delete\',$parentgate->page->getEventParameter(),\''.$gate.'\',\'\',\'\',true); }#\');" class="btn btn-danger btn-small" />
+    <input id="btnDel" runat="server" type="button" value="Delete" onclick="confirmDel_showall(\'##{ getEventUrl(\'delete\',$parentGate->page->getEventParameter(),\''.$gate.'\',\'\',\'\',true); }#\');" class="btn btn-danger btn-small" />
     </div>
 </form></panel>';
     }
     public function getGate($tablename,$gate="") {
         $strout = '<?php
-include_once(\SphpBase::sphp_settings()->slib_path . "/apps/helper/AutoGate.php");
+include_once(\SphpBase::sphpSettings()->slibPath . "/apps/helper/AutoGate.php");
 
 class '. ucfirst($gate).' extends AutoGate{
 // call before object initialize 
@@ -39,9 +39,9 @@ class '. ucfirst($gate).' extends AutoGate{
         $this->setTableName("'.$tablename.'");
         $this->heading = "'. $this->convertFieldName($gate).' List";
         $this->footer = "Print footer";
-        $this->genFormFront = new \Sphp\tools\FrontFile("{$this->mypath}/fronts/'. $gate.'-edit.front");
-        $this->showallFront = new \Sphp\tools\FrontFile("{$this->mypath}/fronts/'. $gate.'-list.front");
-        $this->showallFront->getComponent(\'showall\')->getEventURL(\'showall_show\',\'\',\''. $gate.'\');
+        $this->genFormFront = new \Sphp\Tools\FrontFile("{$this->myPath}/fronts/'. $gate.'-edit.front");
+        $this->showallFront = new \Sphp\Tools\FrontFile("{$this->myPath}/fronts/'. $gate.'-list.front");
+        $this->showallFront->getComponent(\'showall\')->getEventUrl(\'showall_show\',\'\',\''. $gate.'\');
         parent::onstart();
     }
     // call after every object initialize 
@@ -54,9 +54,9 @@ class '. ucfirst($gate).' extends AutoGate{
         $blnwhere = false;
         $qb->addComponentWhere($this->showallFront->getComponent(\'searchby_txtcomp_name\'),$blnwhere);
         $qb->addComponentWhere($this->showallFront->getComponent(\'searchby_sltcountry\'),$blnwhere,"=");
-//        $this->debug->println($qb->getSQL().\' hj \');  
+//        $this->debug->println($qb->getSql().\' hj \');  
         if($blnwhere){
-            $showall->setWhere($qb->getSQL());
+            $showall->setWhere($qb->getSql());
         }else{
             $showall->setWhere(" ");            
         }
@@ -72,22 +72,22 @@ class '. ucfirst($gate).' extends AutoGate{
         $blnFirst = true;
         $col = 0;
         $strsearch = '<panel id="pnlSearch" fun-setLabel="Search '.$this->convertFieldName($gate).'" runat="server" path="uikit/html/SearchPanel.php">
-<form id="frmSearch" class="form-horizontal" runat="server" fun-setAJAX="" action="##{ getEventURL(\'usersrch\',\'\',\''.$gate.'\') }#">
+<form id="frmSearch" class="form-horizontal" runat="server" fun-setAJAX="" action="##{ getEventUrl(\'usersrch\',\'\',\''.$gate.'\') }#">
 ';
         $strgridhead = '
 <panel id="pnlBrowse" runat="server" path="uikit/html/BrowsePanel.php">
       <!-- grid start here -->                          
       <table class="table table-striped table-bordered table-condensed"><thead><tr>';
-        $strgrid = '         <tr onclick="rowclick(this,\'##{ getEventURL(\'rowclick\',$showall->getRow(\'id\'),\''.$gate.'\') }#\');" style="cursor: pointer;">
+        $strgrid = '         <tr onclick="rowclick(this,\'##{ getEventUrl(\'rowclick\',$showall->getRow(\'id\'),\''.$gate.'\') }#\');" style="cursor: pointer;">
 ';
         $strgridflds = '';
         $strgridheader = '';
         
         foreach ($dbfields as $key => $dbfield) {
-            if($key!="id" && $key!="spcmpid"){
+            if($key!="id" && $key!="spcmpId"){
                       $strfield = $this->getEditFormField($dbfield, "frmSearch","searchby_");
             $strgridhead .= '<th class="girdhead-bg">
-                      <a href="#" onclick="return getSortBy(this,\''.$dbfield['Field'].'\',\'##{ getEventURL(\'showall_sortby\',\'\',\''.$gate.'\') }#\');">'. $this->convertFieldName($strfield[1]).'<span class="pull-right hidden-xs showopacity fa fa-download"></span></a></th>
+                      <a href="#" onclick="return getSortBy(this,\''.$dbfield['Field'].'\',\'##{ getEventUrl(\'showall_sortby\',\'\',\''.$gate.'\') }#\');">'. $this->convertFieldName($strfield[1]).'<span class="pull-right hidden-xs showopacity fa fa-download"></span></a></th>
                 ';
             $strgrid .= '             <td class="" runas="holder" sphp-comp="showall" dfield="'. $dbfield['Field'] .'"></td>
 ';
@@ -141,7 +141,7 @@ return $strsearch . $strgridhead .$strgrid;
     public function getEditFormFrontlateStart($dbfield,$gate,$formid="form2",$idprefix="") {
       $strfield = $this->getEditFormField($dbfield, $formid,$idprefix);
         return '<panel id="pnlEdit" fun-setLabel="Edit '.$this->convertFieldName($gate).'" runat="server" path="uikit/html/EditPanel.php">
-<form id="form2" class="form-horizontal form-striped" runat="server" fun-setAJAX="" action="##{ getGateURL(\''.$gate.'\'); }#">
+<form id="form2" class="form-horizontal form-striped" runat="server" fun-setAJAX="" action="##{ getGateUrl(\''.$gate.'\'); }#">
             <label id="lbl1" path="uikit/html/HLabel.php" fur-setLabel="'. $this->convertFieldName($strfield[1]).',|'.$idprefix.$dbfield['Field'].'" runat="server" fun-setSize="col-md-4,|col-md-8">
             '. $strfield[0] .'             </label>
 ';

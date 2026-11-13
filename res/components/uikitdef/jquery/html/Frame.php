@@ -6,7 +6,7 @@
  */
 
 
-class Frame extends Sphp\tools\Component{
+class Frame extends Sphp\Tools\Component{
 private $width = '540px';
 private $heigth = '380px';
 protected function oncreate($element){
@@ -22,7 +22,7 @@ $this->height = $val;
 
 protected function onjsrender(){
 if($this->parameterA['class'] == ''){
-    addHeaderCSS('frame', '
+    addHeaderCss('frame', '
 .frame
 {
 border:1px solid #DDDDDD;

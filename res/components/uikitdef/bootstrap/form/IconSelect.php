@@ -3,7 +3,7 @@
 
 
 
-class IconSelect extends Sphp\tools\Component{
+class IconSelect extends Sphp\Tools\Component{
 private $label = "";
 
 protected function oncreate($param) {
@@ -14,7 +14,7 @@ public function fu_setLabel($label) {
     $this->label = $label;
 }
 protected function onjsrender() {
-    addHeaderJSCode("$this->name", " function {$this->name}_setvalue(obj){ "
+    addHeaderJsCode("$this->name", " function {$this->name}_setvalue(obj){ "
     . "$('#$this->name').val($(obj).data('cls')); "
     . "$('#{$this->name}spn').removeClass(); "
     . "$('#{$this->name}spn').addClass($(obj).data('cls')); "

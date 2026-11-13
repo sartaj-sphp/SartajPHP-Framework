@@ -6,7 +6,7 @@
  */
 
 
-class ContentBox extends Sphp\tools\Component{
+class ContentBox extends Sphp\Tools\Component{
 
 protected function oncreate($element){
 $this->setHTMLName("");

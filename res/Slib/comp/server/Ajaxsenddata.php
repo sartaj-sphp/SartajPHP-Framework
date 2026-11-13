@@ -6,7 +6,7 @@ namespace Sphp\Comp\Server{
  *
  * @author SARTAJ
  */
-class Ajaxsenddata extends \Sphp\tools\Component {
+class Ajaxsenddata extends \Sphp\Tools\Component {
 
     private $url = '';
     private $data = '';
@@ -58,28 +58,28 @@ class Ajaxsenddata extends \Sphp\tools\Component {
         return "aj_$this->name('$url',$data,$cache,'$dataType');";
     }
 
-    public function addJSONBlock($sact, $evtp, $dataar) {
-        \SphpBase::JSServer()->addJSONBlock($sact, $evtp, $dataar);
+    public function addJsonBlock($sact, $evtp, $dataar) {
+        \SphpBase::jsServer()->addJsonBlock($sact, $evtp, $dataar);
     }
 
-    public function addJSONJSBlock($jsdata = '') {
-        \SphpBase::JSServer()->addJSONJSBlock($jsdata);
+    public function addJsonJsBlock($jsdata = '') {
+        \SphpBase::jsServer()->addJsonJsBlock($jsdata);
     }
 
     public function echoJSON() {
-        \SphpBase::JSServer()->echoJSON();
+        \SphpBase::jsServer()->echoJSON();
     }
 
     protected function onjsrender() {
-        $ajax = new \Sphp\kit\Ajax();
-        \SphpBase::JSServer()->getAjax();
+        $ajax = new \Sphp\Kit\Ajax();
+        \SphpBase::jsServer()->getAjax();
         $valobj = null;
         foreach ($this->compa as $key => $val2) {
             $valobj = readGlobal($val2);
             if ($this->method == 'POST') {
                 $this->dataa[] = $valobj;
             } else {
-                $this->datacomp .= "&" . $valobj->name . "='+ encodeURIComponent(" . $valobj->getJSValue() . ")+'";
+                $this->datacomp .= "&" . $valobj->name . "='+ encodeURIComponent(" . $valobj->getJsValue() . ")+'";
             }
         }
 
@@ -108,19 +108,19 @@ document.getElementById('$this->name').style.visibility = 'hidden';
 $this->onrecieve
 }
 ";
-        addFooterJSCode($this->name, $code);
+        addFooterJsCode($this->name, $code);
     }
 
     protected function onrender() {
         if ($this->innerHTML == '') {
-            $this->innerHTML = '<img src="' . $this->myrespath . '/assets/ajax-loader.gif" />';
+            $this->innerHTML = '<img src="' . $this->myUrl . '/assets/ajax-loader.gif" />';
         }
         $this->setAttribute('style', "visibility:hidden;" . $this->getAttribute('style'));
         $this->tagName = 'div';
     }
 
 // javascript functions used by ajax control and other control
-    public function getJSValue() {
+    public function getJsValue() {
         return "document.getElementById('$this->name').value";
     }
 

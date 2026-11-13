@@ -1,13 +1,13 @@
 <?php
 $sharedpath = __DIR__ . "/vendor/sartajphp/sartajphp";
-$respath = "./vendor/sartajphp/sartajphp/res";
-$slibversion = "Slib";
-$libversion = "Sphp8e";
+$resourceUrl = "./vendor/sartajphp/sartajphp/res";
+$slibVersion = "Slib";
+$libVersion = "Sphp8e";
 
 // not editable start
 // <editor-fold defaultstate="collapsed" desc="This is generated code, any changes can effect the application">
-if(!defined("start_path")){
-    define("start_path", __DIR__);
+if(!defined("START_PATH")){
+    define("START_PATH", __DIR__);
 }
 if(!isset($argvm) && isset($argv)){
 global $argvm;
@@ -32,14 +32,14 @@ $argvm = array();
 
 }
 if(isset($argv) && isset($argvm["--sharedpath"])){
-    chdir(start_path);
+    chdir(START_PATH);
     $sharedpath = $argvm["--sharedpath"];
-    $respath = "~rs/res";
+    $resourceUrl = "~rs/res";
 }
-//$respath = "~up/res/";
-$phppath = $sharedpath . "/res";
-include_once("{$phppath}/Score/{$libversion}/global/start.php");
-$globalapp = startSartajPHPEngine();
+//$resourceUrl = "~up/res/";
+$resourcePath = $sharedpath . "/res";
+include_once("{$resourcePath}/Score/{$libVersion}/global/start.php");
+$globalapp = startSartajPhpEngine();
 if($globalapp != ""){
     require_once($globalapp);
     SphpBase::engine()->execute(true);

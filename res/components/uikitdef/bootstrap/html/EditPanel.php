@@ -1,6 +1,6 @@
 <?php
 
-class EditPanel extends Sphp\tools\Component{
+class EditPanel extends Sphp\Tools\Component{
 private $label = "";
 private $lstcomp = "";
 
@@ -16,7 +16,7 @@ private function setLabel2($label,$tfield="") {
             foreach($v1 as $i => $col){
             $tfield .= " " . $this->frontobj->getComponent($col)->value;      
             }
-            //$tfield = SphpBase::sphp_request()->request("txtid");
+            //$tfield = SphpBase::sphpRequest()->request("txtid");
         }
         $label = "Edit " . $label . $tfield;
     }else{
@@ -27,11 +27,11 @@ private function setLabel2($label,$tfield="") {
 protected function onrender(){
     $this->setLabel2($this->label,$this->lstcomp);
     /** Check If Browser request is a AJAX Request */
-    if(SphpBase::sphp_request()->isAJAX()){
-        SphpBase::JSServer()->addJSONHTMLBlock("ui-id-1", $this->label); 
+    if(SphpBase::sphpRequest()->isAjax()){
+        SphpBase::jsServer()->addJsonHtmlBlock("ui-id-1", $this->label); 
     }else{
         // work on all type of request
-        addHeaderJSFunctionCode('ready', $this->name . 'lbl1', '$("#ui-id-1").html("'. $this->label.'")');
+        addHeaderJsFunctionCode('ready', $this->name . 'lbl1', '$("#ui-id-1").html("'. $this->label.'")');
     }
     $this->tagName = 'div';
     $this->setPreTag('<div class="card card-primary">

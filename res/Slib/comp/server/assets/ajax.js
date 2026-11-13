@@ -1184,19 +1184,19 @@ function bindJsVarRefresh(){
     });
 }
 function FrontFile(){
-    var compList = {};
+    var comp_list = {};
     this.addComponent = function(key){
-        if(! Object.prototype.hasOwnProperty.call(compList, key)){
-            compList[key] = null;
+        if(! Object.prototype.hasOwnProperty.call(comp_list, key)){
+            comp_list[key] = null;
         }
     };
     this.setComponent = function(key,obj){
-        if(compList[key] === null){
-            compList[key] = obj;
+        if(comp_list[key] === null){
+            comp_list[key] = obj;
         }
     };
     this.getComponent = function(key){
-        return compList[key];
+        return comp_list[key];
     };
     
 }

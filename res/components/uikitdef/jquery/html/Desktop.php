@@ -6,7 +6,7 @@
  */
 
 
-class Desktop extends Sphp\tools\Component{
+class Desktop extends Sphp\Tools\Component{
 
 protected function oncreate($element){
 $this->unsetrenderTag();
@@ -14,7 +14,7 @@ $this->unsetrenderTag();
 
 
 protected function onjsrender(){
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function setContentWin(frmid){
 $('#{$this->name}').html($('#'+frmid).html());
 return false;

@@ -1,6 +1,6 @@
 <?php
 
-class OnsenFormComp extends \Sphp\tools\Component {
+class OnsenFormComp extends \Sphp\Tools\Component {
 
     private $formName = '';
 
@@ -20,7 +20,7 @@ class OnsenFormComp extends \Sphp\tools\Component {
         );
 
         // Sync ons-input value into hidden input before submit
-        addHeaderJSFunctionCode(
+        addHeaderJsFunctionCode(
             $this->formName . "_submit",
             $this->name,
             '

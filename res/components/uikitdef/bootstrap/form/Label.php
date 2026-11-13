@@ -6,14 +6,14 @@ namespace Sphp\Comp\Form;
  * use bootstrap grid
  * @author sartaj
  */
-class Label extends \Sphp\tools\Component{
+class Label extends \Sphp\Tools\Component{
     static $size = array('col-md-4 col-xs-12','col-md-8 col-xs-12');
     
     public function fu_setLabel($param) {
         $param = str_replace('*', '<span class="text-danger">*</span>', $param);
         $this->element->appendPreTag('<div class="control-group">
 <div class="row mb-3"><div class="'. self::$size[0] .' text-md-end text-xs-start my-auto">
-        <label class="form-label" for="'. $this->HTMLID .'">&nbsp;'. $param.':-</label>
+        <label class="form-label" for="'. $this->htmlId .'">&nbsp;'. $param.':-</label>
     </div><div class="'. self::$size[1] .'"><div class="controls">');
 $this->element->appendPostTag('</div> 
     </div></div>

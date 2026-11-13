@@ -7,7 +7,7 @@
 namespace {
 
 
-class SearchQuery extends \Sphp\tools\Component{
+class SearchQuery extends \Sphp\Tools\Component{
 public $sql = '';
 public $result = array();
 public $row = array();
@@ -88,9 +88,9 @@ protected function onprerender(){
                 break;
             }default:{
                 if($this->row[$obj->getAttribute("dfield")] != ''){
-                    $obj->setInnerHTML($this->row[$obj->getAttribute("dfield")]);
+                    $obj->setInnerHtml($this->row[$obj->getAttribute("dfield")]);
                 }else if($obj->hasAttribute('default')){
-                    $obj->setInnerHTML($obj->getAttribute('default'));                    
+                    $obj->setInnerHtml($obj->getAttribute('default'));                    
                 }
                 break;
             }

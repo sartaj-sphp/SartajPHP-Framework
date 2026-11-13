@@ -5,8 +5,8 @@
  * @author SARTAJ
  */
 //
-include_once(SphpBase::sphp_settings()->php_path . "/classes/base/CompGroup.php");
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php");
+include_once(SphpBase::sphpSettings()->resourcePath . "/classes/base/CompGroup.php");
+include_once(SphpBase::sphpSettings()->uiKitPath . "/form/TextField.php");
 
 
 class Comps extends CompGroup{
@@ -14,19 +14,19 @@ class Comps extends CompGroup{
 public function onstart(){
 global $JQuery;
     $this->addComponent(new TextField('df1'));  
-$this->setFrontFile(new FrontFile($this->mypath."demo2.front"));
+$this->setFrontFile(new FrontFile($this->myPath."demo2.front"));
 $JQuery->getJQKit();
 }
 protected function oncompcreate($element){
 //$this->inhtml = $element->innertext;
 }
 public function page_new(){
-//    print $this->mypath;
+//    print $this->myPath;
 }
 
 protected function onjsrender(){
 $tmp = $this->getFrontControl('txa1');
-$tmp->setInnerHTMLApp($this->innerHTML);
+$tmp->setInnerHtmlApp($this->innerHTML);
 $this->innerHTML = "";
 }
 
@@ -50,7 +50,7 @@ public function sjs_df2_ofjs_click($eventer){
 $data = "{dsm: 'hello2' }";
 }
 public function sjs_df2_sphp_click($eventer){
-$JSServer->addJSONBlock('jsp','proces',"alert('".$_REQUEST['dsm']."')");  
+$jsServer->addJsonBlock('jsp','proces',"alert('".$_REQUEST['dsm']."')");  
 }
 
 }

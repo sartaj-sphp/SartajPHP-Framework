@@ -39,7 +39,7 @@ $tmpf->run();
  }
  
  }
-$this->setInnerHTML($strOut);
+$this->setInnerHtml($strOut);
 
 }
     

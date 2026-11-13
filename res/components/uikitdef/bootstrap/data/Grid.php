@@ -7,7 +7,7 @@
 //namespace Sphp\comp\data;
 namespace{
 
-class Grid extends \Sphp\tools\Component{
+class Grid extends \Sphp\Tools\Component{
 public $pageNo = -1;
 public $totalPages = 1;
 public $perPageRows = 10;
@@ -42,45 +42,45 @@ private $footer = '';
 
 protected function onit() {
 $page = \SphpBase::page();
-$sphp_router = \SphpBase::sphp_router();
-$gate = $sphp_router->gate;
+$sphpRouter = \SphpBase::sphpRouter();
+$gate = $sphpRouter->gate;
 $tblName = \SphpBase::page()->tblName;
-$JSServer = \SphpBase::JSServer();
-$Client = \SphpBase::sphp_request();
+$jsServer = \SphpBase::jsServer();
+$client = \SphpBase::sphpRequest();
 
 if(SphpBase::page()->isSesSecure){
 $this->sesID = true;
 }
 $this->blnajax = true;
 $this->eventName = $name ."_show";
-$JSServer->getAJAX();
-if($Client->isRequest($name.'page')){
-\SphpBase::sphp_request()->session($name.'p', \SphpBase::sphp_request()->request($name.'page'));
-\SphpBase::sphp_request()->session($name.'pc', $gate);
+$jsServer->getAjax();
+if($client->isRequest($name.'page')){
+\SphpBase::sphpRequest()->session($name.'p', \SphpBase::sphpRequest()->request($name.'page'));
+\SphpBase::sphpRequest()->session($name.'pc', $gate);
 }else{
-if($Client->session($name.'pc') == $gate){
-\SphpBase::sphp_request()->request($name.'page', \SphpBase::sphp_request()->session($name.'p'));
+if($client->session($name.'pc') == $gate){
+\SphpBase::sphpRequest()->request($name.'page', \SphpBase::sphpRequest()->session($name.'p'));
 }
 }
-$this->pageNo = $Client->request($name.'page') - 1;
-$this->dtable = $tblName;
+$this->pageNo = $client->request($name.'page') - 1;
+$this->dbTable = $tblName;
 $this->setHTMLName('');
 }
 
 public function handleEvents(){
     extract(getGlobals(), EXTR_REFS);
     $page = \SphpBase::page();
-    $JSServer = \SphpBase::JSServer();
+    $jsServer = \SphpBase::jsServer();
     $genFormFront = readGlobal("genFormFront");
 if(SphpBase::page()->isevent)
 {
 switch(SphpBase::page()->getEvent()){
 case $this->name.'_show':{
-$JSServer->addJSONComp($this,'showalledtif');
+$jsServer->addJsonComp($this,'showalledtif');
 break;
 }
 case $this->name.'_newa':{
-$JSServer->addJSONFront($genFormFront,'showalledtif');
+$jsServer->addJsonFront($genFormFront,'showalledtif');
 break;
 }
 }
@@ -88,7 +88,7 @@ break;
 
 }
 
-public function getEventURL($eventName, $evtp='', $Appgate='', $extra='', $newBasePath='', $blnSesID=false){
+public function getEventUrl($eventName, $evtp='', $Appgate='', $extra='', $newBasePath='', $blnSesID=false){
 $this->eventName = $eventName;
 $this->evtp=$evtp;
 $this->gate=$Appgate;
@@ -100,7 +100,7 @@ $this->sesID=$blnSesID;
     }
 
     protected function genhelpPropList() {
-        $this->addHelpPropFunList('getEventURL','Set Event Path to get page', getEventURL($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $Appgate="", $extra="", $newBasePath="", $blnSesID=false');
+        $this->addHelpPropFunList('getEventUrl','Set Event Path to get page', getEventUrl($this->eventName, $this->evtp, $this->gate, $this->extra, $this->baseName, $this->sesID),'$eventName, $evtp="", $Appgate="", $extra="", $newBasePath="", $blnSesID=false');
         $this->addHelpPropFunList('setMsgName','Name Display in placeholder and Error','','$val');
         $this->addHelpPropFunList('setSQL','Set SQL Database Query','','$sql');
         $this->addHelpPropFunList('setPageCountSQL','Set SQL Query for Count Page, only need to set if you use setSQL','','$sql');
@@ -193,8 +193,8 @@ $this->blndlg = false;
 
 public function executeSQL(){
 $mysql = \SphpBase::dbEngine();
-  $HTMLParser = new \Sphp\tools\HTMLParser();
- $sphp_settings = \SphpBase::sphp_settings();
+  $HtmlParser = new \Sphp\Tools\HtmlParser();
+ $sphpSettings = \SphpBase::sphpSettings();
   $stro = "";
 // count total page
 $mysql->connect();
@@ -274,10 +274,10 @@ $startw += 1;
 $stro .= "<td$w>".$row[$val]."</td>";
 }
 if($this->blnEdit){
-$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventURL($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$sphp_settings->comp_respath}/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onclick=\"pagiedit_$this->name('". getEventUrl($this->name."_view",$row['id'],$this->app,$this->extraData,'',true)."');\" title=\"Click to Edit This Record\"><img src=\"{$sphpSettings->comp_resourceUrl}/comp/data/res/editBTN.gif\" border=\"0\" /></a></td>";
 }
 if($this->blnDelete){
-$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventURL($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$sphp_settings->comp_respath}/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
+$stro .= "<td><a href=\"#\" onClick=\"confirmDel_$this->name('".getEventUrl($this->name."_delete",$row['id'],$this->app,$this->extraData,'',true)."')\" title=\"Click to Delete This Record\"><img src=\"{$sphpSettings->comp_resourceUrl}/comp/data/res/del.jpg\" border=\"0\" /></a></td>";
 }
 
 $stro .= "</tr>";
@@ -287,7 +287,7 @@ $stro .= "</table>";
 $stro .= $this->getPaging();
 }
 else if($this->strFormat!=''){
-$stro = $HTMLParser->executePHPCode('<?php foreach($'. $this->name .'->result as $key1=>$keyar){
+$stro = $HtmlParser->executePhpCode('<?php foreach($'. $this->name .'->result as $key1=>$keyar){
  foreach($keyar as $index=>$'.$this->name.'->row){
 $tmpf = new FrontFile($'.$this->name.'->strFormat,true);
 $tmpf->run();
@@ -314,11 +314,11 @@ if($endPage>$this->totalPages){
 $endPage = $this->totalPages;
 }
 for ($k=$startPage; $k<=$endPage; $k++) {
-        if ($k != \SphpBase::sphp_request()->request($this->name.'page')) {
+        if ($k != \SphpBase::sphpRequest()->request($this->name.'page')) {
 if($this->blnajax){
-         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
+         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
-         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
+         $lynx .= "<div style=\"float:left;\"><a href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
         } else {
          $lynx .= "<div style=\"float:left;\">".($k)."</div>";
@@ -353,18 +353,18 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
 }else{
-    $strlinkP = "<a class=\"pagprev\" href=\"". getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
+    $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
 }
 if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
 }else{
-    $strlinkN = "<a class=\"pagnext\" href=\"".getEventURL($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
+    $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
 }
 $strlink = $strlinkP . $strlinkN ;
@@ -390,7 +390,7 @@ $element->innertext = '';
 public function startAJAX(){
 $opendlg = "";
 if($this->blndlg){
-addHeaderJSFunctionCode('ready',$this->name,'jql("#'.$this->name.'_dlg").dialog({
+addHeaderJsFunctionCode('ready',$this->name,'jql("#'.$this->name.'_dlg").dialog({
 autoOpen: false,
 width: "auto",
 height: "400",
@@ -406,7 +406,7 @@ position: [10,10],
 title: "Grid Editor Form"
     });
 ');
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 
@@ -420,7 +420,7 @@ $jsAjax = "true";
 }else{
 $jsAjax = "false";    
 }
-addHeaderJSCode($this->name,"
+addHeaderJsCode($this->name,"
 function confirmDel_$this->name(link){
 confirmDel(link,$jsAjax);
         }    
@@ -433,7 +433,7 @@ $opendlg
 pagiedit(link,$jsAjax);
         }    
 ");
-    addHeaderJSCode('pagi',"
+    addHeaderJsCode('pagi',"
 function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
@@ -462,7 +462,7 @@ window.location = link ;
 ");
 $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 <div id="'.$this->name.'_editor" style="width:100%;height:100%;"></div>    
-</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventURL($this->name.'_newa','','','','',true).'\');" />';
+</div><input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.getEventUrl($this->name.'_newa','','','','',true).'\');" />';
     $divt = "$ptag<div id=\"{$this->name}_list\">";     
     $this->setPreTag($divt.$this->getPreTag());    
     $this->setPostTag('</div>'.$this->getPostTag());
@@ -470,8 +470,8 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 }
 
 protected function onjsrender(){
-    $JSServer = \SphpBase::JSServer();
-if(! $JSServer->ajaxrender){
+    $jsServer = \SphpBase::jsServer();
+if(! $jsServer->ajaxrender){
 if($this->blnajax){
 $this->startAJAX();
 }
@@ -482,17 +482,17 @@ $this->startAJAX();
 
 protected function onrender(){
 // set default values
-$spt = explode(',', $this->dtable);
+$spt = explode(',', $this->dbTable);
 if(count($spt)>0){
     $idf = $spt[0].".id";
 }else{
     $idf = "id";
 }
 if($this->pageCountSQL==''){
-$this->pageCountSQL = "SELECT count($idf) FROM ".$this->dtable." ".$this->where;
+$this->pageCountSQL = "SELECT count($idf) FROM ".$this->dbTable." ".$this->where;
 }
 if($this->sql==''){
-$this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dtable." ".$this->where;
+$this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dbTable." ".$this->where;
 }
 
 $this->parameterA['class'] = 'pag';

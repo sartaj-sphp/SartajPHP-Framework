@@ -1,6 +1,6 @@
 <?php
 
-class SearchPanel extends Sphp\tools\Component{
+class SearchPanel extends Sphp\Tools\Component{
 private $label = "";
 private $bs = 5;
 
@@ -9,7 +9,7 @@ public function fu_setLabel($label) {
 }
 public function fu_setBS($param) {
     SphpJsM::setJSLibVersion("bootstrap", $param);
-    $this->bs = SphpJsM::getJSLibVersion("bootstrap");
+    $this->bs = SphpJsM::getJsLibVersion("bootstrap");
 }
 protected function onrender(){
     $this->tagName = 'div';
@@ -34,7 +34,7 @@ protected function onrender(){
     $this->setPreTag($pre1);
     $this->class = "col-md-12"; 
     $this->setPostTag('<br></div></div></div></div></div></div>');        
-    addHeaderJSFunctionCode('ready', $this->name .  "lk", 'setTimeout(function(){$("#collapseOne").css("cssText","visibility: visible !important;");},100);');
+    addHeaderJsFunctionCode('ready', $this->name .  "lk", 'setTimeout(function(){$("#collapseOne").css("cssText","visibility: visible !important;");},100);');
 }
 
 }

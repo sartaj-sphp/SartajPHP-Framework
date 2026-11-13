@@ -7,7 +7,7 @@
 
 
 
-class TabsJ extends Sphp\tools\Component{
+class TabsJ extends Sphp\Tools\Component{
 protected function oncreate($element){
 $this->setHTMLName("");
 }
@@ -24,7 +24,7 @@ addFileLink($jquerypath.'ui/jquery.ui.tabs.min.js');
  */
 //bind js event on other component  $("#'.$this->name.'").on("rsize",function(){});
 SphpJsM::addjQueryUI();
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
     var ro'. $this->name . ' = new ResizeObserver(entries => {
         $("#'.$this->name.'").trigger("rsize");
     });
@@ -36,7 +36,7 @@ $this->innerHTML = '<ul>
 		<li><a href="#tabs-1">Tab1</a></li>
 		<li><a href="#tabs-2">Tab2</a></li>
 		<li><a href="#tabs-3">Tab3</a></li>
-                <li><a href="<?php print getEventURL(\'page\',\'data\'); ?>">Ajax Data Tab</a></li>
+                <li><a href="<?php print getEventUrl(\'page\',\'data\'); ?>">Ajax Data Tab</a></li>
 	</ul>
 	<div id="tabs-1">
 <p>

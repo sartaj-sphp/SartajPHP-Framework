@@ -12,7 +12,7 @@
  *        funsetForm="loginForm"
  *        funsetMsgName="Security Code">
  */
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php");
+include_once(SphpBase::sphpSettings()->uiKitPath . "/form/TextField.php");
 class Captcha extends \Sphp\comp\form\TextField {
     
     private $sessionKey = 'captcha_data';
@@ -28,8 +28,8 @@ class Captcha extends \Sphp\comp\form\TextField {
     
     private function setupSession() {
         // Initialize session for captcha attempts
-        if (!SphpBase::sphp_request()->isSession('captcha_attempts')) {
-            SphpBase::sphp_request()->session('captcha_attempts', [
+        if (!SphpBase::sphpRequest()->isSession('captcha_attempts')) {
+            SphpBase::sphpRequest()->session('captcha_attempts', [
                 'count' => 0,
                 'blocked_until' => 0,
                 'last_attempt' => 0
@@ -117,7 +117,7 @@ class Captcha extends \Sphp\comp\form\TextField {
         }
         ';
         
-        addHeaderCSS($this->name . '_styles', $css);
+        addHeaderCss($this->name . '_styles', $css);
     }
     
     public function oncreate($element) {
@@ -131,7 +131,7 @@ class Captcha extends \Sphp\comp\form\TextField {
         
         // Handle validation on form submission
         // Parent class handles required and other validations
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             $this->validateCaptcha();
         }
     }
@@ -159,7 +159,7 @@ class Captcha extends \Sphp\comp\form\TextField {
         }
         
         $userInput = strtoupper(trim($this->getValue()));
-        $sessionData = SphpBase::sphp_request()->session($this->sessionKey);
+        $sessionData = SphpBase::sphpRequest()->session($this->sessionKey);
         
         if (empty($sessionData)) {
             $this->setErrMsg("Security code session expired. Please refresh the code.");
@@ -176,21 +176,21 @@ class Captcha extends \Sphp\comp\form\TextField {
         } elseif (!hash_equals(md5($userInput), md5($expected))) {
             $this->setErrMsg("Security code is incorrect!");
             $this->incrementAttempts();
-            SphpBase::sphp_request()->session($this->sessionKey, null);
+            SphpBase::sphpRequest()->session($this->sessionKey, null);
             $this->logAttempt(false, 'incorrect_code');
             
             // Add JavaScript to refresh captcha on next page load
-            //addHeaderJSFunctionCode('ready', 'refresh_failed_' . $this->name, 'setTimeout(function(){ refreshSartajCaptcha("' . $this->name . '"); }, 500);');
+            //addHeaderJsFunctionCode('ready', 'refresh_failed_' . $this->name, 'setTimeout(function(){ refreshSartajCaptcha("' . $this->name . '"); }, 500);');
         } else {
             // Success - clear attempts and session
             $this->resetAttempts();
-            SphpBase::sphp_request()->session($this->sessionKey, null);
+            SphpBase::sphpRequest()->session($this->sessionKey, null);
             $this->logAttempt(true, 'success');
         }
     }
     
     private function isBlocked() {
-        $attempts = SphpBase::sphp_request()->session('captcha_attempts');
+        $attempts = SphpBase::sphpRequest()->session('captcha_attempts');
         
         if (!$attempts) {
             return false;
@@ -203,7 +203,7 @@ class Captcha extends \Sphp\comp\form\TextField {
         if ($attempts['count'] >= $this->maxAttempts) {
             $attempts['blocked_until'] = time() + $this->blockTime;
             $attempts['count'] = 0;
-            SphpBase::sphp_request()->session('captcha_attempts', $attempts);
+            SphpBase::sphpRequest()->session('captcha_attempts', $attempts);
             return true;
         }
         
@@ -211,7 +211,7 @@ class Captcha extends \Sphp\comp\form\TextField {
     }
     
     private function getRemainingBlockTime() {
-        $attempts = SphpBase::sphp_request()->session('captcha_attempts');
+        $attempts = SphpBase::sphpRequest()->session('captcha_attempts');
         if ($attempts && $attempts['blocked_until'] > time()) {
             return ceil(($attempts['blocked_until'] - time()) / 60);
         }
@@ -219,16 +219,16 @@ class Captcha extends \Sphp\comp\form\TextField {
     }
     
     private function incrementAttempts() {
-        $attempts = SphpBase::sphp_request()->session('captcha_attempts');
+        $attempts = SphpBase::sphpRequest()->session('captcha_attempts');
         if ($attempts) {
             $attempts['count']++;
             $attempts['last_attempt'] = time();
-            SphpBase::sphp_request()->session('captcha_attempts', $attempts);
+            SphpBase::sphpRequest()->session('captcha_attempts', $attempts);
         }
     }
     
     private function resetAttempts() {
-        SphpBase::sphp_request()->session('captcha_attempts', [
+        SphpBase::sphpRequest()->session('captcha_attempts', [
             'count' => 0,
             'blocked_until' => 0,
             'last_attempt' => 0
@@ -236,7 +236,7 @@ class Captcha extends \Sphp\comp\form\TextField {
     }
     
     private function generateCaptchaImage() {
-        include_once($this->mypath . "/cap.php");
+        include_once($this->myPath . "/cap.php");
         $captcha = new CaptchaSub();
         $imageData = $captcha->genImage();
         
@@ -245,18 +245,18 @@ class Captcha extends \Sphp\comp\form\TextField {
             'id' => bin2hex(random_bytes(16)),
             'value' => $captcha->getGeneratedValue(),
             'timestamp' => time(),
-            'ip' => SphpBase::sphp_request()->server('REMOTE_ADDR', 'unknown')
+            'ip' => SphpBase::sphpRequest()->server('REMOTE_ADDR', 'unknown')
         ];
-        SphpBase::sphp_request()->session($this->sessionKey, $captchaData);
+        SphpBase::sphpRequest()->session($this->sessionKey, $captchaData);
         
         // Return image via AJAX to update the container
-        SphpBase::JSServer()->addJSONHTMLBlock('captcha_image_' . $this->name, 
+        SphpBase::jsServer()->addJsonHtmlBlock('captcha_image_' . $this->name, 
             '<img src="data:image/jpeg;base64,' . $imageData . '" width="160" height="60" alt="Security Code" />'
         );
     }
     
     private function refreshCaptcha() {
-        include_once($this->mypath . "/cap.php");
+        include_once($this->myPath . "/cap.php");
         $captcha = new CaptchaSub();
         $imageData = $captcha->genImage();
         
@@ -265,17 +265,17 @@ class Captcha extends \Sphp\comp\form\TextField {
             'id' => bin2hex(random_bytes(16)),
             'value' => $captcha->getGeneratedValue(),
             'timestamp' => time(),
-            'ip' => SphpBase::sphp_request()->server('REMOTE_ADDR', 'unknown')
+            'ip' => SphpBase::sphpRequest()->server('REMOTE_ADDR', 'unknown')
         ];
-        SphpBase::sphp_request()->session($this->sessionKey, $captchaData);
+        SphpBase::sphpRequest()->session($this->sessionKey, $captchaData);
         
         // Update image container
-        SphpBase::JSServer()->addJSONHTMLBlock('captcha_image_' . $this->name, 
+        SphpBase::jsServer()->addJsonHtmlBlock('captcha_image_' . $this->name, 
             '<img src="data:image/jpeg;base64,' . $imageData . '" width="160" height="60" alt="Security Code" />'
         );
         
         // Clear input field and re-enable refresh button
-        SphpBase::JSServer()->addJSONJSBlock('
+        SphpBase::jsServer()->addJsonJsBlock('
             (function() {
                 // Clear input field
                 var inputField = document.getElementById("' . $this->name . '");
@@ -297,16 +297,16 @@ class Captcha extends \Sphp\comp\form\TextField {
         $logMessage = sprintf(
             "Captcha Attempt: %s | IP: %s | Success: %s | Type: %s",
             $this->name,
-            SphpBase::sphp_request()->server('REMOTE_ADDR', 'unknown'),
+            SphpBase::sphpRequest()->server('REMOTE_ADDR', 'unknown'),
             $success ? 'YES' : 'NO',
             $type
         );
         
-        SphpBase::debug()->write_log($logMessage);
+        SphpBase::debug()->writeLog($logMessage);
     }
     
     public function onrender() {
-        SphpBase::JSServer()->getAJAX();
+        SphpBase::jsServer()->getAjax();
         $this->value = "";
         parent::onrender();
         // Configure input element attributes
@@ -378,7 +378,7 @@ class Captcha extends \Sphp\comp\form\TextField {
                 imageBox.innerHTML = \'<span style="color: #6c757d; font-size: 12px;">Loading new code...</span>\';
                 
                 // Make AJAX request using SartajPHP framework
-                getURL("' . getEventURL('refresh_captcha', '', 'index2') . '", 
+                getURL("' . getEventUrl('refresh_captcha', '', 'index2') . '", 
                        {captcha_name: captchaName}, 
                        false);
             }
@@ -400,11 +400,11 @@ class Captcha extends \Sphp\comp\form\TextField {
         // Initialize captcha on page load
         setTimeout(function() {
             // Load initial captcha image
-            getURL("' . getEventURL('captcha', '', 'index2') . '", {}, false);
+            getURL("' . getEventUrl('captcha', '', 'index2') . '", {}, false);
         }, 100);
         ';
         
-        if(!$this->isBlocked()) addHeaderJSFunctionCode('ready', 'captcha_js_' . $this->name, $jsFunctions);
+        if(!$this->isBlocked()) addHeaderJsFunctionCode('ready', 'captcha_js_' . $this->name, $jsFunctions);
     }
     
     // Optional: Add configuration methods

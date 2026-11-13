@@ -117,8 +117,8 @@ class SMTP
      * Debug output level.
      * Options:
      * * self::DEBUG_OFF (`0`) No debug output, default
-     * * self::DEBUG_CLIENT (`1`) Client commands
-     * * self::DEBUG_SERVER (`2`) Client commands and server responses
+     * * self::DEBUG_CLIENT (`1`) client commands
+     * * self::DEBUG_SERVER (`2`) client commands and server responses
      * * self::DEBUG_CONNECTION (`3`) As DEBUG_SERVER plus connection status
      * * self::DEBUG_LOWLEVEL (`4`) Low-level data output, all messages.
      *
@@ -131,7 +131,7 @@ class SMTP
      * Options:
      * * `echo` Output plain-text as-is, appropriate for CLI
      * * `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output
-     * * `error_log` Output to error log as configured in php.ini
+     * * `errorLog` Output to error log as configured in php.ini
      * Alternatively, you can provide a callable expecting two params: a message string and the debug level:
      *
      * ```php
@@ -273,15 +273,15 @@ class SMTP
             return;
         }
         //Avoid clash with built-in function names
-        if (is_callable($this->Debugoutput) && !in_array($this->Debugoutput, ['error_log', 'html', 'echo'])) {
+        if (is_callable($this->Debugoutput) && !in_array($this->Debugoutput, ['errorLog', 'html', 'echo'])) {
             call_user_func($this->Debugoutput, $str, $level);
 
             return;
         }
         switch ($this->Debugoutput) {
-            case 'error_log':
+            case 'errorLog':
                 //Don't output, just log
-                error_log($str);
+                errorLog($str);
                 break;
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output
@@ -664,7 +664,7 @@ class SMTP
     public function connected()
     {
         if (is_resource($this->smtp_conn)) {
-            $sock_status = stream_get_meta_data($this->smtp_conn);
+            $sock_status = stream_get_metaData($this->smtp_conn);
             if ($sock_status['eof']) {
                 //The socket is valid but we are not connected
                 $this->edebug(
@@ -1159,7 +1159,7 @@ class SMTP
     }
 
     /**
-     * Get metadata about the SMTP server from its HELO/EHLO response.
+     * Get metaData about the SMTP server from its HELO/EHLO response.
      * The method works in three ways, dependent on argument value and current state:
      *   1. HELO/EHLO has not been sent - returns null and populates $this->error.
      *   2. HELO has been sent -
@@ -1279,7 +1279,7 @@ class SMTP
                 break;
             }
             //Timed-out? Log and break
-            $info = stream_get_meta_data($this->smtp_conn);
+            $info = stream_get_metaData($this->smtp_conn);
             if ($info['timed_out']) {
                 $this->edebug(
                     'SMTP -> get_lines(): stream timed-out (' . $this->Timeout . ' sec)',

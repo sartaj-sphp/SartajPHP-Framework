@@ -34,7 +34,7 @@ class JQueryUIDialogDecorator {
     
     private function bootstrap5Theme() {
         // Match Bootstrap card styling
-        addHeaderCSS($this->name, '
+        addHeaderCss($this->name, '
             .ui-dialog {
                 padding: 0 !important;
                 border-radius: 0.5rem !important;
@@ -78,7 +78,7 @@ class JQueryUIDialogDecorator {
     }
     
     private function darkTheme() {
-        addHeaderCSS($this->name, '
+        addHeaderCss($this->name, '
             .ui-dialog {
                 background: #1a1a2e !important;
                 border-radius: 12px !important;
@@ -115,7 +115,7 @@ class JQueryUIDialogDecorator {
     }
     
     private function minimalTheme() {
-        addHeaderCSS($this->name, '
+        addHeaderCss($this->name, '
             .ui-dialog {
                 border: 1px solid #e0e0e0 !important;
                 border-radius: 0 !important;
@@ -146,11 +146,11 @@ class JQueryUIDialogDecorator {
     private function customTheme() {
         // Allow dynamic style overrides
         $style = $this->getCustomStyle();
-        addHeaderCSS($this->name, $style);
+        addHeaderCss($this->name, $style);
     }
     
     private function defaultTheme() {
-        addHeaderCSS($this->name, '
+        addHeaderCss($this->name, '
             .ui-dialog-titlebar {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
                 color: white !important;
@@ -171,7 +171,7 @@ class JQueryUIDialogDecorator {
     }
     
     public function addResizableHandles() {
-        addHeaderCSS($this->name . 'resize', '
+        addHeaderCss($this->name . 'resize', '
             .ui-resizable-handle {
                 background: #667eea !important;
             }
@@ -183,7 +183,7 @@ class JQueryUIDialogDecorator {
     }
     
     public function animateDialog() {
-        addHeaderCSS($this->name. 'animate', '
+        addHeaderCss($this->name. 'animate', '
             .ui-dialog {
                 animation: slideIn 0.3s ease-out !important;
             }

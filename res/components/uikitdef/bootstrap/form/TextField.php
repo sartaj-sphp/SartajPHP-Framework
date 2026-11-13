@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form{
 
-class TextField extends \Sphp\tools\Component{
+class TextField extends \Sphp\Tools\Component{
 
     public $maxLen = '';
     public $minLen = '';
@@ -37,9 +37,9 @@ class TextField extends \Sphp\tools\Component{
     protected function oninit() {
         $this->tagName = "input";
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
         if($this->getAttribute("type") == ""){
             $this->setAttribute('type', 'text');
@@ -70,14 +70,14 @@ class TextField extends \Sphp\tools\Component{
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="text-danger">' . $msg . '! </strong>';
-        if(\SphpBase::sphp_request()->isAJAX()){
-            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+        if(\SphpBase::sphpRequest()->isAjax()){
+            \SphpBase::jsServer()->addJsonJsBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
         }
         setErr($this->name, $msg); 
     }
     public function fi_setNumeric() {
-        if ($this->issubmit) {
-            if (!is_valid_num($this->value, $this->dataType)) {
+        if ($this->blnSubmit) {
+            if (!isValidNum($this->value, $this->dataType)) {
                 if ($this->dataType == "INT") {
                     $msg = "Please Fill a Whole Number";
                 } else {
@@ -90,7 +90,7 @@ class TextField extends \Sphp\tools\Component{
     }
 
     public function fi_setMatch($compid) { 
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if ($this->value != $this->frontobj->getComponent($compid)->value) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Value is not Match"); 
             }
@@ -99,7 +99,7 @@ class TextField extends \Sphp\tools\Component{
     }
     
     public function fi_setRequired() { 
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if (strlen($this->value) < 1) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Can not submit Empty"); 
             }
@@ -108,8 +108,8 @@ class TextField extends \Sphp\tools\Component{
     }
 
     public function fi_setEmail() {
-        if ($this->issubmit) {
-            if (strlen($this->value) > 0 && !is_valid_email($this->value)) {
+        if ($this->blnSubmit) {
+            if (strlen($this->value) > 0 && !isValidEmail($this->value)) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Please Fill correct Email Address");
             }
         }
@@ -118,7 +118,7 @@ class TextField extends \Sphp\tools\Component{
 
     public function fi_setMaxLen($val) {
         $this->maxLen = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if (strlen($this->getValue()) > $val) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Maximum Characters should not be exceed then $val");
             }
@@ -131,7 +131,7 @@ class TextField extends \Sphp\tools\Component{
 
     public function fi_setMinLen($val) {
         $this->minLen = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if ($this->getValue() != '' && strlen($this->getValue()) < $val) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Minimum Characters should be $val");
             }
@@ -172,23 +172,23 @@ class TextField extends \Sphp\tools\Component{
                 $this->fu_setMsgName($this->getAttribute('placeholder'));
             }
             if ($this->minLen != '') {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}min", "
 ctlMins['$this->name']= Array('$this->msgName','TextField','$this->minLen');");
             }
             if ($this->numeric) {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}num", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}num", "
 ctlNums['$this->name']= Array('$this->msgName','TextField');");
             }
             if ($this->email) {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}email", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}email", "
 ctlEmail['$this->name']= Array('$this->msgName','TextField');");
             }
             if ($this->req) {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
             }
             if ($this->match != "") {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}match", '
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}match", '
  if($("#'. $this->name .'").val() != $("#'. $this->match .'").val()){
    displayValidationError(document.getElementById("'. $this->name .'"),"Value isn\'t match with " + $("#'. $this->match .'").attr("placeholder"));
    blnSubmit = false ;
@@ -225,12 +225,12 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
         switch($this->styler){
             case 1:{
                 $this->setPreTag($this->getPreTag() . '<div class="form-floating mb-3">');
-                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
+                $this->setPostTag('<label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label></div>' . $this->getPostTag());
                 break;
             }case 2:{
                 $this->setPreTag($this->getPreTag() .'<div class="mb-3">
-                <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
+                <label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->htmlId .'Help" class="form-text">'. $this->helptext .'</div></div>'. $this->getPostTag());
                 break;
             }
         }
@@ -238,7 +238,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
     }
 
 // javascript functions used by ajax control and other control
-    public function getJSValue() {
+    public function getJsValue() {
         return "document.getElementById('$this->name').value";
     }
 

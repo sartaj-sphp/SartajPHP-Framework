@@ -4,18 +4,18 @@
  *
  * @author Sartaj
  */
-include_once("{$libpath}/dev/QueryBuilder.php");
+include_once("{$libPath}/dev/QueryBuilder.php");
 // may use div tag id edtFormHolder for editor form
 
-class AutoGate extends \Sphp\tools\BasicGate {
+class AutoGate extends \Sphp\Tools\BasicGate {
 
     /**
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     protected $genFormFront = null;
 
     /**
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     protected $showallFront = null;
     public $heading = "heading";
@@ -37,19 +37,19 @@ class AutoGate extends \Sphp\tools\BasicGate {
     public $printstylefile = __DIR__ ."/fronts/style.css";
 
     public function onstart() {
-        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
+        $this->logoimg = SphpBase::sphpSettings()->slibUrl ."/apps/helper/fronts/logo.png";
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
         $this->showallFront->getComponent('showall')->fu_setPerPageRows(10);
-        SphpBase::sphp_api()->addProp('page_title',$this->heading);
+        SphpBase::sphpApi()->addProp('page_title',$this->heading);
     }
 
     public function page_event_loadform($evtp) {
         $this->showallFront->getComponent('showall')->fu_setRenderTag();
-        //$this->JSServer->addJSONFront($this->genFormFront,'showall_editor');
-        $this->JSServer->addJSONFront($this->showallFront, 'listFormHolder');
-//      $this->JSServer->addJSONBlock('html','listheading',$listheading->innerHTML);
-//      $this->JSServer->addJSONBlock('html','editheading',$editheading->innerHTML);
+        //$this->jsServer->addJsonFront($this->genFormFront,'showall_editor');
+        $this->jsServer->addJsonFront($this->showallFront, 'listFormHolder');
+//      $this->jsServer->addJsonBlock('html','listheading',$listheading->innerHTML);
+//      $this->jsServer->addJsonBlock('html','editheading',$editheading->innerHTML);
     }
 
     public function page_new() {
@@ -62,15 +62,15 @@ class AutoGate extends \Sphp\tools\BasicGate {
 
     public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
-        $this->JSServer->addJSONComp($showall, 'showall');
-        $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
+        $this->jsServer->addJsonComp($showall, 'showall');
+        $this->jsServer->addJsonBlock('html', 'pagebar', $showall->getPageBar());
     }
 
     public function page_event_print($evtp) {
-        $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
+        $this->printstyle = \SphpBase::sphpApi()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
-        require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
-        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
+        require($this->resourcePath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
+        $showsingleFront = new Sphp\Tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
         $showall->unsetAddButton();
         $showall->unsetDialog();
         $showall->unsetPageBar();
@@ -84,9 +84,9 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
             if (!getCheckErr()) {
-                $this->JSServer->addJSONComp($showall, 'showall');
-                //$this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-                $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
+                $this->jsServer->addJsonComp($showall, 'showall');
+                //$this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
+                $this->jsServer->addJsonBlock('html', 'pagebar', $showall->getPageBar());
             } else {
                 setErr('app1', 'Can not Search Data');
                 $this->sendError();
@@ -116,12 +116,12 @@ class AutoGate extends \Sphp\tools\BasicGate {
     }
 
     public function page_event_rowclick($evtp) {
-        $this->Client->session("formType", "Edit");
+        $this->client->session("formType", "Edit");
         $this->page->viewData($this->genFormFront->getComponent($this->formid));
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
-        $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-//        $this->JSServer->addJSONBlock('html','frmstatus',"Form is on Update Mode!");
+        $this->jsServer->addJsonJsBlock('$( "#showall_dlg" ).dialog( "open" );');
+        $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
+//        $this->jsServer->addJsonBlock('html','frmstatus',"Form is on Update Mode!");
     }
 
     public function page_event_showall_newa($evtp) {
@@ -131,8 +131,8 @@ class AutoGate extends \Sphp\tools\BasicGate {
 	if(isset($_SESSION['curtrec'])){
             unset($_SESSION['curtrec']);
         }
-        $this->Client->session("formType", "Add");
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+        $this->client->session("formType", "Add");
+        $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
     }
 
 // user event handling end here
@@ -141,28 +141,28 @@ class AutoGate extends \Sphp\tools\BasicGate {
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         $extupdate = array();
         $extupdate["up"] = 12;
-        $extupdate["previd"] = $this->Client->request("previd");
-        $extupdate["prevctrl"] = $this->Client->request("prevctrl");
-        $this->Client->session("extupdate", $extupdate);
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+        $extupdate["previd"] = $this->client->request("previd");
+        $extupdate["prevctrl"] = $this->client->request("prevctrl");
+        $this->client->session("extupdate", $extupdate);
+        $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
     }
 
     public function insert() {
-        global $cmpid;
-        $this->extra[]['spcmpid'] = $cmpid;
+        global $cmpId;
+        $this->extra[]['spcmpId'] = $cmpId;
         $blnsendList = $this->checkCrossCall();
         if (!getCheckErr()) {
             $this->insertedid = $this->page->insertData($this->genFormFront->getComponent($this->formid),$this->extra);
             if (!getCheckErr()) {
                 //setMsg('app1','New Data Record is Inserted, want more record add fill form again' );
-                //$JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                //$jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 if ($blnsendList) {
-                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
+                    $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
                 } else {
                     $this->sendCrossCall();
                 }
-                //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
-                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                //$this->jsServer->addJsonBlock('jsp', 'proces', '$("#editform").modal("hide");');
+                $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 $this->sendSuccess('Data is inserted in Database');
                 $this->sendError();
             } else {
@@ -176,10 +176,10 @@ class AutoGate extends \Sphp\tools\BasicGate {
     }
 
     public function checkCrossCall() {
-        $extupdate = $this->Client->session("extupdate");
+        $extupdate = $this->client->session("extupdate");
         if (isset($extupdate["up"]) && $extupdate["up"] == 12) {
             $extupdate["up"] = 11;
-            $this->Client->session("extupdate", $extupdate);
+            $this->client->session("extupdate", $extupdate);
             return false;
         } else {
             return true;
@@ -187,8 +187,8 @@ class AutoGate extends \Sphp\tools\BasicGate {
     }
 
     public function sendCrossCall() {
-        $extupdate = $this->Client->session("extupdate");
-        $this->JSServer->addJSONJSBlock("getURL('" . getEventURL("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
+        $extupdate = $this->client->session("extupdate");
+        $this->jsServer->addJsonJsBlock("getURL('" . getEventUrl("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
     }
 
     public function update() {
@@ -197,13 +197,13 @@ class AutoGate extends \Sphp\tools\BasicGate {
             $this->page->updateData($this->genFormFront->getComponent($this->formid),$this->extra, $this->recID, $this->recWhere);
             if (!getCheckErr()) {
                 if ($blnsendList) {
-                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                    //$this->JSServer->addJSONJSBlock(" setFormAsNew('form2');");
+                    $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
+                    //$this->jsServer->addJsonJsBlock(" setFormAsNew('form2');");
                 } else {
                     $this->sendCrossCall();
                 }
-                //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
-                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                //$this->jsServer->addJsonBlock('jsp', 'proces', '$("#editform").modal("hide");');
+                $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 $this->sendSuccess('Record is updated');
             } else {
                 setErr('app1', 'Record can not update');
@@ -220,13 +220,13 @@ class AutoGate extends \Sphp\tools\BasicGate {
         if (!getCheckErr()) {
             $this->page->deleteRec();
             if ($blnsendList) {
-                $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+                $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
+                $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
             } else {
                 $this->sendCrossCall();
             }
-            //$this->JSServer->addJSONBlock('jsp', 'proces', '$("#editform").modal("hide");');
-            $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+            //$this->jsServer->addJsonBlock('jsp', 'proces', '$("#editform").modal("hide");');
+            $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
             $this->sendSuccess('Record is Deleted');
         } else {
             setErr('app1', 'Record could not be deleted');
@@ -235,13 +235,13 @@ class AutoGate extends \Sphp\tools\BasicGate {
     }
 
     public function sendSuccess($msg) {
-        $this->JSServer->addJSONBlock('html', 'sphpsuccessmsg', $msg);
-        $this->JSServer->addJSONJSBlock('runanierr("success");');
+        $this->jsServer->addJsonBlock('html', 'sphpsuccessmsg', $msg);
+        $this->jsServer->addJsonJsBlock('runanierr("success");');
     }
 
     public function sendWarning($msg) {
-        $this->JSServer->addJSONBlock('html', 'sphpwarningmsg', $msg);
-        $this->JSServer->addJSONJSBlock('runanierr("warning");');
+        $this->jsServer->addJsonBlock('html', 'sphpwarningmsg', $msg);
+        $this->jsServer->addJsonJsBlock('runanierr("warning");');
     }
 
     public function sendError($errorInner = "") {
@@ -254,41 +254,41 @@ class AutoGate extends \Sphp\tools\BasicGate {
             }
         }
         if ($msg != "") {
-            $this->JSServer->addJSONBlock('html', 'sphpinfomsg', $msg);
-            $this->JSServer->addJSONJSBlock('runanierr("info");');
+            $this->jsServer->addJsonBlock('html', 'sphpinfomsg', $msg);
+            $this->jsServer->addJsonJsBlock('runanierr("info");');
         }
         if ($err != "" || $errorInner != "") {
-            $this->JSServer->addJSONBlock('html', 'sphperrormsg', $err . ' ' . $errorInner);
-            $this->JSServer->addJSONJSBlock('runanierr("error");');
+            $this->jsServer->addJsonBlock('html', 'sphperrormsg', $err . ' ' . $errorInner);
+            $this->jsServer->addJsonJsBlock('runanierr("error");');
         }
     }
 
     public function sendInfo($msg) {
         $msg1 = traceMsg(true);
-        $this->JSServer->addJSONBlock('html', 'sphpinfomsg', $msg . $msg1);
-        $this->JSServer->addJSONJSBlock('runanierr("info");');
+        $this->jsServer->addJsonBlock('html', 'sphpinfomsg', $msg . $msg1);
+        $this->jsServer->addJsonJsBlock('runanierr("info");');
     }
 
     public function page_event_efillstate($evtp) {
-        $this->Client->session('country', $this->Client->request('country'));
-        $this->JSServer->addJSONComp($this->genFormFront->getComponent('state'), 'edit_state_box');
-        $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
+        $this->client->session('country', $this->client->request('country'));
+        $this->jsServer->addJsonComp($this->genFormFront->getComponent('state'), 'edit_state_box');
+        $this->jsServer->addJsonComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
     public function page_event_efillcity($evtp) {
-        $this->Client->session('country', $this->Client->request('country'));
-        $this->Client->session('state', $this->Client->request('state'));
-        $this->JSServer->addJSONComp($this->genFormFront->getComponent('city'), 'edit_city_box');
+        $this->client->session('country', $this->client->request('country'));
+        $this->client->session('state', $this->client->request('state'));
+        $this->jsServer->addJsonComp($this->genFormFront->getComponent('city'), 'edit_city_box');
     }
 
     /// Search
     public function page_event_efillstates($evtp) {
-        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_state'), 'edit_state_boxs');
-        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
+        $this->jsServer->addJsonComp($this->showallFront->getComponent('searchby_state'), 'edit_state_boxs');
+        $this->jsServer->addJsonComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 
     public function page_event_efillcitys($evtp) {
-        $this->JSServer->addJSONComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
+        $this->jsServer->addJsonComp($this->showallFront->getComponent('searchby_city'), 'edit_city_boxs');
     }
 
 }

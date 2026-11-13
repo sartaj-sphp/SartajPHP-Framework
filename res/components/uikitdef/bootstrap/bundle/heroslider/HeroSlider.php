@@ -3,13 +3,13 @@
  * For use in .front file of SartajPhp.
  * Example:
  * <header id="slider1" runat="server" 
- *         path="mypath/comp/heroslider/HeroSlider.php" 
+ *         path="myPath/comp/heroslider/HeroSlider.php" 
  *         funsetStyler="1"
  *         funsetImages='{"masters/images/pic1.jpg":"First caption","masters/images/pic2.jpg":"Second caption"}'
  *         funsetInterval="5000"
  *         funsetTitle="Canada Agency"></header>
  */
-class HeroSlider extends Sphp\tools\Component {
+class HeroSlider extends Sphp\Tools\Component {
     private $images = array();
     private $interval = 3000;
     private $title = "Default Title";
@@ -35,11 +35,11 @@ class HeroSlider extends Sphp\tools\Component {
 
     public function setupjs() {
         // CSS dependencies
-        addFileLink($this->myrespath."/heroslider.css",true);
-        addFileLink($this->myrespath."/animate.min.css",true);
+        addFileLink($this->myUrl."/heroslider.css",true);
+        addFileLink($this->myUrl."/animate.min.css",true);
 
         // JS hook: bounce effect on slide change
-        addHeaderJSFunctionCode("ready", $this->name.'jsready', '
+        addHeaderJsFunctionCode("ready", $this->name.'jsready', '
         var effects = ["animate__slideInLeft", "animate__slideInRight", "animate__slideInUp", "animate__slideInDown","animate__bounce","animate__shakeX","animate__shakeY","animate__fadeInUp","animate__fadeInDown","animate_zoomIn","animate__zoomOut"];
             $("#'.$this->name.'").on("slid.bs.carousel", function () {
                 var caption = $(this).find(".carousel-item.active .carousel-caption h1, .carousel-item.active .carousel-caption p");
@@ -81,11 +81,11 @@ class HeroSlider extends Sphp\tools\Component {
     }
 
     protected function onrender(){
-        if(SphpBase::sphp_router()->getCurrentRequest() != 'index'){
+        if(SphpBase::sphpRouter()->getCurrentRequest() != 'index'){
             $key1 = array_key_first($this->images);
             $this->element->setAttribute('class','hero d-flex align-items-center text-center text-white');
             $this->style = "background: linear-gradient(rgba(0, 100, 0, 0.6), rgba(0, 100, 0, 0.6)),url('". $key1 ."') no-repeat center center/cover;height: 30vh;";
-            $this->setInnerHTML('<div class="container">
+            $this->setInnerHtml('<div class="container">
       <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">'. $this->title .'</h1>
       <p class="lead animate__animated animate__fadeInUp">'. $this->images[$key1] .'</p>
       <a href="#apply" class="btn btn-light btn-lg mt-3"><i class="fas fa-child"></i> Learn More</a>
@@ -134,7 +134,7 @@ class HeroSlider extends Sphp\tools\Component {
             </div>';
         }
 
-        $this->setInnerHTML('
+        $this->setInnerHtml('
             '.$indicators.'
             <div class="carousel-inner">'.$imageshtml.'</div>
             <button class="carousel-control-prev" type="button" data-bs-target="#'.$this->name.'" data-bs-slide="prev">

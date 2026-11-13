@@ -7,7 +7,7 @@
 
 
 
-class Accordion extends Sphp\tools\Component{
+class Accordion extends Sphp\Tools\Component{
 protected function oncreate($element){
 $this->setHTMLName("");
 }
@@ -22,7 +22,7 @@ addFileLink($jquerypath.'ui/jquery.ui.widget.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.accordion.min.js');
  * 
  */
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
     $("#'.$this->name.'").accordion();
     ');
 if($this->innerHTML == ''){

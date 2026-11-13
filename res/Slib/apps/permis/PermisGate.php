@@ -6,7 +6,7 @@
  *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
  *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
-class PermisGate extends \Sphp\tools\BasicGate {       
+class PermisGate extends \Sphp\Tools\BasicGate {       
     /**
      * $extra array as $extra[table][field] = value format. pass $extra value while 
      * insert,update data to database. this is extra data which is not provided by bound Components.
@@ -32,13 +32,13 @@ class PermisGate extends \Sphp\tools\BasicGate {
     protected $formid = "form2";
     /**
      * This Front File provide Edit Form to use Insert and Update records
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     public $genFormFront = null;
 
     /**
      * This Front File provide List Records with Pagination + search Form
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     public $showallFront = null;
         
@@ -68,8 +68,8 @@ class PermisGate extends \Sphp\tools\BasicGate {
     public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         $showall->fu_unsetRenderTag();
-        $this->JSServer->addJSONComp($showall, 'showall');
-        $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
+        $this->jsServer->addJsonComp($showall, 'showall');
+        $this->jsServer->addJsonBlock('html', 'pagebar', $showall->getPageBar());
     }
     
     public function hasPermission($p){
@@ -103,13 +103,13 @@ class PermisGate extends \Sphp\tools\BasicGate {
     }        
     
     public function insert() {
-        global $cmpid;
+        global $cmpId;
         if($this->page->hasPermission("add")){
             $this->genFormFront->addMetaData("formButton", "Save");
-            if($this->Client->isSession('sid')) setErr('App','Need to login');
-            $this->extra[]['userid'] = $this->Client->session('sid');
-            $this->extra[]['parentid'] = $this->Client->session('parentid');
-            $this->extra[]['spcmpid'] = $cmpid;
+            if($this->client->isSession('sid')) setErr('App','Need to login');
+            $this->extra[]['userid'] = $this->client->session('sid');
+            $this->extra[]['parentid'] = $this->client->session('parentid');
+            $this->extra[]['spcmpId'] = $cmpId;
             $this->extra[]['submit_timestamp'] = time();
             $this->extra[]['update_timestamp'] = time();
             
@@ -163,9 +163,9 @@ class PermisGate extends \Sphp\tools\BasicGate {
                 $type = "danger";                
                 $showall = $this->showallFront->getComponent('showall');
                 $showall->fu_unsetRenderTag();
-                $this->JSServer->addJSONComp($showall,'showall');
-                $this->JSServer->addJSONBlock('html','pagebar',$showall->getPageBar());
-                $this->JSServer->addJSONJSBlock('setFormStatus("'.$msg.'", "'.$type.'"); readyFormAsNew("form2");');            
+                $this->jsServer->addJsonComp($showall,'showall');
+                $this->jsServer->addJsonBlock('html','pagebar',$showall->getPageBar());
+                $this->jsServer->addJsonJsBlock('setFormStatus("'.$msg.'", "'.$type.'"); readyFormAsNew("form2");');            
             } else {
                 setErr('App', 'Record could not be deleted');
                 $this->setFrontFile($this->showallFront);

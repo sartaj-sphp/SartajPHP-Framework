@@ -3,33 +3,33 @@
 
 
 
-class MsgPanel extends Sphp\tools\Component{
+class MsgPanel extends Sphp\Tools\Component{
 
     protected function oncreate($element) {
 //        $this->fu_unsetRenderTag();
     }
     public function showAlert($type,$msg) {
-        $JSServer = SphpBase::JSServer();
-        $JSServer->addJSONJSBlock("showAlert('$type','$msg');");
+        $jsServer = SphpBase::jsServer();
+        $jsServer->addJsonJsBlock("showAlert('$type','$msg');");
     }
     public function sendSuccess($msg) {
-        $JSServer = SphpBase::JSServer();
-            $JSServer->addJSONBlock('html','sphpsuccessmsg',$msg);
-            $JSServer->addJSONJSBlock('runanierr("success");');        
+        $jsServer = SphpBase::jsServer();
+            $jsServer->addJsonBlock('html','sphpsuccessmsg',$msg);
+            $jsServer->addJsonJsBlock('runanierr("success");');        
     }
     public function sendWarning($msg) {
-        $JSServer = SphpBase::JSServer();
-            $JSServer->addJSONBlock('html','sphpwarningmsg',$msg);
-            $JSServer->addJSONJSBlock('runanierr("warning");');        
+        $jsServer = SphpBase::jsServer();
+            $jsServer->addJsonBlock('html','sphpwarningmsg',$msg);
+            $jsServer->addJsonJsBlock('runanierr("warning");');        
     }
     public function sendError($errorInner="") {
-        $JSServer = SphpBase::JSServer();
-            $JSServer->addJSONBlock('html','sphpinfomsg',traceMsg(true));
-            $JSServer->addJSONBlock('html','sphperrormsg',traceError(true).$errorInner);
-            $JSServer->addJSONJSBlock('runanierr("error");runanierr("info");');
+        $jsServer = SphpBase::jsServer();
+            $jsServer->addJsonBlock('html','sphpinfomsg',traceMsg(true));
+            $jsServer->addJsonBlock('html','sphperrormsg',traceError(true).$errorInner);
+            $jsServer->addJsonJsBlock('runanierr("error");runanierr("info");');
     }
     protected function onjsrender() {
-        addHeaderJSFunction("showAlert", 'function showAlert(type,msg){
+        addHeaderJsFunction("showAlert", 'function showAlert(type,msg){
 ', '    if(type=="warning"){
             $("#sphpwarningmsg").html(msg);
             runanierr(type);
@@ -46,7 +46,7 @@ class MsgPanel extends Sphp\tools\Component{
     }
 }
 ', true);
-        addHeaderJSCode("runanierr", 'window["runanierr"] = function(type){
+        addHeaderJsCode("runanierr", 'window["runanierr"] = function(type){
     $("#sphp" + type).fadeIn(1);
     $("#sphp" + type).css("display","block");
     $("#sphp" + type).delay(5000).fadeOut("slow", function () { $(this).css("display","none"); });            

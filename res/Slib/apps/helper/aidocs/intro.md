@@ -155,7 +155,7 @@ $basepath = "";  // Project is in root directory
 ### Important Notes
 
 - Always use `{workspace_folder}` or `./` to reference the current project root
-- `table_list` returns complete column metadata (names, types, constraints)
+- `table_list` returns complete column meta_data (names, types, constraints)
 - `generateApp` returns code of Gate class + edit.front + list.front files as Database Table Structure
 - To get the `basepath` value, read `$basepath` from `comp.php` in the project root
 - If `$basepath` is not defined in `comp.php`, treat it as empty string

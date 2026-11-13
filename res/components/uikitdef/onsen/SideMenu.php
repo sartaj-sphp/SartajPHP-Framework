@@ -8,26 +8,26 @@
 include_once(__DIR__ ."/OnsenPage.php");
 OnsenPage::$navigator = true;
 
-class SideMenu extends \Sphp\tools\Component{
+class SideMenu extends \Sphp\Tools\Component{
     
 public function oncreate($element){
-    $this->fu_setHTMLName("");
-    $this->fu_setHTMLID("");
-    //$this->registerEventJS('demo');
+    $this->fu_setHtmlName("");
+    $this->fu_setHtmlId("");
+    //$this->registerEventJs('demo');
 }
 
 
 public function onjsrender(){
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsenui.css');
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/css/onsen-css-components.min.css');
-    addFileLink(SphpBase::sphp_settings()->res_path . '/jslib/onsen/js/onsenui.min.js');
+    addFileLink(SphpBase::sphpSettings()->resourceUrl . '/jslib/onsen/css/onsenui.css');
+    addFileLink(SphpBase::sphpSettings()->resourceUrl . '/jslib/onsen/css/onsen-css-components.min.css');
+    addFileLink(SphpBase::sphpSettings()->resourceUrl . '/jslib/onsen/js/onsenui.min.js');
 
-    addHeaderJSCode('onsen0', ' window["onsen"] = {};');
-    addHeaderJSCode('onsen3', ' window.onsen.loadPage = function(page,data){ var content = document.getElementById(\''. $this->name.'content\');
+    addHeaderJsCode('onsen0', ' window["onsen"] = {};');
+    addHeaderJsCode('onsen3', ' window.onsen.loadPage = function(page,data){ var content = document.getElementById(\''. $this->name.'content\');
   var menu = document.getElementById(\''. $this->name.'\');
   content.load(page).then(menu.close.bind(menu));
 };');
-    addHeaderJSCode('onsensidemenu2', ' window["'. $this->name .'"] = {}; window["'. $this->name .'"].open = function(){var menu = document.getElementById(\''. $this->name .'\');
+    addHeaderJsCode('onsensidemenu2', ' window["'. $this->name .'"] = {}; window["'. $this->name .'"].open = function(){var menu = document.getElementById(\''. $this->name .'\');
   menu.open();};
 ');
 }

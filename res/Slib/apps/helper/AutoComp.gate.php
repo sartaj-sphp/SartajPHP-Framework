@@ -1,6 +1,6 @@
 <?php
 
-class AutoComp extends Sphp\tools\BasicGate{
+class AutoComp extends Sphp\Tools\BasicGate{
     public $atype = "";
     public $aid = "";
     public $lblid = "";
@@ -16,12 +16,12 @@ class AutoComp extends Sphp\tools\BasicGate{
 
     public function onstart() {
         //$autocompkey = "FD45A279GH";
-        if(\SphpBase::sphp_request()->session("edtmode") == autocompkey){
+        if(\SphpBase::sphpRequest()->session("edtmode") == autocompkey){
         }else if(isset($_SERVER['HTTP_HOST']) && strpos(" ". $_SERVER['HTTP_HOST'],"localhost") !== false){
-            \SphpBase::sphp_request()->session("edtmode",autocompkey);
-        }else if($this->Client->request("autocompkey") == autocompkey){
-            \SphpBase::sphp_request()->session("edtmode",autocompkey);
-        }else if(!defined("autocompkey") || $this->Client->post("autocompkey") !== autocompkey){
+            \SphpBase::sphpRequest()->session("edtmode",autocompkey);
+        }else if($this->client->request("autocompkey") == autocompkey){
+            \SphpBase::sphpRequest()->session("edtmode",autocompkey);
+        }else if(!defined("autocompkey") || $this->client->post("autocompkey") !== autocompkey){
             echo "no";
             exit();
         }else{
@@ -32,25 +32,25 @@ class AutoComp extends Sphp\tools\BasicGate{
 
     }
     public function page_event_genautocompl($param) {
-        //$b1 = new  Sphp\kit\Eventer();
+        //$b1 = new  Sphp\Kit\Eventer();
         $this->getList(new SphpBase());
-        $this->getList( new  Sphp\kit\Eventer());
+        $this->getList( new  Sphp\Kit\Eventer());
         
-        $this->getList(new Sphp\tools\BasicGate());
+        $this->getList(new Sphp\Tools\BasicGate());
         //$this->getList($this);
         //$this->getList($this->JQuery);
         
-        $this->getList($this->JSServer);
-        $this->getList($this->Client);
+        $this->getList($this->jsServer);
+        $this->getList($this->client);
         $this->getList($this->page);
-        $this->getList(SphpBase::sphp_api());
-        $this->getList(SphpBase::sphp_response());
-        $this->getList(SphpBase::sphp_permissions());
+        $this->getList(SphpBase::sphpApi());
+        $this->getList(SphpBase::sphpResponse());
+        $this->getList(SphpBase::sphpPermissions());
         $this->getList(SphpBase::dbEngine());
         $this->getList(SphpBase::debug());
-        $this->getList(SphpBase::sphp_router());
-        $this->getList(SphpBase::sphp_session());
-        $this->getList(SphpBase::sphp_settings());
+        $this->getList(SphpBase::sphpRouter());
+        $this->getList(SphpBase::sphpSession());
+        $this->getList(SphpBase::sphpSettings());
         //$this->getList(SphpBase::);
         
     }
@@ -60,7 +60,7 @@ class AutoComp extends Sphp\tools\BasicGate{
         $v2["objtype"] = "nop";
         $v2["list"] = $v1;
         //print_r($v1);
-        $this->JSServer->addJSONReturnBlock($v2);            
+        $this->jsServer->addJsonReturnBlock($v2);            
         //$this->debug->printAll();
     }
     public function page_event_test($param) {
@@ -88,12 +88,12 @@ class AutoComp extends Sphp\tools\BasicGate{
             $s = $this->findObjType($this->statement);
             if(is_object($s)){
                 $v1 = $this->getListLive($s);
-                $this->JSServer->addJSONReturnBlock($v1);
+                $this->jsServer->addJsonReturnBlock($v1);
             }else{
                 $v2 = array();
                 $v2["objtype"] = "error";
                 $v2["list"] = $this->statement . " Object not found";
-                $this->JSServer->addJSONReturnBlock($v2);            
+                $this->jsServer->addJsonReturnBlock($v2);            
                 
             }         
         }else{
@@ -104,7 +104,7 @@ class AutoComp extends Sphp\tools\BasicGate{
             $v2["objtype"] = "null";
             $v2["list"] = $v1;
             //$v2["list"] = $_REQUEST["statement"] . " invalid";
-            $this->JSServer->addJSONReturnBlock($v2);            
+            $this->jsServer->addJsonReturnBlock($v2);            
         }
         //$v1["SphpBase"] = array("int SphpBase(int number)","help1");
         //$v1["SphpBase2"] = array("int SphpBase(int number)","help2");
@@ -125,26 +125,26 @@ class AutoComp extends Sphp\tools\BasicGate{
         global $xyzo,$xyzo2;
         $filenpath = $this->apath . '/' . $this->atext;
         //$filenpath = 'D:/www/demo/apps/index2.app';
-        //$projpath = $this->Client->session("wproject");
+        //$projpath = $this->client->session("wproject");
         if($this->atype == "app"){
             \SphpBase::page()->apppath = $this->apath;
-            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,true);
+            $v1 = \SphpBase::sphpApi()->getRegisterAppClass($filenpath,true);
         }else{
-            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,false);            
+            $v1 = \SphpBase::sphpApi()->getRegisterAppClass($filenpath,false);            
         }
         $clsname = $v1[0]; 
-        $projrootpath = $this->Client->session("wproject");
+        $projrootpath = $this->client->session("wproject");
         if($projrootpath == ""){
-            $projrootpath = \SphpBase::sphp_settings()->start_path;
+            $projrootpath = \SphpBase::sphpSettings()->START_PATH;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid
         $this->afile = str_replace("[!", "<", $this->afile);
         $this->afile = str_replace("!]", ">", $this->afile);
-        $this->afile = str_replace("echo getHeaderHTML();", "", $this->afile);
-        $this->afile = str_replace("print getHeaderHTML();", "", $this->afile);
-        $this->afile = str_replace("echo getFooterHTML();", "", $this->afile);
-        $this->afile = str_replace("print getFooterHTML();", "", $this->afile);
+        $this->afile = str_replace("echo getHeaderHtml();", "", $this->afile);
+        $this->afile = str_replace("print getHeaderHtml();", "", $this->afile);
+        $this->afile = str_replace("echo getFooterHtml();", "", $this->afile);
+        $this->afile = str_replace("print getFooterHtml();", "", $this->afile);
         $this->afile = str_replace('$dynData->render();', "", $this->afile);
         $this->afile = str_replace('SphpBase::$dynData->render();', "", $this->afile);
         $this->afile = str_replace('\SphpBase::$dynData->render();', "", $this->afile);
@@ -185,12 +185,12 @@ class AutoComp extends Sphp\tools\BasicGate{
         try{ 
             $objCreater = ' ?><?php global $xyzo; if(class_exists("'. $clsname .'")){ $xyzo = new '. $clsname .'();}else{';
             if($funName !== ""){ 
-                $objCreater .= ' if(function_exists("'. $funName .'")){  global $xyzo2; $xyzo2 = \SphpBase::sphp_api()->rtFunctionInvoke("'. $funName .'",null);} ';
+                $objCreater .= ' if(function_exists("'. $funName .'")){  global $xyzo2; $xyzo2 = \SphpBase::sphpApi()->rtFunctionInvoke("'. $funName .'",null);} ';
             }
             $objCreater .= ' } ';
             //$this->debug->println("class " . $flines[$this->arow]);
             //file_put_contents("td2.txt",implode("\n",$flines) . $objCreater);
-            $v = "Output: " . executePHPCode(implode("\n",$flines). $objCreater,true);
+            $v = "Output: " . executePhpCode(implode("\n",$flines). $objCreater,true);
         } catch (\Throwable $e) {
             $v = "Error: " . $e->getMessage();
             $this->debug->println($v);
@@ -209,16 +209,16 @@ class AutoComp extends Sphp\tools\BasicGate{
             $objvar = new SphpBase();
         }else if(strpos($this->statement,"SphpBase") !== false){
             $objCreater = '<?php global $xyzo2; $xyzo2 = ' . $statement . ';';
-            $v1 = executePHPCode($objCreater,true);
+            $v1 = executePhpCode($objCreater,true);
             $objvar =  $xyzo2;
         }else if($this->atype == "app" || $this->atype == "php"){
             $v = $this->convertThis2($statement);
             $resvar = null;
             if(is_object($xyzo)){ 
                 $rcls1 = new \ReflectionClass($xyzo);
-                $method = \SphpBase::sphp_api()->rtClassMethodFromFileLine($rcls1,$this->arow + 1);
+                $method = \SphpBase::sphpApi()->rtClassMethodFromFileLine($rcls1,$this->arow + 1);
                 if($method !== null){
-                    $resvar =  \SphpBase::sphp_api()->rtClassMethodInvoke($method,$xyzo,null); 
+                    $resvar =  \SphpBase::sphpApi()->rtClassMethodInvoke($method,$xyzo,null); 
                     //$this->debug->println($method);
                     if($resvar !== null){
                         $objvar = $resvar;
@@ -256,20 +256,20 @@ class AutoComp extends Sphp\tools\BasicGate{
             $resvar = null;
             if(is_object($xyzo) && !is_array($xyzo)){
                 $rcls1 = new \ReflectionClass($xyzo);
-                $method = \SphpBase::sphp_api()->rtClassMethodFromFileLine($rcls1,$this->arow);
+                $method = \SphpBase::sphpApi()->rtClassMethodFromFileLine($rcls1,$this->arow);
                 if($method !== null){
-                    $resvar =  \SphpBase::sphp_api()->rtClassMethodInvoke($method,$xyzo,null);
+                    $resvar =  \SphpBase::sphpApi()->rtClassMethodInvoke($method,$xyzo,null);
                     if($resvar !== null){
                         $v2 = array_keys($resvar);
                         foreach ($v2 as $key => $value) { 
-                            \SphpBase::sphp_api()->setGlobal($value,$resvar[$value]);
+                            \SphpBase::sphpApi()->setGlobal($value,$resvar[$value]);
                         }
                     }
                 }
             }else if(is_array($xyzo)){
                 $v2 = array_keys($xyzo); 
                 foreach ($v2 as $key => $value) { 
-                    \SphpBase::sphp_api()->setGlobal($value,$xyzo[$value]);
+                    \SphpBase::sphpApi()->setGlobal($value,$xyzo[$value]);
                 }
             }
         }
@@ -293,7 +293,7 @@ class AutoComp extends Sphp\tools\BasicGate{
             $ope = $value[1];
             $prop = $value[2];
             if(strpos($obj, '$')!== false){
-                $obj = \SphpBase::sphp_api()->getGlobal(substr($obj,1));
+                $obj = \SphpBase::sphpApi()->getGlobal(substr($obj,1));
             }
             if($objvar !== null){
                 $obj = $objvar;
@@ -353,8 +353,8 @@ class AutoComp extends Sphp\tools\BasicGate{
     private function convertThisTest() {
         global $xyzo;
         //$filenpath = $this->apath . '/' . $this->atext;
-        //$filenpath = str_replace(\SphpBase::sphp_settings()->server_path, "", $filenpath);
-        $v1 = \SphpBase::sphp_api()->getRegisterAppClass("apps/index2.app",true);
+        //$filenpath = str_replace(\SphpBase::sphpSettings()->serverPath, "", $filenpath);
+        $v1 = \SphpBase::sphpApi()->getRegisterAppClass("apps/index2.app",true);
         includeOnce($v1[1]);
         return new $v1[0];
         return null;
@@ -363,25 +363,25 @@ class AutoComp extends Sphp\tools\BasicGate{
         global $xyzo;
         $filenpath = $this->apath . '/' . $this->atext;
         //$filenpath = 'D:/www/demo/apps/index2.app';
-        //$projpath = $this->Client->session("wproject");
+        //$projpath = $this->client->session("wproject");
         if($this->atype == "app"){
             \SphpBase::page()->apppath = $this->apath;
-            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,true);
+            $v1 = \SphpBase::sphpApi()->getRegisterAppClass($filenpath,true);
         }else{
-            $v1 = \SphpBase::sphp_api()->getRegisterAppClass($filenpath,false);            
+            $v1 = \SphpBase::sphpApi()->getRegisterAppClass($filenpath,false);            
         }
         $clsname = $v1[0];
         $objCreater = ' global $xyzo; if(class_exists("'. $clsname .'")){ $xyzo = new '. $clsname .'();} ';
-        $projrootpath = $this->Client->session("wproject");
+        $projrootpath = $this->client->session("wproject");
         if($projrootpath == ""){
-            $projrootpath = \SphpBase::sphp_settings()->start_path;
+            $projrootpath = \SphpBase::sphpSettings()->START_PATH;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid
-        $this->afile = str_replace("echo getHeaderHTML();", "", $this->afile);
-        $this->afile = str_replace("print getHeaderHTML();", "", $this->afile);
-        $this->afile = str_replace("echo getFooterHTML();", "", $this->afile);
-        $this->afile = str_replace("print getFooterHTML();", "", $this->afile);
+        $this->afile = str_replace("echo getHeaderHtml();", "", $this->afile);
+        $this->afile = str_replace("print getHeaderHtml();", "", $this->afile);
+        $this->afile = str_replace("echo getFooterHtml();", "", $this->afile);
+        $this->afile = str_replace("print getFooterHtml();", "", $this->afile);
         $this->afile = str_replace('$dynData->render();', "", $this->afile);
         
         $flines = explode("\n", $sta1 . $this->afile . $objCreater);
@@ -402,7 +402,7 @@ class AutoComp extends Sphp\tools\BasicGate{
         }
         //file_put_contents("td2.txt",implode("\n",$flines));
         try{ 
-            $v = "Output: " . executePHPCode(implode("\n",$flines),true);
+            $v = "Output: " . executePhpCode(implode("\n",$flines),true);
         } catch (\Throwable $e) {
             $v = "Error: " . $e->getMessage();
         }catch(\Exception $e){
@@ -421,7 +421,7 @@ class AutoComp extends Sphp\tools\BasicGate{
         }else if(class_exists($statement)){
             return new $statement();
         }else{
-            $v = executePHPCode("<?php if(gettype(" . $statement . ") == 'object'){" .
+            $v = executePhpCode("<?php if(gettype(" . $statement . ") == 'object'){" .
                 ' echo get_class('. $statement .');}else{ echo "nop"; } ?>');
             if($v != "nop"){
                 return new $v();
@@ -437,21 +437,21 @@ class AutoComp extends Sphp\tools\BasicGate{
         $data["aid"] = $this->aid;
         $data["msg"] = $msg;
         $data["line"] = $line;
-        $this->JSServer->callJsFunction("setErrorEditor",$data);
+        $this->jsServer->callJsFunction("setErrorEditor",$data);
     }
     
     public function loadRequest() {
-        $this->aid =  $this->Client->request('aid');
-        $this->akey =  $this->Client->request('akey');
-        $this->atext = $this->Client->request('atext');
-        $this->apath = $this->Client->request('apath');
-        $this->atype = $this->Client->request('atype');
-        $this->afile = $this->Client->request('afile');
-        $this->arow = intval($this->Client->request('arow'));
-        $this->lblid =  $this->Client->request('lblid');
-        $this->statement =  trim($this->Client->request('statement'));
-        $this->operator =  $this->Client->request('operator');
-        $this->infunpara =  $this->Client->request('infunpara');
+        $this->aid =  $this->client->request('aid');
+        $this->akey =  $this->client->request('akey');
+        $this->atext = $this->client->request('atext');
+        $this->apath = $this->client->request('apath');
+        $this->atype = $this->client->request('atype');
+        $this->afile = $this->client->request('afile');
+        $this->arow = intval($this->client->request('arow'));
+        $this->lblid =  $this->client->request('lblid');
+        $this->statement =  trim($this->client->request('statement'));
+        $this->operator =  $this->client->request('operator');
+        $this->infunpara =  $this->client->request('infunpara');
         
         $filenpath = $this->apath . '/' . $this->atext;
         if($this->afile == "" && is_file($filenpath)){
@@ -465,7 +465,7 @@ class AutoComp extends Sphp\tools\BasicGate{
         $xyz2 = get_defined_constants(false);
         $xyz3 = get_defined_functions();
         $xyz4 = get_defined_vars();
-        return \SphpBase::sphp_api()->rtScopeDefinedHelp($xyz1,$xyz2,$xyz3,$xyz4);
+        return \SphpBase::sphpApi()->rtScopeDefinedHelp($xyz1,$xyz2,$xyz3,$xyz4);
     }
     public function getListLive($clsobj) {
         //Instantiate the reflection object
@@ -477,9 +477,9 @@ class AutoComp extends Sphp\tools\BasicGate{
         $ar1["static"] = array();
         $ar1["member"] = array();
         if($mainClass !== null){
-        $ar1["static"] = \SphpBase::sphp_api()->rtClassConstantHelp($mainClass,$reflector);
-        \SphpBase::sphp_api()->rtClassPropertyHelp($mainClass,$clsobj,$reflector,$ar1);
-        \SphpBase::sphp_api()->rtClassMethodHelp($mainClass,$reflector,$ar1);
+        $ar1["static"] = \SphpBase::sphpApi()->rtClassConstantHelp($mainClass,$reflector);
+        \SphpBase::sphpApi()->rtClassPropertyHelp($mainClass,$clsobj,$reflector,$ar1);
+        \SphpBase::sphpApi()->rtClassMethodHelp($mainClass,$reflector,$ar1);
 
         if (!isset($ar1["static"]))
             $ar1["static"] = array();
@@ -496,18 +496,18 @@ class AutoComp extends Sphp\tools\BasicGate{
         return $arf;
     }
     public function page_event_dbtvacdbtree1_dataroot($param) {
-        //$this->sendJSONData(file_get_contents("{$this->myrespath}/dataroots.json"));
+        //$this->sendJSONData(file_get_contents("{$this->myUrl}/dataroots.json"));
         $this->getTreeList();
     }
     public function page_event_dbtvacdbtree1_datachild($param) {
-        //$this->sendJSONData(file_get_contents("{$this->myrespath}/datachildren.json"));
+        //$this->sendJSONData(file_get_contents("{$this->myUrl}/datachildren.json"));
     
     }
 
     public function getTreeList() {
         $this->dbEngine->connect();
         $arrT = $this->genList(); 
-        //$this->JSServer->sendData(json_encode($arrT));
+        //$this->jsServer->sendData(json_encode($arrT));
         $this->dbEngine->disconnect();
         echo json_encode($arrT);
     }

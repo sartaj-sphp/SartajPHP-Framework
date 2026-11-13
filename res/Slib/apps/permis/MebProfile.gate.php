@@ -1,5 +1,5 @@
 <?php
-include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisGate.php");
+include_once(SphpBase::sphpSettings()->slibPath ."/apps/permis/PermisGate.php");
 
 class MebProfile extends PermisGate {
 
@@ -14,20 +14,20 @@ class MebProfile extends PermisGate {
         $this->showallFront->getComponent('showall')->fu_setPerPageRows(50);
          $this->showallFront->getComponent('showall')->fu_unsetAddButton();
 
-        $this->defWhere = " WHERE member.parentid = '". $this->Client->session('parentid') ."' AND usertype = 'MEMBER' AND profile_permission.id = member.profile_id AND member.id != '". $this->Client->session('sid') ."' ORDER BY member.id DESC ";
+        $this->defWhere = " WHERE member.parentid = '". $this->client->session('parentid') ."' AND usertype = 'MEMBER' AND profile_permission.id = member.profile_id AND member.id != '". $this->client->session('sid') ."' ORDER BY member.id DESC ";
         $this->showallFront->getComponent('showall')->fu_setWhere($this->defWhere);
         // set Form Title
         $this->genFormFront->addMetaData('pageName','User Form');
         $this->showallFront->addMetaData('pageName','Manage Users');
         $this->setMasterFile($mebmasterf);
-        SphpBase::sphp_api()->addProp('page_title',"System Users");
+        SphpBase::sphpApi()->addProp('page_title',"System Users");
     }
     
     public function insert() {
         $this->genFormFront->addMetaData("formButton", "Save");
-        $profile_id = $this->Client->request('profile_id');
-        $username = $this->Client->request('username');
-        $email = $this->Client->request('email');
+        $profile_id = $this->client->request('profile_id');
+        $username = $this->client->request('username');
+        $email = $this->client->request('email');
         //$checkUserName = $this->checkUserName($username);
         $checkUserEmail = $this->checkUserEmail($email);
         if($checkUserEmail) {

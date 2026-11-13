@@ -1,6 +1,6 @@
 <?php
 //permissions system is not implemented, only menu ban works
-class BootstrapFooterMenu extends \Sphp\tools\MenuGen{
+class BootstrapFooterMenu extends \Sphp\Tools\MenuGen{
 private $navmenuClasses = "nav col-md-4 justify-content-end";
 private $navmenuitemClasses = "nav-link px-2 text-body-secondary";
 private $fixedPos = "";
@@ -34,7 +34,7 @@ public function setNavMenuItemCss($val) {
 
 public function genMenus() {
     $strmbar = $this->genMenuBar();
-    $mnuroot = $this->sphp_api->getMenuList($this->rootMenu);
+    $mnuroot = $this->sphpApi->getMenuList($this->rootMenu);
     // generate bootstrap menu
     $str1 = "";
     foreach ($mnuroot as $mnuName => $lstMenu) {
@@ -43,7 +43,7 @@ public function genMenus() {
     $this->htmlout = $strmbar[0] . $str1 . $strmbar[1];
 }
 public function genMenu($lstMenu,$submenu=0){
-    $mnuroot = $this->sphp_api->getMenuList($lstMenu[0]);
+    $mnuroot = $this->sphpApi->getMenuList($lstMenu[0]);
     $stra = array();
     $str = "";
     $str1 = "";
@@ -51,7 +51,7 @@ public function genMenu($lstMenu,$submenu=0){
         foreach ($mnuroot as $mnuName => $lstMenu2) {
             $str .= $this->genMenu($lstMenu2,1);
         }
-        $str1 = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str1 = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str1 != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[3],$submenu);  
         }else{
@@ -60,7 +60,7 @@ public function genMenu($lstMenu,$submenu=0){
         return $stra[0] . $str . $str1 . $stra[1];
             
     }else{
-        $str = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[3],$submenu);  
         }else{
@@ -81,8 +81,8 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::JSServer()->getAJAX();
-addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
+SphpBase::jsServer()->getAjax();
+addHeaderJsFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
 private function getB4Menu($mnutext,$mnuhref="",$blnAjaxLink2=false,$mnuSub=0){

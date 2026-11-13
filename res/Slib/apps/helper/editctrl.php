@@ -1,17 +1,17 @@
 <?php
-//SphpBase::sphp_api()->addProp('page_title','set page_title prop in app');
-//$policy = SphpBase::sphp_response()->getSecurityPolicy("*.*");
-// SphpBase::sphp_response()->addSecurityHeaders(array());
-//\SphpBase::sphp_response()->addHttpHeader('Access-Control-Allow-Origin', '*');
-//\SphpBase::sphp_response->()addHttpHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, PATCH, OPTIONS');
-//SphpBase::sphp_response()->addHttpHeader('Content-Security-Policy','media-src *.*;');
+//SphpBase::sphpApi()->addProp('page_title','set page_title prop in app');
+//$policy = SphpBase::sphpResponse()->getSecurityPolicy("*.*");
+// SphpBase::sphpResponse()->addSecurityHeaders(array());
+//\SphpBase::sphpResponse()->addHttpHeader('Access-Control-Allow-Origin', '*');
+//\SphpBase::sphpResponse->()addHttpHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE, PUT, PATCH, OPTIONS');
+//SphpBase::sphpResponse()->addHttpHeader('Content-Security-Policy','media-src *.*;');
 
-SphpBase::sphp_response()->removeHttpHeader('Strict-Transport-Security');
-SphpBase::sphp_response()->removeHttpHeader('Content-Security-Policy');
-SphpBase::sphp_response()->removeHttpHeader('Content-Security-Policy-Report-Only');
-SphpBase::sphp_response()->removeHttpHeader('Cross-Origin-Opener-Policy');
-SphpBase::sphp_response()->removeHttpHeader('X-Frame-Options');
-SphpBase::sphp_response()->removeHttpHeader('X-Content-Type-Option');
-SphpBase::sphp_response()->removeHttpHeader('X-Xss-Protection');
-SphpBase::sphp_response()->addHttpHeader('Access-Control-Allow-Origin', '*');
+SphpBase::sphpResponse()->removeHttpHeader('Strict-Transport-Security');
+SphpBase::sphpResponse()->removeHttpHeader('Content-Security-Policy');
+SphpBase::sphpResponse()->removeHttpHeader('Content-Security-Policy-Report-Only');
+SphpBase::sphpResponse()->removeHttpHeader('Cross-Origin-Opener-Policy');
+SphpBase::sphpResponse()->removeHttpHeader('X-Frame-Options');
+SphpBase::sphpResponse()->removeHttpHeader('X-Content-Type-Option');
+SphpBase::sphpResponse()->removeHttpHeader('X-Xss-Protection');
+SphpBase::sphpResponse()->addHttpHeader('Access-Control-Allow-Origin', '*');
 

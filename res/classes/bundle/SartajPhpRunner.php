@@ -7,10 +7,10 @@
  * @package SartajPHP
  * @version 2.0.0
  */
-define("sphp_mannually_start_engine", true);
-$phppath = $sharedpath . "/res";
-include_once("{$phppath}/Score/{$libversion}/global/start.php");
-$globalapp = startSartajPHPEngine();
+define("SPHP_MANUALLY_START_ENGINE", true);
+$resourcePath = $sharedpath . "/res";
+include_once("{$resourcePath}/Score/{$libVersion}/global/start.php");
+$globalapp = startSartajPhpEngine();
 if($globalapp != ""){
     require_once($globalapp);
     SphpBase::engine()->execute(true);
@@ -36,9 +36,9 @@ class SartajPhpRunner {
      */
     public function __construct($config = []) {
         $this->config = array_merge([
-            'session_path' => __DIR__ . '/storage/sessions',
+            'sessionPath' => __DIR__ . '/storage/sessions',
             'session_lifetime' => 86400, // 24 hours
-            'session_name' => 'SPHPID',
+            'sessionName' => 'SPHPID',
             'max_file_size' => 10 * 1024 * 1024, // 10MB
             'debug' => false,
             'upload_dir' => __DIR__ . '/storage/uploads',
@@ -49,9 +49,9 @@ class SartajPhpRunner {
         
         // Initialize session manager
         $this->sessionManager = new SartajPHPSessionManager(
-            $this->config['session_path'],
+            $this->config['sessionPath'],
             $this->config['session_lifetime'],
-            $this->config['session_name']
+            $this->config['sessionName']
         );
 
     }
@@ -61,7 +61,7 @@ class SartajPhpRunner {
      */
     private function initializeDirectories() {
         $dirs = [
-            $this->config['session_path'],
+            $this->config['sessionPath'],
             $this->config['upload_dir']
         ];
         
@@ -404,7 +404,7 @@ class SartajPHPSessionManager {
      * @param string $sessionName
      */
     public function __construct($sessionPath = null, $sessionLifetime = 86400, $sessionName = null) {
-        $this->sessionName = $sessionName ?? $this->getDefaultSessionName();
+        $this->sessionName = $sessionName ?? $this->getDefaultsessionName();
         $this->sessionPath = $sessionPath ?: sys_get_temp_dir();
         $this->sessionLifetime = $sessionLifetime;
         
@@ -418,10 +418,10 @@ class SartajPHPSessionManager {
      * 
      * @return string
      */
-    private function getDefaultSessionName() {
+    private function getDefaultsessionName() {
         try {
-            if (class_exists('SphpBase') && method_exists(SphpBase::sphp_settings(), 'getSession_name')) {
-                return SphpBase::sphp_settings()->getSession_name();
+            if (class_exists('SphpBase') && method_exists(SphpBase::sphpSettings(), 'getSessionName')) {
+                return SphpBase::sphpSettings()->getSessionName();
             }
         } catch (Exception $e) {
             // Ignore
@@ -482,7 +482,7 @@ class SartajPHPSessionManager {
         }
         
         return [
-            'session_id' => $sessionId,
+            'sessionId' => $sessionId,
             'cookie' => $cookie
         ];
     }
@@ -522,7 +522,7 @@ class SartajPHPSessionManager {
      * @return string
      */
     private function getSessionFile($sessionId) {
-        return $this->sessionPath . '/sphp_session_' . $sessionId;
+        return $this->sessionPath . '/sphpSession_' . $sessionId;
     }
     
     /**
@@ -544,7 +544,7 @@ class SartajPHPSessionManager {
      * 
      * @return string
      */
-    public function getSessionName() {
+    public function getsessionName() {
         return $this->sessionName;
     }
     

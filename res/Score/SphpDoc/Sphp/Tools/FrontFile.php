@@ -1,0 +1,422 @@
+<?php
+namespace Sphp\Tools {
+/**
+* Description of FrontParser
+*
+* FrontParser is the base class for all Front File classes. It parses *.front files
+* into NodeTag and Component objects, manages the bound Gate (front-end or back-end),
+* component lists, meta data, and renders the final HTML output for the browser.
+*
+* @author Sartaj Singh
+*/
+class FrontParser {
+public $data = "";
+public $filePath = "";
+public $fileDir = "";
+public $myPath = "";
+public $myUrl = "";
+protected $compList = array();
+protected $extraCompList = array();
+public $name = "";
+public $backendGate = null;
+/**
+* @var \Sphp\Tools\BasicGate
+*/
+public $parentGate = null;
+public $metaData = array();
+public $blncodeBehind = false;
+public $blncodeFront = false;
+public $blnshowFront = true;
+public $backendGateDirPath = "";
+public $sjsPath = "";
+public $registerGate = "";
+public $gateFilePath = "";
+public $htmlParser = null;
+public $frontFileTag = "";
+public $frontFileTagEnd = "";
+public $prefixName = "";
+public $intphpLevel = 1;
+/**
+* Advance Function
+* Set File Path of FrontFile
+* @param string $filePath
+* @return void
+*/
+/**
+* Advance Function
+* Bind with back-end type Gate or front-end type Gate. 
+* Remember BasicGate is front-end Gate type which
+* can manage more then one front file or run without any front file like in case of API. 
+* Back-end Gate like WebGate always requires FrontFile
+* for run. Like PSP Gate is a back-end Gate type.
+* @param \Sphp\Tools\WebGate $backendGate
+* @return void
+*/
+/**
+* Advance Function
+* Set bound Gate file path
+* @param string $backendGateDirPath
+* @return void
+*/
+/**
+* Advance Function
+* Set FrontFile can bind with back-end Gate type
+* @param boolean $blncodeBehind True mean, bound with back-end Gate
+* @return void
+*/
+/**
+* Advance Function
+* Set FrontFile can bind with front-end Gate type
+* @param boolean $blncodeBehind True mean, bound with back-end Gate
+* @return void
+*/
+/**
+* Advance Function
+* Set Parent Gate Name
+* @param string $registerGate
+* @return void
+*/
+/**
+* Advance Function
+* Add component object in FrontFile
+* @param string $key component name or id in HTML code
+* @param \Sphp\Tools\Component $obj
+* @return void
+*/
+/**
+* Advance Function
+* Add component object in FrontFile as Reference. This reference Components are created 
+* in other Front File so you can just use as reference in Gate or in this Front File. This used in parent child 
+* Front Files. Front File can't process these Components.
+* @param string $key component name or id in HTML code
+* @param \Sphp\Tools\Component $obj
+* @return void
+*/
+/**
+* Add FrontFile as JS Variable to store the JS Objects of components.
+* name of frontfile is used as variable name in JS
+* @return void
+*/
+public function addAsJsVar() {}
+/**
+* Advance Function
+* Register FrontFile with SphpApi
+* @return void
+*/
+/**
+* Set the resolved path and URL of the front file from the given path.
+* @param string $path
+* @return void
+*/
+/**
+* 
+* Advance Function
+* @param string $FrontFilePath File path of FrontFile Or Direct code as string
+* @param boolean $blnStringData Optional Default=false, If true then $FrontFilePath= string code
+* @param \Sphp\Tools\BasicGate $backfileobj Optional Default=null, bind Gate with FrontFile
+* @param string $useSjsFile Optional Default=false true mean use sjs file bind with front file
+* @param \Sphp\Tools\BasicGate $parentGateobj Optional Default=null, Parent Gate of FrontFile
+* @return void
+*/
+/**
+* Advance Function
+* Gate Event handler trigger by Gate. 
+* @return void
+*/
+/**
+* Advance Function
+* Process FrontFile
+* also run and render back-end Gate if any
+* @return void
+*/
+/**
+* Advance Function
+* echo FrontFile Front-End code
+* @return void
+*/
+public function render() {}
+/**
+* Advance Function
+* get FrontFile Front-End code
+* @return string HTML Output
+*/
+public function getOutput() {}
+/**
+* Advance Function
+* get FrontFile Front-End code
+* @return string HTML Output
+*/
+public function ProcessMe() {}
+/**
+* Advance Function
+* Process FrontFile
+* @return void
+*/
+/**
+* Advance Function
+* echo FrontFile data
+* @return void
+*/
+public function renderit() {}
+/**
+* File Path of FrontFile
+* @return string
+*/
+public function getFilePath() {}
+/**
+* Get Name(id) of front file
+* @return string
+*/
+public function getName() {}
+/**
+* Get Parent Gate or Bind Gate with front file. It return bound Gate if FrontFile bound with Gate
+* @return \Sphp\Tools\BasicGate
+*/
+public function getBindGate() {}
+/**
+* Get Gate that is bound with front file
+* @return \Sphp\Tools\BackEndGate
+*/
+public function getBackEndGate() {}
+/**
+* Get Gate Path which is bound with this front file
+* @return string
+*/
+public function getBackEndGateDirPath() {}
+/**
+* Get SJS File Path which is bound with this front file
+* @return string
+*/
+public function getSjspath() {}
+/**
+* Get Parent Gate Name
+* @return string
+*/
+public function getRegisterGate() {}
+/**
+* Disable PHP execution set $intphpLevel=0, Default it is enable.
+* PHP can only executed by a Custom Evaluator not by EVAL. So
+* It can execute only few PHP syntax.PHP tags are not allowed.
+* Only use Expression Tags for output ##{} and silent #{}# 
+* Enable php execution in front file. 0= no php execution, 
+* 1 = Allowed 
+* @param int $level
+* @return void
+*/
+public function disablePhp($level=0) {}
+/**
+* Set SJS file path
+* @param string $sjsPath
+* @return void
+*/
+/**
+* Pass true to Enable rendering for front file
+* @param boolean $blnshowFront
+* @return void
+*/
+public function setShowFront($blnshowFront) {}
+/**
+* Check if FrontFile can render
+* @return boolean
+*/
+public function getShowFront() {}        
+/**
+* Check if FrontFile is bound with any front-end Gate type
+* @return boolean
+*/
+public function isBindFrontGate() {}
+/**
+* Check if FrontFile is bound with any back-end Gate type
+* @return boolean
+*/
+public function isBindBackGate() {}
+/**
+* @param string $FrontFilePath File path of FrontFile Or Direct code as string
+* @param boolean $blnStringData Optional Default=false, If true then $FrontFilePath= string code
+* @param \Sphp\Tools\BasicGate $backfileobj Optional Default=null, bind Gate with FrontFile
+* @param \Sphp\Tools\BasicGate $parentGateobj Optional Default=null, Parent Gate of FrontFile
+* @param boolean $dhtml Optional Default=false, if true then use different frontlate engine
+* @param string $prefixNameadd Optional Default='', prefix for component id
+* @return void
+*/
+/**
+* Execute PHP code in Limited Container. Use only Template Tags ##{ }# or #{ }#
+* @param string $strPHPCode PHP Template code
+* @param \Sphp\Tools\Component $compobj default null, Show debug information if Component
+* run code
+* @return string
+*/
+public function executePhpCode($strPHPCode,$compobj=null) {}
+/**
+* Add Meta Data attached to FrontFile. Only available after Parse Phase. 
+* @param string $key
+* @param string|array $value
+* @return void
+*/
+public function addMetaData($key, $value) {}
+/**
+* Alias of addMetaData
+* Add Meta Data attached to FrontFile. Only available after Parse Phase. 
+* @param string $key
+* @param string|array $value
+* @return void
+*/
+public function addProp($key, $value) {}
+/**
+* Read Meta Data attached with FrontFile
+* @param string $key
+* @return string|array
+*/
+public function getMetaData($key) {}
+/**
+* Get Component Object
+* @param string $name
+* @return \Sphp\Tools\Component
+*/
+/**
+* Check if Component Exist in FrontFile
+* @param string $key component name or id in HTML code
+* @return boolean
+*/
+public function isComponent($key) {}
+/**
+* Get Component
+* @param string $key component name or id in HTML code
+* @return \Sphp\Tools\Component
+*/
+public function getComponent($key) {}
+/**
+* Get Component if exist
+* @param string $key component name or id in HTML code
+* @return \Sphp\Tools\Component|null
+*/
+public function getComponentSafe($key) {}
+/**
+* Get Children Components Only
+* @return array
+*/
+public function getComponents() {}
+/**
+* Get All Children + References Components
+* @return array
+*/
+public function getAllComponents() {}
+/**
+* Generate HTML for Component Object
+* $frontobj = new Sphp\Tools\FrontFile("Gates/forms/front1.front");
+* $div1 = $frontobj->getComponent('div1');
+* echo $frontobj->parseComponent($div1);
+* @param \Sphp\Tools\Component $obj
+* @param boolean $innerHTML Optional Default=false, 
+* if true then it will not generate component tag in html
+* @return string
+*/
+public function parseComponent($obj,$innerHTML = false) {}
+/**
+* Wrap All Children of Component as Node Object.
+* $frontobj = new Sphp\Tools\FrontFile("Gates/forms/front1.front");
+* $div1 = $frontobj->getComponent('div1');
+* $node1 = $frontobj->getChildrenWrapper($div1);
+* echo $frontobj->parseComponentChildren($node1);
+* @param \Sphp\Tools\Component $obj
+* @return Sphp\Tools\NodeTag
+*/
+public function getChildrenWrapper($compobj) {}
+/**
+* Generate HTML for Component Children
+* @param \Sphp\Tools\NodeTag $obj
+* @return string
+*/
+public function parseComponentChildren($obj) {}
+}
+/**
+* Description of FrontFile Class
+* FrontFile Class use FrontParser to Parse the *.front file and Create NodeTag, Components
+*  Objects to Manage HTML generation for Browser. Front File use expression Tags (#{($d)? "Yes":"No"}#) to Evaluate
+*  limited PHP syntax and also filter output (##{raw:$d}#) without use of echo or print function.
+*  Front File don't support:-
+*      1. PHP Tags <?, ?> alternative use Expression Tags
+*      2. PHP Loops alternative use Loop Components
+*      3. echo, print functions alternative use expression Tag ##{'Hello'}#
+*      4. Super Global Variables $_POST alternative use $sphpRequest->post()
+*      5.  
+* @author Sartaj Singh
+*/
+class FrontFile extends FrontParser{
+/**  
+* FrontFile Path is always relative to Gate File Path + "/fronts/" + Gate Class + "_" + FrontFile Name + ".front" . 
+* In Gate Class It will ignore namespace. Use FrontParser Class to any path and name of Front File.
+* @param string $FrontFileName Front File name and Path is relative to Gate File Path + "/fronts/" Or Direct code as string
+* @param boolean $blnStringData Optional Default=false, If true then $FrontFilePath= string code
+* @param \Sphp\Tools\BasicGate $backfileobj Optional Default=null, bind Gate with FrontFile
+* @param \Sphp\Tools\BasicGate $parentGateobj Optional Default=null, Parent Gate of FrontFile
+* @param boolean $dhtml Optional Default=false, if true then use different parser engine
+* @param string $prefixNameadd Optional Default='', prefix for component id
+* @return void
+*/
+}
+/**
+* Child Front File Share Components and meta data with parent as reference not a copy. So changes in child
+*  effect in parent also.FrontFileChild need file extension as *.child.front , Both Front files shared same Registered 
+*  Gate Class.
+*/
+class FrontFileChild extends FrontParser {
+/**
+* Create FrontFileChild object. It is required file name post fix as .child.front and pass parent FrontFile Object.
+* @param string $FrontFilePath
+* @param \Sphp\Tools\FrontFile $parentfront
+* @param string $prefixNameadd Optional Prefix use for Component ID
+* @return void
+*/
+/**
+* Advance Function
+* Add component object in FrontFile
+* @param string $key component name or id in HTML code
+* @param \Sphp\Tools\Component $obj
+* @return void
+*/
+}
+/**
+* FrontFileComp creates a Front File bound to a Component Gate. It shares components and
+* meta data with the parent Front File of the gate and prefixes component ids with the
+* parent component name.
+*/
+class FrontFileComp extends FrontParser {
+/**
+* Create FrontFileComp object bound to a Component Gate.
+* @param string $FrontFilePath
+* @param \Sphp\Tools\BasicGate $parentGate
+* @return void
+*/
+/**
+* Advance Function
+* Add component object in FrontFile
+* @param string $key component name or id in HTML code
+* @param \Sphp\Tools\Component $obj
+* @return void
+*/
+}
+/**
+*  FrontPlace File should always extension end with as *.place.front 
+*  Parent Class for create Front File as Front Place Object. 
+*  Front Place is generate dynamic content in Master File and it can enable, disable by Master File.
+*  For Example you can generate a slider with FrontFile.
+*/
+class FrontPlace extends FrontParser {
+/**
+* Create FrontPlace object from a Front File name.
+* @param string $FrontFileName
+* @return void
+*/
+}
+/**
+* Description of FrontPlacePhp
+*  Parent Class for create PHP Class as Front Place Object. 
+*  Front Place is generate dynamic content in Master File and it can enable, disable by Master File.
+*  For Example you can generate a slider with PHP file rather then FrontFile.
+*/
+abstract class FrontPlacePhp{
+abstract protected function _run();
+abstract protected function render();
+}
+}

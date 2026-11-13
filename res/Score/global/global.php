@@ -1,122 +1,126 @@
 <?php
 if(!isset($_SERVER['HTTP_HOST']) || strpos(" " . $_SERVER['HTTP_HOST'], "localhost") !== false) define("autocompkey","FD45A279GH");
-if(strpos($slibversion,".phar") !== false){
-    $slibpath = "phar://{$phppath}/{$slibversion}";
-    $jslibpath = "{$respath}/jslib_lib.phar";
+if(strpos($slibVersion,".phar") !== false){
+    $slibPath = "phar://{$resourcePath}/{$slibVersion}";
 }else{
-    $slibpath = "{$phppath}/{$slibversion}";
-    $jslibpath = "{$respath}/jslib";
+    $slibPath = "{$resourcePath}/{$slibVersion}";
 }
-$libpath = "{$phppath}/Score/$libversion";
-$jquerypath = "{$jslibpath}/jquery";
-$comppath = "{$phppath}/components";
-$slibrespath = "{$respath}/{$slibversion}";
+$jsLibUrl = "{$resourceUrl}/jslib";
+$libPath = "{$resourcePath}/Score/$libVersion";
+$compPath = "{$resourcePath}/components";
+$slibUrl = "{$resourceUrl}/{$slibVersion}";
 
 // Global Framework Settings
 // ------------------------------
 // default cache time in sec
-$cache_time = "100";
+$cacheTime = "100";
 
-// Component UI Kit uikitdef/bootstrap folder
-$ComponentUI = "/uikitdef/bootstrap"; // Bootstrap
+// Component UI Kit inside Components folder default is uikitdef/bootstrap folder
+$uiKitLocation = "/uikitdef/bootstrap"; // Bootstrap
 
 //default company info
-$cmpid = "demo";
-$cmpname = "Demo";
-$cmpemail = "info@domain.com";
-$cmpaddress1 = "Address1 Lane1";
-$cmpaddress2 = "Address2 ON Canada";
-$cmpphone1 = "+1000-111-0000";
-$cmpphone2 = "+1000-000-1111";
+$cmpId = "demo";
+$cmpName = "Demo";
+$cmpEmail = "info@domain.com";
+$cmpAddress1 = "Address1 Lane1";
+$cmpAddress2 = "Address2 ON Canada";
+$cmpPhone1 = "+1000-111-0000";
+$cmpPhone2 = "+1000-000-1111";
 // for google login, set in comp.php file
-$google_oauth_client_secret = "";
+$googleOauthClientSecret = "";
 
 // use ms
-$ajaxready_max = 50;
+$ajaxReadyMax = 50;
 // 2= defer, 1= async, 0=nop
-$default_filelink_load = 2;
+$defaultFilelinkLoad = 2;
 // default security key
-$defenckey = "aHmlP1";
+$defenceKey = "aHmlP1";
 date_default_timezone_set("America/New_York");
 // use session state, if false you can not login
-$sphp_use_session = true;
+$sphpUseSession = true;
 // single session app
-$sphp_use_session_storage = false;
+$sphpUseSessionStorage = false;
 // convert session to cookie
-$sphp_use_session_cookie = false;
+$sphpUseSessionCookie = false;
 // session settings
-$SESSION_NAME = 'SPHPID';
-$SESSION_PATH = '';
+$sessionName = 'SPHPID';
+$sessionPath = '';
 /**
  * db for Database Handler and Redis Server URL for Reds session handler.
  * By Default it will use PHP Settings and no over write
  */
-$SESSION_HANDLER = '';
+$sessionHandler = '';
 
 // if true it will bypass html cache engine
-$sphp_app_cmd = false;
+$sphpAppCmd = false;
 // Default Language
-$serv_language = "ENGLISH"; 
+$serverLanguage = "ENGLISH"; 
 // debug mode 0,1,2,3
-$debugmode = 0;
-$debugprofiler = "";
-//$debugprofiler = "{$phppath}/classes/base/debug/SPHP_Profiler3.php";
+$debugMode = 0;
+$debugProfiler = "";
+//$debugProfiler = "{$resourcePath}/classes/base/debug/SPHP_Profiler3.php";
 $errorLog = true;
 
 /* run Framework as Lib so it will be not load any Gate Automatically
  * Run SartajPhp inside other PHP Frameworks.
  */
 $sphpRunasLib = false;
-$run_hd_parser = false; // not working under process, remove in future
-$translatermode = false;
+$runHdParser = false; // not working under process, remove in future
+$translaterMode = false;
 $blnEditMode = false; // remove in future only testing purpose
 // true mean use of php preload in ini
 //opcache.preload=D:/www/res/Sphp/preload_lib.php
 //opcache.preload_user=www-data
 $blnPreLibCache = false;
 // if true load libsphp1.php file
-$blnPreLibLoad = true;
+$blnPreLibLoad = false;
 // stop output buffering
 $blnStopResponse = false;
 
-//$db_engine_path = $libpath . "/lib/MySQL.php,\\MySQL";
-// dbEngine object doc = vendor/sartajphp/sartajphp/res/Score/SphpDoc/lib/MySQLiPdo.php
-$db_engine_path = $libpath . "/lib/MySQLiPdo.php,\\MySQLiPdo";
-$ddriver = "";
-$duser = "root";
+//$dbEnginePath = $libPath . "/lib/MySQL.php,\\MySQL";
+// dbEngine object doc = vendor/sartajphp/sartajphp/res/Score/SphpDoc/Sphp/Lib/MySqliPdo.php
+$dbEnginePath = $libPath . "/Sphp/Lib/MySqliPdo.php,\\Sphp\\Lib\\MySqliPdo";
+$dbDriver = "";
+$dbUser = "root";
 $db = "dbplugin";
-$dpass = "";
-$dhost = "localhost:3306";
+$dbPass = "";
+$dbHost = "localhost:3306";
 
 // admin login user
-$admuser = 'admin';
-$admpass = '1234';
+$adminUser = 'admin';
+$adminPass = '1234';
+
+//app mail settings
+$mailServer = "mail.domain.com";
+$mailUser = "info@domain.com";
+$mailPass = "";
+$mailPort = "26";
 
 $jsProtection = false;
 
-$masterf = "{$comppath}{$ComponentUI}/masters/default/master.mast.php";
-//$mobimasterf = "{$slibpath}/masters/default/mobimaster.mast.php";
+$masterf = "{$compPath}{$uiKitLocation}/masters/default/master.mast.php";
+//$mobimasterf = "{$slibPath}/masters/default/mobimaster.mast.php";
 $admmasterf = $masterf;
 $mebmasterf = $masterf;
-//$softmasterf = "{$slibpath}/masters/default/softmaster.mast.php";
+//$softmasterf = "{$slibPath}/masters/default/softmaster.mast.php";
 
 // ------------------------------
 // Global Framework Settings End
 
 if (filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_FLAG_EMPTY_STRING_NULL)) {
     if (isset($_SERVER["HTTPS"]) && ( $_SERVER["HTTPS"] == "on" || $_SERVER["HTTPS"] == 1)){
-        $basepath = "https://".$_SERVER['HTTP_HOST'];
+        $projectUrl = "https://".$_SERVER['HTTP_HOST'];
     }else{
-        $basepath = "http://".$_SERVER['HTTP_HOST'];    
+        $projectUrl = "http://".$_SERVER['HTTP_HOST'];    
     }
 } else {
-    $basepath = "";
+    $projectUrl = "";
 }
-$serverpath = $_SERVER['DOCUMENT_ROOT'];
+$serverPath = $_SERVER['DOCUMENT_ROOT'];
 
 include_once(PROJ_PATH . "/plugin/ccachelist.php");
 include_once(PROJ_PATH . "/cachelist.php");
 include_once(PROJ_PATH . '/comp.php');
 // just interface function remove when need in comp.php file
-function getPluginDB(){}
-function getSPDB(){}
+function getPluginDb(){}
+function getSpDb(){}

@@ -1,16 +1,16 @@
 <?php
-$cmpid = "demo";
-$cmpname = "Sphp Server";
+$cmpId = "demo";
+$cmpName = "Sphp Server";
 
 
-$duser = "root";
+$dbUser = "root";
 $db = "dbproj";
-$dpass = "";
+$dbPass = "";
 
-$debugmode = 2;
+$debugMode = 2;
 
-if($basepath != ""){
-	$basepath .= "demo/";
+if($projectUrl != ""){
+	$projectUrl .= "demo/";
 }
 
 //app mail settings

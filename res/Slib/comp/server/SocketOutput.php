@@ -12,7 +12,7 @@
  * callNativeGate('shell','ls','-l',{});
  * @author SARTAJ
  */
-class SocketOutput extends \Sphp\tools\Component {
+class SocketOutput extends \Sphp\Tools\Component {
 
     private $url = '';
 
@@ -24,16 +24,16 @@ class SocketOutput extends \Sphp\tools\Component {
         $protocol = "ws";
         $this->setAttributeDefault('style', 'style="overflow-y: scroll; height: 500px; max-height: 500px;');
         $this->setAttributeDefault('class', 'text-wrap');
-        addHeaderJSCode($this->name , 'window["'. $this->name .'"] = {wsobj: null, onopen: function(){}}; window["callNativeGate"] = function (gate,evt="",evtp="",data={}){
+        addHeaderJsCode($this->name , 'window["'. $this->name .'"] = {wsobj: null, onopen: function(){}}; window["callNativeGate"] = function (gate,evt="",evtp="",data={}){
         $("#'. $this->name .'").html(\'\');
         window["'. $this->name .'"]["wsobj"].callProcessNativeGate(gate,evt,evtp,data);
     };
 ');
-        if (\SphpBase::sphp_request()->server('HTTPS') == 1) $protocol = "wss";
+        if (\SphpBase::sphpRequest()->server('HTTPS') == 1) $protocol = "wss";
         if ($this->url == '')
-           // $this->url = $protocol . '://' . SphpBase::sphp_request()->server('HTTP_HOST') . '/sphp.ws';
-            $this->url = SphpBase::sphp_request()->server('HTTP_HOST') ;
-        addHeaderJSFunctionCode("ready", "socketnative", 'frontobj.websockethost = "'. $this->url .'"; frontobj.getSphpSocket(function(wsobj1){
+           // $this->url = $protocol . '://' . SphpBase::sphpRequest()->server('HTTP_HOST') . '/sphp.ws';
+            $this->url = SphpBase::sphpRequest()->server('HTTP_HOST') ;
+        addHeaderJsFunctionCode("ready", "socketnative", 'frontobj.websockethost = "'. $this->url .'"; frontobj.getSphpSocket(function(wsobj1){
         window["'. $this->name . '"]["wsobj"] = wsobj1;
         window["'. $this->name . '"]["onopen"]();
         frontobj.onwsmsg = function(msg){ 

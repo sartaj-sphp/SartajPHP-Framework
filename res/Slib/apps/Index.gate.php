@@ -1,8 +1,8 @@
 <?php
 namespace def{
-    use Sphp\tools\FrontFile;
-    use Sphp\tools\FrontParser;
-class Index extends \Sphp\tools\BasicGate{
+    use Sphp\Tools\FrontFile;
+    use Sphp\Tools\FrontParser;
+class Index extends \Sphp\Gates\BasicGate{
     
     public function onstart() {
         //$this->getAuthenticate("GUEST,ADMIN,MEMBER");
@@ -14,7 +14,7 @@ class Index extends \Sphp\tools\BasicGate{
         if(file_exists(PROJ_PATH . "/apps/fronts/index_home.front")){ 
             $dynData = new FrontParser(PROJ_PATH . "/apps/fronts/index_home.front");
         }else{
-            //$dynData = new FrontParser($this->mypath . "/fronts/index_home.front");
+            //$dynData = new FrontParser($this->myPath . "/fronts/index_home.front");
             $dynData = new FrontFile("home");
         }
         $this->setFrontFile($dynData);
@@ -35,19 +35,19 @@ class Index extends \Sphp\tools\BasicGate{
     }
     
     public function page_event_subquote($evtp){
-        global $mailUser,$cmpemail,$cmpname;
+        global $mailUser,$cmpEmail,$cmpName;
         $sd = new FrontFile("contacts", false,false, $this);
-        include_once(SphpBase::sphp_settings()->php_path . "/classes/bundle/email/SMTPMail.php");
+        include_once(SphpBase::sphpSettings()->resourcePath . "/classes/bundle/email/SMTPMail.php");
         if(!getCheckErr()){
             $mail = new SMTPMail();
-            $mail->setFrom($cmpname, $mailUser);
+            $mail->setFrom($cmpName, $mailUser);
             $msgn = "Dont Reply This Email! This Mailbox does not Check. <br>";
             $msgn .= "Name:- ".$sd->qname->getValue()."<br>";
             $msgn .= "Email:- ".$sd->qemail->getValue()."<br>";
             $msgn .= "Phone:- ".$sd->qphone->getValue()."<br>";
             $msgn .= "Address:- ".$sd->qadd->getValue()."<br>";
             $msgn .= "Comments:- ".$sd->qcomments->getValue()."<br>";
-            if($mail->sendMail('Query',$cmpemail, $cmpname, $msgn)){
+            if($mail->sendMail('Query',$cmpEmail, $cmpName, $msgn)){
                 $sd2 = new FrontFile("quote_submit");
                 $this->setFrontFile($sd2);
             }else{

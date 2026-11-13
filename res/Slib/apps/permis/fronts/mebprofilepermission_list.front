@@ -37,7 +37,7 @@
                                    fun-setAJAX="" >
                                 <tr>
                                     <td runas="holder" dfield="profile_name" sphp-comp="showall"></td>
-                                    <td><p>##{raw:$parentgate->displayList($showall->getRow('permission_id'))}#</p></td>
+                                    <td><p>##{raw:$parentGate->displayList($showall->getRow('permission_id'))}#</p></td>
                                     <td>  
                                         <div id='admPreference_view' class="btn-action" runat='server'>
                                             <a href="##{ getEventURLSecure('view', $showall->getRow('id'))}#">

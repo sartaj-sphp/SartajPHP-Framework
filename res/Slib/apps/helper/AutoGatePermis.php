@@ -9,9 +9,9 @@
  *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
  *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
-include_once(SphpBase::sphp_settings()->lib_path . "/dev/QueryBuilder.php");
+include_once(SphpBase::sphpSettings()->libPath . "/dev/QueryBuilder.php");
 
-class AutoGatePermis extends Sphp\tools\BasicGate {
+class AutoGatePermis extends Sphp\Tools\BasicGate {
    /**
     * PDF and Front File Page Heading
     * @var string
@@ -81,13 +81,13 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
     protected $formid = "form2";
     /**
      * This Front File provide Edit Form to use Insert and Update records
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     public $genFormFront = null;
 
     /**
      * This Front File provide List Records with Pagination + search Form
-     *  @var \Sphp\tools\FrontFile
+     *  @var \Sphp\Tools\FrontFile
      */
     public $showallFront = null;
 
@@ -97,13 +97,13 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
      *  create Front Files Objects and name of object required showall, btnDel.
      */
     public function onstart() {
-        $this->logoimg = SphpBase::sphp_settings()->slib_res_path ."/apps/helper/fronts/logo.png";
+        $this->logoimg = SphpBase::sphpSettings()->slibUrl ."/apps/helper/fronts/logo.png";
         /** Disable Render Component-Tag of Grid Component which will not stop Render Children of Grid */
         $this->showallFront->getComponent('showall')->fu_unsetRenderTag();
         /** Disable Render delete Button btnDel Component */
         $this->genFormFront->getComponent('btnDel')->fu_unsetRender();
         $this->showallFront->getComponent('showall')->fu_setPerPageRows(10);
-        SphpBase::sphp_api()->addProp('page_title',$this->heading);
+        SphpBase::sphpApi()->addProp('page_title',$this->heading);
     }
     /**
      * Handle Event URL "loadform" AJAX Request of Gate
@@ -113,7 +113,7 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
         /** Enable Render Component-Tag of Grid Component */
         $this->showallFront->getComponent('showall')->fu_setRenderTag();
         /** Send showallFront Front-File to Tag id=listFormHolder */
-        $this->JSServer->addJSONFront($this->showallFront, 'listFormHolder');
+        $this->jsServer->addJsonFront($this->showallFront, 'listFormHolder');
     }
     /**
      * Handle Landing URL GET Request of Gate
@@ -147,8 +147,8 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
     public function page_event_showall_show($evtp) {
         $showall = $this->showallFront->getComponent('showall');
         $showall->fu_unsetRenderTag();
-        $this->JSServer->addJSONComp($showall, 'showall');
-        $this->JSServer->addJSONHTMLBlock('pagebar', $showall->getPageBar());
+        $this->jsServer->addJsonComp($showall, 'showall');
+        $this->jsServer->addJsonHtmlBlock('pagebar', $showall->getPageBar());
     }
 
     /**
@@ -164,10 +164,10 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
      * It Print Grid Component output as PDF file and send to browser
      */
     public function page_event_print($evtp) {
-        $this->printstyle = \SphpBase::sphp_api()->getDynamicContent($this->printstylefile);
+        $this->printstyle = \SphpBase::sphpApi()->getDynamicContent($this->printstylefile);
         $showall = $this->showallFront->getComponent('showall');
-        require($this->phppath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
-        $showsingleFront = new Sphp\tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
+        require($this->resourcePath . '/classes/bundle/reports/html2pdf/Front2PDF.php');
+        $showsingleFront = new Sphp\Tools\FrontFileChild(__DIR__ ."/fronts/pdf_temp.front",false,null,$this->showallFront);
         $showall->unsetAddButton();
         $showall->unsetDialog();
         $showall->unsetPageBar();
@@ -191,9 +191,9 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
         $showall = $this->showallFront->getComponent('showall');
         if (!getCheckErr()) {
             if (!getCheckErr()) {
-                $this->JSServer->addJSONComp($showall, 'showall');
-                //$this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-                $this->JSServer->addJSONBlock('html', 'pagebar', $showall->getPageBar());
+                $this->jsServer->addJsonComp($showall, 'showall');
+                //$this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
+                $this->jsServer->addJsonBlock('html', 'pagebar', $showall->getPageBar());
             } else {
                 setErr('app1', 'Can not Search Data');
                 $this->sendError();
@@ -212,15 +212,15 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
      */
     public function page_event_rowclick($evtp) {
         if($this->blndisableperm == true || $this->hasPermission("view")){
-        $this->Client->session("formType", "Edit");
+        $this->client->session("formType", "Edit");
         // Fill Form Components from Database
         $this->page->viewData($this->genFormFront->getComponent('form2'));
         // Show btnDel Button in browser, by default hidden in onstart event
         $this->genFormFront->getComponent('btnDel')->fu_setRender();
         // Open Dialog of showall Grid or Pagination Component
-        $this->JSServer->addJSONJSBlock('$( "#showall_dlg" ).dialog( "open" );');
+        $this->jsServer->addJsonJsBlock('$( "#showall_dlg" ).dialog( "open" );');
         // display content in Dialog of showall Component
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+        $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
         }else{
             setErr("app2", "Permission Denied");
             $this->sendError();
@@ -237,8 +237,8 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
 	if(isset($_SESSION['curtrec'])){
             unset($_SESSION['curtrec']);
         }
-        $this->Client->session("formType", "Add");
-        $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
+        $this->client->session("formType", "Add");
+        $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
     }
 
 
@@ -249,13 +249,13 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
      *  Close Dialog Box on success. Send reply as AJAX
      */
     public function insert() {
-        global $cmpid;
+        global $cmpId;
         if($this->blndisableperm == false && !$this->hasPermission("add")){
             setErr("app2", "Permission Denied");
         }
-        $this->extra[]['userid'] = $this->Client->session('sid');
-        $this->extra[]['parentid'] = $this->Client->session('parentid');
-        $this->extra[]['spcmpid'] = $cmpid;
+        $this->extra[]['userid'] = $this->client->session('sid');
+        $this->extra[]['parentid'] = $this->client->session('parentid');
+        $this->extra[]['spcmpId'] = $cmpId;
         $this->extra[]['submit_timestamp'] = time();
         $this->extra[]['update_timestamp'] = time();
         
@@ -263,8 +263,8 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
                 $form2 = $this->genFormFront->getComponent($this->formid);
                 $this->insertedid = $this->page->insertData($form2,$this->extra);            
             if (!getCheckErr()) {
-                $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
+                $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 $this->sendSuccess('Data is inserted in Database');
                 $this->sendError();
             } else {
@@ -292,8 +292,8 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
                 $form2 = $this->genFormFront->getComponent($this->formid);
                 $this->page->updateData($form2,$this->extra, $this->recID, $this->recWhere);
                 if (!getCheckErr()) {
-                    $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                    $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                    $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
+                    $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                     $this->sendSuccess('Record is updated');
                 } else {
                     setErr('app1', 'Record can not update');
@@ -312,9 +312,9 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
         if (!getCheckErr()) {
             $this->page->deleteRec();
             if (!getCheckErr()) {
-                $this->JSServer->addJSONComp($this->showallFront->getComponent('showall'), 'showall');
-                $this->JSServer->addJSONFront($this->genFormFront, 'showall_editor');
-                $this->JSServer->addJSONBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
+                $this->jsServer->addJsonComp($this->showallFront->getComponent('showall'), 'showall');
+                $this->jsServer->addJsonFront($this->genFormFront, 'showall_editor');
+                $this->jsServer->addJsonBlock('jsp','proces','$( "#showall_dlg" ).dialog( "close" );');
                 $this->sendSuccess('Record is Deleted');
             } else {
                 setErr('app1', 'Record could not be deleted');
@@ -327,13 +327,13 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
     }
 
     public function sendSuccess($msg) {
-        $this->JSServer->addJSONBlock('html', 'sphpsuccessmsg', $msg);
-        $this->JSServer->addJSONJSBlock('runanierr("success");');
+        $this->jsServer->addJsonBlock('html', 'sphpsuccessmsg', $msg);
+        $this->jsServer->addJsonJsBlock('runanierr("success");');
     }
 
     public function sendWarning($msg) {
-        $this->JSServer->addJSONBlock('html', 'sphpwarningmsg', $msg);
-        $this->JSServer->addJSONJSBlock('runanierr("warning");');
+        $this->jsServer->addJsonBlock('html', 'sphpwarningmsg', $msg);
+        $this->jsServer->addJsonJsBlock('runanierr("warning");');
     }
 
     public function sendError($errorInner = "") {
@@ -346,19 +346,19 @@ class AutoGatePermis extends Sphp\tools\BasicGate {
             } 
         }
         if ($msg != "") {
-            $this->JSServer->addJSONBlock('html', 'sphpinfomsg', $msg);
-            $this->JSServer->addJSONJSBlock('runanierr("info");');
+            $this->jsServer->addJsonBlock('html', 'sphpinfomsg', $msg);
+            $this->jsServer->addJsonJsBlock('runanierr("info");');
         }
         if ($err != "" || $errorInner != "") {
-            $this->JSServer->addJSONBlock('html', 'sphperrormsg', $err . ' ' . $errorInner);
-            $this->JSServer->addJSONJSBlock('runanierr("error");');
+            $this->jsServer->addJsonBlock('html', 'sphperrormsg', $err . ' ' . $errorInner);
+            $this->jsServer->addJsonJsBlock('runanierr("error");');
         }
     }
 
     public function sendInfo($msg) {
         $msg1 = traceMsg(true);
-        $this->JSServer->addJSONBlock('html', 'sphpinfomsg', $msg . $msg1);
-        $this->JSServer->addJSONJSBlock('runanierr("info");');
+        $this->jsServer->addJsonBlock('html', 'sphpinfomsg', $msg . $msg1);
+        $this->jsServer->addJsonJsBlock('runanierr("info");');
     }
 
 

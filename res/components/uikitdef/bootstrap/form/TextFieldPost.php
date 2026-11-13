@@ -1,5 +1,5 @@
 <?php
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php");
+include_once(SphpBase::sphpSettings()->uiKitPath . "/form/TextField.php");
 
 
 /**
@@ -69,7 +69,7 @@ include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php")
  *      runat="server"
  *      type="text"
  *      path="uikit/form/TextFieldPost.php"
- *      fur-submitAjax="keyup,|##{getEventURL('usersearch')}#,|txtname,|500"
+ *      fur-submitAjax="keyup,|##{getEventUrl('usersearch')}#,|txtname,|500"
  * />
  *
  *
@@ -81,7 +81,7 @@ include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php")
  *      ->getComponent("txtsearch")
  *      ->fu_submitAjax(
  *          "keyup",
- *          getEventURL('usersearch'),
+ *          getEventUrl('usersearch'),
  *          "txtname",
  *          500
  *      );
@@ -112,7 +112,7 @@ include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php")
  *
  *
  * ---------------------------------------------------------------------
- * METHOD: fu_submitWS()
+ * METHOD: fu_submitWs()
  * ---------------------------------------------------------------------
  * Similar to fu_submitAjax(), but sends data using WebSocket instead of HTTP.
  *
@@ -166,7 +166,7 @@ class TextFieldPost extends \Sphp\comp\form\TextField {
     public function fu_submitAjax($eventName, $url = "", $extracomp = "", $delay = 500) {
 
         if ($url == "")
-            $url = getEventURL($this->name . "_" . $eventName,"","","","",false,".gate",true);
+            $url = getEventUrl($this->name . "_" . $eventName,"","","","",false,".gate",true);
 
         $selector = "#" . $this->name;
 
@@ -187,7 +187,7 @@ class TextFieldPost extends \Sphp\comp\form\TextField {
 
         $timer = $jsfun . "_timer";
 
-        addHeaderJSFunction(
+        addHeaderJsFunction(
             $jsfun,
             'var '.$timer.'; function ' . $jsfun . '(evtp){
                 clearTimeout('.$timer.');
@@ -203,7 +203,7 @@ class TextFieldPost extends \Sphp\comp\form\TextField {
     }
 
 
-    public function fu_submitWS($eventName, $host = "", $extracomp = "", $gate="main", $evt="", $evtp="", $delay = 500) {
+    public function fu_submitWs($eventName, $host = "", $extracomp = "", $gate="main", $evt="", $evtp="", $delay = 500) {
 
         $selector = "#" . $this->name;
 
@@ -235,7 +235,7 @@ class TextFieldPost extends \Sphp\comp\form\TextField {
 
         $timer = $jsfun . "_timer";
 
-        addHeaderJSFunction(
+        addHeaderJsFunction(
             $jsfun,
             'var '.$timer.'; function ' . $jsfun . '(evtp){
                 clearTimeout('.$timer.');

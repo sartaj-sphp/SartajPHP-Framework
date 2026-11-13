@@ -8,13 +8,13 @@ addFrontPlace("main_master",__DIR__ . '/main.place.front','centersp1');
 runFrontPlace('main_master','centersp1');
 $sj1 = SphpBase::SphpJsM();
 $sj1::addBootStrap(); 
-echo SphpBase::sphp_api()->getHeaderHTML(); 
+echo SphpBase::sphpApi()->getHeaderHtml(); 
 ?>
-<link href="<?php echo SphpBase::sphp_settings()->comp_uikit_res_path; ?>/masters/default/css/custom.css" rel="stylesheet"  type="text/css" />
+<link href="<?php echo SphpBase::sphpSettings()->uiKitUrl; ?>/masters/default/css/custom.css" rel="stylesheet"  type="text/css" />
 </head>
 <body class="h-100">
 <?php echo renderFrontPlace('main_master','centersp1'); ?>
-<?php  echo SphpBase::sphp_api()->getFooterHTML(); 
-echo SphpBase::sphp_api()->traceError(true) . SphpBase::sphp_api()->traceErrorInner(true); ?>
+<?php  echo SphpBase::sphpApi()->getFooterHtml(); 
+echo SphpBase::sphpApi()->traceError(true) . SphpBase::sphpApi()->traceErrorInner(true); ?>
 </body>    
 </html>

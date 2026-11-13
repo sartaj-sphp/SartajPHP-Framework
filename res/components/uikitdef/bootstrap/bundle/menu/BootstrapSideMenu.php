@@ -1,6 +1,6 @@
 <?php
 
-class BootstrapSideMenu extends \Sphp\tools\MenuGen{
+class BootstrapSideMenu extends \Sphp\Tools\MenuGen{
 public $brandicon = "";
 public $navbarClasses = "nav flex-column flex-nowrap overflow-hidden nav-pills";
 private $navmenuClasses = "navbar-nav";
@@ -44,7 +44,7 @@ public function setBrandIcon($val) {
 }
 public function genMenus() {
     $strmbar = $this->genMenuBar();
-    $mnuroot = $this->sphp_api->getMenuList($this->rootMenu);
+    $mnuroot = $this->sphpApi->getMenuList($this->rootMenu);
     // generate bootstrap 4 menu
     $str1 = "";
     if(is_array($mnuroot)){
@@ -55,7 +55,7 @@ public function genMenus() {
     $this->htmlout = $strmbar[0] . $str1 . $strmbar[1];
 }
 private function genMenu($lstMenu,$submenu=0){
-    $mnuroot = $this->sphp_api->getMenuList($lstMenu[0]);
+    $mnuroot = $this->sphpApi->getMenuList($lstMenu[0]);
     $stra = array();
     $str = "";
     $str1 = "";
@@ -63,7 +63,7 @@ private function genMenu($lstMenu,$submenu=0){
         foreach ($mnuroot as $mnuName => $lstMenu2) {
             $str .= $this->genMenu($lstMenu2,1);
         }
-        $str1 = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str1 = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str1 != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[2],$lstMenu[3],$submenu);  
         }else{
@@ -72,7 +72,7 @@ private function genMenu($lstMenu,$submenu=0){
         return $stra[0] . $str . $str1 . $stra[1];
             
     }else{
-        $str = $this->genMenuLinks($this->sphp_api->getMenuLinkList($lstMenu[0]));
+        $str = $this->genMenuLinks($this->sphpApi->getMenuLinkList($lstMenu[0]));
         if($str != ""){
             $stra = $this->getB4Menu($lstMenu[0],$lstMenu[1],$lstMenu[2],$lstMenu[3],$submenu);  
         }else{
@@ -93,8 +93,8 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::JSServer()->getAJAX();
-addHeaderJSFunction('menu_ajax', "function menu_ajax(url){
+SphpBase::jsServer()->getAjax();
+addHeaderJsFunction('menu_ajax', "function menu_ajax(url){
 ", " getURL(url); }");
 }
 private function getB4Menu($mnutext,$mnuhref="",$mnuicon="",$blnAjaxLink2=false,$mnuSub=0){
@@ -206,9 +206,9 @@ $controlkeysp = "";
     }
     if($strkey != "") $strkey .= " && ";
     // code depend on key listner javascript code of framework
-    addHeaderJSFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", "}",true);
-    addHeaderJSFunctionCode("jq_keyevent", "menukeyevent1", 'ret = jq_menukeyevent(eventer2);',true);
-    addHeaderJSFunctionCode("jq_menukeyevent", $this->name, ' if('. $strkey .'eventer.keycode=='. $this->mkey .'){
+    addHeaderJsFunction("jq_menukeyevent", "function jq_menukeyevent(eventer){", "}",true);
+    addHeaderJsFunctionCode("jq_keyevent", "menukeyevent1", 'ret = jq_menukeyevent(eventer2);',true);
+    addHeaderJsFunctionCode("jq_menukeyevent", $this->name, ' if('. $strkey .'eventer.keycode=='. $this->mkey .'){
         if(eventer.evt==\'keyup\'){
             $(".dropdown-item[data-mkey='.$this->mkey.']")[0].click();
             return false;
@@ -222,7 +222,7 @@ $controlkeysp = "";
 }
 
 private function init() {
-        addHeaderJSFunctionCode("ready", "snavbar1", '
+        addHeaderJsFunctionCode("ready", "snavbar1", '
     var links = jql(\'.snavbar a\');
     jql.each(links, function (key, va) {
         if (va.href == document.URL) {
@@ -235,7 +235,7 @@ private function init() {
     });
 ',true);
         /*
-    addHeaderCSS("snavbar2", '     .nav-link[data-toggle].collapsed:before {
+    addHeaderCss("snavbar2", '     .nav-link[data-toggle].collapsed:before {
     content: " ▾";
 }
 .nav-link[data-toggle]:not(.collapsed):before {

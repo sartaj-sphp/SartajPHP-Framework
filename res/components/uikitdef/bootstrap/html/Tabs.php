@@ -3,7 +3,7 @@
 
 
 
-class Tabs extends Sphp\tools\Component{
+class Tabs extends Sphp\Tools\Component{
     private $activeli = 1;
     private $disabletabs = array();
     private $activeblock = 1;
@@ -18,9 +18,9 @@ class Tabs extends Sphp\tools\Component{
 ';
     
     protected function oncreate($element) {
-        $Client = SphpBase::sphp_request();
-        if($Client->request($this->name .'li')!="" && $Client->request($this->name .'li')!="null"){
-            $this->activeli = $Client->request($this->name . 'li');
+        $client = SphpBase::sphpRequest();
+        if($client->request($this->name .'li')!="" && $client->request($this->name .'li')!="null"){
+            $this->activeli = $client->request($this->name . 'li');
         }
     }
     
@@ -63,7 +63,7 @@ class Tabs extends Sphp\tools\Component{
         }
     }
     protected function onjsrender2() {
-        addHeaderJSFunctionCode('ready', 'tab1', ' $(".nav-tabs").on(\'show.bs.tab\', "li.disabled a", function(event) {
+        addHeaderJsFunctionCode('ready', 'tab1', ' $(".nav-tabs").on(\'show.bs.tab\', "li.disabled a", function(event) {
 		event.stopImmediatePropagation();
         	return false;
     	});
@@ -72,7 +72,7 @@ class Tabs extends Sphp\tools\Component{
         activeTab = $(e.target).data("linum"); 
         previousTab = $(e.relatedTarget).data("linum"); 
     });');
-        addHeaderJSCode('tab1', ' activeTab = "'.$this->activeli.'"; previousTab = "null";');
+        addHeaderJsCode('tab1', ' activeTab = "'.$this->activeli.'"; previousTab = "null";');
     }
     protected function onrender(){
         $this->class .= " tabblock";

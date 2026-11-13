@@ -1,5 +1,5 @@
 <?php
-$plugpath = SphpBase::sphp_api()->getRootPath(__FILE__); 
+$plugpath = SphpBase::sphpApi()->getRootPath(__FILE__); 
 // permissions use for plugin like pagea-add mean Add Page permission 
 registerGate('pagea',"{$plugpath}/plugin/Pager/admin/page.gate.php","","Web Page",array(["add","Add Page"],["edit","Edit Page"],
     ["del","Delete Page"],["catadd","Add Menu"],["catedit","Edit Menu"],["catdel","Delete Menu"]));

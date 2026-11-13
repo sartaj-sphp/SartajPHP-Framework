@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form{
 
-class HTMLForm extends \Sphp\tools\Component {
+class HTMLForm extends \Sphp\Tools\Component {
     private $recID = 'txtid2';
     private $txtid2 = '';
     private $onvalidation = '';
@@ -28,20 +28,20 @@ class HTMLForm extends \Sphp\tools\Component {
     }
     // call outside to load js lib for need form use via ajax lator
     public function fu_setupJSLib() {
-        addFileLink($this->myrespath . "/assets/validation.js", true);
-        addFileLink($this->myrespath . "/assets/jquery.form.js", true);        
+        addFileLink($this->myUrl . "/assets/validation.js", true);
+        addFileLink($this->myUrl . "/assets/jquery.form.js", true);        
     }
     protected function oninit() {
         $this->tagName = "form";
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
-        addFileLink($this->myrespath . "/assets/validation.js", true);
-        $this->recID = $this->HTMLName . 're';        
-        if (\SphpBase::sphp_request()->request($this->recID) !== "") {
-            $this->txtid2 = urldecode(\SphpBase::sphp_request()->request($this->recID));
+        addFileLink($this->myUrl . "/assets/validation.js", true);
+        $this->recID = $this->htmlName . 're';        
+        if (\SphpBase::sphpRequest()->request($this->recID) !== "") {
+            $this->txtid2 = urldecode(\SphpBase::sphpRequest()->request($this->recID));
             $this->txtid2 = trim($this->txtid2);
             if(isSecureVal($this->txtid2)){
                 $this->txtid2 = secure2Val($this->txtid2);
@@ -53,11 +53,11 @@ class HTMLForm extends \Sphp\tools\Component {
     
     public function fu_setAjax() {
         $this->blnajax = true;
-        addFileLink($this->myrespath . "/assets/jquery.form.js", true);
+        addFileLink($this->myUrl . "/assets/jquery.form.js", true);
     }
     public function unsetAjax() {
         $this->blnajax = false;
-        removeFileLink($this->myrespath . "/assets/jquery.form.js", true); 
+        removeFileLink($this->myUrl . "/assets/jquery.form.js", true); 
     }
 
     public function fu_setSocket($gate,$evt="",$evtp="") {
@@ -101,9 +101,9 @@ class HTMLForm extends \Sphp\tools\Component {
     protected function onprejsrender() {
         $valdx = "";
         if ($this->blnajax) {
-            \SphpBase::JSServer()->getAJAX();
+            \SphpBase::jsServer()->getAjax();
             if ($this->target == '') {
-                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::sphp_settings()->res_path . '/'. \SphpBase::sphp_settings()->slib_version  . '/comp/server/assets/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
+                $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::sphpSettings()->resourceUrl . '/'. \SphpBase::sphpSettings()->slibVersion  . '/comp/server/assets/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
                 $this->target = $this->name . "res";
             } else {
                 $divt = "";
@@ -126,7 +126,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             /*
               if(!isset($this->parameterA['action'])){
               $subcode ="
-              getURL('".getThisGateURL('',true)."',$('#$this->name').serialize());
+              getURL('".getThisGateUrl('',true)."',$('#$this->name').serialize());
               ";
               }else{
               $subcode ="
@@ -136,9 +136,9 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
              * 
              */
 
-            //addHeaderJSFunctionCode('ready', $this->name, "$('#" . $this->name . "').ajaxForm(); ");
+            //addHeaderJsFunctionCode('ready', $this->name, "$('#" . $this->name . "').ajaxForm(); ");
         }else if($this->blnsocket){
-            \SphpBase::JSServer()->getAJAX();
+            \SphpBase::jsServer()->getAjax();
             $subcode = " frontobj.getSphpSocket(function(wsobj1){
     var formData = $('#" . $this->name . "').serializeAssoc();
 	delete formData['sphpajax'];
@@ -146,10 +146,10 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
 });";
 
   }else if($this->blnmobileapp){
-            \SphpBase::JSServer()->getAJAX();
+            \SphpBase::jsServer()->getAjax();
             $this->setAttribute("onsubmit","var vt = {$this->name}_submit2(''); return false;");
             // ban submit
-        //addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}mobapp", ' blnSubmit = false ; ');
+        //addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}mobapp", ' blnSubmit = false ; ');
             $subcode = " 
     var formData = $('#" . $this->name . "').serializeAssoc();
     delete formData['sphpajax'];
@@ -172,9 +172,9 @@ blnSubmit =  " . $this->onvalidation . ";
 }
 ";
         }
-        addHeaderJSCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;$("#'. $this->name .'").on("keydown",clearValidationError);');
-        addHeaderJSFunction($this->name . "_submit2", "function " . $this->name .  "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},4000); return vt;}");
-        addHeaderJSFunction($this->name . "_submit", "function " . $this->name . "_submit(val){
+        addHeaderJsCode($this->name . "csubmit2", 'var ' . $this->name . 'st1 = true;$("#'. $this->name .'").on("keydown",clearValidationError);');
+        addHeaderJsFunction($this->name . "_submit2", "function " . $this->name .  "_submit2(val){ var vt = false;"," if({$this->name}st1){ {$this->name}st1 = false; vt = " . $this->name . "_submit(val); } setTimeout(function(){{$this->name}st1 = true;},4000); return vt;}");
+        addHeaderJsFunction($this->name . "_submit", "function " . $this->name . "_submit(val){
 var blnSubmit = true ;
 var ctlReq = Array();
 var ctlEmail = Array();
@@ -212,10 +212,10 @@ return false;
         $this->setAttributeDefault("role","form");
         $this->setAttributeDefault("method","post");
         $this->setAttributeDefault("enctype","multipart/form-data");
-        $this->setAttributeDefault("action",getThisGateURL("",false,".gate"));
+        $this->setAttributeDefault("action",getThisGateUrl("",false,".gate"));
         //$this->setAttributeDefault('onsubmit', "var vt = " . $this->name . "_submit2('');return false;");
         if(!isset($this->onsubmit)){
-            addHeaderJSFunctionCode("ready", $this->name .'rd1', "$('#" . $this->name . "').on('submit',function(e){e.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");
+            addHeaderJsFunctionCode("ready", $this->name .'rd1', "$('#" . $this->name . "').on('submit',function(e){e.preventDefault(); var vt = " . $this->name . "_submit2(''); return vt;}); ");
         }
         $v1 = "";
         if($this->txtid2 != ""){
@@ -225,7 +225,7 @@ return false;
         $hdn = "<input type=\"hidden\" name=\"txtid\" value=\"" . $v1 . "\" />";
         $hdn .= "<input type=\"hidden\" name=\"" . $this->recID . "\" value=\"" . $this->txtid2 . "\" />";
         if($this->blnajax) $hdn .= "<input type=\"hidden\" name=\"sphpajax\" value=\"1\" />";
-        $this->appendHTML($hdn);
+        $this->appendHtml($hdn);
         $parenttag = $this->wrapTag("div");
         $parenttag->setAttribute("id","wrp" . $this->name);
         $parenttag->setAttribute("class", "px-4 py-4");

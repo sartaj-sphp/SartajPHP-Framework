@@ -9,7 +9,7 @@
  * <input id="txtmodel" runat="server" extra="maker,type" type="text" dfield="txtmodel" class="form-control" path="libpath/comp/bundle/Autocomplete.php" funsetForm="form2" funsetMsgName="Model" funsetMaxLen="20"  />
  * send data from server
  *         $sltmaker = $this->genFormFront->getComponent('sltcar_maker')->value;
-        $s1 = $this->Client->request('term');
+        $s1 = $this->client->request('term');
         $res = $this->dbEngine->executeQueryQuick("SELECT txtmodel FROM cartype WHERE sltcar_maker='$sltmaker' AND txtmodel LIKE '%$s1%'");
         $d1 = array();
         while($row = mysqli_fetch_assoc($res)){
@@ -17,7 +17,7 @@
         }
         $this->genFormFront->txtmodel->sendData($d1);
  */
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/TextField.php");
+include_once(SphpBase::sphpSettings()->uiKitPath . "/form/TextField.php");
 class Autocomplete extends \Sphp\comp\form\TextField {
 
     private $url = "";
@@ -28,7 +28,7 @@ class Autocomplete extends \Sphp\comp\form\TextField {
     protected function oninit() {
         parent::oninit();
         //$this->setHTMLName("");
-        $this->url = getEventURL($this->name . '_autocomplete');
+        $this->url = getEventUrl($this->name . '_autocomplete');
     }
 
     public function fu_setURL($val) {
@@ -36,9 +36,9 @@ class Autocomplete extends \Sphp\comp\form\TextField {
     }
 
     public function sendData($val) {
-        SphpBase::JSServer()->addJSONBlock('js', 'proces', '
-   ' . SphpBase::sphp_api()->getJSArray("data", $val) . '
-  var term = "' . SphpBase::sphp_request()->post('term') . '" ;
+        SphpBase::jsServer()->addJsonBlock('js', 'proces', '
+   ' . SphpBase::sphpApi()->getJsArray("data", $val) . '
+  var term = "' . SphpBase::sphpRequest()->post('term') . '" ;
 ' . $this->name . '_cache[term] = data;    
 ' . $this->name . '_response(data);
     ');
@@ -63,15 +63,15 @@ class Autocomplete extends \Sphp\comp\form\TextField {
                 $str1 .= 'request["'. $val .'"] = $("#'. $val .'").val();';                
             }
         }
-        addHeaderJSFunction($this->name . '_autocomplete', "function " . $this->name . '_autocomplete(request){ ', "
+        addHeaderJsFunction($this->name . '_autocomplete', "function " . $this->name . '_autocomplete(request){ ', "
     clearTimeout(this.tmr1); this.tmr1 = setTimeout(function(){
     $str1
 getURL('$this->url',request);    
     },800);
 }");
 
-        addHeaderJSCode($this->name, ' window["' . $this->name . '_cache"] = {}; window["' . $this->name . '_response"] = null;');
-        addHeaderJSFunctionCode('ready', $this->name, '
+        addHeaderJsCode($this->name, ' window["' . $this->name . '_cache"] = {}; window["' . $this->name . '_response"] = null;');
+        addHeaderJsFunctionCode('ready', $this->name, '
     $("#' . $this->name . '").autocomplete({
     minLength: ' . $this->minlen2 . ',
     source: function( request, response ) {

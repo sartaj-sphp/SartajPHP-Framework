@@ -3,7 +3,7 @@
  *  $("#modal1").modal("hide");
  *  $("#modal1").modal("show");
  */
-class ModalBox extends Sphp\tools\Component{
+class ModalBox extends Sphp\Tools\Component{
 private $url = "";
 private $btn1 = ""; 
 
@@ -17,7 +17,7 @@ public function  fu_getURL($url) {
 
 protected function onrender(){
     if($this->url != ""){
-        addHeaderJSFunctionCode('ready',$this->name, "$('#$this->name').on('shown.bs.modal', function () {getAJAX('$this->url',{},true,function(r){"
+        addHeaderJsFunctionCode('ready',$this->name, "$('#$this->name').on('shown.bs.modal', function () {getAjax('$this->url',{},true,function(r){"
             . " }); } );");
     }
 
@@ -30,14 +30,14 @@ protected function onrender(){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>');
     $this->class = "modal-body"; 
-    $this->HTMLID = 'b' . $this->name;
-    $this->HTMLName = 'b' . $this->name;
+    $this->htmlId = 'b' . $this->name;
+    $this->htmlName = 'b' . $this->name;
     $this->setPostTag('<br/>
     </div>
   </div>
 </div>' . $this->btn1);        
-    //addHeaderJSFunctionCode('ready', $this->name, ' window["'. $this->name .'"] = bootstrap.Modal.getOrCreateInstance(document.getElementById("'. $this->name .'")); ',true); 
-    addHeaderJSFunctionCode('ready', $this->name, ' window["'. $this->name .'"] = new bootstrap.Modal(document.getElementById("'. $this->name .'")); ',true); 
+    //addHeaderJsFunctionCode('ready', $this->name, ' window["'. $this->name .'"] = bootstrap.Modal.getOrCreateInstance(document.getElementById("'. $this->name .'")); ',true); 
+    addHeaderJsFunctionCode('ready', $this->name, ' window["'. $this->name .'"] = new bootstrap.Modal(document.getElementById("'. $this->name .'")); ',true); 
 }
 public function getButton($param) {
     return '<button type="button" class="btn btn-primary" ldata-toggle="modal" ldata-target="#'. $this->name .'" onclick="$(\'#'. $this->name .'\').modal(\'show\')">

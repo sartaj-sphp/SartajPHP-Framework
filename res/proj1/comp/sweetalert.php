@@ -1,5 +1,5 @@
 <?php
-class sweetalert extends \Sphp\tools\Component{
+class sweetalert extends \Sphp\Tools\Component{
     private $options = '{}';
     private $msg = 'Hi';
     private $type = 'success';
@@ -14,6 +14,6 @@ class sweetalert extends \Sphp\tools\Component{
             $this->type = $this->getAttribute('type');
         }
         addFileLink('https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js');
-        addHeaderJSFunctionCode("ready",$this->name,"swal('". SphpBase::sphp_settings()->title ."','{$this->msg}','{$this->type}',{$this->options});");
+        addHeaderJsFunctionCode("ready",$this->name,"swal('". SphpBase::sphpSettings()->title ."','{$this->msg}','{$this->type}',{$this->options});");
     }
 }

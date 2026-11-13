@@ -1,12 +1,12 @@
 <?php
 
-class Seditor extends \Sphp\tools\BasicGate{
+class Seditor extends \Sphp\Tools\BasicGate{
     private $tmp1 = null;
     
     
     public function onstart() {
-        $this->setMasterFile(SphpBase::sphp_settings()->slib_path . "/masters/default/softmaster.php");
-        SphpBase::sphp_settings()->disableEditing();
+        $this->setMasterFile(SphpBase::sphpSettings()->slibPath . "/masters/default/softmaster.php");
+        SphpBase::sphpSettings()->disableEditing();
         $this->tmp1 = new FrontFile($this->apppath . "/fronts/seditor_form1.front",false,null,$this);
         
     }
@@ -18,37 +18,37 @@ class Seditor extends \Sphp\tools\BasicGate{
     }
 
     public function page_event_findtempf($param) {
-        $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::sphp_settings()->defenckey);
-        $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::sphp_settings()->defenckey);
+        $tempfname = decrypt($this->client->request("tempfname"),SphpBase::sphpSettings()->defenceKey);
+        $tempappname = decrypt($this->client->request("tempappname"),SphpBase::sphpSettings()->defenceKey);
         
-        addHeaderJSFunctionCode("afterSaveFile", "fileopen3", ' window.opener.ProcessSphpCM("reload");',true);
+        addHeaderJsFunctionCode("afterSaveFile", "fileopen3", ' window.opener.ProcessSphpCM("reload");',true);
         $afile = basename($tempfname);
         $dir1 = dirname($tempfname);
         $atype = pathinfo($tempfname,PATHINFO_EXTENSION);
-        addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventURL("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+        addHeaderJsFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventUrl("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
         $afile = basename($tempappname);
         $dir1 = dirname($tempappname);
         $atype = pathinfo($tempappname,PATHINFO_EXTENSION);
-        addHeaderJSFunctionCode("ready", "fileopen2", '    addTabWithoutTree("'. getEventURL("openfile") .'","a2","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+        addHeaderJsFunctionCode("ready", "fileopen2", '    addTabWithoutTree("'. getEventUrl("openfile") .'","a2","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
         $this->setFrontFile($this->tmp1);
         
-        //$this->JSServer->addJSONJSBlock('');
-        //$this->JSServer->addJSONReturnBlock($this->Client->session("wproject") . "/" . $tempfname);
+        //$this->jsServer->addJsonJsBlock('');
+        //$this->jsServer->addJsonReturnBlock($this->client->session("wproject") . "/" . $tempfname);
     }
     
     public function page_event_findmasterf($param) {
-        if($this->Client->request("tempfname") !== ""){
-            $tempfname = decrypt($this->Client->request("tempfname"),SphpBase::sphp_settings()->defenckey);
-            $tempappname = decrypt($this->Client->request("tempappname"),SphpBase::sphp_settings()->defenckey);
+        if($this->client->request("tempfname") !== ""){
+            $tempfname = decrypt($this->client->request("tempfname"),SphpBase::sphpSettings()->defenceKey);
+            $tempappname = decrypt($this->client->request("tempappname"),SphpBase::sphpSettings()->defenceKey);
             $afile = basename($tempfname);
             $dir1 = dirname($tempfname);
             $atype = pathinfo($tempfname,PATHINFO_EXTENSION);
-            addHeaderJSFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventURL("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
+            addHeaderJsFunctionCode("ready", "fileopen1", '    addTabWithoutTree("'. getEventUrl("openfile") .'","a1","'.$afile .'","'. $dir1 .'","'. $atype .'"); ');
             $this->setFrontFile($this->tmp1);
-            //$this->JSServer->addJSONJSBlock('');
-            //$this->JSServer->addJSONReturnBlock($this->Client->session("wproject") . "/" . $tempfname);
+            //$this->jsServer->addJsonJsBlock('');
+            //$this->jsServer->addJsonReturnBlock($this->client->session("wproject") . "/" . $tempfname);
         }else{
-            //$this->JSServer->addJSONJSBlock(' console.log("Project is not running in editor mode"); ');
+            //$this->jsServer->addJsonJsBlock(' console.log("Project is not running in editor mode"); ');
         }
     }
     

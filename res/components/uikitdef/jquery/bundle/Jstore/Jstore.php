@@ -5,24 +5,24 @@
  * @author SARTAJ
  */
 
-class Jstore extends \Sphp\tools\Component{
+class Jstore extends \Sphp\Tools\Component{
     private $tables = 'tables: []';
 public function oncreate($element){
     $this->setHTMLName("");
-    $this->registerEventJS('ready');
+    $this->registerEventJs('ready');
 }
 
 
 public function onjsrender(){
-    addFileLink($this->myrespath . '/jsstore.js');
-    //addFileLink($this->myrespath . '/jsstore.worker.js');
+    addFileLink($this->myUrl . '/jsstore.js');
+    //addFileLink($this->myUrl . '/jsstore.worker.js');
     if(is_dir("cache/sphpbin/resm/jslib") && !is_file("cache/sphpbin/resm/jslib/jsstore.worker.js")){
-        copy(realpath($this->mypath) . '/jsstore.worker.js',"cache/sphpbin/resm/jslib/jsstore.worker.js");
+        copy(realpath($this->myPath) . '/jsstore.worker.js',"cache/sphpbin/resm/jslib/jsstore.worker.js");
         $workerpath = "cache/sphpbin/resm/jslib/jsstore.worker.js";
     }else if(is_dir("cache/sphpbin/resm/jslib")){
         $workerpath = "cache/sphpbin/resm/jslib/jsstore.worker.js";
     }else{
-        $workerpath = $this->myrespath . '/jsstore.worker.js';          
+        $workerpath = $this->myUrl . '/jsstore.worker.js';          
     }
     $strdatajs = "";
     $blndatanotvalid = false;
@@ -108,7 +108,7 @@ public function onjsrender(){
     }
 ';
     }
-    addHeaderJSCode('jstore'. $this->name, ' var connection = new JsStore.Instance(new Worker("'. $workerpath .'"));
+    addHeaderJsCode('jstore'. $this->name, ' var connection = new JsStore.Instance(new Worker("'. $workerpath .'"));
 const dbEngine = {
     dbname: "'. $this->name .'",
     isopen: false,
@@ -163,8 +163,8 @@ const dbEngine = {
     }
 };
 ');
-    addHeaderJSFunction('comp_'. $this->name .'_ready', 'function comp_'. $this->name .'_ready(event) {', '}');
-    addHeaderJSFunctionCode("ready", $this->name, 'dbEngine.checkDB();');
+    addHeaderJsFunction('comp_'. $this->name .'_ready', 'function comp_'. $this->name .'_ready(event) {', '}');
+    addHeaderJsFunctionCode("ready", $this->name, 'dbEngine.checkDB();');
 }
 
 public function onrender() {

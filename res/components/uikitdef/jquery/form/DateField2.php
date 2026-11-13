@@ -7,7 +7,7 @@
 
 
 
-class DateField2 extends Sphp\tools\Component{
+class DateField2 extends Sphp\Tools\Component{
 public $datemin = '';
 public $datemax = '';
 private $appendText = 'dd-mm-yy';
@@ -19,9 +19,9 @@ private $req = false;
 
 protected function oncreate($element) {
             if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
 
 if($this->value!=''){
@@ -33,7 +33,7 @@ $this->unsetEndTag();
      public function fu_setForm($val) { $this->formName = $val;}
      public function fu_setMsgName($val) { $this->msgName = $val;}
      public function fu_setRequired() {
-if($this->issubmit){
+if($this->blnSubmit){
 if(strlen($this->value) < 1){
 setErr($this->name,"Can not submit Empty");
             }
@@ -104,8 +104,8 @@ public function fu_setButtonImage($val){$this->image=$val;}
 public function fu_setNumMonths($val){$this->nomonth=$val;}
 
 protected function onjsrender(){
-global $libpath;
-global $respath;
+global $libPath;
+global $resourceUrl;
 global $jquerypath;
 /*
 addFileLink("{$jquerypath}/themes/base/jquery.ui.all.css");
@@ -116,19 +116,19 @@ addFileLink("{$jquerypath}/ui/jquery.ui.datepicker.min.js");
  */
 $str = '';
 if($this->appendText!=''){$str .= ",appendText: '$this->appendText', dateFormat: '$this->appendText'";}
-if($this->image==''){$this->image= "$respath/components/uikitdef/jquery/html/res/calendar.gif";}
+if($this->image==''){$this->image= "$resourceUrl/components/uikitdef/jquery/html/res/calendar.gif";}
 if($this->image!=''){$str .= ",showOn: 'button',buttonImageOnly: true, buttonImage: '$this->image'";}
 if($this->datemax!=''){$str .= ",maxDate: '$this->datemax'";}
 if($this->datemin!=''){$str .= ",minDate: '$this->datemin'";}
 if($this->nomonth!=''){$str .= ",numberOfMonths: $this->nomonth";}
 $this->setParameterA('class', $this->parameterA['class']." hasDatePicker2");
-addHeaderJSFunctionCode('ready', "datepicker", "
+addHeaderJsFunctionCode('ready', "datepicker", "
 $('.hasDatePicker2').datepicker({ changeMonth: true,changeYear: true $str});
 ");
 if($this->formName!=''){
 if($this->req){
-addFooterJSFunctionCode("{$this->formName}_submit", "{$this->HTMLID}req", "
-ctlReq['$this->HTMLID']= Array('$this->msgName','TextField');");
+addFooterJsFunctionCode("{$this->formName}_submit", "{$this->htmlId}req", "
+ctlReq['$this->htmlId']= Array('$this->msgName','TextField');");
 }
 }
 }
@@ -144,7 +144,7 @@ $this->parameterA['readonly'] = ' ';
 
 
 // javascript functions
-public function getJSValue(){
+public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 

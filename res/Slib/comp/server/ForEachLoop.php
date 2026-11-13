@@ -17,7 +17,7 @@
 
 
 
-    class ForEachLoop extends \Sphp\tools\Component {
+    class ForEachLoop extends \Sphp\Tools\Component {
 
         public $key = "";
         public $item = "";

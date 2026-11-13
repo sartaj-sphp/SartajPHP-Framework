@@ -1,6 +1,6 @@
 <?php 
 
-class examples extends Sphp\tools\BasicGate{
+class examples extends Sphp\Tools\BasicGate{
 
     public function page_new(){
         $frtMain = new FrontFile("list");

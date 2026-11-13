@@ -9,7 +9,7 @@
 namespace Sphp\Comp\Form {
 
 
-    class FileUploader extends \Sphp\tools\Component {
+    class FileUploader extends \Sphp\Tools\Component {
 
         public $maxLen = '';
         public $minLen = '';
@@ -35,9 +35,9 @@ namespace Sphp\Comp\Form {
         private function fillFileAttrib(){
             if($this->fillcall) return;
             $this->fillcall = true;
-            if (\SphpBase::sphp_request()->isFile("$this->name")) {
-                $this->issubmit = true;
-                $f1 = \SphpBase::sphp_request()->files("$this->name");
+            if (\SphpBase::sphpRequest()->isFile("$this->name")) {
+                $this->blnSubmit = true;
+                $f1 = \SphpBase::sphpRequest()->files("$this->name");
                 if(isset($f1["type"])){
                     $this->fileType = $f1["type"];
                 }
@@ -50,7 +50,7 @@ namespace Sphp\Comp\Form {
                 }
                 $this->fileFrontName = $f1["tmp_name"];
                 if ($this->fileFrontName != '') {
-                    \SphpBase::sphp_request()->request($this->name, false, $f1["name"]);
+                    \SphpBase::sphpRequest()->request($this->name, false, $f1["name"]);
                     $ft = pathinfo($f1["name"]);
                     $this->fileExtention = $ft['extension'];
                     //\SphpBase::debug()->println( $this->fileExtention);
@@ -62,19 +62,19 @@ namespace Sphp\Comp\Form {
         protected function oncreate($element) {
             $page = \SphpBase::page();
             $tblName = \SphpBase::page()->tblName;
-            $JSServer = \SphpBase::JSServer();
-            $Client = \SphpBase::sphp_request();
+            $jsServer = \SphpBase::jsServer();
+            $client = \SphpBase::sphpRequest();
             $mysql = \SphpBase::dbEngine();
             if (!$element->hasAttribute("name")) {
-                $this->HTMLName = $this->name;
+                $this->htmlName = $this->name;
             } else {
-                $this->HTMLName = $this->getAttribute("name");
+                $this->htmlName = $this->getAttribute("name");
             }
             $this->fillFileAttrib();
             $this->unsetEndTag();
             $this->tagName = "input";
             if (\SphpBase::page()->sact == $this->name . 'del') {
-                $file = substr(decryptme(\SphpBase::sphp_request()->request('pfn')), 3);
+                $file = substr(decryptme(\SphpBase::sphpRequest()->request('pfn')), 3);
                 $pt = pathinfo($file);
                 if (file_exists($file)) {
                     unlink($file);
@@ -85,7 +85,7 @@ namespace Sphp\Comp\Form {
                 if ($this->fildName != '') {
                     $mysql->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='" . \SphpBase::page()->getEventParameter() . "'");
                 }
-                $JSServer->addJSONBlock('html', 'out' . $this->name, 'Pic Deleted!');
+                $jsServer->addJsonBlock('html', 'out' . $this->name, 'Pic Deleted!');
             }
             $this->setAttribute('type', 'file');
 
@@ -111,7 +111,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function deleteFile() {
-            $file = decryptme(\SphpBase::sphp_request()->request("hid" . $this->name));
+            $file = decryptme(\SphpBase::sphpRequest()->request("hid" . $this->name));
             if ($file != "") {
                 $file = substr($file, 3);
                 $pt = pathinfo($file);
@@ -125,7 +125,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function isUpdateFile() {
-            $file = decryptme(\SphpBase::sphp_request()->request("hid" . $this->name));
+            $file = decryptme(\SphpBase::sphpRequest()->request("hid" . $this->name));
             if ($file != "" && $this->value != "") {
                 $file = substr($file, 3);
                 if ($file != $this->value) {
@@ -166,7 +166,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function fi_setRequired() {
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if (strlen($this->value) < 1) {
                     $this->setErrMsg($this->getAttribute("placeholder") . ' ' . "Can not submit Empty");
                 }
@@ -176,7 +176,7 @@ namespace Sphp\Comp\Form {
 
         public function fi_setFileMaxLen($val) {
             $this->maxLen = $val;
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if ($this->getFileSize() > $val) {
                     $this->setErrMsg($this->getAttribute("placeholder") . ' ' . "Maximum File Length should not be exceed then $val bytes");
                 }
@@ -189,7 +189,7 @@ namespace Sphp\Comp\Form {
 
         public function fi_setFileMinLen($val) {
             $this->minFileLen = $val;
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if ($this->getValue() != '' && $this->getFileSize() < $val) {
                     $this->setErrMsg("Minimum File Length should be $val bytes");
                 }
@@ -236,7 +236,7 @@ namespace Sphp\Comp\Form {
         }
 
         public function getFilePrevName() {
-            return \SphpBase::sphp_request()->request('hid' . $this->name);
+            return \SphpBase::sphpRequest()->request('hid' . $this->name);
         }
 
         public function getFileExtension() {
@@ -250,7 +250,7 @@ namespace Sphp\Comp\Form {
 
         private function findTypeAllowed() {
             $blnFound = false;
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 $types = explode(',', $this->getFileTypesAllowed());
                 foreach ($types as $key => $val) {
                     if ($val == $this->getFileType()) {
@@ -270,18 +270,18 @@ namespace Sphp\Comp\Form {
         }
         public function saveFile($FilePath) {
             //\SphpBase::debug()->print_r($_FILES);
-            if ($this->issubmit) {
+            if ($this->blnSubmit) {
                 if(!getCheckErr()){
-                    $file = \SphpBase::sphp_request()->files($this->name);
-                if (\SphpBase::sphp_request()->isFile($this->name) && isset($file["error"]) && $file["error"] > 0) {
+                    $file = \SphpBase::sphpRequest()->files($this->name);
+                if (\SphpBase::sphpRequest()->isFile($this->name) && isset($file["error"]) && $file["error"] > 0) {
                     if($file["error"] !== UPLOAD_ERR_OK && $file["error"] !== UPLOAD_ERR_NO_FILE){
                         $this->setErrMsg($file["error"]);
                     }
                 } else {
                     $p1 = "";
                     // run with Sphp Server
-                    if (\SphpBase::sphp_request()->isNativeClient) {
-                        $p1 = \SphpBase::sphp_request()->request($this->name);
+                    if (\SphpBase::sphpRequest()->isNativeclient) {
+                        $p1 = \SphpBase::sphpRequest()->request($this->name);
                         if (file_exists($p1) && !rename($p1, $FilePath)) {
                             $this->setErrMsg("Can not save file on server");
                         } else {
@@ -289,7 +289,7 @@ namespace Sphp\Comp\Form {
                             $this->setDataBound();
                         }
                     } else {
-                        $p1 = \SphpBase::sphp_request()->files($this->name)["tmp_name"];
+                        $p1 = \SphpBase::sphpRequest()->files($this->name)["tmp_name"];
                         if (!move_uploaded_file($p1, $FilePath)) {
                             $this->setErrMsg("Can not save file on server");
                         } else {
@@ -305,10 +305,10 @@ namespace Sphp\Comp\Form {
         }
 
         protected function onjsrender() {
-//SphpBase::JSServer()->getAJAX();
+//SphpBase::jsServer()->getAjax();
             if ($this->formName != '') {
                 if ($this->req) {
-                    addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                    addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
                 }
             }
@@ -316,8 +316,8 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
 
         public function setErrMsg($msg) {
             $this->errmsg .= '<strong class="text-danger">' . $msg . '! </strong>';
-            if (\SphpBase::sphp_request()->isAJAX()) {
-                \SphpBase::JSServer()->addJSONJSBlock('$("#' . $this->name . '").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+            if (\SphpBase::sphpRequest()->isAjax()) {
+                \SphpBase::jsServer()->addJsonJsBlock('$("#' . $this->name . '").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
             }
             setErr($this->name, $msg);
         }
@@ -340,7 +340,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
                     $imgtag = '<img src="' . $this->defaultImg . '" width="150" height="100" />';
                 }
                 if ($this->btnDelete) {
-                    $btnd = '<a href="javascript: ' . \SphpBase::JSServer()->postServer("'" . getEventURL($this->name . 'del', \SphpBase::page()->evtp, '', 'pfn=' . encryptme('t7i' . $this->value), '', true) . "'") . '">Delete</a>';
+                    $btnd = '<a href="javascript: ' . \SphpBase::jsServer()->postServer("'" . getEventUrl($this->name . 'del', \SphpBase::page()->evtp, '', 'pfn=' . encryptme('t7i' . $this->value), '', true) . "'") . '">Delete</a>';
                 }
             }
 
@@ -356,19 +356,19 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
             switch ($this->styler) {
                 case 1: {
                         $this->element->appendPreTag('<div class="form-floating mb-3">');
-                        $this->element->appendPostTag('<label for="' . $this->HTMLID . '" class="form-label">' . $this->msgName . '</label></div>');
+                        $this->element->appendPostTag('<label for="' . $this->htmlId . '" class="form-label">' . $this->msgName . '</label></div>');
                         break;
                     }case 2: {
                         $this->element->appendPreTag('<div class="mb-3">
-                <label for="' . $this->HTMLID . '" class="form-label">' . $this->msgName . '</label>');
-                        $this->element->appendPostTag('<div id="' . $this->HTMLID . 'Help" class="form-text">' . $this->helptext . '</div></div>');
+                <label for="' . $this->htmlId . '" class="form-label">' . $this->msgName . '</label>');
+                        $this->element->appendPostTag('<div id="' . $this->htmlId . 'Help" class="form-text">' . $this->helptext . '</div></div>');
                         break;
                     }
             }
         }
 
 // javascript functions used by ajax control and other control
-        public function getJSValue() {
+        public function getJsValue() {
             return "document.getElementById('$this->name').value";
         }
 

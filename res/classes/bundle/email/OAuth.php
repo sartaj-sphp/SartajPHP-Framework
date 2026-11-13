@@ -21,9 +21,9 @@
 
 namespace PHPMailer\PHPMailer;
 
-use League\OAuth2\Client\Grant\RefreshToken;
-use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Token\AccessToken;
+use League\OAuth2\client\Grant\RefreshToken;
+use League\OAuth2\client\Provider\AbstractProvider;
+use League\OAuth2\client\Token\AccessToken;
 
 /**
  * OAuth - OAuth2 authentication wrapper class.
@@ -36,7 +36,7 @@ use League\OAuth2\Client\Token\AccessToken;
 class OAuth implements OAuthTokenProvider
 {
     /**
-     * An instance of the League OAuth Client Provider.
+     * An instance of the League OAuth client Provider.
      *
      * @var AbstractProvider
      */
@@ -62,14 +62,14 @@ class OAuth implements OAuthTokenProvider
      *
      * @var string
      */
-    protected $oauthClientSecret = '';
+    protected $oauthclientSecret = '';
 
     /**
      * The client ID, generated in the app definition of the service you're connecting to.
      *
      * @var string
      */
-    protected $oauthClientId = '';
+    protected $oauthclientId = '';
 
     /**
      * The refresh token, used to obtain new AccessTokens.
@@ -88,8 +88,8 @@ class OAuth implements OAuthTokenProvider
     {
         $this->provider = $options['provider'];
         $this->oauthUserEmail = $options['userName'];
-        $this->oauthClientSecret = $options['clientSecret'];
-        $this->oauthClientId = $options['clientId'];
+        $this->oauthclientSecret = $options['clientSecret'];
+        $this->oauthclientId = $options['clientId'];
         $this->oauthRefreshToken = $options['refreshToken'];
     }
 

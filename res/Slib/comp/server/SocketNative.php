@@ -5,7 +5,7 @@
  * Socket work with native app to process as outsider from web server environment.
  * @author SARTAJ
  */
-class SocketNative extends \Sphp\tools\Component {
+class SocketNative extends \Sphp\Tools\Component {
 
     private $url = '';
 
@@ -17,13 +17,13 @@ class SocketNative extends \Sphp\tools\Component {
         $this->fu_unsetRender();
         $protocol = "ws";
         //event handler
-        addHeaderJSFunction('js_event_' . $this->name . '_msg', 'function js_event_' . $this->name . '_msg(evtp){', '}');
-        $this->addAsJSVar();
-        if (\SphpBase::sphp_request()->server('HTTPS') == 1)
+        addHeaderJsFunction('js_event_' . $this->name . '_msg', 'function js_event_' . $this->name . '_msg(evtp){', '}');
+        $this->addAsJsVar();
+        if (\SphpBase::sphpRequest()->server('HTTPS') == 1)
             $protocol = "wss";
         if ($this->url == '')
-            $this->url = $protocol . '://' . SphpBase::sphp_request()->server('HTTP_HOST') . '/sphp.ws';
-        addHeaderJSFunctionCode("ready", "socketnative", $this->setAsJSVar("new sphp_wsocket('$this->url',js_event_{$this->name}_msg)"));
+            $this->url = $protocol . '://' . SphpBase::sphpRequest()->server('HTTP_HOST') . '/sphp.ws';
+        addHeaderJsFunctionCode("ready", "socketnative", $this->setAsJsVar("new sphp_wsocket('$this->url',js_event_{$this->name}_msg)"));
     }
 
 }

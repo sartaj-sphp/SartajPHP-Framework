@@ -141,7 +141,7 @@ class SMTP2
      * @access public
      * @return bool
      */
-    function Authenticate($username, $password) {
+    function getAuthenticate($username, $password) {
         // Start authentication
         fputs($this->smtp_conn,"AUTH LOGIN" . $this->CRLF);
 

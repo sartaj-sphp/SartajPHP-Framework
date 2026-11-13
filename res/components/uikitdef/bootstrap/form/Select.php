@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form{
 
-class Select extends \Sphp\tools\Component {
+class Select extends \Sphp\Tools\Component {
 
     public $options = '';
     private $separator = " ";
@@ -48,9 +48,9 @@ class Select extends \Sphp\tools\Component {
     protected function oninit() {
         $this->tagName = "select";
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
 
         if($this->element->hasAttribute("msgname")){
@@ -59,8 +59,8 @@ class Select extends \Sphp\tools\Component {
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
-        if(\SphpBase::sphp_request()->isAJAX()){
-            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+        if(\SphpBase::sphpRequest()->isAjax()){
+            \SphpBase::jsServer()->addJsonJsBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
         }
         $eid = ($this->element->hasAttribute("placeholder")) ? $this->placeholder : $this->name; 
         setErr($eid, $msg);
@@ -149,7 +149,7 @@ class Select extends \Sphp\tools\Component {
 
     public function fi_setNotValue($val) {
         $this->notvalue = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if ($this->notvalue == $this->getValue()) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Please Select a Value");
             }
@@ -157,7 +157,7 @@ class Select extends \Sphp\tools\Component {
     }
     public function fi_setRequired($val) {
         $this->notvalue = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if ($this->notvalue == $this->getValue()) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Please Select a Value");
             }
@@ -322,12 +322,12 @@ class Select extends \Sphp\tools\Component {
 
     protected function onprejsrender() {
         if ($this->formName != '' && $this->notvalue != '') {
-            $jscode = "if(blnSubmit==true && " . $this->getJSValue() . "=='" . $this->notvalue . "'){
+            $jscode = "if(blnSubmit==true && " . $this->getJsValue() . "=='" . $this->notvalue . "'){
     blnSubmit = false ;
 displayValidationError(document.getElementById('$this->name'),'Please Select One Option From " . $this->msgName . "');
 document.getElementById('$this->name').focus();
 }";
-            addHeaderJSFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
+            addHeaderJsFunctionCode("{$this->formName}_submit", "$this->name", $jscode);
         }
     }
 
@@ -342,16 +342,16 @@ document.getElementById('$this->name').focus();
     
     protected function onprerender() {
         if($this->blnsearch){
-            addFileLink($this->myrespath . "/assets/select2.min.css");
-            addFileLink($this->myrespath . "/assets/select2.min.js");
+            addFileLink($this->myUrl . "/assets/select2.min.css");
+            addFileLink($this->myUrl . "/assets/select2.min.js");
         }
     }
 
     protected function onrender() {
          if($this->getVisible()){
-        $HTMLParser = new \Sphp\tools\HTMLParser();
+        $HtmlParser = new \Sphp\Tools\HtmlParser();
         if($this->blnsearch){
-            addHeaderJSFunctionCode("ready", "select2","$(\"#{$this->name}\").select2({
+            addHeaderJsFunctionCode("ready", "select2","$(\"#{$this->name}\").select2({
         theme: \"classic\",
         width: '100%',
         placeholder: \"{$this->placeholder}\",
@@ -367,8 +367,8 @@ document.getElementById('$this->name').focus();
         if ($this->options != '') {
             $this->innerHTML = $this->getOptionsHTML();
         } else {
-            // remove in future, don't use parseHTMLTag, use NodeTag Object
-            $this->innerHTML = $HTMLParser->parseHTMLTag($this->innerHTML, 'processStaticOptions', $this);
+            // remove in future, don't use parseHtmlTag, use NodeTag Object
+            $this->innerHTML = $HtmlParser->parseHtmlTag($this->innerHTML, 'processStaticOptions', $this);
             if (!$this->fstatic) {
                 //$this->innerHTML .= '<option selected="selected">' . $this->value . '</option>';
                 $this->options = $this->value;
@@ -378,12 +378,12 @@ document.getElementById('$this->name').focus();
         switch($this->styler){
             case 1:{
                 $this->setPreTag('<div class="form-floating mb-3">');
-                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>');
+                $this->setPostTag('<label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label></div>');
                 break;
             }case 2:{
                 $this->setPreTag('<div class="mb-3">
-                <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>');
+                <label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->htmlId .'Help" class="form-text">'. $this->helptext .'</div></div>');
                 break;
             }
         }
@@ -470,7 +470,7 @@ document.getElementById('$this->name').focus();
     }
 
 // javascript functions
-    public function getJSValue() {
+    public function getJsValue() {
         return "document.getElementById('$this->name').options[document.getElementById('$this->name').selectedIndex].value";
     }
 
@@ -482,7 +482,7 @@ document.getElementById('$this->name').focus();
         return "document.getElementById('$this->name').options[document.getElementById('$this->name').selectedIndex] = $exp;";
     }
 
-    public function getJSSelectedIndex() {
+    public function getJsSelectedIndex() {
         return "document.getElementById('$this->name').selectedIndex";
     }
 

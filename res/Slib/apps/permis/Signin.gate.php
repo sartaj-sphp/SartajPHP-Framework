@@ -1,12 +1,12 @@
 <?php
 // read if settings in comp.php file
-global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
+global $google_oauth_client_id,$googleOauthclientSecret,$google_oauth_redirect_uri,$google_oauth_version;
 
 // set redirect URL for google to Event "gauthr" of this App (Current Registered App) 
-$google_oauth_redirect_uri = getEventURL("gauthr"); 
+$google_oauth_redirect_uri = getEventUrl("gauthr"); 
 $google_oauth_version = 'v3';
 
-class Signin extends \Sphp\tools\BasicGate {
+class Signin extends \Sphp\Tools\BasicGate {
 
     protected $signinvar = null;
     protected $extra = array();
@@ -22,21 +22,21 @@ class Signin extends \Sphp\tools\BasicGate {
     }
 
     public function page_new() {
-        if($this->Client->cookie("algdec") != "dome1") {
+        if($this->client->cookie("algdec") != "dome1") {
             // delete all authentication related session variables
             destSession();
             // send login form to browser
             $this->setFrontFile($this->signinvar);
         }else{
             // restore login from cookie if exist and valid
-            $authcookie = json_decode(decryptme($this->Client->cookie("algdec2"),'ab7291df5v4d'),true);
-            $this->Client->session('sid',intval($authcookie['sid']));            
-            $this->Client->session('parentid',intval($authcookie['parentid'])); 
-            $this->Client->session('admin-name',$authcookie['admin-name']);            
-            $this->Client->session('email',$authcookie['email']);            
-            $this->Client->session('usertype',$authcookie['usertype']);  
-            $this->Client->session('profile_id',$authcookie['profile_id']);            
-            $this->Client->session('lstpermis',$authcookie['lstpermis']);  
+            $authcookie = json_decode(decryptme($this->client->cookie("algdec2"),'ab7291df5v4d'),true);
+            $this->client->session('sid',intval($authcookie['sid']));            
+            $this->client->session('parentid',intval($authcookie['parentid'])); 
+            $this->client->session('admin-name',$authcookie['admin-name']);            
+            $this->client->session('email',$authcookie['email']);            
+            $this->client->session('usertype',$authcookie['usertype']);  
+            $this->client->session('profile_id',$authcookie['profile_id']);            
+            $this->client->session('lstpermis',$authcookie['lstpermis']);  
             if($authcookie['profile_id'] == 0){
                 setSession('ADMIN', intval($authcookie['sid']));
             }else{
@@ -51,28 +51,28 @@ class Signin extends \Sphp\tools\BasicGate {
      * Handler of PageEvent Submit
      * login or signin form submission handle here
      *  comp.php settings
-     * @global string $cmpid
-     * @global string $admuser
-     * @global string $admpass
+     * @global string $cmpId
+     * @global string $adminUser
+     * @global string $adminPass
      */
     public function page_submit() {
-        global $cmpid,$admuser,$admpass;
+        global $cmpId,$adminUser,$adminPass;
         if(! getCheckErr()){
         $authcookie = array();
        // print_r($_REQUEST); 
         //$this->debug->println("Call Signin Event");
         $uname = $this->signinvar->getComponent("uname")->getValue();
         $pword = $this->signinvar->getComponent("pword")->getValue();
-        //$this->debug->println('user ' . $uname . ' = ' . $admuser);
-        if ($uname == $admuser && $pword == $admpass) {
-            $this->Client->session('sid', '0');
-            $this->Client->session('parentid', '0');
+        //$this->debug->println('user ' . $uname . ' = ' . $adminUser);
+        if ($uname == $adminUser && $pword == $adminPass) {
+            $this->client->session('sid', '0');
+            $this->client->session('parentid', '0');
             
-            $this->Client->session('admin-name', 'Super Admin');
-            $this->Client->session('email', '');
-            $this->Client->session('usertype', 'ADMIN');
-            $this->Client->session('profile_id', '0');
-            $this->Client->session('lstpermis', "");
+            $this->client->session('admin-name', 'Super Admin');
+            $this->client->session('email', '');
+            $this->client->session('usertype', 'ADMIN');
+            $this->client->session('profile_id', '0');
+            $this->client->session('lstpermis', "");
             $authcookie['sid'] = '0';            
             $authcookie['parentid'] = '0';            
             $authcookie['admin-name'] = 'Super Admin';            
@@ -82,23 +82,23 @@ class Signin extends \Sphp\tools\BasicGate {
             $authcookie['lstpermis'] = '';            
             $number_of_days = 10 ;
             $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
-            if($this->Client->isRequest("chkremb")) {
-                $this->Client->cookie("algdec", "dome1",false, $date_of_expiry );
-                $this->Client->cookie("algdec2", encryptme(json_encode($authcookie),'ab7291df5v4d'),false, $date_of_expiry );
+            if($this->client->isRequest("chkremb")) {
+                $this->client->cookie("algdec", "dome1",false, $date_of_expiry );
+                $this->client->cookie("algdec2", encryptme(json_encode($authcookie),'ab7291df5v4d'),false, $date_of_expiry );
             }
             setSession('ADMIN', 0);
             // enable session on sphp app mode
-            if(SphpBase::sphp_settings()->getUse_session() && SphpBase::sphp_request()->isNativeApp()){
+            if(SphpBase::sphpSettings()->useSession && SphpBase::sphpRequest()->isNativeApp()){
                 // Generate a unique session id
                 $sid = session_create_id();
-                $this->Client->cookie(SphpBase::sphp_settings()->getSession_name(), $sid,false, $date_of_expiry);
+                $this->client->cookie(SphpBase::sphpSettings()->getSessionName(), $sid,false, $date_of_expiry);
             }
             //print_r($_SESSION);
             getWelcome();
         } else {
-            $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpid FROM member,profile_permission WHERE username = '$uname' AND password = '$pword' AND member.status = '1' AND profile_id=profile_permission.id ");
-            if ($this->dbEngine->is_rows($result)) {
-                $row = $this->dbEngine->row_fetch_assoc($result);
+            $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpId FROM member,profile_permission WHERE username = '$uname' AND password = '$pword' AND member.status = '1' AND profile_id=profile_permission.id ");
+            if ($this->dbEngine->isRows($result)) {
+                $row = $this->dbEngine->rowFetchAssoc($result);
                 $this->setAuthUser($row);
                     getWelcome();
                 } else {
@@ -115,38 +115,38 @@ class Signin extends \Sphp\tools\BasicGate {
     private function setAuthUser($row) {
         $authcookie = array();
         if (!getCheckErr()) {
-            $this->Client->session('sid', $row['id']);
+            $this->client->session('sid', $row['id']);
 
             if ($row['parentid'] == 0) {
-                $this->Client->session('parentid', $row['id']);
+                $this->client->session('parentid', $row['id']);
             } else {
-                $this->Client->session('parentid', $row['parentid']);
+                $this->client->session('parentid', $row['parentid']);
             }
 
-            $this->Client->session('admin-name', $row['fname'] . " " . $row['lname']);
-            $this->Client->session('email', $row['email']);
-            $this->Client->session('usertype', $row['usertype']);
-            $this->Client->session('profile_id', $row['profile_id']);
-            $this->Client->session('lstpermis', $row['permission_id']);
-            $this->Client->session('compid', $row['spcmpid']);
+            $this->client->session('admin-name', $row['fname'] . " " . $row['lname']);
+            $this->client->session('email', $row['email']);
+            $this->client->session('usertype', $row['usertype']);
+            $this->client->session('profile_id', $row['profile_id']);
+            $this->client->session('lstpermis', $row['permission_id']);
+            $this->client->session('compid', $row['spcmpId']);
 
             //This is for permission management---------------------
             //This is for permission management---------------------
 
             //$usertype = $row['usertype'];
-            $authcookie['sid'] = $this->Client->session('sid');            
-            $authcookie['parentid'] = $this->Client->session('parentid'); 
-            $authcookie['admin-name'] = $this->Client->session('admin-name');            
-            $authcookie['email'] = $this->Client->session('email');            
-            $authcookie['usertype'] = $this->Client->session('usertype');  
-            $authcookie['profile_id'] = $this->Client->session('profile_id');            
-            $authcookie['lstpermis'] = $this->Client->session('lstpermis');            
+            $authcookie['sid'] = $this->client->session('sid');            
+            $authcookie['parentid'] = $this->client->session('parentid'); 
+            $authcookie['admin-name'] = $this->client->session('admin-name');            
+            $authcookie['email'] = $this->client->session('email');            
+            $authcookie['usertype'] = $this->client->session('usertype');  
+            $authcookie['profile_id'] = $this->client->session('profile_id');            
+            $authcookie['lstpermis'] = $this->client->session('lstpermis');            
             $number_of_days = 10 ;
             $date_of_expiry = time() + 60 * 60 * 24 * $number_of_days ;
 
-            if($this->Client->isRequest("chkremb")) {
-                $this->Client->cookie("algdec", "dome1",false, $date_of_expiry );
-                $this->Client->cookie("algdec2", encryptme(json_encode($authcookie)),false, $date_of_expiry );
+            if($this->client->isRequest("chkremb")) {
+                $this->client->cookie("algdec", "dome1",false, $date_of_expiry );
+                $this->client->cookie("algdec2", encryptme(json_encode($authcookie)),false, $date_of_expiry );
             }
 
             setSession('MEMBER', $row['id']);
@@ -154,15 +154,15 @@ class Signin extends \Sphp\tools\BasicGate {
     }
     
     public function getAuthGoogle(){
-        global $google_oauth_client_secret;
-        if($google_oauth_client_secret == null || strlen($google_oauth_client_secret) < 4) $this->signinvar->getComponent("divgog")->fu_unsetRender();
+        global $googleOauthclientSecret;
+        if($googleOauthclientSecret == null || strlen($googleOauthclientSecret) < 4) $this->signinvar->getComponent("divgog")->fu_unsetRender();
     }
      public function page_event_gauth($param) {
-         global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version;
+         global $google_oauth_client_id,$googleOauthclientSecret,$google_oauth_redirect_uri,$google_oauth_version;
         // set in your comp.php file 
         //$google_oauth_client_id = 'YOUR_CLIENT_ID';
-        //$google_oauth_client_secret = 'YOUR_CLIENT_SECRET';
-        //$google_oauth_redirect_uri = getEventURL("gauthr") ;
+        //$googleOauthclientSecret = 'YOUR_CLIENT_SECRET';
+        //$google_oauth_redirect_uri = getEventUrl("gauthr") ;
         
         // Define params and redirect to Google Authentication page
     $params = [
@@ -188,7 +188,7 @@ class Signin extends \Sphp\tools\BasicGate {
     }
      // google redirect event
      public function page_event_gauthr($param) {
-         global $google_oauth_client_id,$google_oauth_client_secret,$google_oauth_redirect_uri,$google_oauth_version,$cmpid;
+         global $google_oauth_client_id,$googleOauthclientSecret,$google_oauth_redirect_uri,$google_oauth_version,$cmpId;
          //print_r($_REQUEST);
          // If the captured code param exists and is valid
         if (isset($_GET['code']) && !empty($_GET['code'])) {
@@ -196,7 +196,7 @@ class Signin extends \Sphp\tools\BasicGate {
             $params = [
                 'code' => $_GET['code'],
                 'client_id' => $google_oauth_client_id,
-                'client_secret' => $google_oauth_client_secret,
+                'client_secret' => $googleOauthclientSecret,
                 'redirect_uri' => $google_oauth_redirect_uri,
                 'grant_type' => 'authorization_code'
             ];
@@ -214,10 +214,10 @@ class Signin extends \Sphp\tools\BasicGate {
                 $profile = json_decode($response, true);
                 // Make sure the profile data exists
                 if (isset($profile['email'])) {
-                    $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpid FROM member,profile_permission WHERE username='". $profile['email'] ."' AND member.status = '1' AND profile_id=profile_permission.id ");
-                    if ($this->dbEngine->is_rows($result)) {
+                    $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpId FROM member,profile_permission WHERE username='". $profile['email'] ."' AND member.status = '1' AND profile_id=profile_permission.id ");
+                    if ($this->dbEngine->isRows($result)) {
 
-                        $rows = $this->dbEngine->row_fetch_assoc($result);
+                        $rows = $this->dbEngine->rowFetchAssoc($result);
                         $this->setAuthUser($rows);
                         getWelcome();
                         
@@ -228,7 +228,7 @@ class Signin extends \Sphp\tools\BasicGate {
 
                     $this->extra['member']['userid'] = '0';
                     $this->extra['member']['parentid'] = '0';
-                    $this->extra['member']['spcmpid'] = $cmpid;
+                    $this->extra['member']['spcmpId'] = $cmpId;
                     $this->extra['member']['submit_timestamp'] = time();
                     $this->extra['member']['update_timestamp'] = time();
                     $this->extra['member']['email'] =$profile['email'];
@@ -246,8 +246,8 @@ class Signin extends \Sphp\tools\BasicGate {
                     if (!getCheckErr()) {
                         $insertedid = $this->page->insertData($this->extra);            
                         if (!getCheckErr()) {
-                            $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpid FROM member,profile_permission WHERE username='". $profile['email'] ."' AND member.status = '1' AND profile_id=profile_permission.id ");
-                            $rows = $this->dbEngine->row_fetch_assoc($result);
+                            $result = $this->dbEngine->executeQueryQuick("SELECT member.id,member.parentid,fname,lname,email,usertype,profile_id,permission_id,member.spcmpId FROM member,profile_permission WHERE username='". $profile['email'] ."' AND member.status = '1' AND profile_id=profile_permission.id ");
+                            $rows = $this->dbEngine->rowFetchAssoc($result);
                             $this->setAuthUser($rows);
                             getWelcome();
                             
@@ -284,8 +284,8 @@ class Signin extends \Sphp\tools\BasicGate {
     public function page_event_logout($param) {
         $number_of_days = 2 ;
         $date_of_expiry = time() - 60 * 60 * 24 * $number_of_days ;
-        $this->Client->cookie( "algdec", "", false, $date_of_expiry );
-        $this->Client->cookie("algdec2", "", false, $date_of_expiry );
+        $this->client->cookie( "algdec", "", false, $date_of_expiry );
+        $this->client->cookie("algdec2", "", false, $date_of_expiry );
         destSession();
         $this->page->forward(getAppURL("index"));
     }

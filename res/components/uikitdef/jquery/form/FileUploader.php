@@ -7,7 +7,7 @@
 
 
 
-class FileUploader extends Sphp\tools\Component{
+class FileUploader extends Sphp\Tools\Component{
 public $maxLen = '';
 public $minLen = '';
 private $formName = '';
@@ -24,9 +24,9 @@ private $fileSavePath = '';
 
 protected function oncreate($element) {
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
 $this->unsetEndTag();
 $this->fileType = $_FILES["$name"]["type"];
@@ -44,13 +44,13 @@ $file = decrypt($_REQUEST['pfn']);
 $pt = pathinfo($file);
 if(file_exists($file)){unlink($file);}
 if(file_exists('cache/'.$pt['basename'])){unlink('cache/'.$pt['basename']);}
-if($element->dtable == ""){
+if($element->dbTable == ""){
 $tblName = SphpBase::page()->tblName;
 }else{
-    $tblName = $element->dtable;
+    $tblName = $element->dbTable;
 }
 SphpBase::dbEngine()->executeQueryQuick("UPDATE $tblName SET $this->fildName='' WHERE id='". SphpBase::page()->getEventParameter() ."'");
-SphpBase::JSServer->addJSONBlock('html','out'.$this->name,'Pic Deleted!');
+SphpBase::jsServer->addJsonBlock('html','out'.$this->name,'Pic Deleted!');
 }
 $this->saveFile($this->fileSavePath);
 
@@ -59,7 +59,7 @@ $this->saveFile($this->fileSavePath);
      public function fu_setForm($val) { $this->formName = $val;}
      public function fu_setMsgName($val) { $this->msgName = $val;}
      public function fu_setRequired() {
-if($this->issubmit){
+if($this->blnSubmit){
 if(strlen($this->value) < 1){
 setErr($this->name.'-req',"Can not submit Empty");
             }
@@ -69,7 +69,7 @@ $this->req = true;
      public function fu_setFileMaxLen($val)
      {
          $this->maxLen = $val;
-if($this->issubmit){
+if($this->blnSubmit){
 if($this->getFileSize() > $val){
 setErr($this->name.'-maxfl',"Maximum File Length should not be exceed then $val bytes");
                                 }
@@ -79,7 +79,7 @@ setErr($this->name.'-maxfl',"Maximum File Length should not be exceed then $val 
      public function fu_setFileMinLen($val)
      {
          $this->minFileLen = $val;
-if($this->issubmit){
+if($this->blnSubmit){
 if($this->getValue()!='' && $this->getFileSize() < $val ){
     setErr($this->name.'-minfl',"Minimum File Length should be $val bytes");
 }
@@ -99,7 +99,7 @@ public function getFileMinLen() { return $this->minLen; }
 
 private function findTypeAllowed(){
 $blnFound = false;
-if($this->issubmit){
+if($this->blnSubmit){
 $types = split(',',$this->getFileTypesAllowed());
     foreach($types as $key=>$val){
         if($val == $this->getFileType()){
@@ -114,7 +114,7 @@ break;
 
 }
 private function saveFile($FilePath){
-if ($this->issubmit && !getCheckErr()){
+if ($this->blnSubmit && !getCheckErr()){
 if ($_FILES[$this->name]["error"] > 0)
     {
         setErr($this->name.'-save',$_FILES[$this->name]["error"]);
@@ -133,11 +133,11 @@ if ($_FILES[$this->name]["error"] > 0)
 
 
 protected function onjsrender(){
-global $JSServer;
-$JSServer->getAJAX();
-addFileLink($this->myrespath."res/jquery.MultiFile.pack.js");
+global $jsServer;
+$jsServer->getAjax();
+addFileLink($this->myUrl."res/jquery.MultiFile.pack.js");
 $this->setPostTag('<div id="'.$this->name.'-list"></div>');
-addHeaderJSFunctionCode('ready', $this->name, "
+addHeaderJsFunctionCode('ready', $this->name, "
 $('#{$this->name}').MultiFile({
 list: '#{$this->name}-list',
 max: 1,
@@ -146,7 +146,7 @@ accept: 'gif|jpg|png|bmp|swf'
 ");
 if($this->formName!=''){
 if($this->req){
-addFooterJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+addFooterJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextField');");
 }
 }
@@ -154,18 +154,18 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
 }
 
 protected function onrender(){
-global $JSClient,$page;
+global $JSclient,$page;
     if($this->value!=''){
     $this->parameterA['value'] = $this->value;
 if($this->value!=''){
     $this->setPostTag('<input type="hidden" name="hid'.$this->name.'" value="'.$this->value.'" /><div id="out'.$this->name.'">
-        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSClient->postServer("'".getEventURL($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
+        <img src="'.$this->value.'" width="150" height="100" /><a href="javascript: '.$JSclient->postServer("'".getEventUrl($this->name.'del',SphpBase::page()->evtp,'','pfn='.encrypt($this->value),'',true)."'").'">Delete</a></div>');
 }
 }
 }
 
 // javascript functions used by ajax control and other control
-public function getJSValue(){
+public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 

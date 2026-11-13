@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Form{
 
-class TextArea extends \Sphp\tools\Component {
+class TextArea extends \Sphp\Tools\Component {
 
     public $maxLen = '';
     public $minLen = '';
@@ -28,23 +28,23 @@ class TextArea extends \Sphp\tools\Component {
 
     protected function oninit() {
         $this->tagName = "textarea";
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             $this->value = htmlentities($this->value, ENT_COMPAT, "UTF-8");
         }
         if($this->getAttribute("msgname") != ""){
             $this->msgName = $this->getAttribute("msgname");
         }        
         if(!$this->element->hasAttribute("name")){
-            $this->HTMLName = $this->name;
+            $this->htmlName = $this->name;
         }else{
-            $this->HTMLName = $this->getAttribute("name");            
+            $this->htmlName = $this->getAttribute("name");            
         }
 
     }
     public function setErrMsg($msg){
         $this->errmsg .= '<strong class="text-danger">' . $msg . '</strong>';
-        if(\SphpBase::sphp_request()->isAJAX()){
-            \SphpBase::JSServer()->addJSONJSBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
+        if(\SphpBase::sphpRequest()->isAjax()){
+            \SphpBase::jsServer()->addJsonJsBlock('$("#'. $this->name .'").after("<strong class=\"text-danger\">' . $msg . '! </strong>");');
         }
         setErr($this->name, $msg);
     }
@@ -59,7 +59,7 @@ class TextArea extends \Sphp\tools\Component {
     }
 
     public function fi_setRequired() {
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if (strlen($this->value) < 1) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Can not submit Empty");
             }
@@ -69,7 +69,7 @@ class TextArea extends \Sphp\tools\Component {
 
     public function fi_setMaxLen($val) {
         $this->maxLen = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if (strlen($this->value) > $val) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Maximum Characters should not be exceed then $val");
             }
@@ -82,7 +82,7 @@ class TextArea extends \Sphp\tools\Component {
 
     public function fi_setMinLen($val) {
         $this->minLen = $val;
-        if ($this->issubmit) {
+        if ($this->blnSubmit) {
             if (strlen($this->getValue()) < $val) {
                 $this->setErrMsg( $this->getAttribute("msgname") .' ' . "Minimum Characters should be $val");
             }
@@ -96,15 +96,15 @@ class TextArea extends \Sphp\tools\Component {
     protected function onjsrender() {
         if ($this->formName != '') {
             if ($this->minLen != '') {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}min", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}min", "
 ctlMins['$this->name']= Array('$this->msgName','TextArea','$this->minLen');");
             }
             if ($this->maxLen != '') {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}max", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}max", "
 ctlMax['$this->name']= Array('$this->msgName','TextArea','$this->maxLen');");
             }
             if ($this->req) {
-                addHeaderJSFunctionCode("{$this->formName}_submit", "{$this->name}req", "
+                addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "
 ctlReq['$this->name']= Array('$this->msgName','TextArea');");
             }
         }
@@ -118,7 +118,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextArea');");
             $this->class = "form-control";
         }
         if ($this->value != '') {
-            $this->setInnerHTML($this->value);
+            $this->setInnerHtml($this->value);
         }
         if($this->getVisible()){
         $this->setAttributeDefault('rows', '10');
@@ -126,23 +126,23 @@ ctlReq['$this->name']= Array('$this->msgName','TextArea');");
                 switch($this->styler){
             case 1:{
                 $this->setPreTag('<div class="form-floating mb-3">');
-                $this->setPostTag('<label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label></div>');
+                $this->setPostTag('<label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label></div>');
                 break;
             }case 2:{
                 $this->setPreTag('<div class="mb-3">
-                <label for="'. $this->HTMLID .'" class="form-label">'. $this->msgName .'</label>');
-                $this->setPostTag('<div id="'. $this->HTMLID .'Help" class="form-text">'. $this->helptext .'</div></div>');
+                <label for="'. $this->htmlId .'" class="form-label">'. $this->msgName .'</label>');
+                $this->setPostTag('<div id="'. $this->htmlId .'Help" class="form-text">'. $this->helptext .'</div></div>');
                 break;
             }
         }
         }else{
-            $this->element->setAttribute("value", $this->getInnerHTML());
-            $this->setInnerHTML('');
+            $this->element->setAttribute("value", $this->getInnerHtml());
+            $this->setInnerHtml('');
         }
     }
 
 // javascript functions used by ajax control and other control
-    public function getJSValue() {
+    public function getJsValue() {
         return "document.getElementById('$this->name').value";
     }
 

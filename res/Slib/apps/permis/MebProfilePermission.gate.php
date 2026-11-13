@@ -1,5 +1,5 @@
 <?php
-include_once(SphpBase::sphp_settings()->slib_path ."/apps/permis/PermisGate.php");
+include_once(SphpBase::sphpSettings()->slibPath ."/apps/permis/PermisGate.php");
 
 class MebProfilePermission extends PermisGate {
 
@@ -8,18 +8,18 @@ class MebProfilePermission extends PermisGate {
         $this->getAuthenticate("ADMIN,MEMBER");
         $this->page->getAuthenticatePerm("view");
         $this->setTableName("profile_permission");
-        //$this->Client->session("appName", "Profile Permission");
+        //$this->client->session("appName", "Profile Permission");
         $this->genFormFront = new FrontFile("edit");
         $this->showallFront = new FrontFile("list");
          $this->showallFront->getComponent('showall')->fu_unsetAddButton();
          
-        $this->defWhere = " WHERE profile_permission.parentid = '". $this->Client->session('parentid') ."' ORDER BY profile_permission.id ASC ";
+        $this->defWhere = " WHERE profile_permission.parentid = '". $this->client->session('parentid') ."' ORDER BY profile_permission.id ASC ";
         $this->showallFront->getComponent('showall')->fu_setWhere($this->defWhere);
         
         $this->genFormFront->addMetaData('pageName','Profile Form');
         $this->showallFront->addMetaData('pageName','Manage Profiles');
         $this->setMasterFile($mebmasterf);
-        SphpBase::sphp_api()->addProp('page_title',"System Profile");
+        SphpBase::sphpApi()->addProp('page_title',"System Profile");
 
     }
     
@@ -28,8 +28,8 @@ class MebProfilePermission extends PermisGate {
     }       
     
     public function insert() {
-        $this->extra[]['sid'] = $this->Client->session('sid');
-        $permission_id = implode(",", $this->Client->request('permissionlist'));
+        $this->extra[]['sid'] = $this->client->session('sid');
+        $permission_id = implode(",", $this->client->request('permissionlist'));
         $this->extra[]['status'] = '0';
         $this->extra[]['permission_id'] = $permission_id;
         parent::insert();
@@ -58,8 +58,8 @@ class MebProfilePermission extends PermisGate {
         $ar1 = array();
         if($eventParam != '') {
             $result1 = $this->dbEngine->executeQueryQuick("SELECT * FROM profile_permission WHERE id = '$eventParam' ");
-            if($this->dbEngine->is_rows($result1)) {
-                $row =  $this->dbEngine->row_fetch_assoc($result1);
+            if($this->dbEngine->isRows($result1)) {
+                $row =  $this->dbEngine->rowFetchAssoc($result1);
                 $ar2 = explode(",", $row["permission_id"]);
                 foreach ($ar2 as $key => $value2) {
                     $ar1[$value2] = true;
@@ -67,7 +67,7 @@ class MebProfilePermission extends PermisGate {
             }
         }
        /* 
-        foreach(SphpBase::sphp_api()->getRegisteredApps() as $key => $armain) { 
+        foreach(SphpBase::sphpApi()->getRegisteredApps() as $key => $armain) { 
             if($armain[3] !== null){
             foreach($armain[3] as $key2 => $permission) {
                 if(is_array($permission)){
@@ -82,7 +82,7 @@ class MebProfilePermission extends PermisGate {
         $permission = array();
         $lih = "";
         $lih2 = "";
-        foreach(SphpBase::sphp_api()->getRegisteredGates() as $key => $armain) {
+        foreach(SphpBase::sphpApi()->getRegisteredGates() as $key => $armain) {
             $lih = "";
             $lih2 = "";
             if($armain[3] !== null){
@@ -102,7 +102,7 @@ class MebProfilePermission extends PermisGate {
                 }
                     $id = $key . "-" . $permission[0];
                 // permission will not show if login user don't have
-                if(SphpBase::sphp_permissions()->hasPermission($id)){
+                if(SphpBase::sphpPermissions()->hasPermission($id)){
                 $cls = '';
                     //$cls = '';
                     if(isset($ar1[$id])) {

@@ -7,7 +7,7 @@
 
 
 
-class Drag extends Sphp\tools\Component{
+class Drag extends Sphp\Tools\Component{
 protected function oncreate($element){
 $this->setHTMLName("");
 }
@@ -38,7 +38,7 @@ addFileLink($jquerypath.'ui/jquery.ui.core.min.js');
 addFileLink($jquerypath.'ui/jquery.ui.draggable.min.js');
  * 
  */
-addHeaderJSFunctionCode('ready',$this->name,'
+addHeaderJsFunctionCode('ready',$this->name,'
 $("#'.$this->name.'").draggable({
 start: function() {
 '.$this->parameterA['onstart'].'
@@ -58,7 +58,7 @@ start: function() {
 });
 ');
 if($this->parameterA['class'] == ''){
-    addHeaderCSS('dragdrop', '
+    addHeaderCss('dragdrop', '
 .dragdrop
 {
 position: relative; 

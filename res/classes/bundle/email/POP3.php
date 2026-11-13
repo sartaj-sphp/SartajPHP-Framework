@@ -68,7 +68,7 @@ class POP3
      * Options:
      * @see POP3::DEBUG_OFF: No output
      * @see POP3::DEBUG_SERVER: Server messages, connection/server errors
-     * @see POP3::DEBUG_CLIENT: Client and Server messages, connection/server errors
+     * @see POP3::DEBUG_CLIENT: client and Server messages, connection/server errors
      *
      * @var int
      */
@@ -183,7 +183,7 @@ class POP3
     }
 
     /**
-     * Authenticate with a POP3 server.
+     * getAuthenticate with a POP3 server.
      * A connect, login, disconnect sequence
      * appropriate for POP-before SMTP authorisation.
      *
@@ -376,7 +376,7 @@ class POP3
     {
         $response = fgets($this->pop_conn, $size);
         if ($this->do_debug >= self::DEBUG_SERVER) {
-            echo 'Server -> Client: ', $response;
+            echo 'Server -> client: ', $response;
         }
 
         return $response;
@@ -393,7 +393,7 @@ class POP3
     {
         if ($this->pop_conn) {
             if ($this->do_debug >= self::DEBUG_CLIENT) { //Show client messages when debug >= 2
-                echo 'Client -> Server: ', $string;
+                echo 'client -> Server: ', $string;
             }
 
             return fwrite($this->pop_conn, $string, strlen($string));

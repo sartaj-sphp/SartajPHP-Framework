@@ -1,27 +1,27 @@
 <?php
 
-include_once(SphpBase::sphp_settings()->comp_uikit_path . "/form/Select.php");
+include_once(SphpBase::sphpSettings()->uiKitPath . "/form/Select.php");
 
 class SelectMulti extends Sphp\comp\form\Select{
     
     public function oninit(){
         parent::oninit();
         //$this->setHTMLID($this->name . "comp");
-        $this->fu_setHTMLName($this->name ."comp");
+        $this->fu_setHtmlName($this->name ."comp");
     }
     
     public function onrender(){
         parent::onrender();
         $event1 = "click";
         if($this->blnsearch){
-            addFileLink(\SphpBase::sphp_settings()->comp_uikit_res_path . "/form/assets/select2.min.css");
-            addFileLink(\SphpBase::sphp_settings()->comp_uikit_res_path . "/form/assets/select2.min.js");
+            addFileLink(\SphpBase::sphpSettings()->uiKitUrl . "/form/assets/select2.min.css");
+            addFileLink(\SphpBase::sphpSettings()->uiKitUrl . "/form/assets/select2.min.js");
             $event1 = "select2:select";
         }
         if($this->value == "0") $this->value = '{ }';
         $vala = json_decode($this->value); 
-        //\SphpBase::debug()->println(SphpBase::sphp_api()->getJSArrayAss($this->name, $vala));
-        addHeaderJSFunctionCode('ready',$this->name .'rd', "  " . SphpBase::sphp_api()->getJSArrayAss($this->name, $vala) .
+        //\SphpBase::debug()->println(SphpBase::sphpApi()->getJsArrayAss($this->name, $vala));
+        addHeaderJsFunctionCode('ready',$this->name .'rd', "  " . SphpBase::sphpApi()->getJsArrayAss($this->name, $vala) .
            " ;window['{$this->name}delete'] = function(i){ delete $this->name[i]; {$this->name}rndr(); };
                 var {$this->name}add = function(){
                     var v1 = $('#{$this->name}').val().split(','); 

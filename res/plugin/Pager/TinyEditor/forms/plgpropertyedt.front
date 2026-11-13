@@ -1,6 +1,6 @@
 <div id="divprop1" class="p-3" style="max-height: 100vh; overflow-y: auto;">
 </div>
-<script runas="filelink"  src="respath/plugin/Pager/TinyEditor/js/property-editors.js" ></script>
+<script runas="filelink"  src="resourceUrl/plugin/Pager/TinyEditor/js/property-editors.js" ></script>
 <script runas="jsfunctioncode" function="ready">
     const element = window.top.currentElement;
     window.PropertyEditors.currentElement = element;

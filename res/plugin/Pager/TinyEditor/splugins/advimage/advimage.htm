@@ -4,15 +4,15 @@
 	<title>{#advimage_dlg.dialog_title}</title>
         
 	<?php SphpBase::JSServer()->getAJAX(); echo getHeaderHTML() . getFooterHTML(); ?>
-	<script type="text/javascript" src="<?php print $slibrespath; ?>/comp/html/jslib/validation.js"></script>
-	<script type="text/javascript" src="<?php print $slibrespath; ?>/comp/html/jslib/jquery.form.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/utils/mctabs.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/utils/form_utils.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/utils/validate.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/utils/editable_selects.js"></script>
-	<script type="text/javascript" src="<?php print $respath; ?>/controls/TinyEditor/plugins/advimage/js/image.js"></script>
-	<link href="<?php print $respath; ?>/controls/TinyEditor/plugins/advimage/css/advimage.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="<?php print $slib_url; ?>/comp/html/jslib/validation.js"></script>
+	<script type="text/javascript" src="<?php print $slib_url; ?>/comp/html/jslib/jquery.form.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/utils/mctabs.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/utils/form_utils.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/utils/validate.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/utils/editable_selects.js"></script>
+	<script type="text/javascript" src="<?php print $resource_url; ?>/controls/TinyEditor/plugins/advimage/js/image.js"></script>
+	<link href="<?php print $resource_url; ?>/controls/TinyEditor/plugins/advimage/css/advimage.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="advimage" style="display: none" role="application" aria-labelledby="app_title">
     <div id="srvmsg"></div>
@@ -85,7 +85,7 @@
 							</td>
 							<td rowspan="6" valign="top">
 								<div class="alignPreview">
-									<img id="alignSampleImg" src="<?php print $respath; ?>/controls/TinyEditor/plugins/advimage/img/sample.gif" alt="{#advimage_dlg.example_img}" />
+									<img id="alignSampleImg" src="<?php print $resource_url; ?>/controls/TinyEditor/plugins/advimage/img/sample.gif" alt="{#advimage_dlg.example_img}" />
 									Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
 									nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
 									edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam

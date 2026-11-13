@@ -7,10 +7,10 @@
  */
 
 
-    class EncodeLink extends \Sphp\tools\Component {
+    class EncodeLink extends \Sphp\Tools\Component {
 
         protected function onrender() {
-            SphpBase::JSServer()->getAJAX();
+            SphpBase::jsServer()->getAjax();
             $kn = "A8969D2B";
             $this->element->appendAttribute('class', $this->name);
             if($this->element->hasAttribute('key')){
@@ -20,8 +20,8 @@
             
             if($this->element->hasAttribute('value')){
                 $this->value = $this->getAttribute('value');
-                $this->setAttribute('value',SphpBase::sphp_api()->encrypt($this->value,$kn));
-                addHeaderJSFunctionCode('ready', 'encodetext1', "function ndecode(t1,key){" 
+                $this->setAttribute('value',SphpBase::sphpApi()->encrypt($this->value,$kn));
+                addHeaderJsFunctionCode('ready', 'encodetext1', "function ndecode(t1,key){" 
                 . ' var result = ""; var strdata = $("#" + t1).attr("value");
 	    if (strdata.length % 2 == 0) {
 	        var c = 0;
@@ -37,7 +37,7 @@
             $("." + t1).attr("href",$("." + t1).attr("prefix") + result);
 	    $("." + t1).html($("." + t1).attr("extra") + " " + result);'
                 ."}");
-                addHeaderJSFunctionCode('ready', $this->name, 'ndecode("'. $this->name .'","'. $kn .'");');
+                addHeaderJsFunctionCode('ready', $this->name, 'ndecode("'. $this->name .'","'. $kn .'");');
             }
         }
 

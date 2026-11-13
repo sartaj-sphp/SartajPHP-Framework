@@ -3,7 +3,7 @@
 <head lang="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<?php echo getHeaderHTML(); ?>
+<?php echo getHeaderHtml(); ?>
 </head>
 <body>
     <div id="mainbody" class="container-fluid">
@@ -12,7 +12,7 @@
 </div></div>
 </div>
 <?php 
-echo getFooterHTML(); 
+echo getFooterHtml(); 
 echo traceError(); echo traceErrorInner(); ?>
 </body>
 </html>

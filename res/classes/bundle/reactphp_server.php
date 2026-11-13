@@ -59,15 +59,15 @@ $_SERVER["HTTP_HOST"] =  "localhost:" . $config["port"] ;
 $_SERVER["SERVER_SOFTWARE"] =  "ReactPHP" ; 
 if($secure) $_SERVER["HTTPS"] = "on";
 $sharedpath = "./vendor/sartajphp/sartajphp";
-$respath = "./vendor/sartajphp/sartajphp/res";
-$slibversion = "Slib";
-$libversion = "Sphp";
+$resourceUrl = "./vendor/sartajphp/sartajphp/res";
+$slibVersion = "Slib";
+$libVersion = "Sphp";
 
 require_once $sharedpath . '/res/classes/bundle/SartajPhpRunner.php';
 
 // Create runner instance
 $runner = new SartajPhpRunner([
-    'session_path' => __DIR__ . '/storage/sessions',
+    'sessionPath' => __DIR__ . '/storage/sessions',
     'debug' => true
 ]);
 

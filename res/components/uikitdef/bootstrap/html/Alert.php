@@ -2,7 +2,7 @@
 
 namespace Sphp\Comp\Html{
 
-class Alert extends \Sphp\tools\Component {
+class Alert extends \Sphp\Tools\Component {
     private $innerErr = true;
     private $showall = false;
     // by deafult enable
@@ -35,10 +35,10 @@ class Alert extends \Sphp\tools\Component {
         <strong>Note!</strong> <span id="sphpinfomsg"></span>
     </div>
 </div><div id="srvmsg"></div>';
-        if(\SphpBase::sphp_api()->getProp("alert") == false){
+        if(\SphpBase::sphpApi()->getProp("alert") == false){
             $this->setPreTag($msg1);
-            \SphpBase::sphp_api()->addProp("alert",true);
-            addHeaderJSCode('alert', "window['runanierr'] = function(type){
+            \SphpBase::sphpApi()->addProp("alert",true);
+            addHeaderJsCode('alert', "window['runanierr'] = function(type){
     $(\"#sphp\" + type).fadeIn(1);
     $(\"#sphp\" + type).css(\"display\",\"block\");
     $(\"#sphp\" + type).delay(5000).fadeOut(\"slow\", function () { $(this).css(\"display\",\"none\"); });            
@@ -76,7 +76,7 @@ class Alert extends \Sphp\tools\Component {
         if($emsg != ""){
              $stro .= '<strong class="alert alert-danger">' . $emsg . '</strong>';
         }
-        $this->setInnerHTML($stro);
+        $this->setInnerHtml($stro);
     }
 }
 }

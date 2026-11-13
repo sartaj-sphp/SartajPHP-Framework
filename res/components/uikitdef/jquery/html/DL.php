@@ -6,14 +6,14 @@
  */
 
 
-class DL extends Sphp\tools\Component{
+class DL extends Sphp\Tools\Component{
 protected function oncreate($element){
 $this->setHTMLName("");
 }
 
 protected function onjsrender(){
 if($this->parameterA['class'] == ''){
-    addHeaderCSS('dl', '
+    addHeaderCss('dl', '
 .dl
 {
 	float: left;

@@ -8,7 +8,7 @@
 
 namespace Sphp\Comp\Html {
 
-    class Title extends \Sphp\tools\Component {
+    class Title extends \Sphp\Tools\Component {
         private $blnautoseo = false;
         private static $blnrender = false;
         
@@ -16,13 +16,13 @@ namespace Sphp\Comp\Html {
             $this->blnautoseo = true;
         }
         public function fu_setMetaKeywords($v) {
-            $this->setAttribute("metakeywords", $v);
+            $this->setAttribute("metaKeywords", $v);
         }
         public function fu_setMetaDescription($v) {
-            $this->setAttribute("metadescription", $v);
+            $this->setAttribute("metaDescription", $v);
         }
         public function fu_setMetaClassification($v) {
-            $this->setAttribute("metaclassification", $v);
+            $this->setAttribute("metaClassification", $v);
         }
         public function fu_setKeywords($v) {
             $this->setAttribute("keywords", $v);
@@ -40,63 +40,63 @@ namespace Sphp\Comp\Html {
         private function optimizeTags($element) {
             switch($element->tagName){
                 case 'a':{
-                    if(! $element->hasAttribute('title')) $element->setAttribute('title', \SphpBase::sphp_settings()->getKeyword());
+                    if(! $element->hasAttribute('title')) $element->setAttribute('title', \SphpBase::sphpSettings()->getKeyword());
                     break;
                 }
                 case 'img':{
-                    if(! $element->hasAttribute('title')) $element->setAttribute('title', \SphpBase::sphp_settings()->getKeyword());
-                    if(! $element->hasAttribute('alt')) $element->setAttribute('alt', \SphpBase::sphp_settings()->getKeyword());
+                    if(! $element->hasAttribute('title')) $element->setAttribute('title', \SphpBase::sphpSettings()->getKeyword());
+                    if(! $element->hasAttribute('alt')) $element->setAttribute('alt', \SphpBase::sphpSettings()->getKeyword());
                     break;
                 }
             }
         }
         protected function onrender() {
-            global $cmpname;
+            global $cmpName;
             // force render once
             if(! self::$blnrender){
                 self::$blnrender = true;
             $this->fu_unsetRenderTag();
-            $hh1 = $this->getInnerHTML();
-            $hh1 = $this->executePHPCode($hh1);
+            $hh1 = $this->getInnerHtml();
+            $hh1 = $this->executePhpCode($hh1);
             // 70 characters
-            \SphpBase::sphp_settings()->title = $hh1;
-            if ($this->element->hasAttribute("metakeywords")) {
-                \SphpBase::sphp_settings()->metakeywords = $this->getAttribute("metakeywords");
+            \SphpBase::sphpSettings()->title = $hh1;
+            if ($this->element->hasAttribute("metaKeywords")) {
+                \SphpBase::sphpSettings()->metaKeywords = $this->getAttribute("metaKeywords");
             } else {
-                \SphpBase::sphp_settings()->metakeywords = $hh1;
+                \SphpBase::sphpSettings()->metaKeywords = $hh1;
             }
             // length = 150
-            if ($this->element->hasAttribute("metadescription")) {
-                \SphpBase::sphp_settings()->metadescription = $this->getAttribute("metadescription");
+            if ($this->element->hasAttribute("metaDescription")) {
+                \SphpBase::sphpSettings()->metaDescription = $this->getAttribute("metaDescription");
             } else {
-                \SphpBase::sphp_settings()->metadescription = $hh1;
+                \SphpBase::sphpSettings()->metaDescription = $hh1;
             }
-            if ($this->element->hasAttribute("metaclassification")) {
-                \SphpBase::sphp_settings()->metaclassification = $this->getAttribute("metaclassification");
+            if ($this->element->hasAttribute("metaClassification")) {
+                \SphpBase::sphpSettings()->metaClassification = $this->getAttribute("metaClassification");
             } else {
-                \SphpBase::sphp_settings()->metaclassification = $hh1;
+                \SphpBase::sphpSettings()->metaClassification = $hh1;
             }
-            if ($this->element->hasAttribute("metaauthor")) {
-                \SphpBase::sphp_settings()->metaauthor = $this->getAttribute("metaauthor");
+            if ($this->element->hasAttribute("metaAuthor")) {
+                \SphpBase::sphpSettings()->metaAuthor = $this->getAttribute("metaAuthor");
             } else {
-                \SphpBase::sphp_settings()->metaauthor = $cmpname;
+                \SphpBase::sphpSettings()->metaAuthor = $cmpName;
             }
             if ($this->element->hasAttribute("keywords")) {
-                \SphpBase::sphp_settings()->keywords = explode(",", $this->getAttribute("keywords"));
+                \SphpBase::sphpSettings()->keywords = explode(",", $this->getAttribute("keywords"));
             } else {
-                \SphpBase::sphp_settings()->keywords = explode(",",\SphpBase::sphp_settings()->metakeywords);
+                \SphpBase::sphpSettings()->keywords = explode(",",\SphpBase::sphpSettings()->metaKeywords);
             }
             // create social media og meta tags for sharing webpage
-            $str1 = '<link rel="canonical" href="'. getThisGateURL() .'" /><meta property="og:locale" content="en_US" />
-		<meta property="og:site_name" content="'. $cmpname .'" />
+            $str1 = '<link rel="canonical" href="'. getThisGateUrl() .'" /><meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="'. $cmpName .'" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="'. \SphpBase::sphp_settings()->title .'" />
-		<meta property="og:description" content="'. \SphpBase::sphp_settings()->metadescription .'" />
-		<meta property="og:url" content="'. getThisGateURL() .'" />';
+		<meta property="og:title" content="'. \SphpBase::sphpSettings()->title .'" />
+		<meta property="og:description" content="'. \SphpBase::sphpSettings()->metaDescription .'" />
+		<meta property="og:url" content="'. getThisGateUrl() .'" />';
             if ($this->element->hasAttribute("img")) {
                 $str1 .= '<meta property="og:image" content="'. $this->element->getAttribute("img") .'" />';
             }else{
-                $str1 .= '<meta property="og:image" content="'. \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png" />';                
+                $str1 .= '<meta property="og:image" content="'. \SphpBase::sphpSettings()->slibUrl .'/masters/default/imgs/android-icon-192x192.png" />';                
             }
                 $str1 .= '<meta property="og:image:width" content="600" />
 		<meta property="og:image:height" content="600" />';
@@ -112,24 +112,24 @@ namespace Sphp\Comp\Html {
             }
         // twiter tags
             if ($this->element->hasAttribute("twitter-site")) {
-                $this->element->setDefaultAttribute('twitter-image', \SphpBase::sphp_settings()->slib_res_path .'/masters/default/imgs/android-icon-192x192.png');
+                $this->element->setDefaultAttribute('twitter-image', \SphpBase::sphpSettings()->slibUrl .'/masters/default/imgs/android-icon-192x192.png');
         $str1 .= '<meta name="twitter:card" content="summary_large_image" /><meta property="twitter:site" content="'. $this->element->getAttribute("twitter-site") .'" />
-            <meta property=""twitter:title" content="'. \SphpBase::sphp_settings()->title .'" />
-            <meta property="twitter:description" content="'. \SphpBase::sphp_settings()->metadescription .'" />
+            <meta property=""twitter:title" content="'. \SphpBase::sphpSettings()->title .'" />
+            <meta property="twitter:description" content="'. \SphpBase::sphpSettings()->metaDescription .'" />
             <meta property="twitter:image" content="'. $this->element->getAttribute("twitter-image") .'" />';
             }
             
             addFileLinkCode('ogtag',$str1);
-            $this->setInnerHTML('');
+            $this->setInnerHtml('');
             if($this->blnautoseo){
                 // component temp file
-                $dom = $this->frontobj->HTMLParser->dhtmldom;
+                $dom = $this->frontobj->htmlParser->dhtmldom;
                 $this->autoSEO1($dom->root->getChildren());
             }
             }else{ // render child temp file
             if($this->blnautoseo){
                 // element temp file object because component is same in both file
-                $dom = $this->element->frontobj->HTMLParser->dhtmldom;
+                $dom = $this->element->frontobj->htmlParser->dhtmldom;
                 $this->autoSEO1($dom->root->getChildren());
             }                
             }

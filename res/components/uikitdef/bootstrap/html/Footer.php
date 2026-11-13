@@ -1,6 +1,6 @@
 <?php
 
-class Footer extends \Sphp\tools\Component{
+class Footer extends \Sphp\Tools\Component{
     private $menufile = null;
     private $text = "";
     private $icon = "";
@@ -51,7 +51,7 @@ class Footer extends \Sphp\tools\Component{
             $menu = new FooterMenuUi();
             $callback($menu);
             $strmbar = $menu->genMenuBar();
-            $mnuroot = SphpBase::sphp_api()->getMenuList($menu->getRootMenu());
+            $mnuroot = SphpBase::sphpApi()->getMenuList($menu->getRootMenu());
             $str1 = "";
             foreach ($mnuroot as $mnuName => $lstMenu) {
                 $menuo .= $callbackmenurun($lstMenu[0],$strmbar[0] . $menu->genMenu($lstMenu) . $strmbar[1]);
@@ -61,9 +61,9 @@ class Footer extends \Sphp\tools\Component{
     }
 
     protected function onrender() {
-        global $cmpname;
-        if($this->text == "")  $this->text = $cmpname;
-        if($this->icon == "") $this->icon = SphpBase::sphp_settings()->slib_path . "/masters/default/imgs/android-icon-192x192.png";
+        global $cmpName;
+        if($this->text == "")  $this->text = $cmpName;
+        if($this->icon == "") $this->icon = SphpBase::sphpSettings()->slibPath . "/masters/default/imgs/android-icon-192x192.png";
         
         $this->setTagName("footer");
         if(! $this->fullsize){
@@ -159,7 +159,7 @@ class Footer extends \Sphp\tools\Component{
                 $st = '<div class="row">
 '. $menuo .'
       <div class="col-md-5 offset-md-1 mb-3">
-        <form method="post" action="'. getEventURL('newsletter','','index') .'">
+        <form method="post" action="'. getEventUrl('newsletter','','index') .'">
           <h5>Subscribe to our newsletter</h5>
           <p>Monthly digest of what\'s new and exciting from us.</p>
           <div class="d-flex flex-column flex-sm-row w-100 gap-2">
@@ -185,7 +185,7 @@ class Footer extends \Sphp\tools\Component{
         }
         
         
-        $this->setInnerHTML($st);
+        $this->setInnerHtml($st);
         
     }
 }

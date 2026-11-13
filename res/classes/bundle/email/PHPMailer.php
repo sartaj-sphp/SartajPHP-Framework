@@ -143,7 +143,7 @@ class PHPMailer
      * The plain-text message body.
      * This body can be read by mail clients that do not have HTML email
      * capability such as mutt & Eudora.
-     * Clients that can read HTML will view the normal Body.
+     * clients that can read HTML will view the normal Body.
      *
      * @var string
      */
@@ -392,8 +392,8 @@ class PHPMailer
      * Debug output level.
      * Options:
      * @see SMTP::DEBUG_OFF: No output
-     * @see SMTP::DEBUG_CLIENT: Client messages
-     * @see SMTP::DEBUG_SERVER: Client and server messages
+     * @see SMTP::DEBUG_CLIENT: client messages
+     * @see SMTP::DEBUG_SERVER: client and server messages
      * @see SMTP::DEBUG_CONNECTION: As SERVER plus connection status
      * @see SMTP::DEBUG_LOWLEVEL: Noisy, low-level data output, rarely needed
      *
@@ -408,7 +408,7 @@ class PHPMailer
      * Options:
      * * `echo` Output plain-text as-is, appropriate for CLI
      * * `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output
-     * * `error_log` Output to error log as configured in php.ini
+     * * `errorLog` Output to error log as configured in php.ini
      * By default PHPMailer will use `echo` if run from a `cli` or `cli-server` SAPI, `html` otherwise.
      * Alternatively, you can provide a callable expecting two params: a message string and the debug level:
      *
@@ -903,16 +903,16 @@ class PHPMailer
             return;
         }
         //Avoid clash with built-in function names
-        if (is_callable($this->Debugoutput) && !in_array($this->Debugoutput, ['error_log', 'html', 'echo'])) {
+        if (is_callable($this->Debugoutput) && !in_array($this->Debugoutput, ['errorLog', 'html', 'echo'])) {
             call_user_func($this->Debugoutput, $str, $this->SMTPDebug);
 
             return;
         }
         switch ($this->Debugoutput) {
-            case 'error_log':
+            case 'errorLog':
                 //Don't output, just log
                 /** @noinspection ForgottenDebugOutputInspection */
-                error_log($str);
+                errorLog($str);
                 break;
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output
@@ -2145,7 +2145,7 @@ class PHPMailer
             //If it's not specified, the default value is used
 
             //Check the host name is a valid name or IP address before trying to use it
-            if (!static::isValidHost($hostinfo[2])) {
+            if (!static::isValidbHost($hostinfo[2])) {
                 $this->edebug($this->lang('invalid_host') . ' ' . $hostinfo[2]);
                 continue;
             }
@@ -4107,7 +4107,7 @@ class PHPMailer
         } elseif (php_uname('n') !== false) {
             $result = php_uname('n');
         }
-        if (!static::isValidHost($result)) {
+        if (!static::isValidbHost($result)) {
             return 'localhost.localdomain';
         }
 
@@ -4122,7 +4122,7 @@ class PHPMailer
      *
      * @return bool
      */
-    public static function isValidHost($host)
+    public static function isValidbHost($host)
     {
         //Simple syntax limits
         if (
@@ -4338,7 +4338,7 @@ class PHPMailer
                             $cid,
                             $filename,
                             static::ENCODING_BASE64,
-                            static::_mime_types((string) static::mb_pathinfo($filename, PATHINFO_EXTENSION))
+                            static::_mimeTypes((string) static::mb_pathinfo($filename, PATHINFO_EXTENSION))
                         )
                     ) {
                         $message = preg_replace(
@@ -4406,7 +4406,7 @@ class PHPMailer
      *
      * @return string MIME type of file
      */
-    public static function _mime_types($ext = '')
+    public static function _mimeTypes($ext = '')
     {
         $mimes = [
             'xl' => 'application/excel',
@@ -4548,7 +4548,7 @@ class PHPMailer
         }
         $ext = static::mb_pathinfo($filename, PATHINFO_EXTENSION);
 
-        return static::_mime_types($ext);
+        return static::_mimeTypes($ext);
     }
 
     /**

@@ -6,7 +6,7 @@
  */
 namespace Sphp\Comp\Html{
 
-class Img extends \Sphp\tools\Component{
+class Img extends \Sphp\Tools\Component{
 
 protected function oninit() {
 $this->tagName = "img";
@@ -16,13 +16,13 @@ $this->unsetEndTag();
 
 
 protected function onrender(){
-    $sphp_settings = getSphpSettings();
-$basepath = $sphp_settings->base_path;
+    $sphpSettings = getSphpSettings();
+$projectUrl = $sphpSettings->projectUrl;
 if($this->value!=''){
 $this->setAttribute('src', $this->value);
 }
 if($this->getAttribute('src')!='' && $this->getAttribute('width')!=''){
-$size = getimagesize(str_replace($basepath, '',$this->getAttribute('src')));
+$size = getimagesize(str_replace($projectUrl, '',$this->getAttribute('src')));
 $size0 = $size[0];
 $size1 = $size[1];
 $aspectratio = $size0/$size1;
@@ -34,7 +34,7 @@ $this->setAttribute('height', strval($height));
 }
 
 // javascript functions used by ajax control and other control
-public function getJSValue(){
+public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 
@@ -42,7 +42,7 @@ public function setJSValue($exp){
 return "document.getElementById('$this->name').value = $exp;" ;
 }
 
-public function getJSSrc(){
+public function getJsSrc(){
 return "document.getElementById('$this->name').src" ;
 }
 
