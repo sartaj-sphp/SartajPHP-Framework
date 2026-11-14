@@ -1,18 +1,18 @@
 <?php
-$cmpid = "demo";
-$cmpname = "SartajPHP Demo";
+$cmpId = "demo";
+$cmpName = "SartajPHP Demo";
 
 
-$duser = "root";
+$dbUser = "root";
 $db = "db1";
-$dpass = "mypass";
+$dbPass = "mypass";
 
-$debugmode = 2;
-$admuser = 'admin';
-$admpass = '1234';
+$debugMode = 2;
+$admUser = 'admin';
+$admPass = '1234';
 
-if($basepath != ""){
-	$basepath .= "/demo";
+if($projectUrl != ""){
+	$projectUrl .= "/demo";
 }
 
 //app mail settings
@@ -21,7 +21,7 @@ $mailUser = "info@domain.com";
 $mailPass = "";
 $mailPort = "26";
 
-$masterf = "masters/default/master.php";
+$masterf = "masters/default/master.mast.php";
 $mebmasterf = $masterf;
 
 function getWelcome(){

@@ -6,8 +6,9 @@ namespace Sphp\Gates{
 * @author Sartaj Singh
 */
 require_once(\SphpBase::sphpSettings()->libPath . "/Sphp/Lib/Dir.php");
-require_once(\SphpBase::sphpSettings()->libPath . "/Sphp/Lib/Dir.php");
+require_once(\SphpBase::sphpSettings()->libPath . "/Sphp/Lib/FileIo.php");
 include_once(\SphpBase::sphpSettings()->libPath . "/Sphp/Lib/HtmlMinifier.php");
+Use Sphp\Tools\FrontFile;
 /**
 * MobileGate is a gate class for building mobile (Android) applications with SartajPHP.
 * It extends BasicGate and provides support for generating Android project files,

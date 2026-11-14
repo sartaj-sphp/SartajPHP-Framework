@@ -66,11 +66,11 @@ public function createFrontFile($filepath,$prefix="") {}
 * @param \Sphp\Tools\FrontParser $frontobj The front-end parser object
 * @return void
 */
-protected function fixCompEventHandlers($frontobj) {}
+protected function _fixCompEventHandlers($frontobj) {}
 /**
 * Register as Gate Class Method as handler of Component Event.
 * if Event is registered and Trigger by Component then It will trigger method as fixed name
-* as comp_event_{$comp_name}_$event .
+* as comp_{$comp_name}_$event .
 *
 * Registers a component event handler using a fixed naming convention
 * based on the component name and event name. The handler method name

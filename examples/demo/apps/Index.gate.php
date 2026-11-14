@@ -1,6 +1,6 @@
 <?php
 
-class index extends \Sphp\tools\BasicApp{
+class Index extends Sphp\Gates\BasicGate{
     private $home_front1 = null;
      
     public function onstart() {
@@ -11,7 +11,7 @@ class index extends \Sphp\tools\BasicApp{
         //set default DB table to deal with
         //$this->setTableName("tbl1");
 
-        $this->home_front1 = new \Sphp\tools\FrontFile($this->mypath . "/fronts/index_front1.front");
+        $this->home_front1 = new Sphp\Tools\FrontFile("front1");
         // use global variable in comp.php file
         $this->setMasterFile($masterf);        
     }
@@ -24,16 +24,16 @@ class index extends \Sphp\tools\BasicApp{
 
     public function page_event_page($evtp) {
         // send temp file to browser
-        $this->setFrontFile(new FrontFile(SphpBase::sphp_settings()->slib_path . '/apps/fronts/contacts.php'));
+        $this->setFrontFile(new Sphp\Tools\FrontParser(SphpBase::sphpSettings()->slibPath . '/apps/fronts/contacts.php'));
     }
 
     public function page_event_captcha($evtp) {
         // pass captcha event to component
-        $temp1 = new FrontFile(SphpBase::sphp_settings()->slib_path . '/apps/fronts/contacts.php');
+        $temp1 = new Sphp\Tools\FrontParser(SphpBase::sphpSettings()->slibPath . '/apps/fronts/contacts.php');
     }
     //form submit here
     public function page_submit() {
-        // set dummy error to test getCheckErr, you can watch this error in browser console in debugmode=2
+        // set dummy error to test getCheckErr, you can watch this error in browser console in debugMode=2
         //setErr("app1","I am dummy error");
 
         if(! getCheckErr()){
@@ -53,14 +53,14 @@ class index extends \Sphp\tools\BasicApp{
 
     //form submit via ajax here
     public function page_event_formsub($evtp) {
-        //$this->JSServer->addJSONHTMLBlock("spn1","You post to server  " . $this->home_front1->getComponent('txtname')->value);
-        $this->JSServer->addJSONHTMLBlock("spn1","You post to server  " . $this->home_front1->txtaddress->value);
-        $this->JSServer->addJSONJSBlock("$('#txtaddress').css('background-color','#FF0000');");
+        //$this->jsServer->addJsonHtmlBlock("spn1","You post to server  " . $this->home_front1->getComponent('txtname')->value);
+        $this->jsServer->addJsonHtmlBlock("spn1","You post to server  " . $this->home_front1->txtaddress->value);
+        $this->jsServer->addJsonJsBlock("$('#txtaddress').css('background-color','#FF0000');");
     }
 
     //txtname component submit via ajax here
     public function page_event_txtname_keyup($evtp) {
-        $this->JSServer->addJSONHTMLBlock("spn2","Server is reading:-  " . $this->home_front1->txtname->value);
+        $this->jsServer->addJsonHtmlBlock("spn2","Server is reading:-  " . $this->home_front1->txtname->value);
     }
     
 }

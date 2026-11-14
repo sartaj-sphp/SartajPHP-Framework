@@ -1,11 +1,11 @@
 <?php
-registerApp("index",__DIR__ ."/apps/index.app");
-registerApp("bind_python",__DIR__ ."/apps/bind_python.app");
-registerApp("bind_node",__DIR__ ."/apps/bind_node.app");
+registerGate("index",__DIR__ ."/apps/Index.gate.php");
+registerGate("bind_python",__DIR__ ."/apps/BindPython.gate.php");
+registerGate("bind_node",__DIR__ ."/apps/BindNode.gate.php");
 
 // find app in apps folder
-if(!SphpBase::sphp_router()->isRegisterCurrentRequest()){
-    $pth = PROJ_PATH . "/apps/" . SphpBase::sphp_router()->getCurrentRequest() . ".app";
-    if(is_file($pth)) SphpBase::sphp_router()->registerCurrentRequest($pth);
+if(!SphpBase::sphpRouter()->isRegisterCurrentRequest()){
+    $pth = PROJ_PATH . "/apps/" . SphpBase::sphpRouter()->getCurrentRequest() . ".gate.php";
+    if(is_file($pth)) SphpBase::sphpRouter()->registerCurrentRequest($pth);
 }
 

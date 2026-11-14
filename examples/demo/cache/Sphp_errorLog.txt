@@ -1,0 +1,47 @@
+
+[2026-11-13: 20:04:53] URL:- / SartajPHP Fatel Error:- Type:-2 Msg:-session_name(): Session name cannot be changed after headers have already been sent File:-D:\github\gitdemo\res\Score\SphpLatest\Sphp\Kit\Ajax.php on line no. 267 
+                ENDLOG_DATA
+[2026-11-13: 20:06:15] URL:- / SartajPHP Exception: Call to undefined function registerApp() File:- D:\github\gitdemo\examples\demo\reg.php On Line:-2 
+                ENDLOG_DATA
+[2026-11-13: 20:29:35] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:30:11] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:32:03] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:32:05] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:33:32] URL:- / SartajPHP Exception: Method getCurrentAppPath does not exist near e&lt;/td&gt;&lt;td&gt;## {$a=$sphpRouter-&gt;getCurrentAppPath(); $a[0]}#&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;This Front file Path check setFrontFile in BasicGate&#039;s PageEvent page_new event handler&lt;/td&gt;&lt;td&gt;## {$frontobj-&gt;getFilePath()}#&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Master file Path check setMasterFile in BasicGate&#039;s LifeCycle onstart Event Handler&lt;/td&gt;&lt;td&gt;## {$parentGate-&gt;page-&gt;masterfilepath}#&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;
+Master design file File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front on line:- 204Method getCurrentAppPath does not exist near e&lt;/td&gt;&lt;td&gt;## {$a=$sphpRouter-&gt;getCurrentAppPath(); $a[0]}#&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;This Front file Path check setFrontFile in BasicGate&#039;s PageEvent page_new event handler&lt;/td&gt;&lt;td&gt;## {$frontobj-&gt;getFilePath()}#&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Master file Path check setMasterFile in BasicGate&#039;s LifeCycle onstart Event Handler&lt;/td&gt;&lt;td&gt;## {$parentGate-&gt;page-&gt;masterfilepath}#&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;
+Master design file File:- D:\github\gitdemo\res\Score\SphpLatest\Sphp\Tools\SafeEval.php on line:- 204 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-1197 
+                ENDLOG_DATA
+[2026-11-13: 20:34:31] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:35:08] URL:- / SartajPHP Exception: Invalid Master File:- masters/default/master.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php On Line:-215 
+                ENDLOG_DATA
+[2026-11-13: 20:36:11] URL:- / SartajPHP Exception: Invalid Front Place menu Object, Invalid File Name, use .place.front as postfix:- D:\github\gitdemo\examples\demo\masters\default/menu.php File:- D:\github\gitdemo\res\Score\SphpLatest\Sphp\Core\SphpApi.php On Line:-2284 
+                ENDLOG_DATA
+[2026-11-13: 20:36:58] URL:- / SartajPHP Exception: Call to undefined function getAppURL() File:- D:\github\gitdemo\examples\demo\masters\default\menu.place.php On Line:-12 
+                ENDLOG_DATA
+[2026-11-13: 20:38:50] URL:- / SartajPHP Exception: File not found: slibPath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibPath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:40:00] URL:- / console.info("Gate:- index :Registered-File: D:\/github\/gitdemo\/examples\/demo\/apps\/Index.gate.php :Event: txtname_keyup :Event-Parameter:  :URL: index-txtname_keyup.html");console.info("SPHP Time(ms):- 5.79, Load Time:- 12.34, TT:- 18.78");console.error("Error in txtname Detail:-(0)  Minimum Characters should be 4");  
+                ENDLOG_DATA
+[2026-11-13: 20:40:00] URL:- / console.info("Gate:- index :Registered-File: D:\/github\/gitdemo\/examples\/demo\/apps\/Index.gate.php :Event: txtname_keyup :Event-Parameter:  :URL: index-txtname_keyup.html");console.info("SPHP Time(ms):- 5.25, Load Time:- 11.97, TT:- 17.84");console.error("Error in txtname Detail:-(0)  Minimum Characters should be 4");  
+                ENDLOG_DATA
+[2026-11-13: 20:54:31] URL:- / SartajPHP Exception: File not found: slibpath/comp/server/SocketOutput.php on Front File line no:- 48  Error in Element:- div#div1 Comp file:-  File not found: slibpath/comp/server/SocketOutput.php File:- D:\github\gitdemo\res\Score\SphpLatest\global\start.php on line:- 184 File:- D:/github/gitdemo/examples/demo/apps/fronts/index_front1.front On Line:-48 
+                ENDLOG_DATA
+[2026-11-13: 20:58:03] URL:- / SartajPHP Exception: Cannot use object of type Sphp\Gates\WsCon as array File:- D:\github\gitdemo\examples\demo\apps\BindPython.gate.php On Line:-56 
+                ENDLOG_DATA
+[2026-11-13: 21:04:16] URL:- / SartajPHP Exception: Call to private method Sphp\Gates\NativeGate::callProcess() from scope BindPython File:- D:\github\gitdemo\examples\demo\apps\BindPython.gate.php On Line:-19 
+                ENDLOG_DATA
+[2026-11-13: 21:07:13] URL:- / SartajPHP Exception: Call to undefined method BindPython::sendCommand() File:- D:\github\gitdemo\examples\demo\apps\BindPython.gate.php On Line:-31 
+                ENDLOG_DATA

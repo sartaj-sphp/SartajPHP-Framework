@@ -23,7 +23,7 @@ class Sphp_App_Controller extends BaseController {
         foreach($data as $i=>$v){
             global $i;
         }
-        $temp1 = new \Sphp\tools\TempFile(APPPATH . "Views/" .$fileview . ".php");
+        $temp1 = new \Sphp\Tools\TempFile(APPPATH . "Views/" .$fileview . ".php");
         $temp1->run();
         return $temp1->data;
         

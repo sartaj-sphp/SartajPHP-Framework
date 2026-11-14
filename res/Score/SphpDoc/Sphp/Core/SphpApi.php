@@ -857,6 +857,10 @@ public function rtAutoCompleteFormat($objname, $helpdoc, $objtype, $code, $helpt
 public function executePhp($strPHPCode) {}
 public function executePhpGlobal($strPHPCode) {}
 public function executePhpFunc($strPHPCode) {}
+/**
+* Console Write, only work in console run not on web server.
+* @param string $param Text to write on stdout
+*/
 public function consoleWrite($param) {}
 public function consoleWriteln($param) {}
 public function consoleReadln($msg) {}

@@ -1,9 +1,9 @@
 <?php
 
-class index extends \Sphp\tools\ConsoleApp{
+class ProjCreate extends \Sphp\Gates\ConsoleGate{
 
         public function onstart(){
-             if($this->Client->server("DOCUMENT_ROOT") == ""){
+             if($this->client->server("DOCUMENT_ROOT") == ""){
                 $this->consoleWriteln("Welcome ");
             }else{
                 echo "This is console app, run on terminal";
@@ -33,19 +33,19 @@ class index extends \Sphp\tools\ConsoleApp{
     }
     private function create_project(){
         $proj = realpath(PROJ_PATH . "/../../../../");
-        echo shell_exec('php -f ' . SphpBase::sphp_settings()->php_path . "/classes/scripts/proj_create.php -- " . $proj);   
+        echo shell_exec('php -f ' . SphpBase::sphpSettings()->resourcePath . "/classes/scripts/proj_create.php -- " . $proj);   
         $str = <<<'A'
 <?php
 
 $sharedpath = "vendor/sartajphp/sartajphp";
-$respath = "vendor/sartajphp/sartajphp/res";
-$slibversion = "Slib";
-$libversion = "Sphp";
+$resourceUrl = "vendor/sartajphp/sartajphp/res";
+$slibVersion = "Slib";
+$libVersion = "SphpLatest";
 
 // not editable start
 // <editor-fold defaultstate="collapsed" desc="This is generated code, any changes can effect the application">
-if(!defined("start_path")){
-    define("start_path", __DIR__);
+if(!defined("START_PATH")){
+    define("START_PATH", __DIR__);
 }
 if(!isset($argvm) && isset($argv)){
 global $argvm;
@@ -70,14 +70,14 @@ $argvm = array();
 
 }
 if(isset($argv) && isset($argvm["--sharedpath"])){
-    chdir(start_path);
+    chdir(START_PATH);
     $sharedpath = $argvm["--sharedpath"];
-    $respath = "~rs/res";
+    $resourceUrl = "~rs/res";
 }
-//$respath = "~up/res/";
-$phppath = $sharedpath . "/res";
-include_once("{$phppath}/Score/{$libversion}/global/start.php");
-startSartajPHPEngine();
+//$resourceUrl = "~up/res/";
+$resourcePath = $sharedpath . "/res";
+include_once("{$resourcePath}/Score/{$libVersion}/global/start.php");
+startSartajPhpEngine();
 
 // </editor-fold>
 // not editable end
