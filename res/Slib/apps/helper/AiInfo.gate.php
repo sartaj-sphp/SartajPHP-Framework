@@ -33,7 +33,7 @@
  * @version 2.0.0
  */
 
-class AiInfo extends \Sphp\Tools\ConsoleGate {
+class AiInfo extends \Sphp\Gates\ConsoleGate {
     
     /**
      * ============================================================
@@ -896,7 +896,7 @@ class AiInfo extends \Sphp\Tools\ConsoleGate {
             "master_file" => $masterf ?? "",
             "member_master" => $mebmasterf ?? "",
             "timezone" => date_default_timezone_get(),
-            "db_configured" => !empty($settings->getDb())
+            "db_configured" => !empty($settings->db)
         ];
     }
     

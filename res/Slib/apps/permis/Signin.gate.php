@@ -6,7 +6,7 @@ global $google_oauth_client_id,$googleOauthclientSecret,$google_oauth_redirect_u
 $google_oauth_redirect_uri = getEventUrl("gauthr"); 
 $google_oauth_version = 'v3';
 
-class Signin extends \Sphp\Tools\BasicGate {
+class Signin extends \Sphp\Gates\BasicGate {
 
     protected $signinvar = null;
     protected $extra = array();

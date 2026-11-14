@@ -9,9 +9,9 @@
  *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
  *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
-include_once(SphpBase::sphpSettings()->libPath . "/dev/QueryBuilder.php");
+include_once(SphpBase::sphpSettings()->libPath . "/Sphp/Dev/QueryBuilder.php");
 
-class AutoGatePermis extends Sphp\Tools\BasicGate {
+class AutoGatePermis extends Sphp\Gates\BasicGate {
    /**
     * PDF and Front File Page Heading
     * @var string

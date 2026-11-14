@@ -4,10 +4,10 @@
  *
  * @author Sartaj
  */
-include_once("{$libPath}/dev/QueryBuilder.php");
+include_once("{$libPath}/Sphp/Dev/QueryBuilder.php");
 // may use div tag id edtFormHolder for editor form
 
-class AutoGate extends \Sphp\Tools\BasicGate {
+class AutoGate extends \Sphp\Gates\BasicGate {
 
     /**
      *  @var \Sphp\Tools\FrontFile

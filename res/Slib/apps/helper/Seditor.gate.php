@@ -1,6 +1,6 @@
 <?php
 
-class Seditor extends \Sphp\Tools\BasicGate{
+class Seditor extends \Sphp\Gates\BasicGate{
     private $tmp1 = null;
     
     

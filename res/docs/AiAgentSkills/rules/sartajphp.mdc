@@ -1,0 +1,53 @@
+---
+description: SartajPhp single- or multi-app workspace — start.php app root, CamelCase APIs, SphpDoc stubs
+alwaysApply: true
+---
+
+# SartajPhp project rule
+
+Works for **one app** (workspace = app) and **many apps** (workspace hosts shared `vendor/` + subfolders).
+
+## Identify folders
+
+1. **Workspace root** = folder opened in Cursor (has `.cursor/`).
+2. **App root** = directory containing **`start.php`**. Prefer the **nearest** `start.php` above the active file (nested apps under a parent app are OK). With no file context: one `start.php` in workspace → that app; several (workspace and/or children, or AGENTS.md list) → multi-project; use the named path or ask.
+3. **Vendor package** = first existing path:
+   - `{workspace}/vendor/sartajphp/sartajphp/`
+   - `{app root}/vendor/sartajphp/sartajphp/`
+4. Never treat `vendor/` as an app root. Read **AGENTS.md** when present.
+
+## Naming
+
+- CamelCase for classes, methods, functions, variables (`sphpApi`, `jsServer`, `$debugMode`).
+- snake_case for Gate events only (`page_new`, `page_event_*`).
+- UPPER_SNAKE for constants.
+- Stubs: `SphpDoc/Sphp/{Core,Dev,Gates,Kit,Lib,Tools}/`.
+- Fusion: Front kebab `fui-*`/`fun-*`/`fur-*`; PHP `fi_*`/`fu_*` CamelCase tails.
+
+## Where to learn
+
+- Router: `.cursor/skills/sartajphp/SKILL.md`
+- Topics (first that exists): `.cursor/skills/sartajphp/NN-….md`, then `{vendor}/res/Score/skills/`, then `{workspace}/docs/sartajphp/`
+- APIs: `{vendor-package}/res/Score/SphpDoc/Sphp/…`
+- Ebook: https://www.sartajphp.com/ebook2-fullbook.html
+- No RAG for agent guidance — skills + SphpDoc only.
+
+## Develop / run / test
+
+- Edit and run under the **app root** (`start.php` folder). Do not edit vendor skill sources to “fix” the app.
+- Cloud = NativeGate + SphpServer (skill 14). Hosting/SPanel ops out of scope.
+
+## Fusion (summary)
+
+- Prefer Front `fui-*` / `fun-*` / `fur-*`.
+- `fi_*` / `fui-*` = init once; do not call Gate `fi_*` after `new FrontFile` unless changing init flow (e.g. FileUploader path before `saveFile`).
+- `fu_*` anytime but **one owner**; if Gate calls `fu_*`, do not also set it on the Front.
+
+## Errors
+
+- Soft: `setErr` / `getCheckErr`. Hard: console + app `cache/Sphp_errorLog.txt`.
+- Skip `vendor/sartajphp/` frames; fix app `apps/` / `fronts/` / `masters/`.
+
+## Secrets
+
+- Never commit passwords or put secrets in docs/skills.

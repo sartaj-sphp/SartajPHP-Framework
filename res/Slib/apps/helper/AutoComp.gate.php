@@ -1,6 +1,6 @@
 <?php
 
-class AutoComp extends Sphp\Tools\BasicGate{
+class AutoComp extends Sphp\Gates\BasicGate{
     public $atype = "";
     public $aid = "";
     public $lblid = "";

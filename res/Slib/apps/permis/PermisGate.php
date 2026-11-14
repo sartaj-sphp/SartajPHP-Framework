@@ -6,7 +6,7 @@
  *    1. $genFormFront:- Front File to Insert/Edit Database Table Record.
  *    2. $showallFront:-  Front File to List All Record from Database Table With Grid or Pagination Component or PHP code
  */
-class PermisGate extends \Sphp\Tools\BasicGate {       
+class PermisGate extends \Sphp\Gates\BasicGate {       
     /**
      * $extra array as $extra[table][field] = value format. pass $extra value while 
      * insert,update data to database. this is extra data which is not provided by bound Components.

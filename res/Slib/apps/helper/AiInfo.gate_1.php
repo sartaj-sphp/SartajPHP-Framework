@@ -4,7 +4,7 @@
  *  call with command line
  *  php -f start.php -- --gate aiinfo
  */
-class AiInfo extends \Sphp\Tools\BasicGate{
+class AiInfo extends \Sphp\Gates\BasicGate{
     
     public function onstart(){
         // only work on command line

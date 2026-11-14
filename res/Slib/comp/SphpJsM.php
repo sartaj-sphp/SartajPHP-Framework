@@ -118,8 +118,8 @@ public static function addBootStrap() {
         SphpJsM::loadJsLib("jquery_mobile",  145);
     }
     
-    public static function addjQueryUI($version = "1.12.1") {
-        SphpJsM::loadJsLib("jqueryui", str_replace('\.', '', $version));
+    public static function addjQueryUI() {
+        SphpJsM::loadJsLib("jqueryui", 1121);
     }
     
     public static function addReact() {
@@ -133,7 +133,7 @@ public static function addBootStrap() {
          * Load jQuery UI kit and register event handler JS functions.
          * @return void
          */
-        public function getJQKit() {
+        public static function getJQKit() {
             if (!SphpJsM::$blngetkit) {
                 \SphpJsM::addjQueryUI();
                 //addFileLink("{$jslibUrlUrl}/jquery/themes/base/jquery.ui.all.css",true);
@@ -191,7 +191,7 @@ public static function addBootStrap() {
          * Add IE6 PNG transparency fix JS code.
          * @return void
          */
-        public function pngFix() {
+        public static function pngFix() {
             $resourceUrl = \SphpBase::sphpSettings()->getResourceUrl();
             $strcode = "         if ($.browser.msie && $.browser.version == '6.0') {";
             $strcode .= "         try {";
@@ -294,6 +294,7 @@ public static function addBootStrap() {
     
     function loadJsLibjqueryui1121() {
         global $jsLibUrl;
+        $version = "1.12.1";
         addFileLink("$jsLibUrl/jquery-ui-" . $version . "/jquery-ui.min.css", true);
         //addFileLink("$jsLibUrl/jquery-ui-" . $version . "/jquery-ui.theme.min.css", true);
         //addFileLink("$jsLibUrl/jquery-ui-" . $version . "/jquery-ui.structure.min.css", true);
