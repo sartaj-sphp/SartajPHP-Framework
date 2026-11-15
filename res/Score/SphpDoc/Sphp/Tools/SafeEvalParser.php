@@ -1,5 +1,5 @@
 <?php
-namespace {
+namespace Sphp\Tools{
 /**
 * SafeEvalParser - PHP-like template parser using PHP tokenizer
 * Parses PHP-like expressions into AST (Abstract Syntax Tree)

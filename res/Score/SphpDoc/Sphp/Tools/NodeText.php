@@ -47,10 +47,10 @@ public function appendChildren($html) {}
 public function replaceChildren($html) {}
 /**
 * Recursively parse a list of DOM nodes and append them as children.
-* Text nodes (nodetype 3) become NodeText objects, element nodes
-* (nodetype 1) become NodeTag objects. The runas=holder attribute is
+* Text nodes (nodeType 3) become NodeText objects, element nodes
+* (nodeType 1) become NodeTag objects. The runas=holder attribute is
 * stripped to stop holder processing.
-* @param array $domNode List of DOM nodes to parse.
+* @param array $domNode List of \Sphp\Tools\HtmlDomNode nodes to parse.
 * @param object|null $parent Parent node to append to (defaults to $this).
 * @return void
 */

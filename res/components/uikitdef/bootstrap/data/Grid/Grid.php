@@ -682,7 +682,7 @@ $msg1 = '<div style="position: fixed; z-index: 2000;width: 500px;">
 
 public function onjsrender(){
 $opendlg = "";
-if(!\SphpBase::jsServer()->ajaxrender){
+if(!\SphpBase::jsServer()->ajaxRender){
     addHeaderCss("gridhighlight", " .highlight{
  font-size: 16px;
  color: #000000;

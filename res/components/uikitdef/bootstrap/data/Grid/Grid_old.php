@@ -456,7 +456,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 
 public function onjsrender(){
 global $jquerypath,$JSclient,$jsServer;
-if(!$jsServer->ajaxrender){
+if(!$jsServer->ajaxRender){
 if($this->blnajax){
 $this->startAJAX();
 }

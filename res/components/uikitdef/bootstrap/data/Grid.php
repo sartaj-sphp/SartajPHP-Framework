@@ -471,7 +471,7 @@ $ptag = '<div id="'.$this->name.'_dlg" class="dragdrop">
 
 protected function onjsrender(){
     $jsServer = \SphpBase::jsServer();
-if(! $jsServer->ajaxrender){
+if(! $jsServer->ajaxRender){
 if($this->blnajax){
 $this->startAJAX();
 }

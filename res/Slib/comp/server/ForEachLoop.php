@@ -5,7 +5,7 @@
  *
  * @author SARTAJ
  * <div id="usersLoop" runat="server"
-     path="slibpath/comp/server/ForEachLoop.php"
+     path="slibPath/comp/server/ForEachLoop.php"
      fun-setObject="users">
     <div class="user">
         Name: ##{$usersLoop->getItem('name')}##<br />

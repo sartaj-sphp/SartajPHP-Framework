@@ -6,7 +6,7 @@
     $arrt = $parentGate->directoryCount($sphpSettings->resourcePath . "/plugin"); 
 }#
 </code>
-<div id="pluginLoop" runat="server" path="slibpath/comp/server/ForEachLoop.php" fun-setObject="arrt">
+<div id="pluginLoop" runat="server" path="slibPath/comp/server/ForEachLoop.php" fun-setObject="arrt">
     <div class="card mb-3">
         <div class="card-header">
             <a href="##{getEventURL('vw',$pluginLoop->item,'installer') }#">##{$pluginLoop->item}#</a>

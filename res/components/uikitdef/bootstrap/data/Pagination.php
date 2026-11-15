@@ -524,7 +524,7 @@ $ptag .= '<button id="btnadd'. $this->name .'" class="btn btn-primary" >Add</but
 protected function onjsrender(){
 $jsServer = SphpBase::jsServer();
 $opendlg = "";
-if(!$jsServer->ajaxrender){
+if(!$jsServer->ajaxRender){
 if($this->blnajax){
 $this->eventName = $this->name."_show";
 $this->editeventName = $this->name."_view";

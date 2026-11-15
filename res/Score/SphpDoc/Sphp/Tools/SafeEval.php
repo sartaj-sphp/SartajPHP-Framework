@@ -1,5 +1,5 @@
 <?php
-namespace {
+namespace Sphp\Tools{
 /**
 * SafeEval - Compiler and executor for parsed AST
 *
@@ -7,10 +7,66 @@ namespace {
 * by parsing them into an AST via SafeEvalParser and executing the AST
 * against a sandboxed set of variables, objects, and allowed functions.
 * Supports if/elseif/else/endif control structures inside templates.
+* Supported Framework variables:-
+* $frontobj = Current Front File Object
+* $parentGate = Current Gate Object of Front File
+* ${Component_id} = any Component Object like $showall->getRow("user_name");
+* ${any metaData key} = Access any metaData variable set in Gate Class like ##{$pageName}# is same like ##{$metaData['pageName']}# OR 
+* ##{$frontobj->getMetaData("pageName")}#
+* $sphpSettings \Sphp\Settings
+* $sphpRouter \Sphp\Core\Router
+* $sphpRequest \Sphp\Core\Request
+* $sphpApi \Sphp\Core\SphpApi
+* $sphpPermissions \SphpPermission
+* $debug \Sphp\Core\DebugProfiler
+* $page  \Sphp\Kit\Page
+* $metaData
+* Supported Functions:-
+*         // String
+['strtoupper', 'strtolower', 'ucfirst', 'ucwords', 'trim',
+'ltrim', 'rtrim', 'strlen', 'substr', 'str_replace', 'str_ireplace',
+'htmlspecialchars', 'htmlentities', 'strip_tags', 'nl2br',
+'addslashes', 'stripslashes', 'str_repeat', 'strpos', 'stripos',
+'strrpos', 'strripos', 'strstr', 'stristr', 'strrev',
+'str_pad', 'str_shuffle', 'str_split', 'str_word_count',
+'sprintf', 'vsprintf', 'number_format',
+'urlencode', 'urldecode', 'rawurlencode', 'rawurldecode',
+'base64_encode', 'base64_decode',
+// Array
+'count', 'sizeof', 'implode', 'join', 'explode',
+'json_encode', 'json_decode',
+'array_merge', 'array_chunk', 'array_column', 'array_combine',
+'array_diff', 'array_intersect', 'array_key_exists',
+'array_keys', 'array_values', 'array_map', 'array_filter',
+'array_reduce', 'array_pop', 'array_push', 'array_shift',
+'array_unshift', 'array_rand', 'array_reverse', 'array_slice',
+'array_sum', 'array_product', 'array_unique',
+'arsort', 'asort', 'krsort', 'ksort', 'rsort', 'sort',
+'array_search', 'in_array', 'range', 'array_flip',
+'current', 'end', 'reset', 'next', 'prev', 'key',
+// Date
+'date', 'time', 'strtotime', 'date_create', 'date_format',
+'strftime', 'mktime', 'checkdate','microtime',
+// Math
+'abs', 'ceil', 'floor', 'round', 'max', 'min',
+'rand', 'mt_rand', 'random_int', 'sqrt', 'pow',
+'intval', 'floatval', 'boolval', 'strval',
+// Type checking
+'is_array', 'is_string', 'is_numeric', 'is_int',
+'is_float', 'is_bool', 'empty', 'isset',
+'is_null', 'is_object', 'is_scalar',
+'ctype_alnum', 'ctype_alpha', 'ctype_digit',
+// File/Path (read-only)
+'file_exists', 'is_file', 'is_dir', 'is_readable',
+'pathinfo', 'dirname', 'basename', 'safeRealpath',
+'parse_url', 'getimagesize',
+//Sphp
+'readGlobal','getEventUrl','getThisGateUrl','getGateUrl','traceError','traceMsg',
+'getKeyword','getEventUrlSecure','getCheckErr']
 */
 class SafeEval {
 /**
-* Constructor. Initializes the SafeEvalParser and sets up the $this object slot.
+* Constructor. Initializes the \Sphp\Tools\SafeEvalParser and sets up the $this object slot.
 */
 /**
 * Set the main object that will be referenced as $this in expressions.

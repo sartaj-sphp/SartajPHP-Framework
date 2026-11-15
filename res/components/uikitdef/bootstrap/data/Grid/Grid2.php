@@ -500,7 +500,7 @@ $ptag .= '<input type="button" value="Add" onclick="paginew_'.$this->name.'(\''.
 public function onjsrender(){
 global $jquerypath,$JSclient,$jsServer;
 $opendlg = "";
-if(!$jsServer->ajaxrender){
+if(!$jsServer->ajaxRender){
 if($this->blnajax){
 $this->eventName = $this->name."_show";
 $this->editeventName = $this->name."_view";
