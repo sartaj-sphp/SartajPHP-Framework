@@ -1353,7 +1353,7 @@ this.sartajpro = function(valm,callback){
             }
         }
         if(blnf1){
-            console.error("Invalid Server Response:- " + valm);
+            console.error("Invalid Server Response or Empty:- " + valm + strerr);
         }
         valm = valm.substring(i1,i2-i1);
         jsonobjar = JSON.parse("[" + valm + "{}]");

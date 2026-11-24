@@ -25,11 +25,11 @@ class Frame extends \Sphp\Tools\Component {
         }        
     }
 
-    public function getRecID() {
+    public function getRecId() {
         return $this->txtid2;
     }
 
-    public function setRecID($v) {
+    public function setRecId($v) {
         $this->txtid2 = $v;
     }
 

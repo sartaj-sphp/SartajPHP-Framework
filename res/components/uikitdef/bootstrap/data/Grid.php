@@ -124,10 +124,10 @@ $this->sesID=$blnSesID;
     }
 
     public function fu_setMsgName($val) { $this->msgName = $val;}
-public function fu_setSQL($sql){
+public function fu_setSql($sql){
 $this->sql = $sql;
 }
-public function fu_setPageCountSQL($sql){
+public function fu_setPageCountSql($sql){
 $this->pageCountSQL = $sql;
 }
 public function fu_setPerPageRows($val){
@@ -191,7 +191,7 @@ public function fu_unsetDialog(){
 $this->blndlg = false;
 }
 
-public function executeSQL(){
+public function executeSql(){
 $mysql = \SphpBase::dbEngine();
   $HtmlParser = new \Sphp\Tools\HtmlParser();
  $sphpSettings = \SphpBase::sphpSettings();
@@ -387,7 +387,7 @@ $this->strFormat = $element->innertext;
 $element->innertext = '';
 }
 
-public function startAJAX(){
+public function startAjax(){
 $opendlg = "";
 if($this->blndlg){
 addHeaderJsFunctionCode('ready',$this->name,'jql("#'.$this->name.'_dlg").dialog({
@@ -473,7 +473,7 @@ protected function onjsrender(){
     $jsServer = \SphpBase::jsServer();
 if(! $jsServer->ajaxRender){
 if($this->blnajax){
-$this->startAJAX();
+$this->startAjax();
 }
 }
 
@@ -496,7 +496,7 @@ $this->sql = "SELECT $idf,$this->fieldNames FROM ".$this->dbTable." ".$this->whe
 }
 
 $this->parameterA['class'] = 'pag';
-$this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
+$this->innerHTML = $this->header. $this->executeSql() . $this->footer;
 //$this->innerHTML = $this->header.$this->footer;
 //$this->unsetrender();
 }

@@ -12,7 +12,7 @@ namespace Sphp\Comp\Html {
         private $blnautoseo = false;
         private static $blnrender = false;
         
-        public function fu_autoSEO() {
+        public function fu_autoSeo() {
             $this->blnautoseo = true;
         }
         public function fu_setMetaKeywords($v) {
@@ -27,12 +27,12 @@ namespace Sphp\Comp\Html {
         public function fu_setKeywords($v) {
             $this->setAttribute("keywords", $v);
         }
-        private function autoSEO1($ar1) {
+        private function autoSeo1($ar1) {
             foreach ($ar1 as $t1){
             if($t1->myclass == "Sphp\\tools\\NodeTag"){
                 $this->optimizeTags($t1);
                 if($t1->hasChildren()){
-                    $this->autoSEO1($t1->getChildren());
+                    $this->autoSeo1($t1->getChildren());
                 }
             }
             }
@@ -124,13 +124,13 @@ namespace Sphp\Comp\Html {
             if($this->blnautoseo){
                 // component temp file
                 $dom = $this->frontobj->htmlParser->dhtmldom;
-                $this->autoSEO1($dom->root->getChildren());
+                $this->autoSeo1($dom->root->getChildren());
             }
             }else{ // render child temp file
             if($this->blnautoseo){
                 // element temp file object because component is same in both file
                 $dom = $this->element->frontobj->htmlParser->dhtmldom;
-                $this->autoSEO1($dom->root->getChildren());
+                $this->autoSeo1($dom->root->getChildren());
             }                
             }
         }

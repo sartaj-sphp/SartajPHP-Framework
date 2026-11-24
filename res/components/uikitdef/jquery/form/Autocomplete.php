@@ -31,7 +31,7 @@ class Autocomplete extends \Sphp\comp\form\TextField {
         $this->url = getEventUrl($this->name . '_autocomplete');
     }
 
-    public function fu_setURL($val) {
+    public function fu_setUrl($val) {
         $this->url = $val;
     }
 

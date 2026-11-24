@@ -118,10 +118,10 @@ public function fu_setPrimaryKey($val){
     $this->primarykey = $val; 
     if($this->cachekey == "id") $this->cachekey = $this->primarykey;    
 }
-public function fu_setSQL($sql){
+public function fu_setSql($sql){
 $this->sql = $sql;
 }
-public function fu_setPageCountSQL($sql){
+public function fu_setPageCountSql($sql){
 $this->pageCountSQL = $sql;
 }
 public function fu_setPerPageRows($val){
@@ -200,7 +200,7 @@ $this->blndlg = false;
 public function fu_unsetAddButton(){
 $this->blnadd = false;
 }
-public function executeSQL(){
+public function executeSql(){
 $mysql = \SphpBase::dbEngine();
 $resourceUrl = \SphpBase::sphpSettings()->resourceUrl;
   $stro = "";
@@ -411,7 +411,7 @@ protected function oncreate($element){
 //$element->innertext = '';
 }
 
-public function startAJAX(){
+public function startAjax(){
 $opendlg = "";
 if($this->blndlg){
 addHeaderJsFunctionCode('ready',$this->name,'
@@ -529,7 +529,7 @@ if($this->blnajax){
 $this->eventName = $this->name."_show";
 $this->editeventName = $this->name."_view";
 $this->deleventName = $this->name."_delete";
-$this->startAJAX();
+$this->startAjax();
 }else{
 $jsAjax = "false";    
 addHeaderJsCode($this->name,"
@@ -604,9 +604,9 @@ if($this->element->hasAttribute("class")){
 }else{
     $this->element->setAttribute("class","pag");    
 }
-//$this->innerHTML = $this->header. $this->executeSQL() . $this->footer;
+//$this->innerHTML = $this->header. $this->executeSql() . $this->footer;
 
-$this->element->replaceChildren($this->header. $this->executeSQL() . $this->footer);
+$this->element->replaceChildren($this->header. $this->executeSql() . $this->footer);
 //SphpBase::debug()->println("pagi end");
 //$this->innerHTML = $this->header.$this->footer;
 //$this->unsetrender();

@@ -102,10 +102,10 @@ public function getRow($field) {
 
 public function fu_setMsgName($val) { $this->msgName = $val;}
 
-public function fu_setSQL($sql){
+public function fu_setSql($sql){
 $this->sql = $sql;
 }
-public function fu_setPageCountSQL($sql){
+public function fu_setPageCountSql($sql){
 $this->pageCountSQL = $sql;
 }
 public function fu_setPerPageRows($val){
@@ -153,7 +153,7 @@ $this->whereDef = $val;
 public function fu_setApp($val){
 $this->app = $val;
 }
-public function fu_setOrderSByDef($v) {
+public function fu_setOrderSortByDef($v) {
     $this->ordersortbyDef = $v;
 }
 public function fu_setAjax(){
@@ -201,7 +201,7 @@ public function setHandleEventByGate(){
     $this->handleeventgate = true;
 }
 
-public function executeSQL(){
+public function executeSql(){
   $mysql = \SphpBase::dbEngine();
   $stro = "";
 // count total page
@@ -465,7 +465,7 @@ private function setDialogTheme(){
     
 }
 
-public function startAJAX(){
+public function startAjax(){
 $opendlg = "";
 if($this->blndlg){
     $this->setDialogTheme();
@@ -694,7 +694,7 @@ if($this->blnajax){
 $this->eventName = $this->name."_show";
 $this->editeventName = $this->name."_view";
 $this->deleventName = $this->name."_delete";
-$this->startAJAX();
+$this->startAjax();
 }else{
 $jsAjax = "false"; 
 addHeaderJsCode($this->name,"
@@ -854,9 +854,9 @@ $client->session($this->name .'store',$storesql);
 
 $this->parameterA['class'] = 'pag';
 if($this->content_section===null){ 
-$this->setInnerHtml($this->header. $this->executeSQL() . $this->footer);
+$this->setInnerHtml($this->header. $this->executeSql() . $this->footer);
 }else{
-    $str = $this->executeSQL();
+    $str = $this->executeSql();
 }
 
 
@@ -864,7 +864,7 @@ $this->setInnerHtml($this->header. $this->executeSQL() . $this->footer);
 //$this->unsetrender();
 }
 
-public function resetSQL(){
+public function resetSql(){
     $storesql['lastsql'] = "";
     $storesql['lastpagecountsql'] = "";
     $storesql['lastapp'] = \SphpBase::sphpRouter()->gate;

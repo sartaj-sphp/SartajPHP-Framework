@@ -27,7 +27,7 @@ protected function oninit() {
         $this->addHelpPropFunList('setCacheTime','Set Cache Expiry Time 0 mean no cache and -1 mean always data from cache','','$val');
     }
 
-public function fu_setSQL($val){
+public function fu_setSql($val){
 $this->sql = $val;
 }
 public function fu_setCacheTime($val){

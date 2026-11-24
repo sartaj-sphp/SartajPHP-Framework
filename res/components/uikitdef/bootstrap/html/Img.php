@@ -38,7 +38,7 @@ public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 
-public function setJSValue($exp){
+public function setJsValue($exp){
 return "document.getElementById('$this->name').value = $exp;" ;
 }
 
@@ -46,7 +46,7 @@ public function getJsSrc(){
 return "document.getElementById('$this->name').src" ;
 }
 
-public function setJSSrc($exp){
+public function setJsSrc($exp){
 return "document.getElementById('$this->name').src = $exp;" ;
 }
 

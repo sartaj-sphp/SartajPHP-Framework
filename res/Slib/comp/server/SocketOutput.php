@@ -16,7 +16,7 @@ class SocketOutput extends \Sphp\Tools\Component {
 
     private $url = '';
 
-    public function fu_setURL($param) {
+    public function fu_setUrl($param) {
         $this->url = $param;
     }
 

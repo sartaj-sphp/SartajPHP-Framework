@@ -196,7 +196,7 @@ class Select extends \Sphp\Tools\Component {
      * funsetOptionsJSON='{"0":"Parent", "1": "Child"}'
      * @param string $val json string
      */
-    public function fu_setOptionsJSON($val) {
+    public function fu_setOptionsJson($val) {
         //$val = trim($val);
         $opt2 = json_decode($val,true);
         $opt1 = array();
@@ -392,7 +392,7 @@ document.getElementById('$this->name').focus();
          }
     }
 
-    public function getOptionsHTML() {
+    public function getOptionsHtml() {
         $vals = $this->value;
         $strOut = '';
         $CF = 0;
@@ -474,11 +474,11 @@ document.getElementById('$this->name').focus();
         return "document.getElementById('$this->name').options[document.getElementById('$this->name').selectedIndex].value";
     }
 
-    public function setJSValue($exp) {
+    public function setJsValue($exp) {
         return " jql(\"select#$this->name\").val($exp); ";
     }
 
-    public function setJSOptionValue($exp) {
+    public function setJsOptionValue($exp) {
         return "document.getElementById('$this->name').options[document.getElementById('$this->name').selectedIndex] = $exp;";
     }
 

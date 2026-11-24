@@ -27,7 +27,7 @@ class HTMLForm extends \Sphp\Tools\Component {
         $this->addHelpPropFunList('setOnValidation','JS Function call on form validation and return false stop form to submit','','$jscode');
     }
     // call outside to load js lib for need form use via ajax lator
-    public function fu_setupJSLib() {
+    public function fu_setupJsLib() {
         addFileLink($this->myUrl . "/assets/validation.js", true);
         addFileLink($this->myUrl . "/assets/jquery.form.js", true);        
     }
@@ -79,7 +79,7 @@ class HTMLForm extends \Sphp\Tools\Component {
         $this->target = $val;
     }
 
-    public function getRecID() {
+    public function getRecId() {
         return $this->txtid2;
     }
 
@@ -91,7 +91,7 @@ class HTMLForm extends \Sphp\Tools\Component {
         }
     }
     
-    public function setRecID($v) {
+    public function setRecId($v) {
         $this->txtid2 = $v;
     }
     

@@ -27,7 +27,7 @@ $this->preTag = '<div id="'.$this->name.'">&nbsp;</div><div style="display:none;
 $this->postTag = '</div>';
 }
 
-public function setJSContent($val){
+public function setJsContent($val){
 return "setContentWin('$val');";
 }
 

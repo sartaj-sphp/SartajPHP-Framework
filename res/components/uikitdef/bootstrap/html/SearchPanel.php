@@ -7,8 +7,8 @@ private $bs = 5;
 public function fu_setLabel($label) {
     $this->label = $label;
 }
-public function fu_setBS($param) {
-    SphpJsM::setJSLibVersion("bootstrap", $param);
+public function fu_setBs($param) {
+    SphpJsM::loadJsLib("bootstrap", $param);
     $this->bs = SphpJsM::getJsLibVersion("bootstrap");
 }
 protected function onrender(){

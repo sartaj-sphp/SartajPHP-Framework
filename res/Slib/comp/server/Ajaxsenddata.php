@@ -22,7 +22,7 @@ class Ajaxsenddata extends \Sphp\Tools\Component {
         $this->setHTMLName("");
     }
 
-    public function fu_setURL($val) {
+    public function fu_setUrl($val) {
         $this->url = $val;
     }
 
@@ -34,7 +34,7 @@ class Ajaxsenddata extends \Sphp\Tools\Component {
         $this->compa = explode(',', $val);
     }
 
-    public function fu_setOutID($val) {
+    public function fu_setOutId($val) {
         $this->outid = $val;
     }
 
@@ -46,7 +46,7 @@ class Ajaxsenddata extends \Sphp\Tools\Component {
         $this->method = 'POST';
     }
 
-    public function fu_setMIME($val) {
+    public function fu_setMime($val) {
         $this->mime = $val;
     }
 
@@ -66,8 +66,8 @@ class Ajaxsenddata extends \Sphp\Tools\Component {
         \SphpBase::jsServer()->addJsonJsBlock($jsdata);
     }
 
-    public function echoJSON() {
-        \SphpBase::jsServer()->echoJSON();
+    public function echoJson() {
+        \SphpBase::jsServer()->echoJson();
     }
 
     protected function onjsrender() {
@@ -124,7 +124,7 @@ $this->onrecieve
         return "document.getElementById('$this->name').value";
     }
 
-    public function setJSValue($exp) {
+    public function setJsValue($exp) {
         return "document.getElementById('$this->name').value = $exp;";
     }
 

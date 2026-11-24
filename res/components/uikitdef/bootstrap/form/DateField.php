@@ -76,7 +76,7 @@ namespace Sphp\Comp\Form {
             $this->req = true;
         }
 
-        private function dateToMySQLDate($date) {
+        private function dateToMySqlDate($date) {
             $date1 = $this->createDate($this->appendText, $date, 'Y-m-d', 0, 0, 0);
             return $date1;
         }
@@ -208,7 +208,7 @@ ctlReq['$this->name']= Array('$this->msgName','TextField');");
             return "document.getElementById('$this->name').value";
         }
 
-        public function setJSValue($exp) {
+        public function setJsValue($exp) {
             $jsOut = "document.getElementById('$this->name').value = $exp;";
         }
 

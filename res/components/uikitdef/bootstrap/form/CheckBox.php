@@ -138,7 +138,7 @@ document.getElementById('$this->name').focus();
             return "document.getElementById('$this->name').checked";
         }
 
-        public function setJSValue($exp) {
+        public function setJsValue($exp) {
             $jsOut = "document.getElementById('$this->name').checked = $exp;";
             writeGlobal("jsOut", $jsOut);
         }

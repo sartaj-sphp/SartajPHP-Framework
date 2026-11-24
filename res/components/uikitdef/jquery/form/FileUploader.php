@@ -169,7 +169,7 @@ public function getJsValue(){
 return "document.getElementById('$this->name').value" ;
 }
 
-public function setJSValue($exp){
+public function setJsValue($exp){
 return "document.getElementById('$this->name').value = $exp;" ;
 }
 

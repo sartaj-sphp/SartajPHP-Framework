@@ -118,7 +118,7 @@ public static function addBootStrap() {
         SphpJsM::loadJsLib("jquery_mobile",  145);
     }
     
-    public static function addjQueryUI() {
+    public static function addjQueryUi() {
         SphpJsM::loadJsLib("jqueryui", 1121);
     }
     
@@ -133,9 +133,9 @@ public static function addBootStrap() {
          * Load jQuery UI kit and register event handler JS functions.
          * @return void
          */
-        public static function getJQKit() {
+        public static function getJqKit() {
             if (!SphpJsM::$blngetkit) {
-                \SphpJsM::addjQueryUI();
+                \SphpJsM::addjQueryUi();
                 //addFileLink("{$jslibUrlUrl}/jquery/themes/base/jquery.ui.all.css",true);
                 //addFileLink("{$jslibUrlUrl}/jquery/ui/jquery.ui.core.min.js",true);
                 //addFileLink("{$jslibUrlUrl}/jquery/ui/jquery.ui.widget.min.js",true);
@@ -338,7 +338,7 @@ public static function addBootStrap() {
          * @param bool $funtype
          * @return void
          */
-        public function setJSFunctionName($jsfun, $funtype = false) {
+        public function setJsFunctionName($jsfun, $funtype = false) {
             $this->jsfun = $jsfun;
             $this->jsfunpublic = $funtype;
         }
@@ -359,7 +359,7 @@ public static function addBootStrap() {
          * @param string $val
          * @return string
          */
-        public function safeJSString($val) {
+        public function safeJsString($val) {
             $str = str_replace(".", "\.", $val);
             return $str;
         }
@@ -369,7 +369,7 @@ public static function addBootStrap() {
          * @param string $val
          * @return string
          */
-        public function getJSString($val) {
+        public function getJsString($val) {
             $val = SphpBase::sphpApi()->stripNewLineChar($val);
             $val = str_replace(".", "\.", $val);
             $val = str_replace("'", "\'", $val);
@@ -467,7 +467,7 @@ public static function addBootStrap() {
          * @param string $val
          * @return string
          */
-        public function addTimeLineCMD($aname, $atTime, $val) {
+        public function addTimeLineCmd($aname, $atTime, $val) {
             $aname2 = $this->stripQuot($aname);
             $code = "{atTime: " . $atTime . ",command: function(){ " . $val . " } }, ";
             \SphpBase::sphpApi()->addHeaderJsFunctionCode($aname2, "", $code);

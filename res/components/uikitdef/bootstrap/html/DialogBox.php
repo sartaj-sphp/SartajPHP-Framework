@@ -42,7 +42,7 @@ private function setDialogTheme(){
     
 }
 
-public function sendAJAX($content){
+public function sendAjax($content){
     SphpBase::jsServer()->addJsonHtmlBlock($this->name . "_editor",$content);
 }
 public function sendFrontFile($frtfile){

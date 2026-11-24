@@ -10,7 +10,7 @@ private $btn1 = "";
 public function  fu_showButton($param) {
     $this->btn1 = $this->getButton($param);
 }
-public function  fu_getURL($url) {
+public function  fu_getUrl($url) {
     //$this->name.show();
     $this->url = $url;
 }

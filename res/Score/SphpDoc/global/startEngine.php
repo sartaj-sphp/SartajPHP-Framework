@@ -270,9 +270,9 @@ spl_autoload_register("loadSphpLibClass");
 * @param array $session key,value pair
 * @return array [code,content,headers,cookies,session]
 */
-function pushToSartajPHPEngine($server,$get,$post,$file,$cookies,$session){}
+function pushToSartajPhpEngine($server,$get,$post,$file,$cookies,$session){}
 /**
 * Run the Sphp engine in the current process
 * @return string gate file path when engine is not global, otherwise empty string
 */
-function runSartajPHPEngine(){}
+function runSartajPhpEngine(){}
