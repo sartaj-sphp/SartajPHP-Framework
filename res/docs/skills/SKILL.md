@@ -16,7 +16,7 @@ Teach develop / run / test only. Do **not** invent APIs — verify against insta
 
 - **CamelCase** — classes, methods, functions, variables (`sphpApi`, `jsServer`, `$debugMode`, `$projectUrl`).
 - **snake_case** — Gate event handlers only (`page_new`, `page_submit`, `page_event_*`, `onstart`).
-- **UPPER_SNAKE** — constants (`PROJ_PATH`, `NEWLINE`).
+- **UPPER_SNAKE** — constants (`PROJ_PATH`, `START_PATH`, `NEWLINE`).
 - **Namespaces / stubs** — `SphpDoc/Sphp/{Core,Dev,Gates,Kit,Lib,Tools}/` (PascalCase).
 - **Fusion:** Front kebab `fui-*`/`fun-*`/`fur-*`; PHP `fi_*`/`fu_*` with CamelCase tails (`fu_setRender`).
 - Skills ship with the matching vendor package — teach this framework version only.

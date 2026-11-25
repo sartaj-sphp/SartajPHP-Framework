@@ -6,8 +6,36 @@ namespace Sphp{
 * configuration, database credentials, SEO meta tags, debug mode and edit mode.
 * Properties are initialized from global variables in the constructor and are
 * read-only afterwards (use getters or the __get magic method).
+* All Protected Properties are Read Only.
 */
 class Settings{
+/** All Protected Properties are Read Only */
+protected $resourceUrl = "" ; 
+protected $resourcePath = "" ; 
+protected $slibPath = "" ; 
+protected $slibVersion = ""; 
+protected $slibUrl = "" ; 
+protected $jsLibUrl = "" ; 
+protected $compPath = "" ; 
+protected $compUrl = "" ; 
+protected $uiKitPath = "" ; 
+protected $uiKitUrl = "" ; 
+protected $libPath = "" ; 
+protected $libVersion = "" ; 
+protected $projectUrl = "" ; 
+protected $webRootUrl = "" ; 
+protected $serverPath = "" ; 
+protected $useSession = false ; 
+protected $sphpUseSessionStorage = false; 
+protected $sphpUseSessionCookie = false; 
+protected $sessionName = "" ;  
+protected $sessionPath = "" ;  
+protected $sessionId = "" ;
+protected $sessionHandler = ""; 
+protected $serverLanguage = "ENGLISH" ;
+protected $debugMode = 0 ; 
+protected $debugProfiler = "" ; 
+/** Public properties */
 public $blnEditMode = false ;
 public $editCtrl = "" ;
 public $blnGlobalGate = false ;
@@ -52,33 +80,7 @@ public $defaultFilelinkLoad = 0;
 /**
 * __get
 * Advance Function, Internal Use
-* To Read Private Properties which is set from comp.php and set inside Settings Class
-*         private $resourceUrl = "" ; // Relative or Full URL of SartajPhp's res folder(Shared Folder)
-private $resourcePath = "" ; // Relative or Absolute Path of SartajPhp's res folder(Shared Folder)
-private $slibPath = "" ; // Slib Folder Path(res/{$slibVersion}) 
-private $slibVersion = ""; // Version Name of Slib folder default is Slib
-private $slibUrl = "" ; // Slib Folder URL (res/{$slibVersion})
-private $jsLibUrl = "" ; // URL of JS Libraries (res/jslib) 
-private $compPath = "" ; // Path of Components Folder
-private $compUrl = "" ; // URL of Components Folder
-private $uiKitPath = "" ; //Path of Components UI Kit Folder
-private $uiKitUrl = "" ; //URL of Components UI Kit Folder
-private $libPath = "" ; // Path of SartajPhp Core Library folder
-private $libVersion = "" ; // Version Name of SartajPhp Core Library folder, Default is Sphp 
-private $projectUrl = "" ; // Project Folder url under Web root folder
-private $webRootUrl = "" ; // Web Root URL 
-private $serverPath = "" ; // PHP Server side Path on web server
-private $START_PATH = "" ; // Project startup path, it may be different from PROJ_PATH
-private $useSession = false ; // Enable, Disable the use of sessions
-private $sphpUseSessionStorage = false; // use session as single file, so one session system
-private $sphpUseSessionCookie = false; // Convert Session as cookies, So No Server side session storage
-private $sessionName = "" ;  // Name of session
-private $sessionPath = "" ;  // Session save path
-private $sessionId = "" ;
-private $sessionHandler = ""; // default is file or php ini settings, others are db and redis server
-private $serverLanguage = "ENGLISH" ;
-private $debugMode = 0 ; // debugging mode settings use by debugProfiler. 0 mean no debug info on browser console. mode 0,1,2,3
-private $debugProfiler = "" ; // custom debug profiler to display debug info, default is handled by Framework
+* To Read Private Protected Properties which is set from comp.php and set inside Settings Class
 * @param string $key property name
 * @return mixed
 */
@@ -130,6 +132,7 @@ public function getServerPath() {}
 public function getProjectPath() {}
 /**
 * Get Start Path
+* Startup path may be different from PROJ_PATH
 * @return string
 */
 public function getStartPath() {}

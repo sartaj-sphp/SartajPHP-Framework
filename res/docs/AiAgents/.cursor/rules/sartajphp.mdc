@@ -1,0 +1,42 @@
+
+---
+description: SartajPHP framework entry rule
+alwaysApply: true
+---
+
+# SartajPHP
+
+## Application
+
+- Workspace root is the folder opened in Cursor.
+- App root is the nearest directory containing `start.php` above the active file.
+- Ignore `start.php` files inside `vendor/`.
+- Never treat a Composer vendor directory as an app root.
+- For multi-app workspaces, identify the correct app from the active file path or user request.
+
+## Framework package
+
+Locate the installed Composer package:
+
+`vendor/sartajphp/sartajphp/`
+
+The package may be located under the workspace root or the selected app root.
+
+## Framework documentation
+
+Before SartajPHP development, read:
+
+- `res/docs/skills/SKILL.md`
+- `res/docs/rules/RULES.md`
+
+Follow their instructions to load relevant documentation.
+
+Use SphpDoc stubs as the API reference:
+
+`res/Score/SphpDoc/Sphp/`
+
+The installed Composer package is the source of truth for SartajPHP-specific guidance.
+
+Do not invent framework APIs or conventions.
+
+Do not edit Composer vendor files to fix application code.
