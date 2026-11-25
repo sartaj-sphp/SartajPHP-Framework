@@ -117,7 +117,7 @@ public function fu_setAuth($param) {}
 * @param string $param Comma separated permission list
 * @depends \SphpBase::sphpPermissions()->isPermission
 */
-public function fu_setrender($permis = "") {}
+public function fu_setRender($permis = "") {}
 /**
 * Not Render if match
 * @param string $param Comma separated permission list
@@ -129,7 +129,7 @@ public function fu_unsetrender($permis = "") {}
 * @param string $permis Comma separated permission list
 * @depends \SphpBase::sphpPermissions()->isPermission
 */
-public function fu_setrenderTag($permis = "") {}
+public function fu_setRenderTag($permis = "") {}
 /**
 * Not Render Tag if match
 * @param string $permis Comma separated permission list
