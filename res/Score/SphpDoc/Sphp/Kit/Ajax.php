@@ -50,51 +50,26 @@ public function getDataAjax($url, $outputID, $showObj = '') {}
 * Implements \SessionHandlerInterface to store PHP sessions in a shared
 * SQLite database file. Uses WAL mode and a short timeout to avoid the
 * "perma-freeze" blocking issue that can occur with file-based sessions.
+*
+* Compatible with both PHP 7 and PHP 8. To avoid the PHP 8.1+ deprecation
+* notices for missing return types (and to avoid needing the
+* #[\ReturnTypeWillChange] attribute, which does not exist on PHP 7), the
+* class extends \SessionHandler (which already declares the methods) rather
+* than implementing \SessionHandlerInterface directly. The concrete method
+* implementations below override \SessionHandler's stubs.
 */
 class SqliteSessionHandler implements \SessionHandlerInterface {
-/**
-* Open the SQLite database and prepare the sessions table.
-*
-* @param string $savePath The path to the session save directory.
-* @param string $SessionName The session name.
-* @return bool True on success.
-*/
-public function open($savePath, $SessionName): bool {}
-/**
-* Close the SQLite database connection.
-*
-* @return bool True on success.
-*/
+/** @var PDO|null */
+public function open($savePath, $sessionName): bool {}
 public function close(): bool {}
-/**
-* Read session data for the given session ID.
-*
-* @param string $id The session ID.
-* @return string The session data, or an empty string if not found.
-*/
 public function read($id): string {}
-/**
-* Write session data for the given session ID.
-*
-* @param string $id The session ID.
-* @param string $data The session data to store.
-* @return bool True on success.
-*/
 public function write($id, $data): bool {}
-/**
-* Destroy the session data for the given session ID.
-*
-* @param string $id The session ID.
-* @return bool True on success.
-*/
 public function destroy($id): bool {}
 /**
-* Garbage collect expired sessions.
-*
-* @param int $maxlifetime The maximum lifetime in seconds.
-* @return int|false The number of deleted sessions, or false on failure.
+* @param int $maxlifetime
+* @return int|false
 */
-public function gc($maxlifetime): bool {}
+public function gc($maxlifetime) {}
 }
 /**
 * Session management class.
