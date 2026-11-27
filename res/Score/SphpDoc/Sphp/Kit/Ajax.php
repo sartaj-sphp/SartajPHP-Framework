@@ -94,7 +94,7 @@ public function destroy($id): bool {}
 * @param int $maxlifetime The maximum lifetime in seconds.
 * @return int|false The number of deleted sessions, or false on failure.
 */
-public function gc($maxlifetime): int|false {}
+public function gc($maxlifetime): bool {}
 }
 /**
 * Session management class.

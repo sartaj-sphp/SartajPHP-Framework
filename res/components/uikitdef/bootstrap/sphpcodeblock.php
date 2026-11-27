@@ -373,7 +373,7 @@ SphpCodeBlock::addCodeBlock('jui',function($element,$args,$lstOther_CB){
     $opt1 = "{}";
     $timer1 = 2000;
     $timer2 = 1000;
-    \SphpJsM->getJQKit();
+    \SphpJsM::getJqueryKit();
     if(isset($args[0])) $effect1 = $args[0];
     if(isset($args[1])) $evt1 = $args[1];
     if(isset($args[2])) $opt1 = $args[2];

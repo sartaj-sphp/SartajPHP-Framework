@@ -1,6 +1,6 @@
 <?php
 $jsServer = SphpBase::jsServer();
-$jsServer->getAjax();
+$jsServer->setupAjaxLib();
 
 if(SphpBase::page()->isevent)
 {
@@ -30,7 +30,7 @@ $jsServer->addJsonFront($genFormFront,'showall_editor');
 break;
 }
 case 'updlist':{
-//$jsServer->addJsonBlock('jsp','proces','$( "#showalledt" ).dialog( "close" ); getURL("'.  getEventUrl('updlist','','','','',true).'",{});');
+//$jsServer->addJsonBlock('jsp','proces','$( "#showalledt" ).dialog( "close" ); sendAjax("'.  getEventUrl('updlist','','','','',true).'",{});');
 $jsServer->addJsonComp($showall,'showall_list');
 break;
 }

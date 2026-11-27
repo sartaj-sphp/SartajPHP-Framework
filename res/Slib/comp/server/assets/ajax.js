@@ -1204,6 +1204,12 @@ function sartajgt(idimg,url,data,cache,dataType){
     var sphp_ajax2 = new sphp_ajax();
 sphp_ajax2.ajaxcall(idimg,url,data,cache,dataType);
 }
+function sendAjax(url,data,runbackground){
+    getURL(url,data,runbackground);
+}
+function getAjaxReturn(url,data,runbackground,callback){
+    getAJAX(url,data,runbackground,callback);
+}
 function getURL(url,data,runbackground){
     var sphp_ajax2 = new sphp_ajax();
 sphp_ajax2.ajaxcall('',url,data,true,'json',true,runbackground);
@@ -1214,7 +1220,7 @@ function getAJAX(url,data,runbackground,callback){
         callback(r1); 
     });        
 }
-function getAJAXChunkUpload(url,data,callback,chunkstart,chunkend){
+function getAjaxChunkUpload(url,data,callback,chunkstart,chunkend){
         if(data === 'undefined') data = {};
         if(chunkstart === 'undefined') chunkstart = 0;
         if(chunkend === 'undefined') chunkend = 0;

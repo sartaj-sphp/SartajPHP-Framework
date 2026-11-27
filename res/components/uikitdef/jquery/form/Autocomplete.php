@@ -66,7 +66,7 @@ class Autocomplete extends \Sphp\comp\form\TextField {
         addHeaderJsFunction($this->name . '_autocomplete', "function " . $this->name . '_autocomplete(request){ ', "
     clearTimeout(this.tmr1); this.tmr1 = setTimeout(function(){
     $str1
-getURL('$this->url',request);    
+sendAjax('$this->url',request);    
     },800);
 }");
 

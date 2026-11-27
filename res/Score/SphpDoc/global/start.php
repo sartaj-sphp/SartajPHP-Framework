@@ -21,9 +21,9 @@ $ytetimestart1 = microtime(true);
 * Resolve a path to an absolute path with forward slashes.
 *
 * @param string $path The path to resolve.
-* @return string|false The normalized absolute path, or false if realpath fails.
+* @return string The normalized absolute path, or empty if realpath fails.
 */
-function safeRealpath(string $path): string|false {}
+function safeRealpath(string $path): string {}
 if (!defined("START_PATH")) {
 define("START_PATH", safeRealpath(getcwd()));
 }

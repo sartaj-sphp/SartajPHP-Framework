@@ -16,7 +16,7 @@ These rules are maintained by the SartajPHP framework and distributed through Co
 ## Naming conventions
 
 - Use CamelCase for classes, methods, functions, and variables.
-- Use snake_case for Gate, Page, Components events handlers.
+- Use snake_case for Gate events.
 - Use UPPER_SNAKE_CASE for constants.
 - Preserve SartajPHP reserved naming conventions.
 
@@ -43,15 +43,3 @@ Examples:
 - `fu_*` functions should have one owner.
 - If Gate calls `fu_*`, do not also assign the same function to the Front.
 
-## Develop / run / test
-
-- Edit and run under the **app root** (`start.php` folder). Do not edit vendor skill sources to “fix” the app.
-- Cloud = NativeGate + SphpServer (skill 14). Hosting/SPanel ops out of scope.
-
-## Front files (summary)
-
-- No `<?php ?>`, and no `echo` / `print` in `.front` — output with `##{$text}#` (filtered). Details: skill `04-front-file-designing.md`.
-
-## Secrets
-
-- Never commit passwords or put secrets in docs/skills.

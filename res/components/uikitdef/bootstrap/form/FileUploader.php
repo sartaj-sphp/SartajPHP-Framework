@@ -305,7 +305,7 @@ namespace Sphp\Comp\Form {
         }
 
         protected function onjsrender() {
-//SphpBase::jsServer()->getAjax();
+//SphpBase::jsServer()->setupAjaxLib();
             if ($this->formName != '') {
                 if ($this->req) {
                     addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}req", "

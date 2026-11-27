@@ -135,7 +135,7 @@ class AutoComp extends Sphp\Gates\BasicGate{
         $clsname = $v1[0]; 
         $projrootpath = $this->client->session("wproject");
         if($projrootpath == ""){
-            $projrootpath = \SphpBase::sphpSettings()->START_PATH;
+            $projrootpath = \START_PATH;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid
@@ -374,7 +374,7 @@ class AutoComp extends Sphp\Gates\BasicGate{
         $objCreater = ' global $xyzo; if(class_exists("'. $clsname .'")){ $xyzo = new '. $clsname .'();} ';
         $projrootpath = $this->client->session("wproject");
         if($projrootpath == ""){
-            $projrootpath = \SphpBase::sphpSettings()->START_PATH;
+            $projrootpath = \START_PATH;
         }
         $sta1 = '<?php chdir("'. $projrootpath . '"); ?>'; 
         // remove invalid

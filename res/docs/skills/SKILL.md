@@ -97,7 +97,7 @@ spanel/                         ← workspace
 | `04-front-file-designing.md` | `.front` expressions, holders, Components in Fronts |
 | `05-master-file-design.md` | Master layout, Front Places |
 | `06-component-design-and-basic-components.md` | Components, **fusion rules** (fi_/fu_, fui/fun/fur) |
-| `07-sartajphp-ajax-library-use.md` | getURL / getAJAX / jsServer |
+| `07-sartajphp-ajax-library-use.md` | sendAjax / getAjaxReturn / jsServer |
 | `08-code-blocks-and-frontfile-theming.md` | Code blocks / theming |
 | `09-permissions-and-authentication.md` | Auth, roles, menus |
 | `10-database-communication-in-gate.md` | Page helpers, HTMLForm, schema install |

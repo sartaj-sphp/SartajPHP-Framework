@@ -195,7 +195,7 @@ class TextFieldPost extends \Sphp\comp\form\TextField {
                     var data = {};
                     data["' . $this->name . '"] = $("#' . $this->name . '").val();
                     '.$lstcomp.'
-                    getURL("' . $url . '",data);
+                    sendAjax("' . $url . '",data);
                 },'.$delay.');
             ',
             '}'

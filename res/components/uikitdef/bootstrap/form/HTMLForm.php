@@ -101,7 +101,7 @@ class HTMLForm extends \Sphp\Tools\Component {
     protected function onprejsrender() {
         $valdx = "";
         if ($this->blnajax) {
-            \SphpBase::jsServer()->getAjax();
+            \SphpBase::jsServer()->setupAjaxLib();
             if ($this->target == '') {
                 $divt = '<div style="visibility:hidden;"><img src="' . \SphpBase::sphpSettings()->resourceUrl . '/'. \SphpBase::sphpSettings()->slibVersion  . '/comp/server/assets/ajax-loader.gif" />' . "</div><div id=\"" . $this->name . "res\"></div>";
                 $this->target = $this->name . "res";
@@ -126,11 +126,11 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
             /*
               if(!isset($this->parameterA['action'])){
               $subcode ="
-              getURL('".getThisGateUrl('',true)."',$('#$this->name').serialize());
+              sendAjax('".getThisGateUrl('',true)."',$('#$this->name').serialize());
               ";
               }else{
               $subcode ="
-              getURL('".$this->parameterA['action']."',$('#$this->name').serialize());
+              sendAjax('".$this->parameterA['action']."',$('#$this->name').serialize());
               ";
               }
              * 
@@ -138,7 +138,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
 
             //addHeaderJsFunctionCode('ready', $this->name, "$('#" . $this->name . "').ajaxForm(); ");
         }else if($this->blnsocket){
-            \SphpBase::jsServer()->getAjax();
+            \SphpBase::jsServer()->setupAjaxLib();
             $subcode = " frontobj.getSphpSocket(function(wsobj1){
     var formData = $('#" . $this->name . "').serializeAssoc();
 	delete formData['sphpajax'];
@@ -146,7 +146,7 @@ $('#{$this->name}').find(\"input[type='submit']\").attr('disabled',false);
 });";
 
   }else if($this->blnmobileapp){
-            \SphpBase::jsServer()->getAjax();
+            \SphpBase::jsServer()->setupAjaxLib();
             $this->setAttribute("onsubmit","var vt = {$this->name}_submit2(''); return false;");
             // ban submit
         //addHeaderJsFunctionCode("{$this->formName}_submit", "{$this->name}mobapp", ' blnSubmit = false ; ');

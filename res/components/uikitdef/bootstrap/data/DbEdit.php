@@ -63,7 +63,7 @@ class DbEdit extends \Sphp\Tools\Component{
                 data["fld"] = $(obj1).data("field");
                 data["fltbl"] = $(obj1).data("table");
                 data["flval"] = $(obj1).text();
-                getAjax($(obj1).data("suburl"),data,false,function(ret){
+                getAjaxReturn($(obj1).data("suburl"),data,false,function(ret){
                     $(obj1).css("background-color","");                    
                 });
             },1000);
@@ -107,7 +107,7 @@ class DbEdit extends \Sphp\Tools\Component{
                 let slt1 = $(obj1).data("recidv") + "d";
                 $("#" + slt1).html(obj1.options[obj1.selectedIndex].text);
                 $("#" + slt1).data("mval",obj1.options[obj1.selectedIndex].value);                
-                getAjax($(obj1).data("suburl"),data,false,function(ret){
+                getAjaxReturn($(obj1).data("suburl"),data,false,function(ret){
                     $(obj1).css("background-color","");                    
                     $(obj1).css("display","none");
                 });

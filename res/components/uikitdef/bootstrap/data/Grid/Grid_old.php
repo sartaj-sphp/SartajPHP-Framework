@@ -47,7 +47,7 @@ $this->sesID = true;
 $this->init($name,'','');
 $this->blnajax = true;
 $this->eventName = $name ."_show";
-$jsServer->getAjax();
+$jsServer->setupAjaxLib();
 if($client->request($name.'page')!=''){
 $_SESSION[$name.'p'] = $_REQUEST[$name.'page'];
 $_SESSION[$name.'pc'] = $gate;
@@ -286,7 +286,7 @@ $endPage = $this->totalPages;
 for ($k=$startPage; $k<=$endPage; $k++) {
         if ($k != $_REQUEST[$this->name.'page']) {
 if($this->blnajax){
-         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
+         $lynx .= "<div style=\"float:left;\"><a href=\"#\" onclick=\"sendAjax('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."');\">".($k)."</a></div>";
 }else{
          $lynx .= "<div style=\"float:left;\"><a href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
 }
@@ -323,7 +323,7 @@ if($blnStartP){
 $strlinkP = "";
 }else{
 if($this->blnajax){
-    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
+    $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"sendAjax('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');\">Prev</a>&nbsp;&nbsp;";
 }else{
     $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
 }
@@ -332,7 +332,7 @@ if($blnEndP){
 $strlinkN = "";
 }else{
 if($this->blnajax){
-    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
+    $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"sendAjax('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');\">Next</a>";
 }else{
     $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
 }
@@ -423,7 +423,7 @@ function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -431,7 +431,7 @@ window.location = link ;
 }
 function pagiedit(link,jsajax) {
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -439,7 +439,7 @@ return false;
 	}
 function paginew(link,jsajax){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }

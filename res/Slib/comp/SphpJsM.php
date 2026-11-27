@@ -37,7 +37,7 @@ final class SphpJsM {
     }
 
     public static function getSphpLib() {
-        \SphpBase::jsServer()->getAjax();
+        \SphpBase::jsServer()->setupAjaxLib();
         addFileLink(\SphpBase::sphpSettings()->uiKitUrl . "/form/assets/validation.js", true);
         addFileLink(\SphpBase::sphpSettings()->uiKitUrl . "/form/assets/jquery.form.js", true);        
     }
@@ -133,7 +133,7 @@ public static function addBootStrap() {
          * Load jQuery UI kit and register event handler JS functions.
          * @return void
          */
-        public static function getJqKit() {
+        public static function getJqueryKit() {
             if (!SphpJsM::$blngetkit) {
                 \SphpJsM::addjQueryUi();
                 //addFileLink("{$jslibUrlUrl}/jquery/themes/base/jquery.ui.all.css",true);

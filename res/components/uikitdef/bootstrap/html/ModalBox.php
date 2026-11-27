@@ -17,7 +17,7 @@ public function  fu_getUrl($url) {
 
 protected function onrender(){
     if($this->url != ""){
-        addHeaderJsFunctionCode('ready',$this->name, "$('#$this->name').on('shown.bs.modal', function () {getAjax('$this->url',{},true,function(r){"
+        addHeaderJsFunctionCode('ready',$this->name, "$('#$this->name').on('shown.bs.modal', function () {getAjaxReturn('$this->url',{},true,function(r){"
             . " }); } );");
     }
 

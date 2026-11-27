@@ -6,21 +6,21 @@ Teach an AI how browser **AJAX JS helpers** (`ajax.js`) talk to a Gate, and how 
 
 - Partial page updates without full reload
 - AJAX forms (`fun-setAJAX`) and button-driven `page_event_*`
-- Component-bound live submit (`fun-submitAJAX` / `fun-submitWS`) without hand-written `getURL`
-- Returning data to a JS callback (`getAJAX`)
+- Component-bound live submit (`fun-submitAJAX` / `fun-submitWS`) without hand-written `sendAjax`
+- Returning data to a JS callback (`getAjaxReturn`)
 - Swapping a FrontFile panel into a holder (`addJsonFront`)
 
 ## Mental model
 
 ```mermaid
 flowchart LR
-  front["Front: getURL / getAJAX / fun-setAJAX / fun-submitAJAX"] -->|POST or WS| gate[BasicGate or NativeGate]
+  front["Front: sendAjax / getAjaxReturn / fun-setAJAX / fun-submitAJAX"] -->|POST or WS| gate[BasicGate or NativeGate]
   gate --> js["jsServer blocks"]
   js -->|JSON response| ajaxjs["ajax.js applies html/js/jsf"]
   ajaxjs --> dom[DOM / callback]
 ```
 
-**Rule:** If the browser uses framework AJAX (`getURL` / `getAJAX` / `fun-setAJAX` / `fun-submitAJAX`), the Gate **must** respond with `$this->jsServer` (same as `SphpBase::jsServer()`). Custom `fetch`/`XHR` will **not** auto-apply those blocks — you would parse JSON yourself.
+**Rule:** If the browser uses framework AJAX (`sendAjax` / `getAjaxReturn` / `fun-setAJAX` / `fun-submitAJAX`), the Gate **must** respond with `$this->jsServer` (same as `SphpBase::jsServer()`). Custom `fetch`/`XHR` will **not** auto-apply those blocks — you would parse JSON yourself.
 
 Do **not** call `setFrontFile` for a pure AJAX JSON response unless you intentionally return a full page.
 
@@ -32,8 +32,8 @@ Loaded with the app (master / framework). Prefer these over raw `fetch`:
 
 | API | Signature (typical) | Role |
 |-----|---------------------|------|
-| `getURL` | `getURL(url, data, runbackground?)` | Fire-and-forget AJAX; jsServer blocks applied automatically |
-| `getAJAX` | `getAJAX(url, data, runbackground, callback)` | Same + `callback(ret)` for `addJsonReturnBlock` |
+| `sendAjax` | `sendAjax(url, data, runbackground?)` | Fire-and-forget AJAX; jsServer blocks applied automatically |
+| `getAjaxReturn` | `getAjaxReturn(url, data, runbackground, callback)` | Same + `callback(ret)` for `addJsonReturnBlock` |
 | Form AJAX | `fun-setAJAX=""` on `<form runat="server">` | Submit posts as AJAX to `action` URL |
 | Component AJAX | `fun-submitAJAX` → `fu_submitAjax` | Bind DOM event; auto-generate JS that posts this + extra Components |
 | Component WS | `fun-submitWS` → `fu_submitWs` | Same values via WebSocket → NativeGate (`callProcessNativeGate`) |
@@ -69,7 +69,7 @@ public function page_event_echo($evtp)
 | `addJsonHtmlBlock($tagId, $html)` | Set element HTML by id |
 | `addJsonJsBlock($js, $type = 'jsp')` | Execute JS (`jss`/`js`/`jsp`/`jsf` priority order) |
 | `callJsFunction($name, …$args)` | Invoke a global JS function |
-| `addJsonReturnBlock($data)` | Payload for `getAJAX` callback |
+| `addJsonReturnBlock($data)` | Payload for `getAjaxReturn` callback |
 | `addJsonFront($frontFile, $outId)` | Render FrontFile into `#outId` |
 | `addJsonComp` / `addJsonCompChildren` | Inject Component markup |
 | `addJsonBlock($sact, $evtp, $data)` | Low-level block (`html`, `js`, `jsf`, …) |
@@ -77,7 +77,7 @@ public function page_event_echo($evtp)
 
 API stub: `vendor/sartajphp/sartajphp/res/Score/SphpDoc/Sphp/Kit/JsServer.php`.
 
-`JsServer::getAjax()` (PHP) **enables** the AJAX client library path — different from browser `getAJAX()`.
+`JsServer::getAjaxReturn()` (PHP) **enables** the AJAX client library path — different from browser `getAjaxReturn()`.
 
 ### 3. Form AJAX pattern
 
@@ -135,7 +135,7 @@ See also index demo: `apps/fronts/index_main.front` (`fun-submitAJAX` → `index
 | File | Role |
 |------|------|
 | `apps/examples/Ex07ajax.gate.php` | `ping` / `echo` / `calc` / `panel` / `txtLive_keyup` |
-| `apps/examples/fronts/ex07ajax_main.front` | `getURL` / `getAJAX` / `fun-setAJAX` / `fun-submitAJAX` |
+| `apps/examples/fronts/ex07ajax_main.front` | `sendAjax` / `getAjaxReturn` / `fun-setAJAX` / `fun-submitAJAX` |
 | `apps/examples/fronts/ex07ajax_panel.front` | Fragment for `addJsonFront` |
 
 Register: `registerGate("ex07ajax", …)` in `reg.php`.

@@ -162,7 +162,7 @@ $this->eventName = $this->name ."_show";
 $this->editeventName = $this->name ."_view";
 $this->deleventName = $this->name ."_delete";
 SphpJsM::addjQueryUI();
-SphpBase::jsServer()->getAjax();
+SphpBase::jsServer()->setupAjaxLib();
 }
 public function fu_setEdit(){
 $this->blnEdit = true;
@@ -336,7 +336,7 @@ private function getPaging(){
     for ($k=$startPage; $k<=$endPage; $k++) {
             if ($k != $_REQUEST['page']) {
                 if($this->blnajax){
-                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
+                         $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"sendAjax('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."'); return false;\">".($k)."</a></div>";
                 }else{
                          $lynx .= "<div class=\"page-item\"><a class=\"page-link\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$k,$this->baseName,$this->sesID)."\">".($k)."</a></div>";    
                 }
@@ -365,7 +365,7 @@ private function getPaging(){
         $strlinkP = "";
     }else{
         if($this->blnajax){
-            $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"getURL('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
+            $strlinkP = "<a class=\"pagprev\" href=\"#\" onclick=\"sendAjax('". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."');return false;\">Prev</a>&nbsp;&nbsp;";
         }else{
             $strlinkP = "<a class=\"pagprev\" href=\"". getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$prev,$this->baseName,$this->sesID)."\">Prev</a>&nbsp;&nbsp;";    
         }
@@ -374,7 +374,7 @@ private function getPaging(){
         $strlinkN = "";
     }else{
         if($this->blnajax){
-            $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"getURL('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
+            $strlinkN = "<a class=\"pagnext\"  href=\"#\" onclick=\"sendAjax('".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."');return false;\">Next</a>";
         }else{
             $strlinkN = "<a class=\"pagnext\" href=\"".getEventUrl($this->eventName,$this->evtp,$this->gate,$this->extra.$next,$this->baseName,$this->sesID)."\">Next</a>";    
         }
@@ -558,7 +558,7 @@ data['sortby'] = field;
 data['dir'] = setg.dir;
 {$this->name}_setg = setg;
 
-getURL(link,data);
+sendAjax(link,data);
 return false;
 }
 window['getSortBy'] = window['getSortBy_{$this->name}'];
@@ -571,7 +571,7 @@ window['getSortBy'] = window['getSortBy_{$this->name}'];
         }
         $('table').find('tr.highlight').removeClass('highlight');
         $(obj).addClass('highlight');
-        getURL(link,data);
+        sendAjax(link,data);
     }
     window['setFormAsNew'] = function(formid){
         readyFormAsNew(formid);
@@ -611,7 +611,7 @@ function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -619,7 +619,7 @@ window.location = link ;
 }
 function pagiedit(link,jsajax) {
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -627,7 +627,7 @@ return false;
 	}
 function paginew(link,jsajax){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -733,7 +733,7 @@ data['sortby'] = field;
 data['dir'] = setg.dir;
 {$this->name}_setg = setg;
 
-getURL(link,data);
+sendAjax(link,data);
 return false;
  }
  window['getSortBy'] = window['getSortBy_{$this->name}'];
@@ -744,7 +744,7 @@ return false;
         }
         $('table').find('tr.highlight').removeClass('highlight');
         $(obj).addClass('highlight');
-        getURL(link,data);
+        sendAjax(link,data);
     }
  
 function pagiedit_$this->name(link){
@@ -761,7 +761,7 @@ function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -769,7 +769,7 @@ window.location = link ;
 }
 function pagiedit(link,jsajax) {
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -777,7 +777,7 @@ return false;
 	}
 function paginew(link,jsajax){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }

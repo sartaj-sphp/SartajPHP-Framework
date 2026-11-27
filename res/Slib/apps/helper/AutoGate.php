@@ -188,7 +188,7 @@ class AutoGate extends \Sphp\Gates\BasicGate {
 
     public function sendCrossCall() {
         $extupdate = $this->client->session("extupdate");
-        $this->jsServer->addJsonJsBlock("getURL('" . getEventUrl("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
+        $this->jsServer->addJsonJsBlock("sendAjax('" . getEventUrl("rowclick", $extupdate['previd'], $extupdate["prevctrl"]) . "');");
     }
 
     public function update() {

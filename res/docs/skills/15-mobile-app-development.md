@@ -201,7 +201,7 @@ The APK has no local PHP Gate, but the WebView can still call a **remote SartajP
 
 | client API | Transport | Server side |
 |------------|-----------|-------------|
-| `getURL` / `getAJAX` (skill [07](07-sartajphp-ajax-library-use.md)) | HTTP AJAX | Remote `BasicGate` + `$this->jsServer` |
+| `sendAjax` / `getAjaxReturn` (skill [07](07-sartajphp-ajax-library-use.md)) | HTTP AJAX | Remote `BasicGate` + `$this->jsServer` |
 | `callNativeGate` / `fun-submitWS` (skill [14](14-nativegate-websocket-and-python-child.md)) | WebSocket | Remote `NativeGate` on SphpServer |
 
 **CSP:** allow those hosts in the Index Gate meta via `setSpecialMetaTag`. Put domains in `$hostlist` so they appear in `default-src`, `connect-src`, `script-src`, etc. Without `connect-src` (and related) entries, the WebView blocks AJAX/WS.

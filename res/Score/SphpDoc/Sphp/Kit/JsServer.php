@@ -18,10 +18,10 @@ public $jsonPlain = false;
 */
 public function init() {}
 /**
-* Enable ajax JS library.
+* Enable Ajax Js library.
 * @return void
 */
-public function getAjax() {}
+public function setupAjaxLib() {}
 /**
 * Read json data from browser post key 
 * @param string $postDataKey
@@ -145,8 +145,8 @@ public function setBlockType($type = "jsonweb") {}
 */
 public function addJsonJsBlock($jsdata = "", $type = "jsp") {}
 /**
-* Send data to getAjax callback function.
-* getAjax('index-test.html',{},true,function(ret){
+* Send data to getAjaxReturn callback function.
+* getAjaxReturn('index-test.html',{},true,function(ret){
 *  console.log('server return data' + ret);
 * });
 * @param array|string $data

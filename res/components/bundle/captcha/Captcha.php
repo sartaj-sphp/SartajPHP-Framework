@@ -306,7 +306,7 @@ class Captcha extends \Sphp\comp\form\TextField {
     }
     
     public function onrender() {
-        SphpBase::jsServer()->getAjax();
+        SphpBase::jsServer()->setupAjaxLib();
         $this->value = "";
         parent::onrender();
         // Configure input element attributes
@@ -378,7 +378,7 @@ class Captcha extends \Sphp\comp\form\TextField {
                 imageBox.innerHTML = \'<span style="color: #6c757d; font-size: 12px;">Loading new code...</span>\';
                 
                 // Make AJAX request using SartajPHP framework
-                getURL("' . getEventUrl('refresh_captcha', '', 'index2') . '", 
+                sendAjax("' . getEventUrl('refresh_captcha', '', 'index2') . '", 
                        {captcha_name: captchaName}, 
                        false);
             }
@@ -400,7 +400,7 @@ class Captcha extends \Sphp\comp\form\TextField {
         // Initialize captcha on page load
         setTimeout(function() {
             // Load initial captcha image
-            getURL("' . getEventUrl('captcha', '', 'index2') . '", {}, false);
+            sendAjax("' . getEventUrl('captcha', '', 'index2') . '", {}, false);
         }, 100);
         ';
         

@@ -134,7 +134,7 @@ if ($_FILES[$this->name]["error"] > 0)
 
 protected function onjsrender(){
 global $jsServer;
-$jsServer->getAjax();
+$jsServer->setupAjaxLib();
 addFileLink($this->myUrl."res/jquery.MultiFile.pack.js");
 $this->setPostTag('<div id="'.$this->name.'-list"></div>');
 addHeaderJsFunctionCode('ready', $this->name, "

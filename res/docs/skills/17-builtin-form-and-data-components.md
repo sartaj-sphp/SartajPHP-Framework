@@ -18,7 +18,7 @@ flowchart LR
   comp -->|dfield| db[(DB column)]
   file["type=file FileUploader"] -->|save disk| disk["uploads/…"]
   file -->|value=path| db
-  row["row click getURL"] --> ajax["jsServer addJsonFront"]
+  row["row click sendAjax"] --> ajax["jsServer addJsonFront"]
   ajax --> holder["#edtHolder"]
 ```
 
@@ -113,7 +113,7 @@ Inside each row, use holders bound to the list Component:
 ```html
 <tbody id="showall" runat="server" path="uikit/data/Pagination.php"
        fun-setFieldNames="id,txttitle" dtable="ex17_doc">
-  <tr onclick="getURL('##{getEventUrl('rowclick', $showall->getRow('id'))}#');">
+  <tr onclick="sendAjax('##{getEventUrl('rowclick', $showall->getRow('id'))}#');">
     <td runas="holder" sphp-comp="showall" dfield="txttitle"></td>
   </tr>
 </tbody>

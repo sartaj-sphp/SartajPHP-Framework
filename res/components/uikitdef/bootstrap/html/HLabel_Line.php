@@ -32,7 +32,7 @@ protected function onrender(){
     $req = "*";        
     }
     if($this->href!=""){
-        $hlink = '<a href="#" onclick="getURLinDialog(\''.$this->href.'\',{}); return false;">'.$this->label.'</a>';        
+        $hlink = '<a href="#" onclick="sendAjaxinDialog(\''.$this->href.'\',{}); return false;">'.$this->label.'</a>';        
     }else{
         $hlink = $this->label;
     }

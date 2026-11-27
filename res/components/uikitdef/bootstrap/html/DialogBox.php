@@ -52,7 +52,7 @@ public function sendFrontFile($frtfile){
 public function fu_setAjax(){
 $this->blnajax = true;
 SphpJsM::addjQueryUI();
-SphpBase::jsServer()->getAjax();
+SphpBase::jsServer()->setupAjaxLib();
 }
 
 protected function onjsrender(){
@@ -116,7 +116,7 @@ pagiedit(link,$jsAjax);
         }
         $('table').find('tr.highlight').removeClass('highlight');
         $(obj).addClass('highlight');
-        getURL(link,data);
+        sendAjax(link,data);
     }
     window['setFormAsNew'] = function(formid){
         readyFormAsNew(formid);
@@ -156,7 +156,7 @@ function confirmDel(link,jsajax){
 var ans = confirm('Are You Sure to Delete This Record !') ;
 if(ans){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -164,7 +164,7 @@ window.location = link ;
 }
 function pagiedit(link,jsajax) {
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }
@@ -172,7 +172,7 @@ return false;
 	}
 function paginew(link,jsajax){
 if(jsajax){
-getURL(link);
+sendAjax(link);
  }else{
 window.location = link ; 
   }

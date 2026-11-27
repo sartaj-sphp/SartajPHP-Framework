@@ -125,8 +125,8 @@ class Header extends \Sphp\Tools\Component{
         <button id="btnlogin" type="button" class="btn btn-outline-primary me-2">Login</button>
         <button id="btnsignin" type="button" class="btn btn-primary">Sign-up</button>
       </div>';        
-                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
-                        . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){sendAjax("index-login.html");});'
+                        . '$("#btnsignin").on("click",function(){sendAjax("index-signin.html");});');
               break;
             }case 3:{
                 $menuo = $this->getMenu(function($menu){
@@ -151,8 +151,8 @@ class Header extends \Sphp\Tools\Component{
         </div>
       </div>
     </div>';        
-                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
-                        . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){sendAjax("index-login.html");});'
+                        . '$("#btnsignin").on("click",function(){sendAjax("index-signin.html");});');
               break;
             
             }case 4:{
@@ -191,8 +191,8 @@ class Header extends \Sphp\Tools\Component{
 '. $menusub .'        
       </div>
     </div>';        
-                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){getURL("index-login.html");});'
-                        . '$("#btnsignin").on("click",function(){getURL("index-signin.html");});');
+                addHeaderJsFunctionCode("ready", "header1", '$("#btnlogin").on("click",function(){sendAjax("index-login.html");});'
+                        . '$("#btnsignin").on("click",function(){sendAjax("index-signin.html");});');
               break;
             }case 5:{
                 $menuo = $this->getMenu(function($menu){

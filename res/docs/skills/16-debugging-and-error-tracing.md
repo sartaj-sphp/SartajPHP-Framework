@@ -99,7 +99,7 @@ echo SphpBase::sphpApi()->traceError(true) . SphpBase::sphpApi()->traceErrorInne
 
 | Channel | Typical error body |
 |---------|-------------------|
-| **AJAX** (`getURL` / `getAJAX` / submitAJAX) | Always **JSON** (jsServer / ajax.js). Inspect Network → Response and Console. |
+| **AJAX** (`sendAjax` / `getAjaxReturn` / submitAJAX) | Always **JSON** (jsServer / ajax.js). Inspect Network → Response and Console. |
 | **SphpServer** normal page that hits a coding failure | Often **JSON** envelope (`Something goes wrong!`, `console.error(…)` inside payload) — not a full HTML error document. |
 | **Apache** (or PHP-FPM) browser navigation | Can return **HTML** error / exception page. |
 

@@ -100,9 +100,9 @@ private function genMenuLinks($mnuroot){
 }
 private function setAjax(){
 $this->blnAjaxLink = true;
-SphpBase::jsServer()->getAjax();
+SphpBase::jsServer()->setupAjaxLib();
 addHeaderJsFunction('menu_ajax', "function menu_ajax(url){
-", " getURL(url); }");
+", " sendAjax(url); }");
 }
 private function getB4Menu($mnutext,$mnuhref="",$mnuicon,$blnAjaxLink2=false,$mnuSub=0){
 $mnutitle = $mnutext;

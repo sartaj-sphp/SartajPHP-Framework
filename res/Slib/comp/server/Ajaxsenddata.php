@@ -72,7 +72,7 @@ class Ajaxsenddata extends \Sphp\Tools\Component {
 
     protected function onjsrender() {
         $ajax = new \Sphp\Kit\Ajax();
-        \SphpBase::jsServer()->getAjax();
+        \SphpBase::jsServer()->setupAjaxLib();
         $valobj = null;
         foreach ($this->compa as $key => $val2) {
             $valobj = readGlobal($val2);
